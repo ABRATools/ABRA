@@ -77,9 +77,9 @@ export default function Dashboard() {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="cpu_percent" stroke="#8884d8" strokeWidth={3}/>
-                    <Line type="monotone" dataKey="mem_percent" stroke="#82ca9d" strokeWidth={3}/>
-                    <Line type="monotone" dataKey="disk_percent" stroke="#ff7300" strokeWidth={3}/>
+                    <Line type="monotone" dataKey="cpu_percent" stroke="#8884d8" strokeWidth={3} isAnimationActive={false}/>
+                    <Line type="monotone" dataKey="mem_percent" stroke="#82ca9d" strokeWidth={3} isAnimationActive={false}/>
+                    <Line type="monotone" dataKey="disk_percent" stroke="#ff7300" strokeWidth={3} isAnimationActive={false}/>
                 </LineChart>
             </ResponsiveContainer>
             {error && <p style={{ color: 'red' }}>{error}</p>}

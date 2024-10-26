@@ -3,7 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // components are held in components folder in src folder
 import IndexPage from './components/IndexPage'
-// import Dashboard from './components/Dashboard'
+import Dashboard from './components/Dashboard'
+import LoginPage from './components/LoginPage';
+
 // import SubmitEntry from './components/SubmitEntry'
 
 import './output.css' // output of tailwind css render
@@ -18,7 +20,8 @@ root.render(
     <Routes>
       <Route index element={<IndexPage />} />
       <Route path="/" element={<IndexPage />} />
-      {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       {/* <Route path="/submit-entry" element={<SubmitEntry />} /> */}
     </Routes>
   </BrowserRouter>

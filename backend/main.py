@@ -31,7 +31,17 @@ class Resource(BaseModel):
   used_disk: float
   free_disk: float
 
+# endpoints to render index page with react-router
+
 @app.get("/")
+async def root(request: Request):
+  return templates.TemplateResponse('index.html', {'request': request})
+
+@app.get("/login")
+async def root(request: Request):
+  return templates.TemplateResponse('index.html', {'request': request})
+
+@app.get("/dashboard")
 async def root(request: Request):
   return templates.TemplateResponse('index.html', {'request': request})
 
