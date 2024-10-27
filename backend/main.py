@@ -3,7 +3,7 @@
 import psutil
 import datetime
 from pydantic import BaseModel
-from typing import Optional 
+from typing import Optional, List
 
 # database stuff
 import database as db
@@ -33,6 +33,26 @@ class Resource(BaseModel):
   total_disk: float
   used_disk: float
   free_disk: float
+
+class Environment(BaseModel):
+  id: int
+  machine_name: str
+  description: Optional[str]
+  os: str
+  total_cpu: int
+  total_memory: float
+  total_disk: float
+  ip: Optional[str]
+  port: Optional[int]
+  status: str
+
+class Node(BaseModel):
+  id: int
+  name: str
+  ip: str
+  port: int
+  status: str
+  environments: List[Environment]
 
 # endpoints to render index page with react-router
 
@@ -65,6 +85,44 @@ async def get_resources(request: Request) -> Resource:
     free_disk=disk.free / (1024 ** 3)
   )
   return JSONResponse(content=resource.model_dump_json(), status_code=200)
+
+@app.get("/get_nodes")
+async def get_nodes(request: Request):
+  nodes = []
+  node1_env1 = Environment(
+    id=1,
+    machine_name="env1",
+    description="env1 description",
+    os="linux",
+    total_cpu=4,
+    total_memory=8,
+    total_disk=100,
+    ip="192.168.1.50",
+    port=22,
+    status="running"
+  )
+  node1_env2 = Environment(
+    id=2,
+    machine_name="env2",
+    description="env2 description",
+    os="linux",
+    total_cpu=4,
+    total_memory=8,
+    total_disk=100,
+    ip="192.168.1.51",
+    port=22,
+    status="running"
+  )
+  node1 = Node(
+    id=1,
+    name="node1",
+    ip="192.168.1.1",
+    port=22,
+    status="running",
+    environments=[node1_env1, node1_env2]
+    )
+  nodes.append(node1)
+  return JSONResponse(response=nodes, status_code=200)
 
 
 if __name__ == "__main__":

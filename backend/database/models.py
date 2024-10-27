@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Enum, DateTime
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Enum, DateTime, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 import datetime
@@ -30,6 +30,9 @@ class Environment(Base):
     machine_name = Column(String(50), nullable=False)
     description = Column(String(255), nullable=True)
     os = Column(String(50), default="undefined", nullable=False)
+    total_cpu = Column(Integer, nullable=False)
+    total_memory = Column(Float, nullable=False)
+    total_disk = Column(Float, nullable=False)
     ip = Column(String(50), nullable=True)
     port = Column(Integer, nullable=True)
     status = Column(String(50), default="undefined", nullable=False)

@@ -1,11 +1,15 @@
 export type Environment = {
-    name: string;
+    id: number;
+    machine_name: string;
     description: string;
-    total_ram: number;
-    total_disk: number;
+    os: string;
     total_cpu: number;
-    total_gpu: number;
-    total_bandwidth: number;
-    total_cores: number;
-    resource_api: string;
+    total_memory: number;
+    total_disk: number;
+    ip: string;
+    port: number;
+    status: string;
+    node_id: number;
+    // default value for resource_api_endpoint is /get_resources
+    resource_api_endpoint ?: string;
 };
