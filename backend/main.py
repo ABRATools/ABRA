@@ -5,6 +5,9 @@ import datetime
 from pydantic import BaseModel
 from typing import Optional 
 
+# database stuff
+import database as db
+
 # webserver stuff
 import uvicorn
 from starlette.middleware.sessions import SessionMiddleware
