@@ -5,14 +5,29 @@
 /* @import "../frontend/node_modules/bootstrap/scss/bootstrap.scss"; */
 
 html, body {
-    height: 100%;
     margin: 0;
     padding: 0;
-    font-family: Inter,ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
-    background-color: oklch(var(--b2));
+    /* font-family: 'Open Sans', sans-serif; */
+    /* font-family: 'Poppins', sans-serif !important; */
+    font-family: "Montserrat", sans-serif !important;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #07030a !important;
+    height: 100%;
+    min-height: 100%;
+    background-color: #f8f1f9 !important;
 }
 
 #main{
     left:0;
     top:0;
+}
+
+:root {
+    --b1: #f8f1f9;
+    --fallback-b1: #f8f1f9;
+    --bc: #07030a;
+    --fallback-bc: #07030a;
+    --tc: #07030a;
+    --fallback-tc: #07030a;
 }

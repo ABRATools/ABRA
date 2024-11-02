@@ -38,16 +38,16 @@ export default function LoginPage() {
 
     return (
         <>
-        <nav className='w-full py-4 flex flex-row align-center justify-center bg-secondary text-primary-content'>
-            <h1 className='text-7xl'>ABRA</h1>                    
+        <nav className='w-full py-[2rem] flex flex-row align-center px-[40px] bg-abra-accent'>
+            <h1 className='text-7xl'>ABRA Tools</h1>
         </nav>
         <PageLayout>
-            <div className='flex flex-col items-center justify-center gap-5 h-screen-70'>
-                <div className='flex flex-col items-center justify-center gap-5 p-5 py-10 rounded-md p-10 text-accent-content bg-neutral-content border-primary-content border-2'>
+            <div className='flex flex-col items-center justify-center gap-[20px] h-screen-70'>
+                <div className='flex flex-col items-center justify-center gap-[20px] p-[40px] py-[60px] rounded-md border-2 border-abra-primary bg-white'>
                     <form onSubmit={handleSubmit} className='flex flex-col items-center justify-center gap-5'>
                         <div className='flex flex-col items-center justify-center gap-x-1.5'>
                             <input
-                                className='rounded-md text-[#6fcdc6] text-3xl text-center placeholder-accent border-primary-content border-2 mb-2'
+                                className='rounded-md text-3xl border-abra-primary border-2 mb-[10px] p-[10px]'
                                 type="text"
                                 placeholder="Username"
                                 // value={username}
@@ -55,14 +55,14 @@ export default function LoginPage() {
                                 onChange={(e) => setForm({ ...form, username: e.target.value })}
                             />
                             <input
-                                className='rounded-md text-[#6fcdc6] text-3xl text-center placeholder-accent border-primary-content border-2 mb-2'
+                                className='rounded-md text-3xl border-abra-primary border-2 mb-[40px] p-[10px]'
                                 type="password"
                                 placeholder="Password"
                                 // value={password}
                                 required={true}
                                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                             />
-                            <button type="submit" disabled={loading} className='p-2 rounded-md w-min-content h-[30px] bg-accent text-2xl text-white text-center flex flex-col align-center justify-center'>
+                            <button type="submit" disabled={loading} className='rounded-md w-min-content h-[30px] border-abra-accent border-4 text-2xl text-center flex flex-col align-center justify-center p-[25px]'>
                                 {loading ? 'Loading...' : 'Submit'}
                             </button>
                         </div>
