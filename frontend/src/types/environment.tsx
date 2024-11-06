@@ -9,7 +9,4 @@ export type Environment = {
     ip: string;
     port: number;
     status: string;
-    node_id: number;
-    // default value for resource_api_endpoint is /get_resources
-    resource_api_endpoint ?: string;
 };

@@ -3,6 +3,8 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     SECRET_KEY: SecretStr
+    REDIS_HOST: str
+    REDIS_PORT: int
     # LDAP_SERVER: str
     # LDAP_PORT: int
     # LDAP_BIND_USER: str
