@@ -7,6 +7,8 @@ Description: Select which environment to look at (probably can save some logic f
 
 import React, { useState } from "react";
 import EnvironmentSubSelect from "./EnvironmentSubSelect";
+import "../../styles/dashboard.css";
+
 
 export default function EnvironmentSelect( { environments }) {
 
@@ -16,7 +18,7 @@ export default function EnvironmentSelect( { environments }) {
         <>
         <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
             {/* Left Side - Node Buttons */}
-            <div style={{ width: '30%', padding: '10px', borderRight: '1px solid #ccc' }}>
+            <div className="environment-buttons" style={{ width: '30%', padding: '10px', borderRight: '1px solid #ccc' }}>
                 {environments.map((env) => (
                     <button
                         key={env.id}

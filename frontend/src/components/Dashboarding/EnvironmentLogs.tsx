@@ -6,6 +6,7 @@ Description: Show logs for that environment. Right now just passes to NodeLogs b
 */
 
 import NodeLogs from "./NodeLogs";
+import "../../styles/dashboard.css";
 
 export default function EnvironmentLogs({ envData }) {
 

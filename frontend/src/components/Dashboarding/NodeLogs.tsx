@@ -5,6 +5,8 @@ File: NodeLogs.tsx
 Description: Show all logs of that node
 */
 
+import "../../styles/dashboard.css";
+
 export default function NodeLogs({ nodeData }) {
 
     return (

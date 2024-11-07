@@ -8,6 +8,8 @@ Description: Node Select Component (for selecting a node to focus on)
 // imports
 import React, { useState } from 'react';
 import NodeSubSelect from "./NodeSubSelect";
+import "../../styles/dashboard.css";
+
 
 export default function NodeSelect() {
 

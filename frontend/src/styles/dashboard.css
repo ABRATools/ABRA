@@ -1,0 +1,143 @@
+/* General Reset */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* NodeSubSelect Container */
+.node-sub-select {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+/* Tab Button Container */
+.tab-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Tab Buttons */
+.tab-buttons button {
+    flex: 1;
+    background-color: #f9f9f9;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #555;
+    transition: all 0.3s ease;
+    border-radius: 8px 8px 0 0;
+    border-bottom: none;
+}
+
+.tab-buttons button:not(:last-child) {
+    margin-right: 5px;
+}
+
+.tab-buttons button.active {
+    background-color: #007bff;
+    color: white;
+    border-top: 3px solid #0056b3;
+    border-left: 1px solid #0056b3;
+    border-right: 1px solid #0056b3;
+    border-bottom: 2px solid white;
+}
+
+.tab-buttons button:hover {
+    background-color: #e1e1e1;
+    color: #333;
+}
+
+/* Content Sections for SubSelect */
+.subselect-content {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    min-height: 200px;
+}
+
+/* Section Title Styling */
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #0056b3;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 5px;
+}
+
+h3, h4 {
+    margin-top: 20px;
+    color: #007bff;
+}
+
+/* Summary Section */
+.summary, .environment-details {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Button list for environments */
+.environment-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.environment-buttons button {
+    flex: 1 1 auto;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.environment-buttons button:hover {
+    background-color: #0056b3;
+}
+
+.environment-buttons button.active {
+    background-color: #0056b3;
+}
+
+/* Environment Details Section */
+.environment-details ul {
+    padding: 0;
+    list-style: none;
+}
+
+.environment-details ul li {
+    margin-bottom: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .node-sub-select {
+        padding: 15px;
+        max-width: 90%;
+    }
+
+    .tab-buttons button {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+
+    .subselect-content {
+        min-height: 150px;
+    }
+}

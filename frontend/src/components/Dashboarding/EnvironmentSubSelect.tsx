@@ -8,6 +8,7 @@ Description: Shows what can be viewed for an environment
 import React, { useState } from "react";
 import EnvironmentLogs from "./EnvironmentLogs";
 import EnvironmentSummary from "./EnvironmentSummary";
+import "../../styles/dashboard.css";
 
 export default function NodeSubSelect({ envData }) {
 
@@ -30,10 +31,20 @@ export default function NodeSubSelect({ envData }) {
         <>
         <div>
             {/* Menu for selecting different views */}
-            <div style={{ display: 'flex', marginBottom: '1rem' }}>
-                <button onClick={() => setSelectedMenu('Summary')}>Summary</button>
+            <div className="tab-buttons" style={{ display: 'flex', marginBottom: '1rem' }}>
+                <button 
+                    onClick={() => setSelectedMenu('Summary')}
+                    className={selectedMenu === 'Summary' ? 'active' : ''}
+                >
+                    Summary
+                </button>
                 {/* <button onClick={() => setSelectedMenu('Environments')}>Environments</button> */}
-                <button onClick={() => setSelectedMenu('Env Log')}>Env Log</button>
+                <button 
+                    onClick={() => setSelectedMenu('Env Log')}
+                    className={selectedMenu === 'Env Log' ? 'active' : ''}
+                >
+                    Env Log
+                </button>
             </div>
 
             {/* Render the selected view */}

@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 import NodeSummary from "./NodeSummary";
 import EnvironmentSelect from "./EnvironentSelect";
 import NodeLogs from "./NodeLogs";
+import "../../styles/dashboard.css";
 
 export default function NodeSubSelect({ nodeData }) {
 
@@ -30,12 +31,27 @@ export default function NodeSubSelect({ nodeData }) {
 
     return (
         <>
-        <div>
+        <div className="node-sub-select">
             {/* Menu for selecting different views */}
-            <div style={{ display: 'flex', marginBottom: '1rem' }}>
-                <button onClick={() => setSelectedMenu('Summary')}>Summary</button>
-                <button onClick={() => setSelectedMenu('Environments')}>Environments</button>
-                <button onClick={() => setSelectedMenu('Total Log')}>Total Log</button>
+            <div className="tab-buttons" style={{ display: 'flex', marginBottom: '1rem' }}>
+                <button 
+                    onClick={() => setSelectedMenu('Summary')} 
+                    className={selectedMenu === 'Summary' ? 'active' : ''}
+                >
+                    Summary
+                </button>
+                <button 
+                    onClick={() => setSelectedMenu('Environments')} 
+                    className={selectedMenu === 'Environments' ? 'active' : ''}
+                >
+                    Environments
+                </button>
+                <button 
+                    onClick={() => setSelectedMenu('Total Log')} 
+                    className={selectedMenu === 'Total Log' ? 'active' : ''}
+                >
+                    Total Log
+                </button>
             </div>
 
             {/* Render the selected view */}

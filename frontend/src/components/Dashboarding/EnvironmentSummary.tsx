@@ -5,11 +5,13 @@ File: EnvironmentSummary.tsx
 Description: same as node summary but with env in the title jaja
 */
 
+import "../../styles/dashboard.css";
+
 export default function EnvironmentSummary({ envData }) {
 
     return (
         <>
-            <div>
+            <div className="environment-details">
                 <h2>Env Summary</h2>
                 <p><strong>ID:</strong> {envData.id}</p>
                 <p><strong>OS:</strong> {envData.os}</p>
