@@ -15,6 +15,10 @@ BASE_URL="http://cdimage.ubuntu.com/ubuntu-base/releases/$UBUNTU_VERSION/release
 FILENAME="ubuntu-base-$UBUNTU_VERSION-base-$ARCH.tar.gz"
 DOWNLOAD_URL="$BASE_URL/$FILENAME"
 
+# Install necessary packages
+echo "Installing necessary packages..."
+dnf install -y systemd-container curl
+
 # Create the container directory
 mkdir -p "$CONTAINER_DIR"
 
@@ -33,11 +37,20 @@ tar xzf "$FILENAME" --numeric-owner
 rm "$FILENAME"
 
 # Set SELinux context if SELinux is enabled
-if command -v chcon >/dev/null 2>&1; then
+if sestatus | grep -q "SELinux status:.*enabled"; then
     echo "Setting SELinux context..."
     chcon -R -t container_file_t "$CONTAINER_DIR"
 fi
 
-# Start the container
-echo "Starting the container..."
-systemd-nspawn -D "$CONTAINER_DIR" --machine="$CONTAINER_NAME"
+# Configure the container (optional)
+echo "Configuring the container..."
+
+# For example, set the container's hostname
+echo "$CONTAINER_NAME" > "$CONTAINER_DIR"/etc/hostname
+
+# Enable and start the container as a systemd service
+echo "Enabling and starting the container as a background service..."
+systemctl enable systemd-nspawn@"$CONTAINER_NAME".service
+systemctl start systemd-nspawn@"$CONTAINER_NAME".service
+
+echo "Container '$CONTAINER_NAME' is now running persistently in the background."
