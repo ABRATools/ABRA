@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
-import json
-import psutil
 import datetime
 from pydantic import BaseModel
 from typing import Optional, List
-from contextlib import asynccontextmanager
+
+import sys
 import redis
-from config import settings
-# database stuff
+import bcrypt
+import logging
 import database as db
+from config import settings
+from contextlib import asynccontextmanager
 
 # webserver stuff
 import uvicorn
@@ -19,20 +20,45 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse, RedirectResponse, JSONResponse
 
-redis_client = redis.StrictRedis(
-  host=settings.REDIS_HOST,
-  port=settings.REDIS_PORT,
-  db=0,
-  decode_responses=True,
-)
+from classes import User, Group, Environment, Node, Service, Task, Notification
 
-def get_redis_client():
-  return redis_client
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s')
+
+file_handler = logging.FileHandler('abra.log')
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(formatter)
+
+logger.addHandler(file_handler)
+
+def obtain_session():
+  try:
+    session = db.get_session()
+  except Exception as e:
+    raise
+  return next(session)
+
+session = obtain_session()
+
+def get_session():
+  return session
+
+# redis_client = redis.StrictRedis(
+#   host=settings.REDIS_HOST,
+#   port=settings.REDIS_PORT,
+#   db=0,
+#   decode_responses=True,
+# )
+
+# def get_redis_client():
+#   return redis_client
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
   try:
-    redis_client.ping()
+    # redis_client.ping()
+    print("FastAPI is starting...")
   except Exception as e:
     print(f"Redis is not connected {e}")
   yield
@@ -43,41 +69,9 @@ app = FastAPI(lifespan=lifespan)
 templates = Jinja2Templates(directory='templates')
 app.mount('/static', StaticFiles(directory='static'), name='static')
 
-app.add_middleware(SessionMiddleware, secret_key='!thisisasupersecretkeyandyouwouldneverguessitevengivenatrillionyears!')
-
-class Resource(BaseModel):
-  date: str
-  cpu_percent: float
-  mem_percent: float
-  total_mem: float
-  avail_mem: float
-  disk_percent: float
-  total_disk: float
-  used_disk: float
-  free_disk: float
-
-class Environment(BaseModel):
-  id: int
-  machine_name: str
-  description: Optional[str]
-  os: str
-  total_cpu: int
-  total_memory: float
-  total_disk: float
-  ip: Optional[str]
-  port: Optional[int]
-  status: str
-
-class Node(BaseModel):
-  id: int
-  name: str
-  ip: str
-  port: int
-  status: str
-  environments: List[Environment]
+app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_value())
 
 # endpoints to render index page with react-router
-
 @app.get("/")
 async def root(request: Request):
   return templates.TemplateResponse('index.html', {'request': request})
@@ -86,8 +80,34 @@ async def root(request: Request):
 async def root(request: Request):
   return templates.TemplateResponse('index.html', {'request': request})
 
+@app.post("/login")
+async def login(request: Request, session = Depends(get_session)):
+  form = await request.form()
+  username = form['username'].replace(' ', '').strip()
+  password = form['password'].replace(' ', '').strip()
+  logger.info(f"User {username} is attempting to log in")
+  user_pw_hash = db.get_hash_for_user(session, username)
+  if user_pw_hash is None:
+    logger.info(f"User {username} does not exist")
+    return JSONResponse(content={'message': 'Invalid credentials'}, status_code=401)
+  if bcrypt.checkpw(password.encode('utf-8'), user_pw_hash):
+    logger.info(f"User {username} has successfully logged in")
+    request.session['user'] = username
+    user_groups = db.get_user_groups(session, username)
+    for group in user_groups:
+      logger.info(f"User {username} is in group {group}")
+      if group == 'admin':
+        request.session['is_admin'] = True
+    return JSONResponse(content={'message': 'Successfully logged in', 'redirect': '/dashboard'}, status_code=200)
+  logger.info(f"User {username} has failed to log in")
+  return JSONResponse(content={'message': 'Invalid credentials'}, status_code=401)
+
 @app.get("/dashboard")
-async def root(request: Request):
+async def root(request: Request, session = Depends(get_session)):
+  if 'user' in request.session:
+    return templates.TemplateResponse('index.html', {'request': request})
+  else:
+    return JSONResponse(content={'message': 'Unauthorized'}, status_code=401)
   return templates.TemplateResponse('index.html', {'request': request})
 
 @app.get("/get_resources")
@@ -181,7 +201,6 @@ async def get_nodes(request: Request, redis_client=Depends(get_redis_client)):
   redis_client.set('nodes', str(nodes))
   print(redis_client.get('nodes'))
   return JSONResponse(content=nodes, status_code=200)
-
 
 if __name__ == "__main__":
   uvicorn.run('main:app', host='127.0.0.1', port=8000, reload=True)

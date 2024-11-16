@@ -1,17 +1,52 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Enum, DateTime, Float
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Enum, DateTime, Float, Table
+# sqlite does not support mutable lists lol
+# from sqlalchemy.ext.mutable import MutableList
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 import datetime
 
 Base = declarative_base()
 
+user_groups = Table(
+    'user_groups',
+    Base.metadata,
+    Column('user_id', Integer, ForeignKey('users.id'), primary_key=True),
+    Column('group_id', Integer, ForeignKey('groups.id'), primary_key=True)
+)
+
+user_notifications = Table(
+    'user_notifications',
+    Base.metadata,
+    Column('user_id', Integer, ForeignKey('users.id'), primary_key=True),
+    Column('notification_id', Integer, ForeignKey('notifications.id'), primary_key=True)
+)
+
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String(50), nullable=False, unique=True)
-    password = Column(String(255), nullable=False)
-    passwordChangeDate = Column(DateTime, default="", nullable=True)
-    role = Column(Enum('admin', 'user'), nullable=False)
+    username = Column(String(255), nullable=False, unique=True)
+    email = Column(String(255), nullable=True)
+    # hashed password
+    password = Column(String(60), nullable=False)
+    # password change date is set to epoch time by default
+    passwordChangeDate = Column(DateTime, default=datetime.datetime.fromtimestamp(0, datetime.timezone.utc), nullable=True)
+    is_active = Column(Boolean, default=True)
+    totp_secret = Column(String(50), nullable=True)
+    is_totp_enabled = Column(Boolean, default=True)
+    is_totp_confirmed = Column(Boolean, default=False)
+    # user can have multiple notifications
+    notifications = relationship("Notification", secondary=user_notifications, back_populates="users")
+    # user can have multiple groups
+    groups = relationship("Group", secondary=user_groups, back_populates="users")
+
+class Group(Base):
+    __tablename__ = 'groups'
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(50), nullable=False)
+    # sqlite does not support mutable lists lol
+    # permissions = Column(MutableList.as_mutable(String), nullable=True)
+    permissions = Column(String(255), nullable=True)
+    users = relationship("User", secondary=user_groups, back_populates="groups")
 
 class Node(Base):
     __tablename__ = 'nodes'
@@ -30,12 +65,47 @@ class Environment(Base):
     machine_name = Column(String(50), nullable=False)
     description = Column(String(255), nullable=True)
     os = Column(String(50), default="undefined", nullable=False)
-    total_cpu = Column(Integer, nullable=False)
-    total_memory = Column(Float, nullable=False)
-    total_disk = Column(Float, nullable=False)
     ip = Column(String(50), nullable=True)
-    port = Column(Integer, nullable=True)
     status = Column(String(50), default="undefined", nullable=False)
+    max_cpus = Column(Integer, nullable=False)
+    max_memory = Column(Integer, nullable=False)
+    max_disk = Column(Integer, nullable=False)
+    current_cpu_percent = Column(Integer, nullable=False)
+    current_memory_percent = Column(Integer, nullable=False)
+    current_disk_percent = Column(Integer, nullable=False)
     # environment can only have one node
     node_id = Column(Integer, ForeignKey('nodes.id'))
     nodes = relationship("Node", back_populates="environments")
+
+class Service(Base):
+    __tablename__ = 'services'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(50), nullable=False)
+    description = Column(String(200), nullable=False)
+    status = Column(String(50), default="undefined", nullable=False)
+    port_number = Column(Integer, nullable=False)
+
+class Task(Base):
+    __tablename__ = 'tasks'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(50), nullable=False)
+    description = Column(String(200), nullable=False)
+    start_time = Column(DateTime, default=datetime.datetime.now(tz=datetime.timezone.utc))
+    end_time = Column(DateTime, nullable=True)
+    completed = Column(Boolean, default=False)
+    status = Column(String(50), default="undefined", nullable=False)
+    output = Column(String(200), nullable=True)
+
+class Notification(Base):
+    __tablename__ = 'notifications'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(50), nullable=False)
+    description = Column(String(200), nullable=False)
+    date_created = Column(DateTime, default=datetime.datetime.now(tz=datetime.timezone.utc))
+    is_read = Column(Boolean, default=False)
+    is_active = Column(Boolean, default=True)
+    # can have multiple users
+    users = relationship("User", secondary=user_notifications, back_populates="notifications")

@@ -15,13 +15,12 @@ class Settings(BaseSettings):
     # LDAP_GROUP_DN: str
     # ALGORITHM: str
     # ACCESS_TOKEN_EXPIRE_MINUTES: int
-    # DB_HOST: str
-    # DB_PORT: int
-    # DB_USER: str
-    # DB_PASSWORD: SecretStr
-    # DB_NAME: str
+    DB_HOST: str
+    DB_PORT: int
+    DB_USER: str
+    DB_PASSWORD: SecretStr
+    DB_NAME: str
     LOCAL_DB: bool = True
-    HASH_ALGORITHM: str = "bcrypt"
 
     class Config:
         env_file = ".env"
