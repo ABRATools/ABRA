@@ -110,97 +110,97 @@ async def root(request: Request, session = Depends(get_session)):
     return JSONResponse(content={'message': 'Unauthorized'}, status_code=401)
   return templates.TemplateResponse('index.html', {'request': request})
 
-@app.get("/get_resources")
-async def get_resources(request: Request) -> Resource:
-  cpu_percent = psutil.cpu_percent(interval=1)
-  mem = psutil.virtual_memory()
-  disk = psutil.disk_usage('/')
-  resource = Resource(
-    date=datetime.datetime.now().strftime("%Y-%m-%d"),
-    cpu_percent=cpu_percent,
-    mem_percent=mem.percent,
-    total_mem=mem.total / (1024 ** 3),
-    avail_mem=mem.available / (1024 ** 3),
-    disk_percent=disk.percent,
-    total_disk=disk.total / (1024 ** 3),
-    used_disk=disk.used / (1024 ** 3),
-    free_disk=disk.free / (1024 ** 3)
-  )
-  return JSONResponse(content=resource.model_dump_json(), status_code=200)
+# @app.get("/get_resources")
+# async def get_resources(request: Request) -> Resource:
+#   cpu_percent = psutil.cpu_percent(interval=1)
+#   mem = psutil.virtual_memory()
+#   disk = psutil.disk_usage('/')
+#   resource = Resource(
+#     date=datetime.datetime.now().strftime("%Y-%m-%d"),
+#     cpu_percent=cpu_percent,
+#     mem_percent=mem.percent,
+#     total_mem=mem.total / (1024 ** 3),
+#     avail_mem=mem.available / (1024 ** 3),
+#     disk_percent=disk.percent,
+#     total_disk=disk.total / (1024 ** 3),
+#     used_disk=disk.used / (1024 ** 3),
+#     free_disk=disk.free / (1024 ** 3)
+#   )
+#   return JSONResponse(content=resource.model_dump_json(), status_code=200)
 
-@app.get("/get_nodes")
-async def get_nodes(request: Request, redis_client=Depends(get_redis_client)):
-  nodes = []
-  node1_env1 = Environment(
-    id=1,
-    machine_name="env1",
-    description="env1 description",
-    os="linux",
-    total_cpu=4,
-    total_memory=8,
-    total_disk=100,
-    ip="192.168.1.50",
-    port=22,
-    status="running"
-  )
-  node1_env2 = Environment(
-    id=2,
-    machine_name="env2",
-    description="env2 description",
-    os="linux",
-    total_cpu=4,
-    total_memory=8,
-    total_disk=100,
-    ip="192.168.1.51",
-    port=22,
-    status="running"
-  )
-  node2_env1 = Environment(
-    id=1,
-    machine_name="env1",
-    description="env1 description",
-    os="linux",
-    total_cpu=4,
-    total_memory=8,
-    total_disk=100,
-    ip="192.168.1.50",
-    port=22,
-    status="running"
-  )
-  node2_env2 = Environment(
-    id=2,
-    machine_name="env2",
-    description="env2 description",
-    os="linux",
-    total_cpu=4,
-    total_memory=8,
-    total_disk=100,
-    ip="192.168.1.51",
-    port=22,
-    status="running"
-  )
-  node1 = Node(
-    id=1,
-    name="node1",
-    ip="192.168.1.1",
-    port=22,
-    status="running",
-    environments=[node1_env1, node1_env2]
-    )
-  node2 = Node(
-    id=2,
-    name="node2",
-    ip="192.168.2.1",
-    port=22,
-    status="running",
-    environments=[node2_env1, node2_env2]
-    )
-  nodes.append(node1.model_dump_json())
-  nodes.append(node2.model_dump_json())
+# @app.get("/get_nodes")
+# async def get_nodes(request: Request, redis_client=Depends(get_redis_client)):
+#   nodes = []
+#   node1_env1 = Environment(
+#     id=1,
+#     machine_name="env1",
+#     description="env1 description",
+#     os="linux",
+#     total_cpu=4,
+#     total_memory=8,
+#     total_disk=100,
+#     ip="192.168.1.50",
+#     port=22,
+#     status="running"
+#   )
+#   node1_env2 = Environment(
+#     id=2,
+#     machine_name="env2",
+#     description="env2 description",
+#     os="linux",
+#     total_cpu=4,
+#     total_memory=8,
+#     total_disk=100,
+#     ip="192.168.1.51",
+#     port=22,
+#     status="running"
+#   )
+#   node2_env1 = Environment(
+#     id=1,
+#     machine_name="env1",
+#     description="env1 description",
+#     os="linux",
+#     total_cpu=4,
+#     total_memory=8,
+#     total_disk=100,
+#     ip="192.168.1.50",
+#     port=22,
+#     status="running"
+#   )
+#   node2_env2 = Environment(
+#     id=2,
+#     machine_name="env2",
+#     description="env2 description",
+#     os="linux",
+#     total_cpu=4,
+#     total_memory=8,
+#     total_disk=100,
+#     ip="192.168.1.51",
+#     port=22,
+#     status="running"
+#   )
+#   node1 = Node(
+#     id=1,
+#     name="node1",
+#     ip="192.168.1.1",
+#     port=22,
+#     status="running",
+#     environments=[node1_env1, node1_env2]
+#     )
+#   node2 = Node(
+#     id=2,
+#     name="node2",
+#     ip="192.168.2.1",
+#     port=22,
+#     status="running",
+#     environments=[node2_env1, node2_env2]
+#     )
+#   nodes.append(node1.model_dump_json())
+#   nodes.append(node2.model_dump_json())
 
-  redis_client.set('nodes', str(nodes))
-  print(redis_client.get('nodes'))
-  return JSONResponse(content=nodes, status_code=200)
+#   redis_client.set('nodes', str(nodes))
+#   print(redis_client.get('nodes'))
+#   return JSONResponse(content=nodes, status_code=200)
 
 if __name__ == "__main__":
   uvicorn.run('main:app', host='127.0.0.1', port=8000, reload=True)
