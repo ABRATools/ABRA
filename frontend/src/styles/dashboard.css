@@ -67,7 +67,7 @@ body {
 }
 
 /* Section Title Styling */
-h2 {
+/* h2 {
     font-size: 1.8rem;
     margin-bottom: 10px;
     color: #0056b3;
@@ -78,7 +78,7 @@ h2 {
 h3, h4 {
     margin-top: 20px;
     color: #007bff;
-}
+} */
 
 /* Summary Section */
 .summary, .environment-details {

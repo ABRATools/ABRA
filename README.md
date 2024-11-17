@@ -37,7 +37,16 @@ Creating an Ubuntu container:
 
 ### Default Login Credentials
 
-```text
-username: admin
-password abra
-```
+1. admin
+
+    ```text
+    username: admin
+    password abra
+    ```
+
+2. sysadmin1
+
+    ```text
+    username: sysadmin1
+    password sysadmin1
+    ```

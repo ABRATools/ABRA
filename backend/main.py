@@ -106,7 +106,7 @@ async def get_current_user_details(request: Request):
       username=user.username,
       email=user.email,
       groups=[group.name for group in user.groups],
-      passwordChangeDate=user.passwordChangeDate,
+      passwordChangeDate=user.passwordChangeDate.strftime('%Y-%m-%d %H:%M:%S'),
       is_active=user.is_active,
       is_totp_enabled=user.is_totp_enabled,
       is_totp_confirmed=user.is_totp_confirmed,
@@ -145,7 +145,8 @@ async def process_login(request: Request, session = Depends(get_session)):
 async def process_logout(request: Request):
   if 'user' in request.session:
     request.session.pop('user')
-    request.session.pop('is_admin')
+    if 'is_admin' in request.session:
+      request.session.pop('is_admin')
     return JSONResponse(content={'message': 'Successfully logged out', 'redirect': '/login'}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
@@ -169,7 +170,7 @@ async def get_users(request: Request, session = Depends(get_session)) -> JSONRes
         username=user.username,
         email=user.email,
         groups=[group.name for group in user.groups],
-        passwordChangeDate=user.passwordChangeDate,
+        passwordChangeDate=user.passwordChangeDate.strftime('%Y-%m-%d %H:%M:%S'),
         is_active=user.is_active,
         is_totp_enabled=user.is_totp_enabled,
         is_totp_confirmed=user.is_totp_confirmed,

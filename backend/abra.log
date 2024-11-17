@@ -38,3 +38,8 @@
 2024-11-17 01:38:00,247 | INFO | User admin is attempting to log in
 2024-11-17 01:38:00,624 | INFO | User admin has successfully logged in
 2024-11-17 01:38:00,630 | INFO | User admin is in group admin
+2024-11-17 10:15:33,667 | INFO | User sysadmin1 is attempting to log in
+2024-11-17 10:15:33,969 | INFO | User sysadmin1 has successfully logged in
+2024-11-17 10:25:30,802 | INFO | User admin is attempting to log in
+2024-11-17 10:25:31,131 | INFO | User admin has successfully logged in
+2024-11-17 10:25:31,135 | INFO | User admin is in group admin
