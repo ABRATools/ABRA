@@ -4,6 +4,7 @@ import datetime
 from pydantic import BaseModel
 from typing import Optional, List
 
+import os
 import sys
 import redis
 import bcrypt
@@ -20,7 +21,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse, RedirectResponse, JSONResponse
 
-from classes import User, Group, Environment, Node, Service, Task, Notification
+from classes import User, FilteredUser, Group, Environment, Node, Service, Task, Notification
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -78,10 +79,39 @@ app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_
 async def root(request: Request):
   return templates.TemplateResponse('index.html', {'request': request})
 
-@app.get("/get_user")
-async def get_user(request: Request):
+@app.get("/users")
+async def display_users(request: Request):
+  return templates.TemplateResponse('index.html', {'request': request})
+
+@app.get("/audit")
+async def display_audit(request: Request):
+  return templates.TemplateResponse('index.html', {'request': request})
+
+@app.get("/settings")
+async def display_settings(request: Request):
+  return templates.TemplateResponse('index.html', {'request': request})
+
+@app.get("/authenticate_current_user")
+async def authenticate_current_user(request: Request):
   if 'user' in request.session:
     return JSONResponse(content={'message': 'Authorized', 'user': request.session}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@app.get("/get_user_settings")
+async def get_current_user_details(request: Request):
+  if 'user' in request.session:
+    user = db.get_user(session, request.session['user'])
+    user_json = FilteredUser(
+      user_id=user.id,
+      username=user.username,
+      email=user.email,
+      groups=[group.name for group in user.groups],
+      passwordChangeDate=user.passwordChangeDate,
+      is_active=user.is_active,
+      is_totp_enabled=user.is_totp_enabled,
+      is_totp_confirmed=user.is_totp_confirmed,
+    )
+    return JSONResponse(content={'user': user_json.model_dump()}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 @app.get("/login")
@@ -127,97 +157,39 @@ async def get_dashboard(request: Request, session = Depends(get_session)):
     return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
   return templates.TemplateResponse('index.html', {'request': request})
 
-# @app.get("/get_resources")
-# async def get_resources(request: Request) -> Resource:
-#   cpu_percent = psutil.cpu_percent(interval=1)
-#   mem = psutil.virtual_memory()
-#   disk = psutil.disk_usage('/')
-#   resource = Resource(
-#     date=datetime.datetime.now().strftime("%Y-%m-%d"),
-#     cpu_percent=cpu_percent,
-#     mem_percent=mem.percent,
-#     total_mem=mem.total / (1024 ** 3),
-#     avail_mem=mem.available / (1024 ** 3),
-#     disk_percent=disk.percent,
-#     total_disk=disk.total / (1024 ** 3),
-#     used_disk=disk.used / (1024 ** 3),
-#     free_disk=disk.free / (1024 ** 3)
-#   )
-#   return JSONResponse(content=resource.model_dump_json(), status_code=200)
+@app.get("/get_users")
+async def get_users(request: Request, session = Depends(get_session)) -> JSONResponse:
+  if 'user' in request.session:
+    users = db.get_users(session)
+    # filter out passwords and totp secret
+    users_json = []
+    for user in users:
+      filtered_user = FilteredUser(
+        user_id=user.id,
+        username=user.username,
+        email=user.email,
+        groups=[group.name for group in user.groups],
+        passwordChangeDate=user.passwordChangeDate,
+        is_active=user.is_active,
+        is_totp_enabled=user.is_totp_enabled,
+        is_totp_confirmed=user.is_totp_confirmed,
+      )
+      users_json.append(filtered_user.model_dump())
+    return JSONResponse(content={'users': users_json}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-# @app.get("/get_nodes")
-# async def get_nodes(request: Request, redis_client=Depends(get_redis_client)):
-#   nodes = []
-#   node1_env1 = Environment(
-#     id=1,
-#     machine_name="env1",
-#     description="env1 description",
-#     os="linux",
-#     total_cpu=4,
-#     total_memory=8,
-#     total_disk=100,
-#     ip="192.168.1.50",
-#     port=22,
-#     status="running"
-#   )
-#   node1_env2 = Environment(
-#     id=2,
-#     machine_name="env2",
-#     description="env2 description",
-#     os="linux",
-#     total_cpu=4,
-#     total_memory=8,
-#     total_disk=100,
-#     ip="192.168.1.51",
-#     port=22,
-#     status="running"
-#   )
-#   node2_env1 = Environment(
-#     id=1,
-#     machine_name="env1",
-#     description="env1 description",
-#     os="linux",
-#     total_cpu=4,
-#     total_memory=8,
-#     total_disk=100,
-#     ip="192.168.1.50",
-#     port=22,
-#     status="running"
-#   )
-#   node2_env2 = Environment(
-#     id=2,
-#     machine_name="env2",
-#     description="env2 description",
-#     os="linux",
-#     total_cpu=4,
-#     total_memory=8,
-#     total_disk=100,
-#     ip="192.168.1.51",
-#     port=22,
-#     status="running"
-#   )
-#   node1 = Node(
-#     id=1,
-#     name="node1",
-#     ip="192.168.1.1",
-#     port=22,
-#     status="running",
-#     environments=[node1_env1, node1_env2]
-#     )
-#   node2 = Node(
-#     id=2,
-#     name="node2",
-#     ip="192.168.2.1",
-#     port=22,
-#     status="running",
-#     environments=[node2_env1, node2_env2]
-#     )
-#   nodes.append(node1.model_dump_json())
-#   nodes.append(node2.model_dump_json())
-
-#   redis_client.set('nodes', str(nodes))
-#   print(redis_client.get('nodes'))
-#   return JSONResponse(content=nodes, status_code=200)
+@app.get("/get_audit_log")
+# this is a simple example of how to read a log file, it rly sux and should be replaced with a proper logging solution lol
+async def get_audit_log(request: Request, session = Depends(get_session)) -> JSONResponse:
+  if 'user' in request.session:
+    # audit_log stored in ./abra.log
+    audit_log = []
+    with open('abra.log', 'r') as f:
+      for line in f:
+        audit_log.append(line.strip())
+    audit_str = '\n'.join(audit_log)
+    return JSONResponse(content={'audit_log': audit_str}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 if __name__ == "__main__":
   uvicorn.run('main:app', host='127.0.0.1', port=8000, reload=True)

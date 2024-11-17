@@ -1,7 +1,10 @@
 export type User = {
-    id: number;
+    user_id: number;
     username: string;
-    password: string;
+    email?: string;
+    groups?: string[];
     passwordChangeDate: string;
-    role: string;
+    is_active: boolean;
+    is_totp_enabled: boolean;
+    is_totp_confirmed: boolean;
 };

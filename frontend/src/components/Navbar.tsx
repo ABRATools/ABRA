@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <div className="navbar min-h-[100px] bg-abra-accent">
       <div className="flex-1">
-        <Link to="/" className="no-underline p-0 m-0 flex flex-row align-center">
+        <Link to="/dashboard" className="no-underline p-0 m-0 flex flex-row align-center">
             <h1 className="lg:text-4xl text-2xl self-center ml-10">ABRA Dashboard</h1>
         </Link>
       </div>

@@ -8,8 +8,7 @@ export function useAuthenticateUser() {
     const { setUser } = useContext(userContext);
 
     useEffect(() => {
-        console.log('redirectUser');
-        fetch('/get_user')
+        fetch('/authenticate_current_user')
             .then(response => {
                 if (response.status === 200) {
                     return response.json();
@@ -21,9 +20,7 @@ export function useAuthenticateUser() {
             })
             .then(data => {
                 if (data && data.user) {
-                    console.log(data.user);
                     setUser(data.user);
-                    navigate('/dashboard');
                 } else {
                     navigate('/login');
                 }

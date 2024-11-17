@@ -3,6 +3,7 @@ from typing import Optional, List
 import datetime
 
 class User(BaseModel):
+  user_id: int
   username: str
   email: Optional[str]
   password: str
@@ -10,6 +11,16 @@ class User(BaseModel):
   groups: Optional[List[str]]
   is_active: bool
   totp_secret: Optional[str]
+  is_totp_enabled: bool
+  is_totp_confirmed: bool
+
+class FilteredUser(BaseModel):
+  user_id: int
+  username: str
+  email: Optional[str]
+  groups: Optional[List[str]]
+  passwordChangeDate: Optional[datetime.datetime]
+  is_active: bool
   is_totp_enabled: bool
   is_totp_confirmed: bool
 

@@ -54,6 +54,13 @@ def delete_user(db, username):
     db.delete(user)
     db.commit()
 
+def get_users(db):
+    return db.query(User).all()
+
+def get_user(db, username):
+    user = db.query(User).filter(User.username == username).first()
+    return user
+
 def update_user_email(db, username, email):
     user = db.query(User).filter(User.username == username).first()
     user.email = email
