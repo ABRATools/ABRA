@@ -31,7 +31,7 @@ export default function LoginPage() {
                 setSuccess(true);
                 navigate('/dashboard');
             } else {
-                setError('Username not found in database');
+                setError('Invalid username or password');
             }
         } catch (error) {
             setError('An error occurred');

@@ -7,8 +7,6 @@ Description: Select which environment to look at (probably can save some logic f
 
 import React, { useState } from "react";
 import EnvironmentSubSelect from "./EnvironmentSubSelect";
-import "../../styles/dashboard.css";
-
 
 export default function EnvironmentSelect( { environments }) {
 
@@ -16,23 +14,17 @@ export default function EnvironmentSelect( { environments }) {
 
     return (
         <>
-        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+        <div className="flex flex-row w-full">
             {/* Left Side - Node Buttons */}
-            <div className="environment-buttons" style={{ width: '30%', padding: '10px', borderRight: '1px solid #ccc' }}>
+            <div className="flex flex-col gap-[10px] max-h-max max-w-max border-[#ccc] box-border border-r-[1px] min-h-128">
                 {environments.map((env) => (
                     <button
                         key={env.id}
                         onClick={() => setSelectedEnv(env)}
+                        className="hover:bg-blue-700 hover:cursor-pointer rounded-sm py-[10x] px-[20px] mb-2"
                         style={{
-                            display: 'block',
-                            width: '100%',
-                            padding: '10px',
-                            marginBottom: '10px',
                             backgroundColor: selectedEnv.id === env.id ? '#007bff' : '#f0f0f0',
                             color: selectedEnv.id === env.id ? '#fff' : '#000',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
                         }}
                     >
                         {env.id}
@@ -41,7 +33,7 @@ export default function EnvironmentSelect( { environments }) {
             </div>
 
             {/* Right Side - NodeSubSelect Component */}
-            <div style={{ width: '70%', padding: '10px' }}>
+            <div className="w-full">
                 <EnvironmentSubSelect envData={selectedEnv} />
             </div>
         </div>

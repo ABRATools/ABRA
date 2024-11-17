@@ -5,10 +5,9 @@ File: EnvironmentSubSelect.tsx
 Description: Shows what can be viewed for an environment 
 */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import EnvironmentLogs from "./EnvironmentLogs";
 import EnvironmentSummary from "./EnvironmentSummary";
-import "../../styles/dashboard.css";
 
 export default function NodeSubSelect({ envData }) {
 
@@ -18,9 +17,7 @@ export default function NodeSubSelect({ envData }) {
         switch (selectedMenu) {
             case 'Summary':
                 return <EnvironmentSummary envData={envData}/>;
-            // case "Environments":
-            //     return <EnvironmentSelect environments={nodeData.environments}/>;
-            case 'Env Log':
+            case 'Environment Log':
                 return <EnvironmentLogs envData={envData}/>;
             default:
                 return <EnvironmentSummary envData={envData}/>;
@@ -31,17 +28,19 @@ export default function NodeSubSelect({ envData }) {
         <>
         <div>
             {/* Menu for selecting different views */}
-            <div className="tab-buttons" style={{ display: 'flex', marginBottom: '1rem' }}>
-                <button 
+            <div className="flex justify-around px-[10px] my-[10px] border-b-[2px]">
+                <button
                     onClick={() => setSelectedMenu('Summary')}
-                    className={selectedMenu === 'Summary' ? 'active' : ''}
+                    className="text-md"
+                    style={{fontWeight: selectedMenu === 'Summary' ? 'bold' : 'normal'}}
                 >
                     Summary
                 </button>
-                {/* <button onClick={() => setSelectedMenu('Environments')}>Environments</button> */}
-                <button 
-                    onClick={() => setSelectedMenu('Env Log')}
-                    className={selectedMenu === 'Env Log' ? 'active' : ''}
+
+                <button
+                    onClick={() => setSelectedMenu('Environment Log')}
+                    className="text-md"
+                    style={{fontWeight: selectedMenu === 'Environment Log' ? 'bold' : 'normal'}}
                 >
                     Env Log
                 </button>

@@ -20,7 +20,16 @@ export default function Navbar() {
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 text-lg visible inline-flex">
-          <button onClick={handleLogout} className="upper">
+          <Link to="/users" className="no-underline">
+            <li className="menu-title">Manage Users</li>
+          </Link>
+          <Link to="/audit" className="no-underline">
+            <li className="menu-title">Audit ABRA</li>
+          </Link>
+          <Link to="/settings" className="no-underline">
+            <li className="menu-title">Settings</li>
+          </Link>
+          <button onClick={handleLogout} className="menu-title">
             Logout
           </button>
         </ul>

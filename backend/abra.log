@@ -12,3 +12,17 @@
 2024-11-16 20:12:56,653 | INFO | User admin is attempting to log in
 2024-11-16 20:12:56,954 | INFO | User admin has successfully logged in
 2024-11-16 20:12:56,956 | INFO | User admin is in group admin
+2024-11-16 20:25:55,009 | INFO | User admin is attempting to log in
+2024-11-16 20:25:55,312 | INFO | User admin has successfully logged in
+2024-11-16 20:25:55,314 | INFO | User admin is in group admin
+2024-11-16 21:17:50,483 | INFO | User admin is attempting to log in
+2024-11-16 21:17:50,804 | INFO | User admin has successfully logged in
+2024-11-16 21:17:50,807 | INFO | User admin is in group admin
+2024-11-16 21:26:16,735 | INFO | User admin is attempting to log in
+2024-11-16 21:26:17,037 | INFO | User admin has successfully logged in
+2024-11-16 21:26:17,038 | INFO | User admin is in group admin
+2024-11-16 21:43:12,733 | INFO | User admin is attempting to log in
+2024-11-16 21:43:13,047 | INFO | User admin has failed to log in
+2024-11-16 21:43:20,375 | INFO | User admin is attempting to log in
+2024-11-16 21:43:20,682 | INFO | User admin has successfully logged in
+2024-11-16 21:43:20,683 | INFO | User admin is in group admin

@@ -90,7 +90,6 @@ async def get_login(request: Request):
 
 @app.post("/login")
 async def process_login(request: Request, session = Depends(get_session)):
-  # expect JSON in the form of {'username': 'user', 'password': 'password'}
   data = await request.json()
   username = data['username'].lower().strip()
   password = data['password'].strip()

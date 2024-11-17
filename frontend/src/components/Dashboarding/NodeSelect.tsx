@@ -6,10 +6,8 @@ Description: Node Select Component (for selecting a node to focus on)
 */
 
 // imports
-import React, { useState } from 'react';
+import { useState } from 'react';
 import NodeSubSelect from "./NodeSubSelect";
-import "../../styles/dashboard.css";
-
 
 export default function NodeSelect() {
 
@@ -148,23 +146,17 @@ export default function NodeSelect() {
 
     return (
         <>
-        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+        <div className='flex flex-row w-full p-[10px] h-full'>
             {/* Left Side - Node Buttons */}
-            <div style={{ width: '30%', padding: '10px', borderRight: '1px solid #ccc' }}>
+            <div className="max-w-[5vw] min-w-min border-[#ccc] border-r-[1px] h-full box-border min-h-144">
                 {test_data.nodes.map((node) => (
                     <button
                         key={node.id}
                         onClick={() => setSelectedNode(node)}
+                        className='hover:bg-blue-500 hover:text-white hover:cursor-pointer rounded-sm mb-4 text-lg py-[10x] px-[20px] lg:py-[20x] lg:px-[40px]'
                         style={{
-                            display: 'block',
-                            width: '100%',
-                            padding: '10px',
-                            marginBottom: '10px',
                             backgroundColor: selectedNode.id === node.id ? '#007bff' : '#f0f0f0',
                             color: selectedNode.id === node.id ? '#fff' : '#000',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
                         }}
                     >
                         {node.id}
@@ -173,7 +165,7 @@ export default function NodeSelect() {
             </div>
 
             {/* Right Side - NodeSubSelect Component */}
-            <div style={{ width: '70%', padding: '10px' }}>
+            <div className="w-full h-full">
                 <NodeSubSelect nodeData={selectedNode} />
             </div>
         </div>
