@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function handleLogout() {
   fetch("/logout", {
-    method: "POST",
+    method: "GET",
   }).then(() => {
     window.location.href = "/";
   });
@@ -20,9 +20,9 @@ export default function Navbar() {
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 text-lg visible inline-flex">
-          <li><button onClick={handleLogout} className="upper">
+          <button onClick={handleLogout} className="upper">
             Logout
-            </button></li>
+          </button>
         </ul>
       </div>
     </div>

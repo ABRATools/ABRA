@@ -32,3 +32,12 @@ Creating an Ubuntu container:
 ## eBPF Scripts
 
 ## ABRA Daemon
+
+## General Information
+
+### Default Login Credentials
+
+```text
+username: admin
+password abra
+```

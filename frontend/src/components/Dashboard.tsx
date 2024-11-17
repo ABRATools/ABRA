@@ -8,12 +8,12 @@ import {
 // import { Node } from '../types/node';
 // import fetchNodes from '../services/getNodes';
 import NodeSelect from './Dashboarding/NodeSelect';
+import { useAuthenticateUser } from '../hooks/useAuthenticateUser';
 
 export default function Dashboard() {
-
+    useAuthenticateUser();
     return (
         <div>
-            <p>hi</p>
             <Navbar />
             <NodeSelect />
         </div>

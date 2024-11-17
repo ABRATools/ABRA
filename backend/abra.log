@@ -1,0 +1,14 @@
+2024-11-16 19:51:02,650 | INFO | User username is attempting to log in
+2024-11-16 19:51:02,678 | INFO | User username does not exist
+2024-11-16 19:55:33,073 | INFO | User admin is attempting to log in
+2024-11-16 19:55:33,408 | INFO | User admin has successfully logged in
+2024-11-16 19:55:33,414 | INFO | User admin is in group <database.models.Group object at 0x0000026327EA9AC0>
+2024-11-16 19:59:21,753 | INFO | User admin is attempting to log in
+2024-11-16 19:59:22,086 | INFO | User admin has successfully logged in
+2024-11-16 19:59:22,090 | INFO | User admin is in group admin
+2024-11-16 20:11:43,605 | INFO | User admin is attempting to log in
+2024-11-16 20:11:43,930 | INFO | User admin has successfully logged in
+2024-11-16 20:11:43,938 | INFO | User admin is in group admin
+2024-11-16 20:12:56,653 | INFO | User admin is attempting to log in
+2024-11-16 20:12:56,954 | INFO | User admin has successfully logged in
+2024-11-16 20:12:56,956 | INFO | User admin is in group admin

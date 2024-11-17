@@ -25,9 +25,11 @@ from classes import User, Group, Environment, Node, Service, Task, Notification
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s')
+# remove all handlers
+logger.propagate = False
+logger.handlers.clear()
 
 file_handler = logging.FileHandler('abra.log')
-file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)
@@ -76,15 +78,22 @@ app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_
 async def root(request: Request):
   return templates.TemplateResponse('index.html', {'request': request})
 
+@app.get("/get_user")
+async def get_user(request: Request):
+  if 'user' in request.session:
+    return JSONResponse(content={'message': 'Authorized', 'user': request.session}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
 @app.get("/login")
-async def root(request: Request):
+async def get_login(request: Request):
   return templates.TemplateResponse('index.html', {'request': request})
 
 @app.post("/login")
-async def login(request: Request, session = Depends(get_session)):
-  form = await request.form()
-  username = form['username'].replace(' ', '').strip()
-  password = form['password'].replace(' ', '').strip()
+async def process_login(request: Request, session = Depends(get_session)):
+  # expect JSON in the form of {'username': 'user', 'password': 'password'}
+  data = await request.json()
+  username = data['username'].lower().strip()
+  password = data['password'].strip()
   logger.info(f"User {username} is attempting to log in")
   user_pw_hash = db.get_hash_for_user(session, username)
   if user_pw_hash is None:
@@ -98,16 +107,25 @@ async def login(request: Request, session = Depends(get_session)):
       logger.info(f"User {username} is in group {group}")
       if group == 'admin':
         request.session['is_admin'] = True
-    return JSONResponse(content={'message': 'Successfully logged in', 'redirect': '/dashboard'}, status_code=200)
+    print("Successfully logged in")
+    return JSONResponse(content={'message': 'Successfully logged in', 'user': request.session, 'redirect': '/dashboard'}, status_code=200)
   logger.info(f"User {username} has failed to log in")
   return JSONResponse(content={'message': 'Invalid credentials'}, status_code=401)
 
+@app.get("/logout")
+async def process_logout(request: Request):
+  if 'user' in request.session:
+    request.session.pop('user')
+    request.session.pop('is_admin')
+    return JSONResponse(content={'message': 'Successfully logged out', 'redirect': '/login'}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
 @app.get("/dashboard")
-async def root(request: Request, session = Depends(get_session)):
+async def get_dashboard(request: Request, session = Depends(get_session)):
   if 'user' in request.session:
     return templates.TemplateResponse('index.html', {'request': request})
   else:
-    return JSONResponse(content={'message': 'Unauthorized'}, status_code=401)
+    return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
   return templates.TemplateResponse('index.html', {'request': request})
 
 # @app.get("/get_resources")

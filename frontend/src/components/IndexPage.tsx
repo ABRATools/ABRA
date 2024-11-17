@@ -1,19 +1,16 @@
-// import React from 'react';
 import Navbar from './Navbar';
 import PageLayout from './PageLayout';
-import RechartVMResource from './RechartVMResource';
+import { useAuthenticateUser } from "../hooks/useAuthenticateUser";
 
-export default function Dashboard() {
+export default function IndexPage() {
+    useAuthenticateUser();
+
     return (
-        <>
-        <Navbar />
-        <PageLayout>
-            <>
-            <h1 className='text-3xl'>Dashboard</h1>
-            <RechartVMResource VMAPI='/get_resources' update_interval={10} />
-            <RechartVMResource VMAPI='/get_resources' update_interval={5} />
-            </>
-        </PageLayout>
-        </>
+        <div>
+            <Navbar />
+            <PageLayout>
+                <h1 className="text-2xl font-semibold">Index Page</h1>
+            </PageLayout>
+        </div>
     );
 }
