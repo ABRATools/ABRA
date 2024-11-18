@@ -1,0 +1,45 @@
+2024-11-16 19:51:02,650 | INFO | User username is attempting to log in
+2024-11-16 19:51:02,678 | INFO | User username does not exist
+2024-11-16 19:55:33,073 | INFO | User admin is attempting to log in
+2024-11-16 19:55:33,408 | INFO | User admin has successfully logged in
+2024-11-16 19:55:33,414 | INFO | User admin is in group <database.models.Group object at 0x0000026327EA9AC0>
+2024-11-16 19:59:21,753 | INFO | User admin is attempting to log in
+2024-11-16 19:59:22,086 | INFO | User admin has successfully logged in
+2024-11-16 19:59:22,090 | INFO | User admin is in group admin
+2024-11-16 20:11:43,605 | INFO | User admin is attempting to log in
+2024-11-16 20:11:43,930 | INFO | User admin has successfully logged in
+2024-11-16 20:11:43,938 | INFO | User admin is in group admin
+2024-11-16 20:12:56,653 | INFO | User admin is attempting to log in
+2024-11-16 20:12:56,954 | INFO | User admin has successfully logged in
+2024-11-16 20:12:56,956 | INFO | User admin is in group admin
+2024-11-16 20:25:55,009 | INFO | User admin is attempting to log in
+2024-11-16 20:25:55,312 | INFO | User admin has successfully logged in
+2024-11-16 20:25:55,314 | INFO | User admin is in group admin
+2024-11-16 21:17:50,483 | INFO | User admin is attempting to log in
+2024-11-16 21:17:50,804 | INFO | User admin has successfully logged in
+2024-11-16 21:17:50,807 | INFO | User admin is in group admin
+2024-11-16 21:26:16,735 | INFO | User admin is attempting to log in
+2024-11-16 21:26:17,037 | INFO | User admin has successfully logged in
+2024-11-16 21:26:17,038 | INFO | User admin is in group admin
+2024-11-16 21:43:12,733 | INFO | User admin is attempting to log in
+2024-11-16 21:43:13,047 | INFO | User admin has failed to log in
+2024-11-16 21:43:20,375 | INFO | User admin is attempting to log in
+2024-11-16 21:43:20,682 | INFO | User admin has successfully logged in
+2024-11-16 21:43:20,683 | INFO | User admin is in group admin
+2024-11-16 21:57:51,982 | INFO | User admin is attempting to log in
+2024-11-16 21:57:52,297 | INFO | User admin has successfully logged in
+2024-11-16 21:57:52,303 | INFO | User admin is in group admin
+2024-11-17 01:36:09,565 | INFO | User admin is attempting to log in
+2024-11-17 01:36:09,874 | INFO | User admin has successfully logged in
+2024-11-17 01:36:09,875 | INFO | User admin is in group admin
+2024-11-17 01:36:39,769 | INFO | User admin is attempting to log in
+2024-11-17 01:36:40,080 | INFO | User admin has successfully logged in
+2024-11-17 01:36:40,081 | INFO | User admin is in group admin
+2024-11-17 01:38:00,247 | INFO | User admin is attempting to log in
+2024-11-17 01:38:00,624 | INFO | User admin has successfully logged in
+2024-11-17 01:38:00,630 | INFO | User admin is in group admin
+2024-11-17 10:15:33,667 | INFO | User sysadmin1 is attempting to log in
+2024-11-17 10:15:33,969 | INFO | User sysadmin1 has successfully logged in
+2024-11-17 10:25:30,802 | INFO | User admin is attempting to log in
+2024-11-17 10:25:31,131 | INFO | User admin has successfully logged in
+2024-11-17 10:25:31,135 | INFO | User admin is in group admin

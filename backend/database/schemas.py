@@ -8,13 +8,6 @@ def get_hash_for_user(db, username):
     except AttributeError:
         return None
 
-# class Group(Base):
-#     __tablename__ = 'groups'
-#     id = Column(Integer, primary_key=True, index=True)
-#     name = Column(String(50), nullable=False)
-#     permissions = Column(MutableList.as_mutable(String), nullable=True)
-#     users = relationship("User", secondary=user_groups, back_populates="groups")
-
 def create_group(db, name):
     # default permissions for a group (admin)
     group = Group(name=name, permissions="create, read, update, delete")
@@ -23,7 +16,8 @@ def create_group(db, name):
 
 def get_user_groups(db, username):
     try:
-        return db.query(User).filter(User.username == username).first().groups
+        user = db.query(User).filter(User.username == username).first()
+        return [group.name for group in user.groups]
     except AttributeError:
         return None
 
@@ -32,23 +26,6 @@ def add_user_to_group(db, username, group):
     group = db.query(Group).filter(Group.name == group).first()
     user.groups.append(group)
     db.commit()
-
-# class User(Base):
-#     __tablename__ = 'users'
-#     id = Column(Integer, primary_key=True, index=True)
-#     username = Column(String(255), nullable=False, unique=True)
-#     email = Column(String(255), nullable=True)
-#     # hashed password
-#     password = Column(String(60), nullable=False)
-#     passwordChangeDate = Column(DateTime, default="", nullable=True)
-#     is_active = Column(Boolean, default=True)
-#     totp_secret = Column(String(50), nullable=True)
-#     is_totp_enabled = Column(Boolean, default=True)
-#     is_totp_confirmed = Column(Boolean, default=False)
-#     # user can have multiple notifications
-#     notifications = relationship("Notification", secondary=user_notifications, back_populates="users")
-#     # user can have multiple groups
-#     groups = relationship("Group", secondary=user_groups, back_populates="users")
 
 def create_user(db, username, password, admin):
     if db.query(User).filter(User.username == username).first() is not None:
@@ -71,6 +48,18 @@ def create_user(db, username, password, admin):
         user.groups.append(group)
     db.add(user)
     db.commit()
+
+def delete_user(db, username):
+    user = db.query(User).filter(User.username == username).first()
+    db.delete(user)
+    db.commit()
+
+def get_users(db):
+    return db.query(User).all()
+
+def get_user(db, username):
+    user = db.query(User).filter(User.username == username).first()
+    return user
 
 def update_user_email(db, username, email):
     user = db.query(User).filter(User.username == username).first()

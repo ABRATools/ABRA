@@ -2,8 +2,11 @@
 
 import React from 'react';
 import PageLayout from './PageLayout';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
+    const navigate = useNavigate();
+
     const [form, setForm] = React.useState({ username: '', password: '' });
     const [error, setError] = React.useState('');
     const [loading, setLoading] = React.useState(false);
@@ -15,6 +18,7 @@ export default function LoginPage() {
         setLoading(true);
 
         try {
+            console.log(form);
             const response = await fetch('/login', {
                 method: 'POST',
                 headers: {
@@ -25,9 +29,9 @@ export default function LoginPage() {
 
             if (response.ok) {
                 setSuccess(true);
-                window.location.href = '/dashboard';
+                navigate('/dashboard');
             } else {
-                setError('Username not found in database');
+                setError('Invalid username or password');
             }
         } catch (error) {
             setError('An error occurred');
@@ -38,27 +42,29 @@ export default function LoginPage() {
 
     return (
         <>
-        <nav className='w-full py-[2rem] flex flex-row align-center px-[40px] bg-abra-accent'>
-            <h1 className='text-7xl'>ABRA Tools</h1>
+        <nav className='w-full py-[40px] flex flex-row align-center px-[40px] bg-abra-accent'>
+            <Link to='/'>
+                <h1 className='text-4xl font-bold'>ABRA Tools</h1>
+            </Link>
         </nav>
         <PageLayout>
             <div className='flex flex-col items-center justify-center gap-[20px] h-screen-70'>
-                <div className='flex flex-col items-center justify-center gap-[20px] p-[40px] py-[60px] rounded-md border-2 border-abra-primary bg-white'>
+                <div className='flex flex-col items-center justify-center gap-[20px] p-[20px] py-[20px] rounded-md border-2 border-abra-primary bg-white'>
                     <form onSubmit={handleSubmit} className='flex flex-col items-center justify-center gap-5'>
                         <div className='flex flex-col items-center justify-center gap-x-1.5'>
                             <input
-                                className='rounded-md text-3xl border-abra-primary border-2 mb-[10px] p-[10px]'
+                                className='rounded-md text-2xl border-abra-primary border-2 mb-[10px] p-[5px]'
                                 type="text"
                                 placeholder="Username"
-                                // value={username}
+                                value={form.username}
                                 required={true}
                                 onChange={(e) => setForm({ ...form, username: e.target.value })}
                             />
                             <input
-                                className='rounded-md text-3xl border-abra-primary border-2 mb-[40px] p-[10px]'
+                                className='rounded-md text-2xl border-abra-primary border-2 mb-[40px] p-[5px]'
                                 type="password"
                                 placeholder="Password"
-                                // value={password}
+                                value={form.password}
                                 required={true}
                                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                             />

@@ -1,15 +1,25 @@
 from pydantic import BaseModel
 from typing import Optional, List
-import datetime
 
 class User(BaseModel):
+  user_id: int
   username: str
   email: Optional[str]
   password: str
-  passwordChangeDate: Optional[datetime.datetime]
+  passwordChangeDate: Optional[str]
   groups: Optional[List[str]]
   is_active: bool
   totp_secret: Optional[str]
+  is_totp_enabled: bool
+  is_totp_confirmed: bool
+
+class FilteredUser(BaseModel):
+  user_id: int
+  username: str
+  email: Optional[str]
+  groups: Optional[List[str]]
+  passwordChangeDate: Optional[str]
+  is_active: bool
   is_totp_enabled: bool
   is_totp_confirmed: bool
 
@@ -48,8 +58,8 @@ class Service(BaseModel):
 class Task(BaseModel):
   name: str
   description: str
-  start_time: datetime.datetime
-  end_time: Optional[datetime.datetime]
+  start_time: str
+  end_time: Optional[str]
   completed: bool
   status: str
   output: Optional[str]
@@ -57,7 +67,7 @@ class Task(BaseModel):
 class Notification(BaseModel):
   name: str
   description: str
-  date_created: datetime.datetime
+  date_created: str
   is_read: bool
   is_active: bool
   users: List[User]

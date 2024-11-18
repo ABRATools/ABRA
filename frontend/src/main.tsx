@@ -5,6 +5,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import IndexPage from './components/IndexPage'
 import Dashboard from './components/Dashboard'
 import LoginPage from './components/LoginPage';
+import ManageUsers from './components/ManageUsers';
+import Audit from './components/Audit';
+import Settings from './components/Settings';
 
 // import SubmitEntry from './components/SubmitEntry'
 
@@ -22,7 +25,11 @@ root.render(
       <Route path="/" element={<IndexPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      {/* <Route path="/submit-entry" element={<SubmitEntry />} /> */}
+      <Route path="/users" element={<ManageUsers />} />
+      <Route path="/audit" element={<Audit />} />
+      <Route path="/settings" element={<Settings />} />
+      {/* non-included path */}
+      <Route path="*" element={<IndexPage />} />
     </Routes>
   </BrowserRouter>
 );

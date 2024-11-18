@@ -6,11 +6,10 @@ Description: Secondary dashboard selection after choosing your node -> what do y
 */
 
 // imports
-import React, { useState } from 'react';
+import { useState } from 'react';
 import NodeSummary from "./NodeSummary";
 import EnvironmentSelect from "./EnvironentSelect";
 import NodeLogs from "./NodeLogs";
-import "../../styles/dashboard.css";
 
 export default function NodeSubSelect({ nodeData }) {
 
@@ -31,24 +30,24 @@ export default function NodeSubSelect({ nodeData }) {
 
     return (
         <>
-        <div className="node-sub-select">
+        <div className="rounded-[8px] my-auto">
             {/* Menu for selecting different views */}
-            <div className="tab-buttons" style={{ display: 'flex', marginBottom: '1rem' }}>
-                <button 
-                    onClick={() => setSelectedMenu('Summary')} 
-                    className={selectedMenu === 'Summary' ? 'active' : ''}
+            <div className="flex justify-between px-[20px] text-xl border-b-[2px]">
+                <button
+                    onClick={() => setSelectedMenu('Summary')}
+                    className={selectedMenu === 'Summary' ? 'font-bold' : ''}
                 >
                     Summary
                 </button>
-                <button 
-                    onClick={() => setSelectedMenu('Environments')} 
-                    className={selectedMenu === 'Environments' ? 'active' : ''}
+                <button
+                    onClick={() => setSelectedMenu('Environments')}
+                    className={selectedMenu === 'Environments' ? 'font-bold' : ''}
                 >
                     Environments
                 </button>
-                <button 
-                    onClick={() => setSelectedMenu('Total Log')} 
-                    className={selectedMenu === 'Total Log' ? 'active' : ''}
+                <button
+                    onClick={() => setSelectedMenu('Total Log')}
+                    className={selectedMenu === 'Total Log' ? 'font-bold' : ''}
                 >
                     Total Log
                 </button>
