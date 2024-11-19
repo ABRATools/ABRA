@@ -8,6 +8,7 @@ Description: Shows what can be viewed for an environment
 import { useState } from "react";
 import EnvironmentLogs from "./EnvironmentLogs";
 import EnvironmentSummary from "./EnvironmentSummary";
+import EnvironmentConfig from "./EnvironmentConfig";
 
 export default function NodeSubSelect({ envData }) {
 
@@ -17,6 +18,8 @@ export default function NodeSubSelect({ envData }) {
         switch (selectedMenu) {
             case 'Summary':
                 return <EnvironmentSummary envData={envData}/>;
+            case 'Config':
+                return <EnvironmentConfig envData={envData}/>;
             case 'Environment Log':
                 return <EnvironmentLogs envData={envData}/>;
             default:
@@ -36,7 +39,13 @@ export default function NodeSubSelect({ envData }) {
                 >
                     Summary
                 </button>
-
+                <button
+                    onClick={() => setSelectedMenu('Config')}
+                    className="text-md"
+                    style={{fontWeight: selectedMenu === 'Config' ? 'bold' : 'normal'}}
+                >
+                    Config
+                </button>
                 <button
                     onClick={() => setSelectedMenu('Environment Log')}
                     className="text-md"
