@@ -21,6 +21,9 @@ def get_user_groups(db, username):
     except AttributeError:
         return None
 
+def get_all_groups(db):
+    return db.query(Group).all()
+
 def add_user_to_group(db, username, group):
     user = db.query(User).filter(User.username == username).first()
     group = db.query(Group).filter(Group.name == group).first()
