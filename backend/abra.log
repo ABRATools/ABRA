@@ -43,3 +43,18 @@
 2024-11-17 10:25:30,802 | INFO | User admin is attempting to log in
 2024-11-17 10:25:31,131 | INFO | User admin has successfully logged in
 2024-11-17 10:25:31,135 | INFO | User admin is in group admin
+2024-11-18 19:52:58,375 | INFO | Password change request for user sysadmin1
+2024-11-18 19:52:58,702 | INFO | Password changed successfully for user sysadmin1
+2024-11-18 19:52:58,702 | INFO | Unauthorized request to change password for user... redirecting to login
+2024-11-18 19:53:36,029 | INFO | User admin is attempting to log in
+2024-11-18 19:53:36,332 | INFO | User admin has successfully logged in
+2024-11-18 19:53:36,333 | INFO | User admin is in group admin
+2024-11-18 19:54:08,253 | INFO | Password change request for user sysadmin1
+2024-11-18 19:54:08,577 | INFO | Password changed successfully for user sysadmin1
+2024-11-18 19:54:08,577 | INFO | Unauthorized request to change password for user... redirecting to login
+2024-11-18 19:55:10,263 | INFO | Password change request for user sysadmin1
+2024-11-18 19:55:10,597 | INFO | Password changed successfully for user sysadmin1
+2024-11-18 19:55:35,913 | INFO | User sysadmin1 is attempting to log in
+2024-11-18 19:55:36,217 | INFO | User sysadmin1 has successfully logged in
+2024-11-18 19:56:33,999 | INFO | Password change request for user sysadmin1
+2024-11-18 19:56:34,315 | INFO | Password changed successfully for user sysadmin1
