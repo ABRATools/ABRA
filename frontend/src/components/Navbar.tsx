@@ -29,6 +29,9 @@ export default function Navbar() {
           <Link to="/settings" className="no-underline">
             <li className="menu-title">Settings</li>
           </Link>
+          <Link to="/nodes" className="no-underline">
+            <li className="menu-title">Manage Nodes</li>
+          </Link>
           <button onClick={handleLogout} className="menu-title">
             Logout
           </button>

@@ -192,5 +192,30 @@ async def get_audit_log(request: Request, session = Depends(get_session)) -> JSO
     return JSONResponse(content={'audit_log': audit_str}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
+@app.post("/change_password")
+async def get_change_password(request: Request, session = Depends(get_session)) -> JSONResponse:
+  if 'user' in request.session:
+    # expect json: { 'username': 'username', 'password': 'new_password', 'confirmPassword': 'new_password' }
+    data = await request.json()
+    username = data['username']
+    logger.info(f"Password change request for user {username}")
+    new_password = data['password']
+    confirm_password = data['confirmPassword']
+    if new_password != confirm_password:
+      logger.info(f"Passwords do not match")
+      return JSONResponse(content={'message': 'Passwords do not match'}, status_code=400)
+    if new_password == '':
+      logger.info(f"Password cannot be empty")
+      return JSONResponse(content={'message': 'Password cannot be empty'}, status_code=400)
+    if len(new_password) < 8:
+      logger.info(f"Password must be at least 8 characters long")
+      return JSONResponse(content={'message': 'Password must be at least 8 characters long'}, status_code=400)
+    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+    db.update_user_password(session, username, hashed_password)
+    logger.info(f"Password changed successfully for user {username}")
+    return JSONResponse(content={'message': 'Password changed successfully'}, status_code=200)
+  logger.info(f"Unauthorized request to change password for user... redirecting to login")
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
 if __name__ == "__main__":
   uvicorn.run('main:app', host='127.0.0.1', port=8000, reload=True)
