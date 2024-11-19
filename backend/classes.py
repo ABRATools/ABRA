@@ -25,8 +25,9 @@ class FilteredUser(BaseModel):
 
 class Group(BaseModel):
   name: str
-  permissions: Optional[List[str]]
-  users: List[User]
+  # permissions: Optional[List[str]]
+  permissions: Optional[str]
+  users: List[str]
 
 class Environment(BaseModel):
   machine_name: str
