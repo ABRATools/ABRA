@@ -126,7 +126,7 @@ async def process_login(request: Request, session = Depends(get_session)):
   logger.info(f"User {username} is attempting to log in")
   user_pw_hash = db.get_hash_for_user(session, username)
   if user_pw_hash is None:
-    logger.info(f"User {username} does not exist")
+    logger.error(f"User {username} does not exist")
     return JSONResponse(content={'message': 'Invalid credentials'}, status_code=401)
   if bcrypt.checkpw(password.encode('utf-8'), user_pw_hash):
     logger.info(f"User {username} has successfully logged in")
@@ -138,7 +138,7 @@ async def process_login(request: Request, session = Depends(get_session)):
         request.session['is_admin'] = True
     print("Successfully logged in")
     return JSONResponse(content={'message': 'Successfully logged in', 'user': request.session, 'redirect': '/dashboard'}, status_code=200)
-  logger.info(f"User {username} has failed to log in")
+  logger.warning(f"User {username} has failed to log in")
   return JSONResponse(content={'message': 'Invalid credentials'}, status_code=401)
 
 @app.get("/logout")
@@ -202,19 +202,19 @@ async def get_change_password(request: Request, session = Depends(get_session)) 
     new_password = data['password']
     confirm_password = data['confirmPassword']
     if new_password != confirm_password:
-      logger.info(f"Passwords do not match")
+      logger.error(f"Passwords do not match")
       return JSONResponse(content={'message': 'Passwords do not match'}, status_code=400)
     if new_password == '':
-      logger.info(f"Password cannot be empty")
+      logger.error(f"Password cannot be empty")
       return JSONResponse(content={'message': 'Password cannot be empty'}, status_code=400)
     if len(new_password) < 8:
-      logger.info(f"Password must be at least 8 characters long")
+      logger.error(f"Password must be at least 8 characters long")
       return JSONResponse(content={'message': 'Password must be at least 8 characters long'}, status_code=400)
     hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
     db.update_user_password(session, username, hashed_password)
     logger.info(f"Password changed successfully for user {username}")
     return JSONResponse(content={'message': 'Password changed successfully'}, status_code=200)
-  logger.info(f"Unauthorized request to change password for user... redirecting to login")
+  logger.warning(f"Unauthorized request to change password for user... redirecting to login")
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 if __name__ == "__main__":

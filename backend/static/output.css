@@ -1272,12 +1272,6 @@ html {
   color: var(--fallback-bc,oklch(var(--bc)/0.4));
 }
 
-.mockup-phone .display {
-  overflow: hidden;
-  border-radius: 40px;
-  margin-top: -25px;
-}
-
 .mockup-browser .mockup-browser-toolbar .input {
   position: relative;
   margin-left: auto;
@@ -1577,12 +1571,16 @@ html {
   margin-left: 2.5rem;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
 .ml-\[10px\] {
   margin-left: 10px;
 }
 
-.ml-\[20px\] {
-  margin-left: 20px;
+.ml-\[50px\] {
+  margin-left: 50px;
 }
 
 .ml-\[5px\] {
@@ -1895,16 +1893,6 @@ html {
   border-radius: 0.125rem;
 }
 
-.rounded-l-none {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
-
-.rounded-r-none {
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-
 .border {
   border-width: 1px;
 }
@@ -2018,9 +2006,19 @@ html {
   background-color: var(--fallback-nc,oklch(var(--nc)/var(--tw-bg-opacity)));
 }
 
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-yellow-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(253 224 71 / var(--tw-bg-opacity));
 }
 
 .p-0 {
@@ -2124,6 +2122,10 @@ html {
 
 .align-middle {
   vertical-align: middle;
+}
+
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 .text-2xl {
