@@ -8,6 +8,7 @@ import LoginPage from './components/LoginPage';
 import ManageUsers from './components/ManageUsers';
 import Audit from './components/Audit';
 import Settings from './components/Settings';
+import ManageNodes from './components/Management/ManageNodes';
 
 // import SubmitEntry from './components/SubmitEntry'
 
@@ -28,6 +29,7 @@ root.render(
       <Route path="/users" element={<ManageUsers />} />
       <Route path="/audit" element={<Audit />} />
       <Route path="/settings" element={<Settings />} />
+      <Route path="/nodes" element={<ManageNodes />} />
       {/* non-included path */}
       <Route path="*" element={<IndexPage />} />
     </Routes>

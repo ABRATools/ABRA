@@ -1,5 +1,5 @@
 from sqlalchemy import and_, func
-from .models import User, Group
+from .models import User, Group, Node
 import datetime
 
 def get_hash_for_user(db, username):
@@ -92,3 +92,10 @@ def reset_totp_secret(db, username):
     user.is_totp_enabled = False
     user.is_totp_confirmed = False
     db.commit()
+
+"""
+NODE STUFF
+"""
+
+def get_nodes(db):
+    return db.query(Node).all()

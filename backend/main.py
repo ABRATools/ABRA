@@ -91,6 +91,10 @@ async def display_audit(request: Request):
 async def display_settings(request: Request):
   return templates.TemplateResponse('index.html', {'request': request})
 
+@app.get("/nodes")
+async def display_nodes(request: Request):
+  return templates.TemplateResponse('index.html', {'request': request})
+
 @app.get("/authenticate_current_user")
 async def authenticate_current_user(request: Request):
   if 'user' in request.session:
@@ -244,6 +248,49 @@ async def get_groups(request: Request, session = Depends(get_session)) -> JSONRe
     groups_json = [group.model_dump() for group in groups]
     print(groups_json)
     return JSONResponse(content={'groups': groups_json}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+# get node
+@app.get("/get_nodes", 
+         summary="Get Nodes",
+         description="""
+         An endpoint to get all the nodes
+         in the database.
+         Likely used
+         in the dashboard.
+         - Anthony
+         Psalms 43:1-5
+         """)
+async def get_nodes(request: Request, session = Depends(get_session)) -> JSONResponse:
+  if 'user' in request.session:
+    nodes = db.get_nodes(session)
+    nodes_json = [node.model_dump() for node in nodes]
+    return JSONResponse(content={'nodes': nodes_json}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+# add node
+@app.post("/add_node",
+          summary="Add Node",
+          description="""
+          An endpoint to add a node
+          to the database.
+          Likely used
+          in the dashboard.
+          - Anthony
+          Ecclesiastes 3:1-8
+          """)
+async def add_node(request: Request, session = Depends(get_session)) -> JSONResponse:
+  if 'user' in request.session:
+    data = await request.json()
+    node = Node(
+      name=data['name'],
+      ip=data['ip'],
+      port=data['port'],
+      status=data['status'],
+      environments=[],
+    )
+    db.create_node(session, node)
+    return JSONResponse(content={'message': 'Node added successfully'}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 if __name__ == "__main__":
