@@ -262,10 +262,33 @@ async def get_change_password(request: Request, session = Depends(get_session), 
   logger.warning(f"Unauthorized request to change password for user... redirecting to login")
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-@app.get("/logout")
-async def process_logout(request: Request, token: AuthToken = Depends(authenticate_cookie)):
-  if token:
-    return JSONResponse(content={'message': 'Successfully logged out', 'redirect': '/login'}, status_code=200)
+@app.post("/change_email")
+async def post_change_email(request: Request, session = Depends(get_session)) -> JSONResponse:
+  if 'user' in request.session:
+    # expect json: { 'username': 'username', 'email': 'new_email' }
+    data = await request.json()
+    username = data['username']
+    logger.info(f"Email change request for user {username}")
+    email = data['email']
+    db.update_user_email(session, username, email)
+    logger.info(f"Email changed successfully for user {username}")
+    return JSONResponse(content={'message': 'Password changed successfully'}, status_code=200)
+  logger.warning(f"Unauthorized request to change email for user... redirecting to login")
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@app.get('/get_groups')
+async def get_groups(request: Request, session = Depends(get_session)) -> JSONResponse:
+  if 'user' in request.session:
+    db_groups = db.get_all_groups(session)
+    for group in db_groups:
+      print(group.name)
+      print(group.permissions)
+      for users in group.users:
+        print(users.username)
+    groups = [Group(name=group.name, permissions=group.permissions, users=[user.username for user in group.users]) for group in db.get_all_groups(session)]
+    groups_json = [group.model_dump() for group in groups]
+    print(groups_json)
+    return JSONResponse(content={'groups': groups_json}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 if __name__ == "__main__":
