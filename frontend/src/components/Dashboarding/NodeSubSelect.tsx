@@ -10,6 +10,7 @@ import { useState } from 'react';
 import NodeSummary from "./NodeSummary";
 import EnvironmentSelect from "./EnvironentSelect";
 import NodeLogs from "./NodeLogs";
+import NodeConfig from "./NodeConfig";
 
 export default function NodeSubSelect({ nodeData }) {
 
@@ -19,6 +20,8 @@ export default function NodeSubSelect({ nodeData }) {
         switch (selectedMenu) {
             case 'Summary':
                 return <NodeSummary nodeData={nodeData}/>;
+            case 'Config':
+                return <NodeConfig nodeData={nodeData}/>;
             case "Environments":
                 return <EnvironmentSelect environments={nodeData.environments}/>;
             case 'Total Log':
@@ -38,6 +41,12 @@ export default function NodeSubSelect({ nodeData }) {
                     className={selectedMenu === 'Summary' ? 'font-bold' : ''}
                 >
                     Summary
+                </button>
+                <button
+                    onClick={() => setSelectedMenu('Config')}
+                    className={selectedMenu === 'Config' ? 'font-bold' : ''}
+                >
+                    Config
                 </button>
                 <button
                     onClick={() => setSelectedMenu('Environments')}
