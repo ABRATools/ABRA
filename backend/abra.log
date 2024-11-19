@@ -58,3 +58,12 @@
 2024-11-18 19:55:36,217 | INFO | User sysadmin1 has successfully logged in
 2024-11-18 19:56:33,999 | INFO | Password change request for user sysadmin1
 2024-11-18 19:56:34,315 | INFO | Password changed successfully for user sysadmin1
+2024-11-19 10:27:19,083 | INFO | User admin is attempting to log in
+2024-11-19 10:27:19,284 | INFO | User admin has successfully logged in
+2024-11-19 10:27:19,286 | INFO | User admin is in group admin
+2024-11-19 10:30:00,673 | INFO | User sysadmin1 is attempting to log in
+2024-11-19 10:30:00,864 | INFO | User sysadmin1 has successfully logged in
+2024-11-19 10:30:13,093 | INFO | Password change request for user sysadmin1
+2024-11-19 10:30:13,293 | INFO | Password changed successfully for user sysadmin1
+2024-11-19 10:30:43,644 | INFO | User sysadmin1 is attempting to log in
+2024-11-19 10:30:43,837 | INFO | User sysadmin1 has successfully logged in
