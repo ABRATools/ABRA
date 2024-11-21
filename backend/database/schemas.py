@@ -1,5 +1,5 @@
 from sqlalchemy import and_, func
-from .models import User, Group, Node
+from .models import User, Group, Node, Environment
 import datetime
 
 def get_hash_for_user(db, username):
@@ -98,4 +98,11 @@ NODE STUFF
 """
 
 def get_nodes(db):
-    return db.query(Node).all()
+    nodes = db.query(Node).all()
+    # print(nodes)
+    return nodes
+
+def get_nodes_and_environments(db):
+    # need to left join nodes and environments on node.id = environment.node_id
+    nodes = db.query(Node).join(Environment, Node.id == Environment.node_id).all()
+    return nodes

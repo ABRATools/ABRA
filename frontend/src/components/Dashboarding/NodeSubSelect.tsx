@@ -11,8 +11,9 @@ import NodeSummary from "./NodeSummary";
 import EnvironmentSelect from "./EnvironentSelect";
 import NodeLogs from "./NodeLogs";
 import NodeConfig from "./NodeConfig";
+import { Node } from "../../types/node";
 
-export default function NodeSubSelect({ nodeData }) {
+export default function NodeSubSelect({ nodeData } : { nodeData: Node }) {
 
     const [selectedMenu, setSelectedMenu] = useState('Summary');
 

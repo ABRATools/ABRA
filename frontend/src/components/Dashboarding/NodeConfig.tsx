@@ -5,8 +5,9 @@ File: NodeConfig.tsx
 Description: Component for viewing/editing node configurations
 */
 
+import { Node } from "../../types/node";
 
-export default function NodeConfig({ nodeData }) {
+export default function NodeConfig({ nodeData } : { nodeData: Node }) {
     /*
     page to edit firewall rules, network settings, etc.
     */

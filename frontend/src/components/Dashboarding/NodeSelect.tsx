@@ -6,171 +6,72 @@ Description: Node Select Component (for selecting a node to focus on)
 */
 
 // imports
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 import NodeSubSelect from "./NodeSubSelect";
+import { Node } from "../../types/node";
 
 export default function NodeSelect() {
+  const [nodes, setNodes] = useState<Node[] | null>(null);
+  const [selectedNode, setSelectedNode] = useState<Node | null>(null);
 
-    const test_data = {
-        nodes: [
-            {
-                id: "node1",
-                os: "TempleOS",
-                date_created: "10/10/10",
-                resources: {
-                    "cpu_percent": 5,
-                    "memory_percent": 20,
-                    "latency": 50
-                },
-                environments: [
-                    {
-                        id: "env1",
-                        os: "Amazon Linux 2",
-                        date_created: "10/11/10",
-                        resources: {
-                            "cpu_percent": 2,
-                            "memory_percent": 15,
-                            "latenct": 10
-                        }
-                    },
-                    {
-                        id: "env2",
-                        os: "Amazon Linux 2",
-                        date_created: "10/11/10",
-                        resources: {
-                            "cpu_percent": 2,
-                            "memory_percent": 15,
-                            "latenct": 10
-                        }
-                    },
-                    {
-                        id: "env3",
-                        os: "Amazon Linux 2",
-                        date_created: "10/11/10",
-                        resources: {
-                            "cpu_percent": 2,
-                            "memory_percent": 15,
-                            "latenct": 10
-                        }
-                    }
-                ]
-            },
-            {
-                id: "node2",
-                os: "TempleOS",
-                date_created: "10/10/10",
-                resources: {
-                    "cpu_percent": 5,
-                    "memory_percent": 20,
-                    "latency": 50
-                },
-                environments: [
-                    {
-                        id: "env4",
-                        os: "Amazon Linux 2",
-                        date_created: "10/11/10",
-                        resources: {
-                            "cpu_percent": 2,
-                            "memory_percent": 15,
-                            "latenct": 10
-                        }
-                    },
-                    {
-                        id: "env5",
-                        os: "Amazon Linux 2",
-                        date_created: "10/11/10",
-                        resources: {
-                            "cpu_percent": 2,
-                            "memory_percent": 15,
-                            "latenct": 10
-                        }
-                    },
-                    {
-                        id: "env6",
-                        os: "Amazon Linux 2",
-                        date_created: "10/11/10",
-                        resources: {
-                            "cpu_percent": 2,
-                            "memory_percent": 15,
-                            "latenct": 10
-                        }
-                    }
-                ]
-            },
-            {
-                id: "node3",
-                os: "TempleOS",
-                date_created: "10/10/10",
-                resources: {
-                    "cpu_percent": 5,
-                    "memory_percent": 20,
-                    "latency": 50
-                },
-                environments: [
-                    {
-                        id: "env7",
-                        os: "Amazon Linux 2",
-                        date_created: "10/11/10",
-                        resources: {
-                            "cpu_percent": 2,
-                            "memory_percent": 15,
-                            "latenct": 10
-                        }
-                    },
-                    {
-                        id: "env8",
-                        os: "Amazon Linux 2",
-                        date_created: "10/11/10",
-                        resources: {
-                            "cpu_percent": 2,
-                            "memory_percent": 15,
-                            "latenct": 10
-                        }
-                    },
-                    {
-                        id: "env9",
-                        os: "Amazon Linux 2",
-                        date_created: "10/11/10",
-                        resources: {
-                            "cpu_percent": 2,
-                            "memory_percent": 15,
-                            "latenct": 10
-                        }
-                    }
-                ]
-            }
-        ]
+  useEffect(() => {
+    const fetchNodes = async () => {
+      try {
+        const response = await fetch("/get_nodes");
+        if (response.ok) {
+          const data = await response.json();
+          const nodeData: Node[] = data["nodes"];
+          setNodes(nodeData);
+        } else {
+          console.error("Failed to fetch nodes");
+        }
+      } catch (error) {
+        console.error("Error fetching nodes:", error);
+      }
     };
+    fetchNodes();
+  }, []);
 
-    // 
+  //
+  // if nodes is null, return link to manage nodes page
 
-    const [selectedNode, setSelectedNode] = useState(test_data.nodes[0]);
-
+  if (nodes === null) {
     return (
-        <>
-        <div className='flex flex-row w-full h-full'>
-            {/* Left Side - Node Buttons */}
-            <div className="max-w-[5vw] min-w-min border-[#ccc] border-r-[1px] h-full box-border min-h-144">
-                {test_data.nodes.map((node) => (
-                    <button
-                        key={node.id}
-                        onClick={() => setSelectedNode(node)}
-                        className='hover:bg-blue-300 hover:cursor-pointer rounded-sm mb-4 text-lg py-[10x] px-[20px] lg:py-[20x] lg:px-[40px]'
-                        style={{
-                            backgroundColor: selectedNode.id === node.id ? '#007bff' : '#f0f0f0',
-                            color: selectedNode.id === node.id ? '#fff' : '#000',
-                        }}
-                    >
-                        {node.id}
-                    </button>
-                ))}
-            </div>
-
-            {/* Right Side - NodeSubSelect Component */}
-            <div className="w-full h-full">
-                <NodeSubSelect nodeData={selectedNode} />
-            </div>
-        </div>
-        </>
+      <div>
+        <h1>Nodes are null</h1>
+      </div>
     );
+  } else if (nodes.length !== 0 && selectedNode === null) {
+    setSelectedNode(nodes[0]);
+  }
+
+  return (
+    <>
+      <div className="flex flex-row w-full h-full">
+        {/* Left Side - Node Buttons */}
+        <div className="max-w-[5vw] min-w-min border-[#ccc] border-r-[1px] h-full box-border min-h-144">
+          {selectedNode &&
+            nodes.map((node) => (
+              <button
+                key={node.id}
+                onClick={() => setSelectedNode(node)}
+                className="hover:bg-blue-300 hover:cursor-pointer rounded-sm mb-4 text-lg py-[10x] px-[20px] lg:py-[20x] lg:px-[40px]"
+                style={{
+                  backgroundColor:
+                    selectedNode.id === node.id ? "#007bff" : "#f0f0f0",
+                  color: selectedNode.id === node.id ? "#fff" : "#000",
+                }}
+              >
+                {node.id}
+              </button>
+            ))}
+        </div>
+
+        {/* Right Side - NodeSubSelect Component */}
+        <div className="w-full h-full">
+          <NodeSubSelect nodeData={selectedNode} />
+        </div>
+      </div>
+    </>
+  );
 }

@@ -6,7 +6,9 @@ export type Environment = {
     total_cpu: number;
     total_memory: number;
     total_disk: number;
+    
     ip: string;
     port: number;
     status: string;
+    node_id: number;
 };

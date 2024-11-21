@@ -264,7 +264,51 @@ async def get_groups(request: Request, session = Depends(get_session)) -> JSONRe
 async def get_nodes(request: Request, session = Depends(get_session)) -> JSONResponse:
   if 'user' in request.session:
     nodes = db.get_nodes(session)
+    nodes = [Node(
+      name=node.name,
+      ip=node.ip,
+      port=node.port,
+      status=node.status,
+      environments=[],
+    ) for node in nodes]
     nodes_json = [node.model_dump() for node in nodes]
+    return JSONResponse(content={'nodes': nodes_json}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@app.get("/get_nodes_and_environments",
+         summary="Get Nodes and Environments",
+         description="""
+         An endpoint to get all the nodes
+         in the database and their environments.
+         Likely used
+         in the dashboard.
+         - Anthony
+         """)
+async def get_nodes_and_environments(request: Request, session = Depends(get_session)) -> JSONResponse:
+  if 'user' in request.session:
+    nodes = db.get_nodes_and_environments(session)
+    print("got nodes:", nodes)
+    nodes = [Node(
+      name=node.name,
+      ip=node.ip,
+      port=node.port,
+      status=node.status,
+      environments=[Environment(
+        id=env.id,
+        machine_name=env.machine_name,
+        description=env.description,
+        os=env.os,
+        total_cpu=env.total_cpu,
+        total_memory=env.total_memory,
+        total_disk=env.total_disk,
+        ip=env.ip,
+        port=env.port,
+        status=env.status,
+        node_id=env.node_id,
+      ) for env in node.environments],
+    ) for node in nodes]
+    nodes_json = [node.model_dump() for node in nodes]
+    print(nodes_json)
     return JSONResponse(content={'nodes': nodes_json}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Navbar from '../Navbar';
+import NodeSettings from './NodeSettings';
 import { useAuthenticateUser } from '../../hooks/useAuthenticateUser';
 import { Node } from '../../types/node';
 
@@ -16,10 +17,10 @@ export default function Settings() {
     useEffect(() => {
         const fetchNodeSettings = async () => {
             try {
-                const response = await fetch('/get_nodes');
+                const response = await fetch('/get_nodes_and_environments');
                 if (response.ok) {
                     const data = await response.json();
-                    const nodeData: node[] = data['nodes'];
+                    const nodeData: Node[] = data['nodes'];
                     setNodes(nodeData);
                 } else {
                     console.error('Failed to fetch user settings');
@@ -47,7 +48,7 @@ export default function Settings() {
                     </div>
                 </div>
                 {nodes?.map((node) => (
-                    <NodeSettings key={node.name} node={node} />
+                    <NodeSettings key={node.id} node={node} />
                 ))}
             </div>
         </div>

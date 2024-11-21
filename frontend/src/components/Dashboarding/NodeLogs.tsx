@@ -5,7 +5,9 @@ File: NodeLogs.tsx
 Description: Show all logs of that node
 */
 
-export default function NodeLogs({ nodeData }) {
+import { Node } from "../../types/node";
+
+export default function NodeLogs({ nodeData } : { nodeData: Node }) {
 
     return (
         <>
