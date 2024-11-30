@@ -100,3 +100,8 @@
 2024-11-30 13:29:06,696 | INFO | No token found
 2024-11-30 13:36:10,637 | INFO | No auth header found
 2024-11-30 13:36:10,638 | INFO | No token found
+2024-11-30 13:57:23,773 | INFO | JWTError: Signature has expired.
+2024-11-30 13:57:24,717 | INFO | JWTError: Signature has expired.
+2024-11-30 13:57:31,483 | INFO | User admin is attempting to log in
+2024-11-30 13:57:31,817 | INFO | User admin has successfully logged in
+2024-11-30 13:57:31,827 | INFO | User admin has successfully logged in
