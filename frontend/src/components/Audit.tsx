@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Navbar from './Navbar';
-import { useAuthenticateUser } from '../hooks/useAuthenticateUser';
+import useAuth from '../hooks/useAuth';
 
 const REFRESH_INTERVAL = 30000;
 
@@ -12,18 +12,43 @@ interface MatchPosition {
 }
 
 export default function Audit() {
-  useAuthenticateUser();
-//   holds the audit log data
+  const { isAuthorized, loading } = useAuth(() => {
+		window.location.href = '/login';
+	});
+	if (isAuthorized) {
+		console.log('Authorized');
+	}
+	if (loading) {
+		return <div>Loading...</div>;
+	}
+  return (
+    <RenderAudit />
+  );
+}
+
+const RenderAudit = () => {
+  //   holds the audit log data
   const [auditLog, setAuditLog] = useState('');
   const [timeUntilRefresh, setTimeUntilRefresh] = useState(REFRESH_INTERVAL / 1000);
   const [searchTerm, setSearchTerm] = useState('');
   const [matchPositions, setMatchPositions] = useState<MatchPosition[]>([]);
   const [currentMatchIndex, setCurrentMatchIndex] = useState(0);
 
+  const token = sessionStorage.getItem('token');
+  if (!token) {
+    return <div>Unauthorized</div>;
+  }
+
   useEffect(() => {
     const fetchAuditLog = async () => {
       try {
-        const response = await fetch('/get_audit_log');
+        const response = await fetch('/audit_log', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+        );
         if (response.ok) {
           const data = await response.json();
           setAuditLog(data.audit_log);

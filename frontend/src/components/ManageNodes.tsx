@@ -1,11 +1,23 @@
 import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
-import { useAuthenticateUser } from '../hooks/useAuthenticateUser';
+import useAuth from '../hooks/useAuth';
 import { User } from '../types/user';
 
 // get user possible user settings such as changing password, email, updating 2FA, etc.
 export default function Settings() {
-    useAuthenticateUser();
+    const { isAuthorized, loading } = useAuth(() => {
+		window.location.href = '/login';
+		// console.log('Unauthorized');
+	});
+
+	if (isAuthorized) {
+		// window.location.href = '/dashboard';
+		console.log('Authorized');
+	}
+
+	if (loading) {
+		return <div>Loading...</div>;
+	}
     const [users, setUsers] = useState<User[] | null>(null);
     const [displayUpdateEmail, setDisplayUpdateEmail] = useState<boolean>(false);
     const [displayUpdateGroups, setDisplayUpdateGroups] = useState<boolean>(false);

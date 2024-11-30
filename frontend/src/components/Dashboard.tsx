@@ -1,17 +1,21 @@
-// import React from 'react';
 import Navbar from './Navbar';
-import Environment from './Environment';
-import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
-} from 'recharts';
-
-// import { Node } from '../types/node';
-// import fetchNodes from '../services/getNodes';
 import NodeSelect from './Dashboarding/NodeSelect';
-import { useAuthenticateUser } from '../hooks/useAuthenticateUser';
+import useAuth from '../hooks/useAuth';
 
 export default function Dashboard() {
-    useAuthenticateUser();
+    const { isAuthorized, loading } = useAuth(() => {
+		window.location.href = '/login';
+		// console.log('Unauthorized');
+	});
+
+	if (isAuthorized) {
+		// window.location.href = '/dashboard';
+		console.log('Authorized');
+	}
+
+	if (loading) {
+		return <div>Loading...</div>;
+	}
     return (
         <div>
             <Navbar />

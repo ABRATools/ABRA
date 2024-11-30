@@ -61,6 +61,21 @@ def get_user(db, username):
     user = db.query(User).filter(User.username == username).first()
     return user
 
+def get_user_info(db, username):
+    user = db.query(User).filter(User.username == username).first()
+    if user is None:
+        return None
+    groups = [group.name for group in user.groups]
+    if 'admin' in groups:
+        user_type = 'admin'
+    else:
+        user_type = 'user'
+    return {
+        "username": user.username,
+        "user_type": user_type,
+        "groups": groups,
+    }
+
 def update_user_email(db, username, email):
     user = db.query(User).filter(User.username == username).first()
     user.email = email

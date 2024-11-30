@@ -3,10 +3,11 @@
 import { Link } from "react-router-dom";
 
 function handleLogout() {
+  sessionStorage.removeItem("token");
   fetch("/logout", {
     method: "GET",
   }).then(() => {
-    window.location.href = "/";
+    window.location.href = "/logout";
   });
 }
 
