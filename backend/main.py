@@ -263,8 +263,8 @@ async def get_change_password(request: Request, session = Depends(get_session), 
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 @app.post("/change_email")
-async def post_change_email(request: Request, session = Depends(get_session)) -> JSONResponse:
-  if 'user' in request.session:
+async def post_change_email(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  if token:
     # expect json: { 'username': 'username', 'email': 'new_email' }
     data = await request.json()
     username = data['username']
@@ -277,8 +277,8 @@ async def post_change_email(request: Request, session = Depends(get_session)) ->
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 @app.get('/get_groups')
-async def get_groups(request: Request, session = Depends(get_session)) -> JSONResponse:
-  if 'user' in request.session:
+async def get_groups(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  if token:
     db_groups = db.get_all_groups(session)
     for group in db_groups:
       print(group.name)

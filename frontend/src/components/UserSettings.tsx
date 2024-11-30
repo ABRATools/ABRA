@@ -8,6 +8,12 @@ interface Group {
 }
 
 function UserSettings({ user }: { user: User }) {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+        return <div>Unauthorized</div>;
+    }
+    const permissions = ["Read", "Write", "Delete", "Create", "Update", "Admin"];
+    const [groups, setGroups] = useState<Group[]>([]);
     const [displayUpdateEmail, setDisplayUpdateEmail] = useState(false);
     const [displayUpdateGroups, setDisplayUpdateGroups] = useState(false);
     const [displayChangePassword, setDisplayChangePassword] = useState(false);
@@ -42,12 +48,19 @@ function UserSettings({ user }: { user: User }) {
     const handleDisplayGroupAddMenu = async () => {
         setDisplayUpdateGroups(true);
         try {
-            const response = await fetch('/get_users');
+            const response = await fetch('/get_users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
             if (response.ok) {
                 const data = await response.json();
-                const groupData: Group[] = data['groups'];
+                console.log(data);
+                const groupData: Group[] = JSON.parse(data.groups);
+                console.log(groupData);
                 setGroups(groupData);
-                
             } else {
                 console.error('Failed to fetch group data');
             }
@@ -89,6 +102,7 @@ function UserSettings({ user }: { user: User }) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({ username: user.username, password: passwordResetForm.password, confirmPassword: passwordResetForm.confirmPassword }),
             });
@@ -113,6 +127,7 @@ function UserSettings({ user }: { user: User }) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({ username: user.username, email: emailForm.email }),
             });
@@ -177,7 +192,7 @@ function UserSettings({ user }: { user: User }) {
                         </ul>
                     </div>
                 </div>
-                {displayUpdateGroups && (
+                {/* {displayUpdateGroups && (
                     <div className="mt-2 px-[10px]">
                         <h3>Update Groups for {user.username}</h3>
                         <div className='flex flex-row gap-x-[10px]'>
@@ -197,7 +212,7 @@ function UserSettings({ user }: { user: User }) {
                         </div>
                         <button className="bg-abra-accent text-white p-2 rounded-lg mt-2">Submit</button>
                     </div>
-                )}
+                )} */}
 
                 <div className="flex flex-row w-full justify-between px-[10px] min-w-max">
                     <div className='flex flex-row gap-x-[10px]'>
@@ -260,7 +275,6 @@ function UserSettings({ user }: { user: User }) {
                             <button onClick={closeUpdate2FA} className="bg-abra-accent text-white p-2 rounded-lg mt-2">Close</button>
                         </div>
                     </div>
-                )} */}
                 )} */}
             </div>
         </div>
