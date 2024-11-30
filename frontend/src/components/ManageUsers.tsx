@@ -1,17 +1,40 @@
 import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
-import { useAuthenticateUser } from '../hooks/useAuthenticateUser';
+import useAuth from '../hooks/useAuth';
 import { User } from '../types/user';
 import UserSettings from './UserSettings';
 
 export default function ManageUsers() {
-    useAuthenticateUser();
-    const [users, setUsers] = useState<User[] | null>(null);
+    const { isAuthorized, loading } = useAuth(() => {
+		window.location.href = '/login';
+	});
 
+	if (isAuthorized) {
+		console.log('Authorized');
+	}
+	if (loading) {
+		return <div>Loading...</div>;
+	}
+    return (
+        <RenderManageUsers />
+    );
+}
+
+const RenderManageUsers = () => {
+    const [users, setUsers] = useState<User[] | null>(null);
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+        return <div>Unauthorized</div>;
+    }
     useEffect(() => {
         const fetchUserSettings = async () => {
             try {
-                const response = await fetch('/get_users');
+                const response = await fetch('/get_users', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 if (response.ok) {
                     const data = await response.json();
                     const userData: User[] = data['users'];

@@ -12,6 +12,8 @@ import logging
 import database as db
 from config import settings
 from contextlib import asynccontextmanager
+from jose import JWTError, jwt
+from passlib.context import CryptContext
 
 # webserver stuff
 import uvicorn
@@ -47,16 +49,6 @@ session = obtain_session()
 def get_session():
   return session
 
-# redis_client = redis.StrictRedis(
-#   host=settings.REDIS_HOST,
-#   port=settings.REDIS_PORT,
-#   db=0,
-#   decode_responses=True,
-# )
-
-# def get_redis_client():
-#   return redis_client
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
   try:
@@ -73,6 +65,71 @@ templates = Jinja2Templates(directory='templates')
 app.mount('/static', StaticFiles(directory='static'), name='static')
 
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_value())
+
+# Define secret key and algorithm
+SECRET_KEY = settings.SECRET_KEY.get_secret_value()
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_SECONDS = 3 * 60 * 60 # 3 hours
+
+# Password hashing context
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+class AuthToken(BaseModel):
+  username: Optional[str] = None
+  user_type: Optional[str] = None
+  groups: Optional[List[str]] = None
+
+def create_access_token(data: dict, expires_delta: Optional[datetime.timedelta] = None):
+  to_encode = data.copy()
+  if expires_delta:
+    expire = datetime.datetime.now(datetime.UTC) + expires_delta
+  else:
+    # default expiration time is 15 minutes
+    expire = datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=15)
+  to_encode.update({"exp": expire})
+  encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+  return encoded_jwt
+
+async def get_cookie_or_token(request: Request):
+  # access_token = request.cookies.get("access_token")
+  auth_header = request.headers.get("Authorization")
+  if auth_header:
+    return auth_header
+  else:
+    logger.info("No auth header found")
+    return None
+
+async def authenticate_cookie(auth_header: str = Depends(get_cookie_or_token)):
+  try:
+    if auth_header:
+      access_token = auth_header.split("Bearer ")[1]
+      try:
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms=[ALGORITHM])
+        token_data = AuthToken(
+          username=payload.get("username"),
+          user_type=payload.get("user_type"),
+          groups=payload.get("groups")
+        )
+        return token_data
+      except JWTError as e:
+        logger.info("JWTError: " + str(e))
+        return False
+    logger.info("No token found")
+    return False
+  except AttributeError:
+    return False
+
+@app.post("/validate-token")
+async def validate_token(request: Request, token: AuthToken = Depends(authenticate_cookie)):
+  if token:
+    request.session['user'] = token.username
+    token_json = {
+      "username": token.username,
+      "user_type": token.user_type,
+      "groups": token.groups
+    }
+    return JSONResponse(content={"token": token_json}, status_code=200)
+  return JSONResponse(content={"token": None}, status_code=401)
 
 # endpoints to render index page with react-router
 @app.get("/")
@@ -91,15 +148,43 @@ async def display_audit(request: Request):
 async def display_settings(request: Request):
   return templates.TemplateResponse('index.html', {'request': request})
 
-@app.get("/authenticate_current_user")
-async def authenticate_current_user(request: Request):
-  if 'user' in request.session:
-    return JSONResponse(content={'message': 'Authorized', 'user': request.session}, status_code=200)
-  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+@app.get("/login")
+async def get_login(request: Request):
+  return templates.TemplateResponse('index.html', {'request': request})
 
-@app.get("/get_user_settings")
-async def get_current_user_details(request: Request):
-  if 'user' in request.session:
+@app.get("/dashboard")
+async def get_dashboard(request: Request):
+  return templates.TemplateResponse('index.html', {'request': request})
+
+@app.post("/login")
+async def process_login(request: Request, session = Depends(get_session)) -> JSONResponse:
+  data = await request.json()
+  username = data['username'].lower().strip()
+  password = data['password'].strip()
+  logger.info(f"User {username} is attempting to log in")
+
+  user_pw_hash = db.get_hash_for_user(session, username)
+
+  if user_pw_hash is None:
+    logger.error(f"User {username} does not exist")
+    return JSONResponse(content={'message': 'Invalid credentials'}, status_code=401)
+
+  if bcrypt.checkpw(password.encode('utf-8'), user_pw_hash):
+    logger.info(f"User {username} has successfully logged in")
+    request.session['user'] = username
+    user_data = db.get_user_info(session, username)
+    access_token_expires = datetime.timedelta(seconds=ACCESS_TOKEN_EXPIRE_SECONDS)
+    access_token = create_access_token(data=user_data, expires_delta=access_token_expires)
+    logger.info(f"User {username} has successfully logged in")
+    response = JSONResponse(content={"token": access_token}, status_code=200)
+    response.set_cookie(key="access_token", value=f"Bearer {access_token}", httponly=True, max_age=ACCESS_TOKEN_EXPIRE_SECONDS)
+    return response
+  logger.warning(f"User {username} has failed to log in")
+  return JSONResponse(content={"token": None}, status_code=401)
+
+@app.post("/get_user_settings")
+async def get_current_user_details(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  if token:
     user = db.get_user(session, request.session['user'])
     user_json = FilteredUser(
       user_id=user.id,
@@ -114,53 +199,9 @@ async def get_current_user_details(request: Request):
     return JSONResponse(content={'user': user_json.model_dump()}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-@app.get("/login")
-async def get_login(request: Request):
-  return templates.TemplateResponse('index.html', {'request': request})
-
-@app.post("/login")
-async def process_login(request: Request, session = Depends(get_session)):
-  data = await request.json()
-  username = data['username'].lower().strip()
-  password = data['password'].strip()
-  logger.info(f"User {username} is attempting to log in")
-  user_pw_hash = db.get_hash_for_user(session, username)
-  if user_pw_hash is None:
-    logger.error(f"User {username} does not exist")
-    return JSONResponse(content={'message': 'Invalid credentials'}, status_code=401)
-  if bcrypt.checkpw(password.encode('utf-8'), user_pw_hash):
-    logger.info(f"User {username} has successfully logged in")
-    request.session['user'] = username
-    user_groups = db.get_user_groups(session, username)
-    for group in user_groups:
-      logger.info(f"User {username} is in group {group}")
-      if group == 'admin':
-        request.session['is_admin'] = True
-    print("Successfully logged in")
-    return JSONResponse(content={'message': 'Successfully logged in', 'user': request.session, 'redirect': '/dashboard'}, status_code=200)
-  logger.warning(f"User {username} has failed to log in")
-  return JSONResponse(content={'message': 'Invalid credentials'}, status_code=401)
-
-@app.get("/logout")
-async def process_logout(request: Request):
-  if 'user' in request.session:
-    request.session.pop('user')
-    if 'is_admin' in request.session:
-      request.session.pop('is_admin')
-    return JSONResponse(content={'message': 'Successfully logged out', 'redirect': '/login'}, status_code=200)
-  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
-
-@app.get("/dashboard")
-async def get_dashboard(request: Request, session = Depends(get_session)):
-  if 'user' in request.session:
-    return templates.TemplateResponse('index.html', {'request': request})
-  else:
-    return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
-  return templates.TemplateResponse('index.html', {'request': request})
-
-@app.get("/get_users")
-async def get_users(request: Request, session = Depends(get_session)) -> JSONResponse:
-  if 'user' in request.session:
+@app.post("/get_users")
+async def get_users(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  if token:
     users = db.get_users(session)
     # filter out passwords and totp secret
     users_json = []
@@ -179,10 +220,10 @@ async def get_users(request: Request, session = Depends(get_session)) -> JSONRes
     return JSONResponse(content={'users': users_json}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-@app.get("/get_audit_log")
+@app.post("/audit_log")
 # this is a simple example of how to read a log file, it rly sux and should be replaced with a proper logging solution lol
-async def get_audit_log(request: Request, session = Depends(get_session)) -> JSONResponse:
-  if 'user' in request.session:
+async def get_audit_log(request: Request, token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  if token:
     # audit_log stored in ./abra.log
     audit_log = []
     with open('abra.log', 'r') as f:
@@ -193,29 +234,40 @@ async def get_audit_log(request: Request, session = Depends(get_session)) -> JSO
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 @app.post("/change_password")
-async def get_change_password(request: Request, session = Depends(get_session)) -> JSONResponse:
-  if 'user' in request.session:
-    # expect json: { 'username': 'username', 'password': 'new_password', 'confirmPassword': 'new_password' }
+async def get_change_password(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  if token:
+    logger.info(f"Password change request for user {username}")
     data = await request.json()
     username = data['username']
-    logger.info(f"Password change request for user {username}")
     new_password = data['password']
     confirm_password = data['confirmPassword']
+
     if new_password != confirm_password:
       logger.error(f"Passwords do not match")
       return JSONResponse(content={'message': 'Passwords do not match'}, status_code=400)
+
     if new_password == '':
       logger.error(f"Password cannot be empty")
       return JSONResponse(content={'message': 'Password cannot be empty'}, status_code=400)
+
     if len(new_password) < 8:
       logger.error(f"Password must be at least 8 characters long")
       return JSONResponse(content={'message': 'Password must be at least 8 characters long'}, status_code=400)
+
     hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
     db.update_user_password(session, username, hashed_password)
     logger.info(f"Password changed successfully for user {username}")
     return JSONResponse(content={'message': 'Password changed successfully'}, status_code=200)
+
   logger.warning(f"Unauthorized request to change password for user... redirecting to login")
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
+@app.get("/logout")
+async def process_logout(request: Request, token: AuthToken = Depends(authenticate_cookie)):
+  if token:
+    return JSONResponse(content={'message': 'Successfully logged out', 'redirect': '/login'}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
 if __name__ == "__main__":
+  print("hello bingus!")
   uvicorn.run('main:app', host='127.0.0.1', port=8000, reload=True)

@@ -5,7 +5,7 @@ function UserSettings({ user }: { user: User }) {
     const [displayUpdateEmail, setDisplayUpdateEmail] = useState(false);
     const [displayUpdateGroups, setDisplayUpdateGroups] = useState(false);
     const [displayChangePassword, setDisplayChangePassword] = useState(false);
-    const [displayUpdate2FA, setDisplayUpdate2FA] = useState(false);
+    // const [displayUpdate2FA, setDisplayUpdate2FA] = useState(false);
 
     const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
     const [passwordResetError, setPasswordResetError] = useState('');
@@ -35,13 +35,13 @@ function UserSettings({ user }: { user: User }) {
         setDisplayChangePassword(false);
     };
 
-    const toggleUpdate2FA = () => {
-        setDisplayUpdate2FA(!displayUpdate2FA);
-    };
+    // const toggleUpdate2FA = () => {
+    //     setDisplayUpdate2FA(!displayUpdate2FA);
+    // };
 
-    const closeUpdate2FA = () => {
-        setDisplayUpdate2FA(false);
-    };
+    // const closeUpdate2FA = () => {
+    //     setDisplayUpdate2FA(false);
+    // };
 
     const handlePasswordChangeSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -165,7 +165,7 @@ function UserSettings({ user }: { user: User }) {
                     </div>
                 )}
 
-                <div className="flex flex-row w-full justify-between px-[10px] min-w-max">
+                {/* <div className="flex flex-row w-full justify-between px-[10px] min-w-max">
                     <div>
                         <h3 className="text-xl font-semibold self-center align-middle">2FA Confirmed: {user.is_totp_confirmed ? "Yes" : "No"}</h3>
                     </div>
@@ -175,15 +175,13 @@ function UserSettings({ user }: { user: User }) {
                 </div>
                 {displayUpdate2FA && (
                     <div className="mt-2 px-[10px]">
-                        {/* Form to update 2FA */}
                         <h3>Update 2FA for {user.username}</h3>
-                        {/* 2FA update logic */}
                         <div className='w-full flex flex-row justify-between'>
                             <button className="bg-abra-accent text-white p-2 rounded-lg mt-2">Submit</button>
                             <button onClick={closeUpdate2FA} className="bg-abra-accent text-white p-2 rounded-lg mt-2">Close</button>
                         </div>
                     </div>
-                )}
+                )} */}
             </div>
         </div>
     );

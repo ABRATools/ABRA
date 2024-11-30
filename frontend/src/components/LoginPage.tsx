@@ -10,34 +10,34 @@ export default function LoginPage() {
     const [form, setForm] = React.useState({ username: '', password: '' });
     const [error, setError] = React.useState('');
     const [loading, setLoading] = React.useState(false);
-    const [success, setSuccess] = React.useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
         setLoading(true);
-
-        try {
-            console.log(form);
-            const response = await fetch('/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username: form.username, password: form.password }),
-            });
-
-            if (response.ok) {
-                setSuccess(true);
-                navigate('/dashboard');
+        await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: form.username, password: form.password }),
+        }).then(response => {
+            if (response.status === 200) {
+            return response.json();
             } else {
-                setError('Invalid username or password');
-            }
-        } catch (error) {
             setError('An error occurred');
-        }
-
-        setLoading(false);
+            setLoading(false);
+            }
+        }).then(data => {
+            setTimeout(() => {
+                sessionStorage.setItem('token', data.token);
+                window.location.href = '/dashboard';
+                setLoading(false);
+            }, 1500);
+        }).catch(error => {
+            setError('An error occurred: ' + error);
+            setLoading(false);
+        });
     };
 
     return (
@@ -75,7 +75,6 @@ export default function LoginPage() {
                     </form>
                 </div>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                {success && <p style={{ color: 'green' }}>Success!</p>}
             </div>
         </PageLayout>
         </>
