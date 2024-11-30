@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { User } from '../types/user';
 
+interface Group {
+    name: string;
+    permissions: string[];
+    users: string[];
+}
+
 function UserSettings({ user }: { user: User }) {
     const [displayUpdateEmail, setDisplayUpdateEmail] = useState(false);
     const [displayUpdateGroups, setDisplayUpdateGroups] = useState(false);
@@ -15,6 +21,13 @@ function UserSettings({ user }: { user: User }) {
         confirmPassword: "",
     });
 
+    const [emailSuccess, setEmailSuccess] = useState(false);
+    const [emailError, setEmailError] = useState('');
+
+    const [emailForm, setEmailForm] = useState({
+        email: ""
+    });
+
     const toggleUpdateEmail = () => {
         setDisplayUpdateEmail(!displayUpdateEmail);
     };
@@ -23,9 +36,22 @@ function UserSettings({ user }: { user: User }) {
         setDisplayUpdateEmail(false);
     };
 
-    const toggleUpdateGroups = () => {
-        setDisplayUpdateGroups(!displayUpdateGroups);
-    };
+    const handleDisplayGroupAddMenu = async () => {
+        setDisplayUpdateGroups(true);
+        try {
+            const response = await fetch('/get_users');
+            if (response.ok) {
+                const data = await response.json();
+                const groupData: Group[] = data['groups'];
+                setGroups(groupData);
+                
+            } else {
+                console.error('Failed to fetch group data');
+            }
+        } catch (error) {
+            console.error('Error fetching group data:', error);
+        };
+    }
 
     const toggleChangePassword = () => {
         setDisplayChangePassword(!displayChangePassword);
@@ -38,7 +64,13 @@ function UserSettings({ user }: { user: User }) {
     // const toggleUpdate2FA = () => {
     //     setDisplayUpdate2FA(!displayUpdate2FA);
     // };
+    // const toggleUpdate2FA = () => {
+    //     setDisplayUpdate2FA(!displayUpdate2FA);
+    // };
 
+    // const closeUpdate2FA = () => {
+    //     setDisplayUpdate2FA(false);
+    // };
     // const closeUpdate2FA = () => {
     //     setDisplayUpdate2FA(false);
     // };
@@ -70,6 +102,30 @@ function UserSettings({ user }: { user: User }) {
         }
     }
 
+    const handleEmailSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            console.log(emailForm);
+            const response = await fetch('/change_email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username: user.username, email: emailForm.email }),
+            });
+
+            if (response.ok) {
+                setEmailError('');
+                setEmailSuccess(true);
+            } else {
+                const data = await response.json();
+                setEmailError(data.message);
+            }
+        } catch (error) {
+            setEmailError('Something went wrong while changing password');
+        }
+    }
+
     return (
         <div className='flex flex-col gap-y-[10px] px-[10px] lg:px-[10vw]'>
             <h2 className='text-2xl font-bold'>Current User Settings for user: {user.username || "ERR"}</h2>
@@ -84,13 +140,20 @@ function UserSettings({ user }: { user: User }) {
                 </div>
                 {displayUpdateEmail && (
                     <div className="mt-2 px-[10px]">
-                        {/* Form to update email */}
-                        <h3>Update Email for {user.username}</h3>
-                        <input type="email" placeholder="New email" className="border p-2 w-full" />
-                        <div className='w-full flex flex-row justify-between'>
-                            <button className="bg-abra-accent text-white p-2 rounded-lg mt-2">Submit</button>
-                            <button onClick={closeUpdateEmail} className="bg-abra-accent text-white p-2 rounded-lg mt-2">Close</button>
-                        </div>
+                        <form onSubmit={handleEmailSubmit}>
+                            <h3>Update Email for {user.username}</h3>
+                            <input
+                            type="email"
+                            placeholder="New email"
+                            className="border p-2 w-full"
+                            onChange={(e) => setEmailForm({ ...emailForm, email: e.target.value })}/>
+                            {emailSuccess && <p className="text-sm text-green-600">Password changed successfully!</p>}
+                            {emailError && <p className="text-sm text-red-600">{emailError}</p>}
+                            <div className='w-full flex flex-row justify-between'>
+                                <button className="bg-abra-accent text-white p-2 rounded-lg mt-2">Submit</button>
+                                <button onClick={closeUpdateEmail} className="bg-abra-accent text-white p-2 rounded-lg mt-2">Close</button>
+                            </div>
+                        </form>
                     </div>
                 )}
 
@@ -106,16 +169,29 @@ function UserSettings({ user }: { user: User }) {
                                 </li>
                             )) : <li className='self-center'>No groups found</li>}
                             <li>
-                                <button onClick={toggleUpdateGroups} className="bg-abra-accent text-white p-2 rounded-lg ml-[5px]">+</button>
+                                <button onClick={handleDisplayGroupAddMenu} className="bg-abra-accent text-white p-2 rounded-lg ml-[5px]">+</button>
                             </li>
                         </ul>
                     </div>
                 </div>
                 {displayUpdateGroups && (
                     <div className="mt-2 px-[10px]">
-                        {/* Form to update groups */}
                         <h3>Update Groups for {user.username}</h3>
-                        {/* Add group selection or modification logic */}
+                        <div className='flex flex-row gap-x-[10px]'>
+                            {groups.map((group, index) => (
+                                <div key={index} className='flex flex-col gap-y-[5px]'>
+                                    <h4>{group.name}</h4>
+                                    <ul className='flex flex-col gap-y-[5px]'>
+                                        {permissions.map((permission, index) => (
+                                            <li key={index} className='flex flex-row gap-x-[5px]'>
+                                                <input type="checkbox" className="self-center"/>
+                                                <p>{permission}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
                         <button className="bg-abra-accent text-white p-2 rounded-lg mt-2">Submit</button>
                     </div>
                 )}
@@ -181,6 +257,7 @@ function UserSettings({ user }: { user: User }) {
                             <button onClick={closeUpdate2FA} className="bg-abra-accent text-white p-2 rounded-lg mt-2">Close</button>
                         </div>
                     </div>
+                )} */}
                 )} */}
             </div>
         </div>
