@@ -5,7 +5,7 @@ File: EnvironmentSelect.tsx
 Description: Select which environment to look at (probably can save some logic from NodeSelect)
 */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import EnvironmentSubSelect from "./EnvironmentSubSelect";
 
 export default function EnvironmentSelect( { environments }) {

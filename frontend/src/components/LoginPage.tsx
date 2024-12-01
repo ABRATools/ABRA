@@ -2,12 +2,11 @@
 
 import React from 'react';
 import PageLayout from './PageLayout';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ThemeProvider } from './Theming/ThemeProvider';
 import { ThemeToggle } from './Theming/ThemeToggle';
 
 const LoginPage = () => {
-    const navigate = useNavigate();
 
     const [form, setForm] = React.useState({ username: '', password: '' });
     const [error, setError] = React.useState('');
@@ -44,7 +43,7 @@ const LoginPage = () => {
 
     return (
         <>
-        <nav className='w-full py-[40px] flex flex-row align-center px-[40px] bg-abra-accent justify-between'>
+        <nav className='w-full py-[40px] flex flex-row align-center px-[40px] dark:bg-background bg-abra-accent justify-between'>
             <div>
                 <Link to='/'>
                     <h1 className='text-4xl font-bold'>ABRA Tools</h1>

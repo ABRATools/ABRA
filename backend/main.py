@@ -262,12 +262,6 @@ async def get_change_password(request: Request, session = Depends(get_session), 
   logger.warning(f"Unauthorized request to change password for user... redirecting to login")
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-@app.get("/logout")
-async def process_logout(request: Request, token: AuthToken = Depends(authenticate_cookie)):
-  if token:
-    return JSONResponse(content={'message': 'Successfully logged out', 'redirect': '/login'}, status_code=200)
-  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
-
 @app.post("/change_email")
 async def post_change_email(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
@@ -295,6 +289,12 @@ async def get_groups(request: Request, session = Depends(get_session), token: Au
     groups_json = [group.model_dump() for group in groups]
     print(groups_json)
     return JSONResponse(content={'groups': groups_json}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@app.get("/logout")
+async def process_logout(request: Request, token: AuthToken = Depends(authenticate_cookie)):
+  if token:
+    return JSONResponse(content={'message': 'Successfully logged out', 'redirect': '/login'}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 if __name__ == "__main__":

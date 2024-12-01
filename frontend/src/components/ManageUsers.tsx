@@ -4,6 +4,7 @@ import useAuth from '../hooks/useAuth';
 import { User } from '../types/user';
 import UserSettings from './UserSettings';
 import { ThemeProvider } from './Theming/ThemeProvider';
+import LoadingDisplay from './LoadingDisplay';
 
 export default function ManageUsers() {
     const { isAuthorized, loading } = useAuth(() => {
@@ -14,7 +15,7 @@ export default function ManageUsers() {
 		console.log('Authorized');
 	}
 	if (loading) {
-		return <div>Loading...</div>;
+		return <LoadingDisplay />;
 	}
     return (
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">

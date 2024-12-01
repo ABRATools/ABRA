@@ -19,9 +19,9 @@ export default function Settings() {
 		return <div>Loading...</div>;
 	}
     const [users, setUsers] = useState<User[] | null>(null);
-    const [displayUpdateEmail, setDisplayUpdateEmail] = useState<boolean>(false);
-    const [displayUpdateGroups, setDisplayUpdateGroups] = useState<boolean>(false);
-    const [displayChangePassword, setDisplayChangePassword] = useState<boolean>(false);
+    // const [displayUpdateEmail, setDisplayUpdateEmail] = useState<boolean>(false);
+    // const [displayUpdateGroups, setDisplayUpdateGroups] = useState<boolean>(false);
+    // const [displayChangePassword, setDisplayChangePassword] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchUserSettings = async () => {
@@ -73,7 +73,7 @@ export default function Settings() {
                         <h1 className="text-3xl font-semibold align-middle">Manage User Attributes</h1>
                     </div>
                 </div>
-                {users?.map((user, index) => (
+                {users?.map((user, _) => (
                     <div className='flex flex-col gap-y-[10px] px-[10px] lg:px-[10vw]'>
                         <h2 className='text-2xl font-bold'>Current User Settings for user: {user?.username || "ERR"}</h2>
                         <div className="flex flex-col w-full min-w-max py-[25px] rounded-md border-2 border-[#ccc] gap-y-[10px]">
