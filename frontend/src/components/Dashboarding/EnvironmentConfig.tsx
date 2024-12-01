@@ -4,9 +4,9 @@ Date: 11/17/24
 File: EnvironmentConfig.tsx
 Description: Component for viewing/editing node configurations
 */
+import { Environment } from "@/types/environment";
 
-
-export default function EnvironmentConfig({ envData }) {
+export default function EnvironmentConfig( envData: Environment ) {
     /*
     page to edit firewall rules, network settings, etc. with buttons and sliders to change values
     */
@@ -15,9 +15,11 @@ export default function EnvironmentConfig({ envData }) {
         <>
             <div className="p-[10px] rounded-[8px]">
                 <h2 className="text-[#007bff] text-2xl">Environment Configuration</h2>
-                <p><strong>env ID:</strong> {envData.id}</p>
+                <p><strong>Node Name:</strong> {envData.name}</p>
                 <p><strong>OS:</strong> {envData.os}</p>
-                <p><strong>Date Created:</strong> {envData.date_created}</p>
+                <p><strong>IP:</strong> {envData.ip}</p>
+                <p><strong>Status:</strong> {envData.status}</p>
+                <p><strong>Uptime:</strong> {envData.uptime}</p>
 
                 <h3 className="text-[#007bff] text-2xl">Firewall Rules</h3>
                 <ul>
@@ -27,7 +29,7 @@ export default function EnvironmentConfig({ envData }) {
                 </ul>
 
                 <h3 className="text-[#007bff] text-2xl">Network Settings</h3>
-                <ul> 
+                <ul>
                     <li><strong>Subnet:</strong> 192.168.1.0/24</li>
                     <li><strong>DNS:</strong> 8.8.8.8</li>
                     <li><strong>Gateway:</strong> 192.168.1.1</li>

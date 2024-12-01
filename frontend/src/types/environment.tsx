@@ -1,12 +1,14 @@
 export type Environment = {
     id: number;
-    machine_name: string;
-    description: string;
-    os: string;
-    total_cpu: number;
-    total_memory: number;
-    total_disk: number;
+    name: string;
     ip: string;
-    port: number;
+    os: string;
     status: string;
+    uptime: string;
+    cpu_percent: number;
+    memory_percent: number;
+    disk_percent: number;
+    max_cpus: number;
+    max_memory: number;
+    max_disk: number;
 };

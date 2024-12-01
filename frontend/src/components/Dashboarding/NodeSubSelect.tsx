@@ -5,29 +5,27 @@ File: NodeSubSelect.tsx
 Description: Secondary dashboard selection after choosing your node -> what do you want to see about your node?
 */
 
-// imports
 import { useState } from 'react';
 import NodeSummary from "./NodeSummary";
-import EnvironmentSelect from "./EnvironentSelect";
+import EnvironmentSelect from "./EnvironmentSelect";
 import NodeLogs from "./NodeLogs";
 import NodeConfig from "./NodeConfig";
+import { Node } from '@/types/node';
 
-export default function NodeSubSelect({ nodeData }) {
-
+export default function NodeSubSelect(nodeData: Node) {
     const [selectedMenu, setSelectedMenu] = useState('Summary');
-
     const renderContent = () => {
         switch (selectedMenu) {
             case 'Summary':
-                return <NodeSummary nodeData={nodeData}/>;
+                return <NodeSummary {...nodeData}/>;
             case 'Config':
-                return <NodeConfig nodeData={nodeData}/>;
+                return <NodeConfig {...nodeData}/>;
             case "Environments":
-                return <EnvironmentSelect environments={nodeData.environments}/>;
+                return <EnvironmentSelect {...nodeData.environments}/>;
             case 'Total Log':
-                return <NodeLogs nodeData={nodeData}/>;
+                return <NodeLogs {...nodeData}/>;
             default:
-                return <NodeSummary nodeData={nodeData}/>;
+                return <NodeSummary {...nodeData}/>;
         }
     };
 

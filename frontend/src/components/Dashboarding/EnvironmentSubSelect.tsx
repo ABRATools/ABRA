@@ -9,21 +9,21 @@ import { useState } from "react";
 import EnvironmentLogs from "./EnvironmentLogs";
 import EnvironmentSummary from "./EnvironmentSummary";
 import EnvironmentConfig from "./EnvironmentConfig";
+import { Environment } from "@/types/environment";
 
-export default function NodeSubSelect({ envData }) {
-
+export default function NodeSubSelect( envData: Environment ) {
     const [selectedMenu, setSelectedMenu] = useState('Summary');
 
     const renderContent = () => {
         switch (selectedMenu) {
             case 'Summary':
-                return <EnvironmentSummary envData={envData}/>;
+                return <EnvironmentSummary {...envData}/>;
             case 'Config':
-                return <EnvironmentConfig envData={envData}/>;
+                return <EnvironmentConfig {...envData}/>;
             case 'Environment Log':
-                return <EnvironmentLogs envData={envData}/>;
+                return <EnvironmentLogs {...envData}/>;
             default:
-                return <EnvironmentSummary envData={envData}/>;
+                return <EnvironmentSummary {...envData}/>;
         }
     };
 
@@ -51,7 +51,7 @@ export default function NodeSubSelect({ envData }) {
                     className="text-md"
                     style={{fontWeight: selectedMenu === 'Environment Log' ? 'bold' : 'normal'}}
                 >
-                    Env Log
+                    Environment Log
                 </button>
             </div>
 
