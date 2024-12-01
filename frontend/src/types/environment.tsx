@@ -1,5 +1,5 @@
 export type Environment = {
-    id: number;
+    env_id: number;
     name: string;
     ip: string;
     os: string;
@@ -11,4 +11,5 @@ export type Environment = {
     max_cpus: number;
     max_memory: number;
     max_disk: number;
+    node_id: number;
 };

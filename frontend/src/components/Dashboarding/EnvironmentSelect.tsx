@@ -26,12 +26,12 @@ export default function EnvironmentSelect( environments: Environment[] ) {
           <div className="flex flex-col h-full w-full">
             {Object.keys(environments).length ? Object.values(environments).map((env) => (
               <Button
-                variant={selectedEnv.id === env.id ? 'default' : 'ghost'}
-                key={env.id}
+                variant={selectedEnv.env_id === env.env_id ? 'default' : 'ghost'}
+                key={env.env_id}
                 onClick={() => setSelectedEnv(env)}
                 className="hover:bg-blue-700 hover:cursor-pointer rounded-none py-[10x] px-[20px] min-w-max"
                 style={{
-                    backgroundColor: selectedEnv.id === env.id ? '#007bff' : '',
+                    backgroundColor: selectedEnv.env_id === env.env_id ? '#007bff' : '',
                     // color: selectedEnv.id === env.id ? '#fff' : '#000',
                 }}
               >
