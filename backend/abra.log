@@ -149,3 +149,11 @@
 2024-11-30 20:08:19,641 | INFO | User admin is attempting to log in
 2024-11-30 20:08:19,944 | INFO | User admin has successfully logged in
 2024-11-30 20:08:19,951 | INFO | User admin has successfully logged in
+2024-11-30 21:42:30,132 | INFO | No auth header found
+2024-11-30 21:42:30,133 | INFO | No token found
+2024-11-30 21:42:47,484 | INFO | User admin is attempting to log in
+2024-11-30 21:42:47,770 | INFO | User admin has successfully logged in
+2024-11-30 21:42:47,775 | INFO | User admin has successfully logged in
+2024-12-01 09:26:10,430 | INFO | User admin is attempting to log in
+2024-12-01 09:26:10,719 | INFO | User admin has successfully logged in
+2024-12-01 09:26:10,776 | INFO | User admin has successfully logged in
