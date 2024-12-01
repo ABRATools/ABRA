@@ -1,6 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Environment } from "@/types/environment"
 
 import {
   DropdownMenu,
@@ -8,26 +9,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
-export type Course = {
-  name: string,
-  environments: Environment[],
-}
-
-export type Environment = {
-  name: string,
-  vmid: number,
-  status: "running" | "stopped" | "undefined",
-  prox_type: string,
-  uptime: string,
-  maxcpu: number,
-  cpu: number,
-  maxdisk: string,
-  disk: string,
-  mem: string,
-  maxmem: string,
-  ip_address: string,
-}
 
 export const columns: ColumnDef<Environment>[] = [
   {
@@ -53,7 +34,7 @@ export const columns: ColumnDef<Environment>[] = [
     }
   },
   {
-    accessorKey: "prox_type",
+    accessorKey: "os",
     header: "Type",
   },
   {
@@ -61,15 +42,22 @@ export const columns: ColumnDef<Environment>[] = [
     header: "Uptime",
   },
   {
-    accessorKey: "cpu",
-    header: "CPU",
-  },
-  {
-    accessorKey: "mem",
+    accessorKey: "cpu_percent",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Memory
+          CPU %
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    }
+  },
+  {
+    accessorKey: "memory",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Memory (GB)
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
@@ -77,22 +65,22 @@ export const columns: ColumnDef<Environment>[] = [
   },
   {
     accessorKey: "disk",
-    header: "Disk",
+    header: "Disk (GB)",
   },
   {
-    accessorKey: "maxcpu",
+    accessorKey: "max_cpus",
     header: "Max CPU",
   },
   {
-    accessorKey: "maxmem",
+    accessorKey: "max_memory",
     header: "Max Memory",
   },
   {
-    accessorKey: "maxdisk",
+    accessorKey: "max_disk",
     header: "Max Disk",
   },
   {
-    accessorKey: "ip_address",
+    accessorKey: "ip",
     header: "IP Address",
   },
   {
@@ -108,7 +96,7 @@ export const columns: ColumnDef<Environment>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => {console.log(environment.vmid)}}>
+            <DropdownMenuItem onClick={() => {console.log(environment.id)}}>
               Start
             </DropdownMenuItem>
             <DropdownMenuItem>

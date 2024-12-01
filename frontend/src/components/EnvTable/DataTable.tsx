@@ -1,5 +1,3 @@
-import { RefreshCw } from "lucide-react"
-
 import {
   ColumnDef,
   PaginationState,
@@ -32,9 +30,6 @@ import {
 
 import * as React from "react"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-
-import FetchEnvironments from "./DisplayTable"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -67,13 +62,6 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 
   return (
     <div>
-      <div className="flex flex-row-reverse items-center w-full">
-        <div className="self-end">
-          <Button variant={"ghost"} onClick={FetchEnvironments}>
-            <RefreshCw />
-          </Button>
-        </div>
-      </div>
       <div className="flex flex-row justify-between items-center py-4 w-full">
         <div className="flex-1">
           <Input
