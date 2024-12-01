@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import Navbar from './Navbar';
 import useAuth from '../hooks/useAuth';
 import { ThemeProvider } from './Theming/ThemeProvider';
+import LoadingDisplay from './LoadingDisplay';
 
 const REFRESH_INTERVAL = 30000;
 
@@ -20,7 +21,7 @@ export default function Audit() {
 		console.log('Authorized');
 	}
 	if (loading) {
-		return <div>Loading...</div>;
+		return <LoadingDisplay />;
 	}
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">

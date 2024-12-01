@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import useAuth from '../hooks/useAuth';
 import { User } from '../types/user';
 import { ThemeProvider } from '@/components/Theming/ThemeProvider';
+import LoadingDisplay from '@/components/LoadingDisplay';
 
 // get user possible user settings such as changing password, email, updating 2FA, etc.
 export default function Settings() {
@@ -13,7 +14,7 @@ export default function Settings() {
 		console.log('Authorized');
 	}
 	if (loading) {
-		return <div>Loading...</div>;
+		return <LoadingDisplay />;
 	}
     return (
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
@@ -25,10 +26,10 @@ export default function Settings() {
 const RenderSettings = () => {
     const [user, setUser] = useState<User | null>(null);
     const [email, setEmail] = useState<string>("");
-    const [groups, setGroups] = useState<string[]>([]);
     const [passwordChangeDate, setPasswordChangeDate] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const [groups, setGroups] = useState<string[]>([]);
 
     const token = sessionStorage.getItem('token');
     if (!token) {

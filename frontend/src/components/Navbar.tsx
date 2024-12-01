@@ -3,12 +3,9 @@ import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom";
 import {
     LogOut,
-    // Plus,
-    // PlusCircle,
+    Activity,
     Settings,
-    MessageSquareWarning,
-    // User,
-    ListChecks,
+    Boxes,
     Users,
     Menu
   } from "lucide-react"
@@ -25,7 +22,7 @@ function handleLogout() {
   fetch("/logout", {
     method: "GET",
   }).then(() => {
-    window.location.href = "/logout";
+    window.location.href = "/login";
   });
 }
 
@@ -51,24 +48,24 @@ export default function Navbar() {
             <DropdownMenuContent className="w-56">
             <DropdownMenuItem>
                 <Users />
-                <span>Manage Users</span>
+                <Link to="/users">Manage Users</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <MessageSquareWarning />
-                <span>Audit</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings />
-                <span>Settings</span>
+                <Activity />
+                <Link to="/audit">Audit</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Settings />
-                <span>Nodes</span>
+                <Link to="/settings">Settings</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Boxes />
+                <Link to="/nodes">Nodes</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <LogOut />
-                <span>Log out</span>
+                <Button variant={"ghost"} onClick={handleLogout}>Logout</Button>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

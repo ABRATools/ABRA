@@ -117,3 +117,20 @@
 2024-11-30 17:11:48,002 | INFO | User admin is attempting to log in
 2024-11-30 17:11:48,308 | INFO | User admin has successfully logged in
 2024-11-30 17:11:48,315 | INFO | User admin has successfully logged in
+2024-11-30 17:58:34,925 | INFO | No auth header found
+2024-11-30 17:58:34,927 | INFO | No token found
+2024-11-30 17:58:35,158 | INFO | No auth header found
+2024-11-30 17:58:35,158 | INFO | No token found
+2024-11-30 18:06:54,602 | INFO | User admin is attempting to log in
+2024-11-30 18:06:54,943 | INFO | User admin has successfully logged in
+2024-11-30 18:06:54,991 | INFO | User admin has successfully logged in
+2024-11-30 18:08:16,062 | INFO | No auth header found
+2024-11-30 18:08:16,063 | INFO | No token found
+2024-11-30 18:08:33,313 | INFO | User admin is attempting to log in
+2024-11-30 18:08:33,644 | INFO | User admin has successfully logged in
+2024-11-30 18:08:33,655 | INFO | User admin has successfully logged in
+2024-11-30 18:15:15,200 | INFO | No auth header found
+2024-11-30 18:15:15,200 | INFO | No token found
+2024-11-30 18:15:20,442 | INFO | User admin is attempting to log in
+2024-11-30 18:15:20,737 | INFO | User admin has successfully logged in
+2024-11-30 18:15:20,742 | INFO | User admin has successfully logged in

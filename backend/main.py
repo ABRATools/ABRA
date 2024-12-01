@@ -291,6 +291,12 @@ async def get_groups(request: Request, session = Depends(get_session), token: Au
     return JSONResponse(content={'groups': groups_json}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
+@app.get("/logout")
+async def process_logout(request: Request, token: AuthToken = Depends(authenticate_cookie)):
+  if token:
+    return JSONResponse(content={'message': 'Successfully logged out', 'redirect': '/login'}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
 if __name__ == "__main__":
   print("hello bingus!")
   uvicorn.run('main:app', host='127.0.0.1', port=8000, reload=True)
