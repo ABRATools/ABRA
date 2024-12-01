@@ -1,7 +1,7 @@
 import { Environment } from './environment';
 
 export type Node = {
-    id: number;
+    node_id: number;
     name: string;
     ip: string;
     os: string;

@@ -30,24 +30,33 @@ class Group(BaseModel):
   users: List[str]
 
 class Environment(BaseModel):
-  machine_name: str
-  description: Optional[str]
+  env_id: int
+  name: str
+  ip: str
   os: str
-  ip: Optional[str]
   status: str
+  uptime: str
+  cpu_percent: int
+  memory: float
+  disk: float
   max_cpus: int
-  max_memory: int
-  max_disk: int
-  current_cpu_percent: int
-  current_memory_percent: int
-  current_disk_percent: int
+  max_memory: float
+  max_disk: float
   node_id: int
 
 class Node(BaseModel):
+  node_id: int
   name: str
   ip: str
-  port: int
+  os: str
   status: str
+  uptime: str
+  cpu_percent: int
+  memory: float
+  disk: float
+  max_cpus: int
+  max_memory: float
+  max_disk: float
   environments: List[Environment]
 
 class Service(BaseModel):

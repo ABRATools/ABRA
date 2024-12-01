@@ -96,7 +96,7 @@ export const columns: ColumnDef<Environment>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => {console.log(environment.id)}}>
+            <DropdownMenuItem onClick={() => {console.log(environment.env_id)}}>
               Start
             </DropdownMenuItem>
             <DropdownMenuItem>
