@@ -105,3 +105,15 @@
 2024-11-30 13:57:31,483 | INFO | User admin is attempting to log in
 2024-11-30 13:57:31,817 | INFO | User admin has successfully logged in
 2024-11-30 13:57:31,827 | INFO | User admin has successfully logged in
+2024-11-30 16:58:02,845 | INFO | JWTError: Signature has expired.
+2024-11-30 16:58:04,360 | INFO | JWTError: Signature has expired.
+2024-11-30 17:03:35,925 | INFO | User admin is attempting to log in
+2024-11-30 17:03:36,250 | INFO | User admin has successfully logged in
+2024-11-30 17:03:36,258 | INFO | User admin has successfully logged in
+2024-11-30 17:04:19,532 | INFO | No auth header found
+2024-11-30 17:04:19,533 | INFO | No token found
+2024-11-30 17:04:19,747 | INFO | No auth header found
+2024-11-30 17:04:19,751 | INFO | No token found
+2024-11-30 17:11:48,002 | INFO | User admin is attempting to log in
+2024-11-30 17:11:48,308 | INFO | User admin has successfully logged in
+2024-11-30 17:11:48,315 | INFO | User admin has successfully logged in

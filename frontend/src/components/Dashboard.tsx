@@ -1,6 +1,7 @@
 import Navbar from './Navbar';
 import NodeSelect from './Dashboarding/NodeSelect';
 import useAuth from '../hooks/useAuth';
+import { ThemeProvider } from './Theming/ThemeProvider';
 
 export default function Dashboard() {
     const { isAuthorized, loading } = useAuth(() => {
@@ -17,10 +18,10 @@ export default function Dashboard() {
 		return <div>Loading...</div>;
 	}
     return (
-        <div>
+        <ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
             <Navbar />
             <NodeSelect />
-        </div>
+        </ThemeProvider>
     );
 }
 

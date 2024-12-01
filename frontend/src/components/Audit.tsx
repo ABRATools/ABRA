@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import Navbar from './Navbar';
 import useAuth from '../hooks/useAuth';
+import { ThemeProvider } from './Theming/ThemeProvider';
 
 const REFRESH_INTERVAL = 30000;
 
@@ -22,7 +23,9 @@ export default function Audit() {
 		return <div>Loading...</div>;
 	}
   return (
-    <RenderAudit />
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <RenderAudit />
+    </ThemeProvider>
   );
 }
 

@@ -146,17 +146,17 @@ export default function NodeSelect() {
 
     return (
         <>
-        <div className='flex flex-row w-full h-full'>
+        <div className='flex flex-row w-full h-full min-h-[70vh] shadow-xl'>
             {/* Left Side - Node Buttons */}
-            <div className="max-w-[5vw] min-w-min border-[#ccc] border-r-[1px] h-full box-border min-h-144">
+            <div className="max-w-[5vw] min-w-min border-[#ccc] border-r-[1px] h-full box-border min-h-[70vh]">
                 {test_data.nodes.map((node) => (
                     <button
                         key={node.id}
                         onClick={() => setSelectedNode(node)}
-                        className='hover:bg-blue-300 hover:cursor-pointer rounded-sm mb-4 text-lg py-[10x] px-[20px] lg:py-[20x] lg:px-[40px]'
+                        className='hover:bg-blue-500 hover:cursor-pointer border border-foreground text-lg py-[40x] px-[20px] lg:px-[40px] color-foreground'
                         style={{
-                            backgroundColor: selectedNode.id === node.id ? '#007bff' : '#f0f0f0',
-                            color: selectedNode.id === node.id ? '#fff' : '#000',
+                            backgroundColor: selectedNode.id === node.id ? '#007bff' : '',
+                            // color: selectedNode.id === node.id ? '#fff' : '#000',
                         }}
                     >
                         {node.id}
@@ -165,7 +165,7 @@ export default function NodeSelect() {
             </div>
 
             {/* Right Side - NodeSubSelect Component */}
-            <div className="w-full h-full">
+            <div className="w-full h-full min-h-[70vh]">
                 <NodeSubSelect nodeData={selectedNode} />
             </div>
         </div>

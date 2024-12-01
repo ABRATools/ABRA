@@ -16,7 +16,7 @@ export default function EnvironmentSelect( { environments }) {
         <>
         <div className="flex flex-row w-full">
             {/* Left Side - Node Buttons */}
-            <div className="flex flex-col gap-[10px] max-h-max max-w-max border-[#ccc] box-border border-r-[1px] min-h-128">
+            <div className="flex flex-col gap-[10px] max-h-max max-w-max border-[#ccc] box-border border-r-[1px] min-h-144">
                 {environments.map((env) => (
                     <button
                         key={env.id}
