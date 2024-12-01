@@ -134,3 +134,18 @@
 2024-11-30 18:15:20,442 | INFO | User admin is attempting to log in
 2024-11-30 18:15:20,737 | INFO | User admin has successfully logged in
 2024-11-30 18:15:20,742 | INFO | User admin has successfully logged in
+2024-11-30 18:23:59,006 | INFO | No auth header found
+2024-11-30 18:23:59,007 | INFO | No token found
+2024-11-30 18:24:06,841 | INFO | User admin is attempting to log in
+2024-11-30 18:24:07,216 | INFO | User admin has successfully logged in
+2024-11-30 18:24:07,230 | INFO | User admin has successfully logged in
+2024-11-30 18:26:10,902 | INFO | No auth header found
+2024-11-30 18:26:10,906 | INFO | No token found
+2024-11-30 18:27:08,793 | INFO | User admin is attempting to log in
+2024-11-30 18:27:09,107 | INFO | User admin has successfully logged in
+2024-11-30 18:27:09,114 | INFO | User admin has successfully logged in
+2024-11-30 20:08:15,403 | INFO | No auth header found
+2024-11-30 20:08:15,404 | INFO | No token found
+2024-11-30 20:08:19,641 | INFO | User admin is attempting to log in
+2024-11-30 20:08:19,944 | INFO | User admin has successfully logged in
+2024-11-30 20:08:19,951 | INFO | User admin has successfully logged in

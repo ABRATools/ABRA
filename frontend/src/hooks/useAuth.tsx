@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
-const useAuth = (onUnauthorized) => {
+// weird typescript type for callback function
+const useAuth = (onUnauthorized: () => void) => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
 //   const navigate = useNavigate();

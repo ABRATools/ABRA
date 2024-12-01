@@ -90,4 +90,10 @@ html, body {
   body {
     @apply dark:bg-stone-800 bg-muted text-foreground;
   }
+  html {
+    @apply dark:bg-stone-800 bg-muted text-foreground;
+  }
+  #main {
+    @apply dark:bg-stone-800 bg-muted text-foreground;
+  }
 }

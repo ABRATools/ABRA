@@ -4,9 +4,9 @@ Date: 11/17/24
 File: NodeConfig.tsx
 Description: Component for viewing/editing node configurations
 */
+import { Node } from "@/types/node";
 
-
-export default function NodeConfig({ nodeData }) {
+export default function NodeConfig( nodeData: Node ) {
     /*
     page to edit firewall rules, network settings, etc.
     */
@@ -15,10 +15,11 @@ export default function NodeConfig({ nodeData }) {
         <>
             <div className="p-[10px] rounded-[8px]">
                 <h2 className="text-[#007bff] text-2xl">Node Configuration</h2>
-                <p><strong>Node ID:</strong> {nodeData.id}</p>
-                {/* <p><strong>IP Address:</strong> {nodeData.ip_address}</p> */}
+                <p><strong>Node Name:</strong> {nodeData.name}</p>
                 <p><strong>OS:</strong> {nodeData.os}</p>
-                <p><strong>Date Created:</strong> {nodeData.date_created}</p>
+                <p><strong>IP:</strong> {nodeData.ip}</p>
+                <p><strong>Status:</strong> {nodeData.status}</p>
+                <p><strong>Uptime:</strong> {nodeData.uptime}</p>
 
                 <h3 className="text-[#007bff] text-xl">Firewall Rules</h3>
                 <ul>
