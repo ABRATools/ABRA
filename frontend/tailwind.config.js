@@ -1,76 +1,113 @@
 import daisyui from 'daisyui'
+import tailwindcssAnimate from 'tailwindcss-animate';
 
 /** @type {import('tailwindcss').Config} */
 
 export default {
+  darkMode: ["class"],
   content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   preflight: false,
   theme: {
-    extend: {
-      spacing: {
-        '128': '32rem',
-        '144': '36rem',
-      },
-      width: {
-        '96': '24rem',
-        '128': '32rem',
-        'almost-full': 'calc(100vw - 2rem)',
-        'screen-80': '80vw',
-        'screen-70': '70vw'
-      },
-      height: {
-        'almost-full': 'calc(100vh - 2rem)',
-        'screen-80': '80vh',
-        'screen-70': '70vh'
-      },
-      minHeight: {
-        'almost-full': 'calc(100vh - 2rem)',
-        'screen-80': '80vh',
-        'screen-70': '70vh',
-        'screen-60': '60vh'
-      },
-      backgroundColor: {
-        'abra-primary': '#9d38c8',
-        'abra-secondary': '#e0a88f',
-        'abra-accent': '#d3c75f',
-        'abra-neutral': '#07030a',
-        'abra-base-100': '#f8f2fb',
-      },
-      textColor: {
-        'abra-primary': '#9d38c8',
-        'abra-secondary': '#e0a88f',
-        'abra-accent': '#d3c75f',
-        'abra-neutral': '#07030a',
-        'abra-base-100': '#f8f2fb',
-      },
-      borderColor: {
-        'abra-primary': '#9d38c8',
-        'abra-secondary': '#e0a88f',
-        'abra-accent': '#d3c75f',
-        'abra-neutral': '#07030a',
-        'abra-base-100': '#f8f2fb',
-      },
-      fontFamily: {
-        'sans': ['Inter', 'sans-serif'],
-        'serif': ['Merriweather', 'serif'],
-      },
-    }
+  	extend: {
+  		spacing: {
+  			'128': '32rem',
+  			'144': '36rem'
+  		},
+  		width: {
+  			'96': '24rem',
+  			'128': '32rem',
+  			'almost-full': 'calc(100vw - 2rem)',
+  			'screen-80': '80vw',
+  			'screen-70': '70vw'
+  		},
+  		height: {
+  			'almost-full': 'calc(100vh - 2rem)',
+  			'screen-80': '80vh',
+  			'screen-70': '70vh'
+  		},
+  		minHeight: {
+  			'almost-full': 'calc(100vh - 2rem)',
+  			'screen-80': '80vh',
+  			'screen-70': '70vh',
+  			'screen-60': '60vh'
+  		},
+  		backgroundColor: {
+  			'abra-primary': '#9d38c8',
+  			'abra-secondary': '#e0a88f',
+  			'abra-accent': '#d3c75f',
+  			'abra-neutral': '#07030a',
+  			'abra-base-100': '#f8f2fb'
+  		},
+  		textColor: {
+  			'abra-primary': '#9d38c8',
+  			'abra-secondary': '#e0a88f',
+  			'abra-accent': '#d3c75f',
+  			'abra-neutral': '#07030a',
+  			'abra-base-100': '#f8f2fb'
+  		},
+  		borderColor: {
+  			'abra-primary': '#9d38c8',
+  			'abra-secondary': '#e0a88f',
+  			'abra-accent': '#d3c75f',
+  			'abra-neutral': '#07030a',
+  			'abra-base-100': '#f8f2fb'
+  		},
+  		fontFamily: {
+  			sans: ['Inter', 'sans-serif'],
+  			serif: ['Merriweather', 'serif']
+  		},
+  		borderRadius: {
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		colors: {
+  			background: 'hsl(var(--background))',
+  			foreground: 'hsl(var(--foreground))',
+  			card: {
+  				DEFAULT: 'hsl(var(--card))',
+  				foreground: 'hsl(var(--card-foreground))'
+  			},
+  			popover: {
+  				DEFAULT: 'hsl(var(--popover))',
+  				foreground: 'hsl(var(--popover-foreground))'
+  			},
+  			primary: {
+  				DEFAULT: 'hsl(var(--primary))',
+  				foreground: 'hsl(var(--primary-foreground))'
+  			},
+  			secondary: {
+  				DEFAULT: 'hsl(var(--secondary))',
+  				foreground: 'hsl(var(--secondary-foreground))'
+  			},
+  			muted: {
+  				DEFAULT: 'hsl(var(--muted))',
+  				foreground: 'hsl(var(--muted-foreground))'
+  			},
+  			accent: {
+  				DEFAULT: 'hsl(var(--accent))',
+  				foreground: 'hsl(var(--accent-foreground))'
+  			},
+  			destructive: {
+  				DEFAULT: 'hsl(var(--destructive))',
+  				foreground: 'hsl(var(--destructive-foreground))'
+  			},
+  			border: 'hsl(var(--border))',
+  			input: 'hsl(var(--input))',
+  			ring: 'hsl(var(--ring))',
+  			chart: {
+  				'1': 'hsl(var(--chart-1))',
+  				'2': 'hsl(var(--chart-2))',
+  				'3': 'hsl(var(--chart-3))',
+  				'4': 'hsl(var(--chart-4))',
+  				'5': 'hsl(var(--chart-5))'
+  			}
+  		}
+  	}
   },
-  daisyui: {
-    themes: [
-      // {
-      //   abra: {
-      //     "primary": "#9d38c8",
-      //     "secondary": "#e0a88f",
-      //     "accent": "#d3c75f",
-      //     "neutral": "#07030a",
-      //     "base-100": "#f8f2fb",
-      //   },
-      // },
-    ], // only one theme
-  },
+  daisyui: {},
   plugins: [
-    // require('daisyui'),
     daisyui,
+    tailwindcssAnimate
   ],
 }

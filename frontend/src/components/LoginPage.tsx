@@ -3,8 +3,10 @@
 import React from 'react';
 import PageLayout from './PageLayout';
 import { Link, useNavigate } from 'react-router-dom';
+import { ThemeProvider } from './Theming/ThemeProvider';
+import { ThemeToggle } from './Theming/ThemeToggle';
 
-export default function LoginPage() {
+const LoginPage = () => {
     const navigate = useNavigate();
 
     const [form, setForm] = React.useState({ username: '', password: '' });
@@ -42,14 +44,19 @@ export default function LoginPage() {
 
     return (
         <>
-        <nav className='w-full py-[40px] flex flex-row align-center px-[40px] bg-abra-accent'>
-            <Link to='/'>
-                <h1 className='text-4xl font-bold'>ABRA Tools</h1>
-            </Link>
+        <nav className='w-full py-[40px] flex flex-row align-center px-[40px] bg-abra-accent justify-between'>
+            <div>
+                <Link to='/'>
+                    <h1 className='text-4xl font-bold'>ABRA Tools</h1>
+                </Link>
+            </div>
+            <div>
+                <ThemeToggle />
+            </div>
         </nav>
         <PageLayout>
             <div className='flex flex-col items-center justify-center gap-[20px] h-screen-70'>
-                <div className='flex flex-col items-center justify-center gap-[20px] p-[20px] py-[20px] rounded-md border-2 border-abra-primary bg-white'>
+                <div className='flex flex-col items-center justify-center gap-[20px] p-[20px] py-[20px] rounded-md border-2 border-abra-primary dark:bg-muted bg-white'>
                     <form onSubmit={handleSubmit} className='flex flex-col items-center justify-center gap-5'>
                         <div className='flex flex-col items-center justify-center gap-x-1.5'>
                             <input
@@ -68,7 +75,7 @@ export default function LoginPage() {
                                 required={true}
                                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                             />
-                            <button type="submit" disabled={loading} className='rounded-md w-min-content h-[30px] border-abra-accent border-4 text-2xl text-center flex flex-col align-center justify-center p-[25px]'>
+                            <button type="submit" disabled={loading} className='rounded-md w-min-content h-[30px] border-abra-accent border-4 text-2xl text-center flex flex-col align-center justify-center p-[25px] bg-muted'>
                                 {loading ? 'Loading...' : 'Submit'}
                             </button>
                         </div>
@@ -80,3 +87,11 @@ export default function LoginPage() {
         </>
     );
   }
+
+export default () => {
+    return (
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+            <LoginPage />
+        </ThemeProvider>
+    );
+}

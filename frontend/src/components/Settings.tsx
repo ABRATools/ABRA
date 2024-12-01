@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import useAuth from '../hooks/useAuth';
 import { User } from '../types/user';
+import { ThemeProvider } from '@/components/Theming/ThemeProvider';
 
 // get user possible user settings such as changing password, email, updating 2FA, etc.
 export default function Settings() {
@@ -15,7 +16,9 @@ export default function Settings() {
 		return <div>Loading...</div>;
 	}
     return (
-        <RenderSettings />
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+            <RenderSettings />
+        </ThemeProvider>
     );
 }
 

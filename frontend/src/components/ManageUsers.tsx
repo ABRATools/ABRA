@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import useAuth from '../hooks/useAuth';
 import { User } from '../types/user';
 import UserSettings from './UserSettings';
+import { ThemeProvider } from './Theming/ThemeProvider';
 
 export default function ManageUsers() {
     const { isAuthorized, loading } = useAuth(() => {
@@ -16,7 +17,9 @@ export default function ManageUsers() {
 		return <div>Loading...</div>;
 	}
     return (
-        <RenderManageUsers />
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+            <RenderManageUsers />
+        </ThemeProvider>
     );
 }
 
