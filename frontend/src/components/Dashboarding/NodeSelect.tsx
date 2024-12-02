@@ -17,8 +17,8 @@ import {
   } from "@/components/ui/resizable"
 
 export default function NodeSelect( nodes: Node[] ) {
+    const nodeArr = Object.values(nodes);
     const [selectedNode, setSelectedNode] = useState<Node>(nodes[0]);
-
     return (
         <div className='flex flex-row w-full h-full min-h-[70vh] shadow-xl'>
             {/* Left Side - Node Buttons */}
@@ -26,7 +26,8 @@ export default function NodeSelect( nodes: Node[] ) {
                 <ResizablePanel defaultSize={10} className="border-[#ccc] box-border border-r-[2px] min-h-144">
                     <div className="h-full min-h-[70vh]">
                         <ScrollArea className="h-full min-w-fit w-full">
-                            {Object.keys(nodes).length ? Object.values(nodes).map((node) => (
+                            {/* {Object.keys(nodes).length ? Object.values(nodes).map((node) => ( */}
+                            {nodeArr.length ? nodeArr.map((node) => (
                                 <div className='flex flex-col w-full h-full'>
                                     <Button
                                         variant={selectedNode.node_id === node.node_id ? 'default' : 'ghost'}

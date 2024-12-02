@@ -4,6 +4,7 @@ import datetime
 from pydantic import BaseModel
 from typing import Optional, List
 
+import random
 import os
 import sys
 import redis
@@ -297,7 +298,7 @@ async def get_node_data(request: Request, session = Depends(get_session), token:
   if token:
     env1_1 = Environment(env_id = 1, name='Env 1', ip='10.0.2.1', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=10, memory=2.1, disk=30, max_cpus=4, max_memory=8, max_disk=100, node_id=1)
     env2_1 = Environment(env_id = 2, name='Env 2', ip='10.0.2.2', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=22, memory=14, disk=88, max_cpus=4, max_memory=16, max_disk=100, node_id=1)
-    node1 = Node(node_id=1,name='Node 1',ip='10.0.11',os='Linux',status='Active',uptime='1d 2h 3m',cpu_percent=40,memory=2,disk=300,max_cpus=4,max_memory=8,max_disk=1000,environments=[env1_1])
+    node1 = Node(node_id=1,name='Node 1',ip='10.0.11',os='Linux',status='Active',uptime='1d 2h 3m',cpu_percent=20,memory=2,disk=200,max_cpus=4,max_memory=8,max_disk=1000,environments=[env1_1])
     node1.environments.append(env1_1)
     node1.environments.append(env2_1)
 
@@ -312,10 +313,30 @@ async def get_node_data(request: Request, session = Depends(get_session), token:
     node3.environments.append(env1_3)
     node3.environments.append(env2_3)
     node3.environments.append(env3_3)
+    sample_data1 = [node1, node2, node3]
 
-    nodes = [node1, node2, node3]
+    env1_1 = Environment(env_id = 1, name='Env 1', ip='10.0.2.1', os='Linux', status='Active', uptime='2d 2h 3m', cpu_percent=60, memory=8.1, disk=20, max_cpus=4, max_memory=8, max_disk=100, node_id=1)
+    env2_1 = Environment(env_id = 2, name='Env 2', ip='10.0.2.2', os='Linux', status='Active', uptime='2d 2h 3m', cpu_percent=42, memory=4, disk=8, max_cpus=4, max_memory=16, max_disk=100, node_id=1)
+    node1 = Node(node_id=1,name='Node 1',ip='10.0.11',os='Linux',status='Active',uptime='2d 2h 3m',cpu_percent=40,memory=7,disk=300,max_cpus=4,max_memory=8,max_disk=1000,environments=[env1_1])
+    node1.environments.append(env1_1)
+    node1.environments.append(env2_1)
+
+    env1_2 = Environment(env_id = 1, name='Env 1', ip='10.0.2.1', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=10, memory=2.1, disk=30, max_cpus=4, max_memory=8, max_disk=100, node_id=2)
+    node2 = Node(node_id=2,name='Node 2',ip='10.0.12',os='Linux',status='Active',uptime='1d 2h 3m',cpu_percent=30,memory=7.7,disk=30,max_cpus=4,max_memory=8,max_disk=100,environments=[])
+    node2.environments.append(env1_2)
+
+    env1_3 = Environment(env_id = 1, name='Env 1', ip='10.0.2.1', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=10, memory=2.1, disk=30, max_cpus=4, max_memory=8, max_disk=100, node_id=3)
+    env2_3 = Environment(env_id = 2, name='Env 2', ip='10.0.2.2', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=22, memory=14, disk=88, max_cpus=4, max_memory=16, max_disk=100, node_id=3)
+    env3_3 = Environment(env_id = 3, name='Env 3', ip='10.0.2.3', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=40, memory=4.8, disk=30.4, max_cpus=4, max_memory=8, max_disk=100, node_id=3)
+    node3 = Node(node_id=3,name='Node 3',ip='10.0.13',os='Linux',status='Active',uptime='1d 2h 3m',cpu_percent=70,memory=20,disk=300,max_cpus=4,max_memory=32,max_disk=2000,environments=[])
+    node3.environments.append(env1_3)
+    node3.environments.append(env2_3)
+    node3.environments.append(env3_3)
+    sample_data2 = [node1, node2, node3]
+
+    random_choice = random.choice([sample_data1, sample_data2])
     # nodes = db.get_all_nodes(session)
-    nodes_json = [node.model_dump() for node in nodes]
+    nodes_json = [node.model_dump() for node in random_choice]
     return JSONResponse(content={'nodes': nodes_json}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
