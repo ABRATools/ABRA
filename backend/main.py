@@ -289,6 +289,7 @@ async def get_nodes_and_environments(request: Request, session = Depends(get_ses
     nodes = db.get_nodes_and_environments(session)
     print("got nodes:", nodes)
     nodes = [Node(
+      id=node.id,
       name=node.name,
       ip=node.ip,
       port=node.port,
@@ -298,17 +299,19 @@ async def get_nodes_and_environments(request: Request, session = Depends(get_ses
         machine_name=env.machine_name,
         description=env.description,
         os=env.os,
-        total_cpu=env.total_cpu,
-        total_memory=env.total_memory,
-        total_disk=env.total_disk,
         ip=env.ip,
-        port=env.port,
         status=env.status,
+        max_cpus=env.max_cpus,
+        max_memory=env.max_memory,
+        max_disk=env.max_disk,
+        current_cpu_percent=env.current_cpu_percent,
+        current_memory_percent=env.current_memory_percent,
+        current_disk_percent=env.current_disk_percent,
         node_id=env.node_id,
       ) for env in node.environments],
     ) for node in nodes]
     nodes_json = [node.model_dump() for node in nodes]
-    print(nodes_json)
+    # print(nodes_json)
     return JSONResponse(content={'nodes': nodes_json}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
@@ -326,14 +329,14 @@ async def get_nodes_and_environments(request: Request, session = Depends(get_ses
 async def add_node(request: Request, session = Depends(get_session)) -> JSONResponse:
   if 'user' in request.session:
     data = await request.json()
-    node = Node(
+    node = db.Node(
       name=data['name'],
       ip=data['ip'],
       port=data['port'],
-      status=data['status'],
+      status="UNKNOWN", # a nodes status is unknown until we can ping it
       environments=[],
     )
-    db.create_node(session, node)
+    db.add_node(session, node)
     return JSONResponse(content={'message': 'Node added successfully'}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 

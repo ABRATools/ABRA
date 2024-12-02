@@ -104,5 +104,11 @@ def get_nodes(db):
 
 def get_nodes_and_environments(db):
     # need to left join nodes and environments on node.id = environment.node_id
-    nodes = db.query(Node).join(Environment, Node.id == Environment.node_id).all()
+    nodes = db.query(Node).outerjoin(Environment, Node.id == Environment.node_id).all()
     return nodes
+
+def add_node(db, node : Node):
+    # add the node to the Node table in the db
+    print("Trying to add", node)
+    db.add(node)
+    db.commit()
