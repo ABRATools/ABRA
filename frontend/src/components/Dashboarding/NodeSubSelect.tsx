@@ -13,6 +13,7 @@ import NodeConfig from "./NodeConfig";
 import { Node } from '@/types/node';
 
 export default function NodeSubSelect(nodeData: Node) {
+    console.log('NodeData:', nodeData);
     const [selectedMenu, setSelectedMenu] = useState('Summary');
     const renderContent = () => {
         switch (selectedMenu) {
