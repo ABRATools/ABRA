@@ -11,7 +11,7 @@ import EnvironmentSummary from "./EnvironmentSummary";
 import EnvironmentConfig from "./EnvironmentConfig";
 import { Environment } from "@/types/environment";
 
-export default function NodeSubSelect( envData: Environment ) {
+export default function EnvironmentSubSelect( envData: Environment ) {
     const [selectedMenu, setSelectedMenu] = useState('Summary');
 
     const renderContent = () => {

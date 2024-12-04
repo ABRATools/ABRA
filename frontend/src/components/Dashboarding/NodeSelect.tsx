@@ -4,7 +4,7 @@ Date: 11/6/24
 File: NodeSelect.tsx
 Description: Node Select Component (for selecting a node to focus on)
 */
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import NodeSubSelect from "./NodeSubSelect";
 import { Node } from '@/types/node';
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -17,8 +17,30 @@ import {
   } from "@/components/ui/resizable"
 
 export default function NodeSelect( nodes: Node[] ) {
-    const nodeArr = Object.values(nodes);
-    const [selectedNode, setSelectedNode] = useState<Node>(nodes[0]);
+    const [data, setData] = useState<Node[]>([]);
+    const [selectedNode, setSelectedNode] = useState<Node | null>(nodes[0]);
+    const selectedIndexRef = useRef(-1);
+
+    useEffect(() => {
+        // why does react do this? why can't I just use the nodes array?
+        const nodesArray = Object.values(nodes);
+        setData(nodesArray);
+
+        // if valid index
+        if (selectedIndexRef.current >= 0 && selectedIndexRef.current < nodesArray.length) {
+            setSelectedNode(nodesArray[selectedIndexRef.current]);
+        } else {
+            // default to 0th index if possible
+            selectedIndexRef.current = nodesArray.length > 0 ? 0 : -1;
+            setSelectedNode(nodesArray[0] || null);
+        }
+    }, [nodes]);
+  
+    const handleSelectionChange = (newIndex: number) => {
+        selectedIndexRef.current = newIndex;
+        setSelectedNode(data[newIndex] || null);
+    };
+
     return (
         <div className='flex flex-row w-full h-full min-h-[70vh] shadow-xl'>
             {/* Left Side - Node Buttons */}
@@ -26,16 +48,15 @@ export default function NodeSelect( nodes: Node[] ) {
                 <ResizablePanel defaultSize={10} className="border-[#ccc] box-border border-r-[2px] min-h-144">
                     <div className="h-full min-h-[70vh]">
                         <ScrollArea className="h-full min-w-fit w-full">
-                            {/* {Object.keys(nodes).length ? Object.values(nodes).map((node) => ( */}
-                            {nodeArr.length ? nodeArr.map((node) => (
+                            {data.length ? data.map((node, index) => (
                                 <div className='flex flex-col w-full h-full'>
                                     <Button
-                                        variant={selectedNode.node_id === node.node_id ? 'default' : 'ghost'}
+                                        variant={selectedNode && selectedNode.node_id === node.node_id ? 'default' : 'ghost'}
                                         key={node.node_id}
-                                        onClick={() => setSelectedNode(node)}
+                                        onClick={() => handleSelectionChange(index)}
                                         className='hover:bg-blue-500 hover:cursor-pointer rounded-none text-lg px-[20px]'
                                         style={{
-                                            backgroundColor: selectedNode.node_id === node.node_id ? '#007bff' : '',
+                                            backgroundColor: selectedNode && selectedNode.node_id === node.node_id ? '#007bff' : '',
                                         }}
                                     >
                                         {node.name}
@@ -53,9 +74,15 @@ export default function NodeSelect( nodes: Node[] ) {
 
                 <ResizablePanel defaultSize={90}>
                     {/* Right Side - NodeSubSelect Component */}
-                    <div className="w-full h-full min-h-[70vh]">
-                        <NodeSubSelect {...selectedNode} />
-                    </div>
+                    {selectedNode ? (
+                        <div className="w-full h-full min-h-[70vh]">
+                            <NodeSubSelect {...selectedNode} />
+                        </div>
+                    ) : (
+                        <div className="w-full h-full min-h-[70vh]">
+                            <p>No Node Selected</p>
+                        </div>
+                    )}
                 </ResizablePanel>
             </ResizablePanelGroup>
         </div>
