@@ -1194,6 +1194,11 @@ html:is(.dark *) {
   --tw-text-opacity: 0.2;
 }
 
+.btm-nav > * .label {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 @keyframes button-pop {
   0% {
     transform: scale(var(--btn-focus-scale, 0.98));
@@ -1326,16 +1331,6 @@ html:is(.dark *) {
 
 .input::-webkit-date-and-time-value {
   text-align: inherit;
-}
-
-.link:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.link:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
 }
 
 .link:focus {
@@ -1747,12 +1742,20 @@ html:is(.dark *) {
   border-width: 0;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
 
 .relative {
   position: relative;
+}
+
+.inset-0 {
+  inset: 0px;
 }
 
 .left-2 {
@@ -1850,12 +1853,12 @@ html:is(.dark *) {
   margin-top: 0.25rem;
 }
 
-.mt-4 {
-  margin-top: 1rem;
+.mt-2 {
+  margin-top: 0.5rem;
 }
 
-.mt-\[5px\] {
-  margin-top: 5px;
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .box-border {
@@ -1944,14 +1947,6 @@ html:is(.dark *) {
 
 .h-\[30px\] {
   height: 30px;
-}
-
-.h-\[40px\] {
-  height: 40px;
-}
-
-.h-\[60px\] {
-  height: 60px;
 }
 
 .h-\[var\(--radix-select-trigger-height\)\] {
@@ -2079,6 +2074,10 @@ html:is(.dark *) {
 
 .max-w-\[100px\] {
   max-width: 100px;
+}
+
+.max-w-\[500px\] {
+  max-width: 500px;
 }
 
 .max-w-full {
@@ -2367,11 +2366,6 @@ html:is(.dark *) {
   border-color: rgb(18 49 35 / var(--tw-border-opacity, 1));
 }
 
-.border-\[\#6fcdc6\] {
-  --tw-border-opacity: 1;
-  border-color: rgb(111 205 198 / var(--tw-border-opacity, 1));
-}
-
 .border-\[\#ccc\] {
   --tw-border-opacity: 1;
   border-color: rgb(204 204 204 / var(--tw-border-opacity, 1));
@@ -2404,11 +2398,6 @@ html:is(.dark *) {
   border-top-color: transparent;
 }
 
-.bg-\[\#6fcdc6\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(111 205 198 / var(--tw-bg-opacity, 1));
-}
-
 .bg-abra-accent {
   --tw-bg-opacity: 1;
   background-color: rgb(211 199 95 / var(--tw-bg-opacity, 1));
@@ -2423,17 +2412,17 @@ html:is(.dark *) {
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
 }
 
+.bg-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity, 1));
+}
+
 .bg-border {
   background-color: hsl(var(--border));
 }
 
 .bg-destructive {
   background-color: hsl(var(--destructive));
-}
-
-.bg-blue-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 .bg-fuchsia-400 {
@@ -2443,7 +2432,7 @@ html:is(.dark *) {
 
 .bg-gray-300 {
   --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
 }
 
 .bg-gray-500 {
@@ -2491,12 +2480,12 @@ html:is(.dark *) {
   background-color: rgb(253 224 71 / var(--tw-bg-opacity, 1));
 }
 
-.fill-current {
-  fill: currentColor;
-}
-
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
+}
+
+.fill-current {
+  fill: currentColor;
 }
 
 .p-0 {
@@ -2557,11 +2546,6 @@ html:is(.dark *) {
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
-}
-
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
 }
 
 .px-\[10px\] {
@@ -2717,11 +2701,6 @@ html:is(.dark *) {
   color: rgb(0 123 255 / var(--tw-text-opacity, 1));
 }
 
-.text-\[\#6fcdc6\] {
-  --tw-text-opacity: 1;
-  color: rgb(111 205 198 / var(--tw-text-opacity, 1));
-}
-
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
@@ -2738,7 +2717,7 @@ html:is(.dark *) {
 
 .text-gray-700 {
   --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity));
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
 }
 
 .text-green-600 {
@@ -2776,22 +2755,8 @@ html:is(.dark *) {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
-.no-underline {
-  text-decoration-line: none;
-}
-
 .underline-offset-4 {
   text-underline-offset: 4px;
-}
-
-.placeholder-\[\#6fcdc6\]::-moz-placeholder {
-  --tw-placeholder-opacity: 1;
-  color: rgb(111 205 198 / var(--tw-placeholder-opacity, 1));
-}
-
-.placeholder-\[\#6fcdc6\]::placeholder {
-  --tw-placeholder-opacity: 1;
-  color: rgb(111 205 198 / var(--tw-placeholder-opacity, 1));
 }
 
 .opacity-50 {

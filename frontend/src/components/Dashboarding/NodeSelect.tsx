@@ -40,16 +40,16 @@ export default function NodeSelect( nodes: Node[] ) {
         selectedIndexRef.current = newIndex;
         setSelectedNode(data[newIndex] || null);
     };
-    fetchNodes();
-    if (nodes && nodes.length !== 0) { 
-      setSelectedNode(nodes[0]);
-      console.log("Selected node: ", nodes[0]);
-    }
-    else {
-      setSelectedNode(nodes[0]); // forcing it to have a value
-      console.log("Nodes are null or empty");
-    }
-  }, []); 
+    // fetchNodes();
+    // if (nodes && nodes.length !== 0) { 
+    //   setSelectedNode(nodes[0]);
+    //   console.log("Selected node: ", nodes[0]);
+    // }
+    // else {
+    //   setSelectedNode(nodes[0]); // forcing it to have a value
+    //   console.log("Nodes are null or empty");
+    // }
+  // }, []); 
 
     return (
         <div className='flex flex-row w-full h-full min-h-[70vh] shadow-xl'>
@@ -98,34 +98,3 @@ export default function NodeSelect( nodes: Node[] ) {
         </div>
     );
   }
-
-  return (
-    <>
-      <div className="flex flex-row w-full h-full">
-        {/* Left Side - Node Buttons */}
-        <div className="max-w-[5vw] min-w-min border-[#ccc] border-r-[1px] h-full box-border min-h-144">
-          {selectedNode &&
-            nodes.map((node) => (
-              <button
-                key={node.id}
-                onClick={() => setSelectedNode(node)}
-                className="hover:bg-blue-300 hover:cursor-pointer rounded-sm mb-4 text-lg py-[10x] px-[20px] lg:py-[20x] lg:px-[40px]"
-                style={{
-                  backgroundColor:
-                    selectedNode.id === node.id ? "#007bff" : "#f0f0f0",
-                  color: selectedNode.id === node.id ? "#fff" : "#000",
-                }}
-              >
-                {node.id}
-              </button>
-            ))}
-        </div>
-
-        {/* Right Side - NodeSubSelect Component */}
-        <div className="w-full h-full">
-          <NodeSubSelect nodeData={selectedNode} />
-        </div>
-      </div>
-    </>
-  );
-}
