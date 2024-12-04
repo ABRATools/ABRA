@@ -33,15 +33,16 @@ async function FetchNodes(): Promise<Node[]> {
 	  return [];
   }
 
-const RenderDashboard = () => {
+const Dashboard = () => {
 	const [, forceUpdate] = useState(true);
 	const [data, setData] = useState<Node[]>([]);
 	const [loading, setLoading] = useState(true);
+
+	// on mount
 	useEffect(() => {
 	  const fetchData = async () => {
 		try {
 			const nodes = await FetchNodes();
-			console.log('Fetched nodes:', nodes);
 			setData(nodes);
 		} catch (error) {
 			console.error('Failed to fetch nodes:', error);
@@ -66,9 +67,9 @@ const RenderDashboard = () => {
 	  return <div>No data</div>;
 	}
 	return <NodeSelect {...data} />;
-  }
+}
 
-export default function Dashboard() {
+export default () => {
 	const { isAuthorized, loading } = useAuth(() => {
 		window.location.href = '/login';
 	});
@@ -78,10 +79,10 @@ export default function Dashboard() {
 	if (loading) {
 		return <LoadingDisplay />;
 	}
-    return (
-        <ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
-            <Navbar />
-            <RenderDashboard />
-        </ThemeProvider>
-    );
+	return (
+		<ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
+			<Navbar />
+			<Dashboard />
+		</ThemeProvider>
+	);
 }

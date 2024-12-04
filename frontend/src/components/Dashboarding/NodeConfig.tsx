@@ -4,9 +4,14 @@ Date: 11/17/24
 File: NodeConfig.tsx
 Description: Component for viewing/editing node configurations
 */
+import { useEffect, useState } from 'react';
 import { Node } from "@/types/node";
 
 export default function NodeConfig( nodeData: Node ) {
+    const [data, setData] = useState<Node | null>(nodeData);
+    useEffect(() => {
+        setData(nodeData);
+    }, [nodeData]);
     /*
     page to edit firewall rules, network settings, etc.
     */
@@ -15,11 +20,11 @@ export default function NodeConfig( nodeData: Node ) {
         <>
             <div className="p-[10px] rounded-[8px]">
                 <h2 className="text-[#007bff] text-2xl">Node Configuration</h2>
-                <p><strong>Node Name:</strong> {nodeData.name}</p>
-                <p><strong>OS:</strong> {nodeData.os}</p>
-                <p><strong>IP:</strong> {nodeData.ip}</p>
-                <p><strong>Status:</strong> {nodeData.status}</p>
-                <p><strong>Uptime:</strong> {nodeData.uptime}</p>
+                <p><strong>Node Name:</strong> {data?.name}</p>
+                <p><strong>OS:</strong> {data?.os}</p>
+                <p><strong>IP:</strong> {data?.ip}</p>
+                <p><strong>Status:</strong> {data?.status}</p>
+                <p><strong>Uptime:</strong> {data?.uptime}</p>
 
                 <h3 className="text-[#007bff] text-xl">Firewall Rules</h3>
                 <ul>

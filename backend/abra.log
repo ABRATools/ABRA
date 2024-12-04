@@ -173,3 +173,14 @@
 2024-12-01 17:22:05,884 | INFO | User admin is attempting to log in
 2024-12-01 17:22:06,180 | INFO | User admin has successfully logged in
 2024-12-01 17:22:06,188 | INFO | User admin has successfully logged in
+2024-12-02 14:34:57,333 | INFO | User admin is attempting to log in
+2024-12-02 14:34:57,615 | INFO | User admin has successfully logged in
+2024-12-02 14:34:57,655 | INFO | User admin has successfully logged in
+2024-12-02 15:24:04,481 | INFO | No auth header found
+2024-12-02 15:24:04,482 | INFO | No token found
+2024-12-03 12:15:51,893 | INFO | User admin is attempting to log in
+2024-12-03 12:15:52,173 | INFO | User admin has successfully logged in
+2024-12-03 12:15:52,206 | INFO | User admin has successfully logged in
+2024-12-03 20:24:08,847 | INFO | User admin is attempting to log in
+2024-12-03 20:24:09,119 | INFO | User admin has successfully logged in
+2024-12-03 20:24:09,154 | INFO | User admin has successfully logged in
