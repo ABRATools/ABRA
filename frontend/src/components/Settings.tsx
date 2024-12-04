@@ -1,22 +1,51 @@
 import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
-import { useAuthenticateUser } from '../hooks/useAuthenticateUser';
+import useAuth from '../hooks/useAuth';
 import { User } from '../types/user';
+import { ThemeProvider } from '@/components/Theming/ThemeProvider';
+import LoadingDisplay from '@/components/LoadingDisplay';
 
 // get user possible user settings such as changing password, email, updating 2FA, etc.
 export default function Settings() {
-    useAuthenticateUser();
+    const { isAuthorized, loading } = useAuth(() => {
+		window.location.href = '/login';
+	});
+	if (isAuthorized) {
+		console.log('Authorized');
+	}
+	if (loading) {
+		return <LoadingDisplay />;
+	}
+    return (
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+            <RenderSettings />
+        </ThemeProvider>
+    );
+}
+
+const RenderSettings = () => {
     const [user, setUser] = useState<User | null>(null);
     const [email, setEmail] = useState<string>("");
-    const [groups, setGroups] = useState<string[]>([]);
     const [passwordChangeDate, setPasswordChangeDate] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const [groups, setGroups] = useState<string[]>([]);
+
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+        return <div>Unauthorized</div>;
+    }
 
     useEffect(() => {
         const fetchUserSettings = async () => {
             try {
-                const response = await fetch('/get_user_settings');
+                const response = await fetch('/get_user_settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 if (response.ok) {
                     const data = await response.json();
                     const userData: User = data['user'];
@@ -39,7 +68,8 @@ export default function Settings() {
             const response = await fetch('/update_user_settings', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     email,

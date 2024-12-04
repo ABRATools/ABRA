@@ -1,12 +1,24 @@
 import Navbar from './Navbar';
 import PageLayout from './PageLayout';
-import { useAuthenticateUser } from "../hooks/useAuthenticateUser";
+import useAuth from "../hooks/useAuth";
 import { Link } from 'react-router-dom';
 
 // redirect to dashboard if user is authenticated
 
 export default function IndexPage() {
-    useAuthenticateUser();
+    const { isAuthorized, loading } = useAuth(() => {
+		window.location.href = '/login';
+		// console.log('Unauthorized');
+	});
+
+	if (isAuthorized) {
+		// window.location.href = '/dashboard';
+		console.log('Authorized');
+	}
+
+	if (loading) {
+		return <div>Loading...</div>;
+	}
 
     return (
         <div>

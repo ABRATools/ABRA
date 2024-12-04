@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #compile tailwind
-npx tailwindcss -i ../backend/static/input.css -o ./src/output.css
+npx tailwindcss -i ./src/index.css -o ./src/output.css
 
 # Build the frontend
 tsc && vite build

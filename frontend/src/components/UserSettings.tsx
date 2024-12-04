@@ -8,13 +8,16 @@ interface Group {
 }
 
 function UserSettings({ user }: { user: User }) {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+        return <div>Unauthorized</div>;
+    }
+    const permissions = ["Read", "Write", "Delete", "Create", "Update", "Admin"];
+    const [groups, setGroups] = useState<Group[]>([]);
     const [displayUpdateEmail, setDisplayUpdateEmail] = useState(false);
     const [displayUpdateGroups, setDisplayUpdateGroups] = useState(false);
     const [displayChangePassword, setDisplayChangePassword] = useState(false);
     // const [displayUpdate2FA, setDisplayUpdate2FA] = useState(false);
-
-    const permissions = ['read', 'write', 'delete', 'admin', 'superadmin', 'owner', 'superduperadmin'];
-    const [groups, setGroups] = useState<Group[]>([]);
 
     const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
     const [passwordResetError, setPasswordResetError] = useState('');
@@ -42,12 +45,19 @@ function UserSettings({ user }: { user: User }) {
     const handleDisplayGroupAddMenu = async () => {
         setDisplayUpdateGroups(true);
         try {
-            const response = await fetch('/get_users');
+            const response = await fetch('/get_users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
             if (response.ok) {
                 const data = await response.json();
-                const groupData: Group[] = data['groups'];
+                console.log(data);
+                const groupData: Group[] = JSON.parse(data.groups);
+                console.log(groupData);
                 setGroups(groupData);
-                
             } else {
                 console.error('Failed to fetch group data');
             }
@@ -67,7 +77,13 @@ function UserSettings({ user }: { user: User }) {
     // const toggleUpdate2FA = () => {
     //     setDisplayUpdate2FA(!displayUpdate2FA);
     // };
+    // const toggleUpdate2FA = () => {
+    //     setDisplayUpdate2FA(!displayUpdate2FA);
+    // };
 
+    // const closeUpdate2FA = () => {
+    //     setDisplayUpdate2FA(false);
+    // };
     // const closeUpdate2FA = () => {
     //     setDisplayUpdate2FA(false);
     // };
@@ -83,6 +99,7 @@ function UserSettings({ user }: { user: User }) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({ username: user.username, password: passwordResetForm.password, confirmPassword: passwordResetForm.confirmPassword }),
             });
@@ -107,6 +124,7 @@ function UserSettings({ user }: { user: User }) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({ username: user.username, email: emailForm.email }),
             });
@@ -171,7 +189,7 @@ function UserSettings({ user }: { user: User }) {
                         </ul>
                     </div>
                 </div>
-                {displayUpdateGroups && (
+                {/* {displayUpdateGroups && (
                     <div className="mt-2 px-[10px]">
                         <h3>Update Groups for {user.username}</h3>
                         <div className='flex flex-row gap-x-[10px]'>
@@ -191,7 +209,7 @@ function UserSettings({ user }: { user: User }) {
                         </div>
                         <button className="bg-abra-accent text-white p-2 rounded-lg mt-2">Submit</button>
                     </div>
-                )}
+                )} */}
 
                 <div className="flex flex-row w-full justify-between px-[10px] min-w-max">
                     <div className='flex flex-row gap-x-[10px]'>
@@ -238,7 +256,7 @@ function UserSettings({ user }: { user: User }) {
                     </div>
                 )}
 
-            {/* <div className="flex flex-row w-full justify-between px-[10px] min-w-max">
+                {/* <div className="flex flex-row w-full justify-between px-[10px] min-w-max">
                     <div>
                         <h3 className="text-xl font-semibold self-center align-middle">2FA Confirmed: {user.is_totp_confirmed ? "Yes" : "No"}</h3>
                     </div>
