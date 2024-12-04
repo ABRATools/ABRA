@@ -20,8 +20,9 @@ export default function NodeSelect() {
         const response = await fetch("/get_nodes");
         if (response.ok) {
           const data = await response.json();
-          const nodeData: Node[] = data["nodes"];
+          const nodeData: Node[] = data["nodes"]; // this isnt working because the response is not in the correct format *** FIX LATER
           setNodes(nodeData);
+          console.log("Got nodes: ", nodes);
         } else {
           console.error("Failed to fetch nodes");
         }
@@ -30,10 +31,18 @@ export default function NodeSelect() {
       }
     };
     fetchNodes();
-  }, []);
+    if (nodes && nodes.length !== 0) { 
+      setSelectedNode(nodes[0]);
+      console.log("Selected node: ", nodes[0]);
+    }
+    else {
+      setSelectedNode(nodes[0]); // forcing it to have a value
+      console.log("Nodes are null or empty");
+    }
+  }, []); 
 
   //
-  // if nodes is null, return link to manage nodes page
+  // if nodes is null, return link to manage nodes page?
 
   if (nodes === null) {
     return (
@@ -41,8 +50,6 @@ export default function NodeSelect() {
         <h1>Nodes are null</h1>
       </div>
     );
-  } else if (nodes.length !== 0 && selectedNode === null) {
-    setSelectedNode(nodes[0]);
   }
 
   return (

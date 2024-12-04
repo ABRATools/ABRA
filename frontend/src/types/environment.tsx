@@ -3,12 +3,13 @@ export type Environment = {
     machine_name: string;
     description: string;
     os: string;
-    total_cpu: number;
-    total_memory: number;
-    total_disk: number;
-    
     ip: string;
-    port: number;
     status: string;
+    max_cpus: number;
+    max_memory: number;
+    max_disk: number;
+    current_cpu_percent: number;
+    current_memory_percent: number;
+    current_disk_percent: number;
     node_id: number;
 };
