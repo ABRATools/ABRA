@@ -184,3 +184,23 @@
 2024-12-03 20:24:08,847 | INFO | User admin is attempting to log in
 2024-12-03 20:24:09,119 | INFO | User admin has successfully logged in
 2024-12-03 20:24:09,154 | INFO | User admin has successfully logged in
+2024-12-04 13:40:43,265 | INFO | User admin is attempting to log in
+2024-12-04 13:40:43,463 | INFO | User admin has successfully logged in
+2024-12-04 13:40:43,467 | INFO | User admin has successfully logged in
+2024-12-04 14:17:30,991 | INFO | No auth header found
+2024-12-04 14:17:30,991 | INFO | No token found
+2024-12-04 14:17:32,319 | INFO | User admin is attempting to log in
+2024-12-04 14:17:32,526 | INFO | User admin has successfully logged in
+2024-12-04 14:17:32,528 | INFO | User admin has successfully logged in
+2024-12-04 22:02:33,815 | INFO | User admin is attempting to log in
+2024-12-04 22:02:34,027 | INFO | User admin has successfully logged in
+2024-12-04 22:02:34,031 | INFO | User admin has successfully logged in
+2024-12-04 22:40:05,371 | INFO | User admin is attempting to log in
+2024-12-04 22:40:05,572 | INFO | User admin has successfully logged in
+2024-12-04 22:40:05,573 | INFO | User admin has successfully logged in
+2024-12-04 22:42:59,054 | INFO | User admin is attempting to log in
+2024-12-04 22:42:59,248 | INFO | User admin has successfully logged in
+2024-12-04 22:42:59,249 | INFO | User admin has successfully logged in
+2024-12-04 23:22:58,895 | INFO | User admin is attempting to log in
+2024-12-04 23:22:59,091 | INFO | User admin has successfully logged in
+2024-12-04 23:22:59,094 | INFO | User admin has successfully logged in

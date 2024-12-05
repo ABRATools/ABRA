@@ -157,6 +157,10 @@ async def get_login(request: Request):
 async def get_dashboard(request: Request):
   return templates.TemplateResponse('index.html', {'request': request})
 
+@app.get("/nodes")
+async def get_nodes(request: Request):
+  return templates.TemplateResponse('index.html', {'request': request})
+
 @app.post("/login")
 async def process_login(request: Request, session = Depends(get_session)) -> JSONResponse:
   data = await request.json()
