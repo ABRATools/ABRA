@@ -3,6 +3,7 @@ import socket
 import os, os.path
 from podman import PodmanClient
 
+# uri='ssh://root@10.0.1.11/run/podman/podman.sock'
 uri='unix:///run/podman/podman.sock'
 
 #add logging
@@ -40,7 +41,7 @@ while True:
             con.send(f"{c.status}".encode())
     elif(tokens[0].decode()=="end"):
         '''end {container name} '''
-        #spindown container
+        #check to make sure container is real first
         with PodmanClient(base_url=uri) as client:
             c=client.containers.get(tokens[1])
             c.stop()

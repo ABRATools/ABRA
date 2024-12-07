@@ -1,24 +1,12 @@
 import psutil
-import socket
 import os, os.path
 from podman import PodmanClient
 
 uri='unix:///run/podman/podman.sock'
 
-#add logging
-#change socket to be able to receive multiple messages
+class HeadNode:
+    def __init__(self):
 
-server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-#server.bind("/tmp/abra.sock")
-server.bind(("",5555))
-server.listen(1)
-while True:
-  con,addr=server.accept()
-  datagram=con.recv(1024)
-  if datagram:
-    print(datagram)
-    tokens=datagram.strip().split()
-    print(tokens)
 
     if(tokens[0].decode()=="status"):
         with PodmanClient(base_url=uri) as client:
@@ -40,7 +28,7 @@ while True:
             con.send(f"{c.status}".encode())
     elif(tokens[0].decode()=="end"):
         '''end {container name} '''
-        #spindown container
+        #check to make sure container is real first
         with PodmanClient(base_url=uri) as client:
             c=client.containers.get(tokens[1])
             c.stop()
