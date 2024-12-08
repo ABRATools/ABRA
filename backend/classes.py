@@ -32,6 +32,8 @@ class Group(BaseModel):
 class ConnectionStrings(BaseModel):
   name: str
   connection_string: str
+  type: str
+  ip: Optional[str]
 
 class Environment(BaseModel):
   env_id: int

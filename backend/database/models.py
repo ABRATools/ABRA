@@ -53,6 +53,8 @@ class ConnectionStrings(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(50), nullable=False)
     connection_string = Column(String(255), nullable=False)
+    type = Column(String(50), nullable=False)
+    ip = Column(String(50), nullable=True)
 
 class Node(Base):
     __tablename__ = 'nodes'

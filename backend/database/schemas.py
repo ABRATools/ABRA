@@ -52,14 +52,14 @@ def create_user(db, username, password, admin):
     db.add(user)
     db.commit()
 
-def create_connection_string(db, name, connection_string):
+def create_connection_string(db, name, connection_string, conn_str_type, ip=None):
     exists = db.query(ConnectionStrings).filter(ConnectionStrings.name == name).first()
     if exists is not None:
         print(f"Connection string {name} already exists")
         exists.connection_string = connection_string
         db.commit()
         return
-    connection_string = ConnectionStrings(name=name, connection_string=connection_string)
+    connection_string = ConnectionStrings(name=name, connection_string=connection_string, type=conn_str_type, ip=ip)
     db.add(connection_string)
     db.commit()
 

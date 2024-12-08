@@ -313,14 +313,14 @@ async def post_connection_string(input: InputConnString, session = Depends(get_s
     conn_string = "http+unix:///run/podman/podman.sock"
   else:
     return JSONResponse(content={'message': 'Invalid request'}, status_code=400)
-  db.create_connection_string(session, input.name, conn_string)
+  db.create_connection_string(session, input.name, conn_string, input.source, input.ip)
   return JSONResponse(content={'message': 'Connection string added successfully'}, status_code=200)
   # return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 @app.get("/get_node_locations")
 async def get_node_locations(request: Request, session = Depends(get_session)) -> JSONResponse:
   node_locations = db.get_connection_strings(session)
-  node_locations_json = [ConnectionStrings(name=location.name, connection_string=location.connection_string).model_dump_json() for location in node_locations]
+  node_locations_json = [ConnectionStrings(name=location.name, connection_string=location.connection_string, type=location.type, ip=location.ip).model_dump_json() for location in node_locations]
   return JSONResponse(content={'node_locations': node_locations_json}, status_code=200)
 
 # test data for now
