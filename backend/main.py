@@ -24,7 +24,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse, RedirectResponse, JSONResponse
 
-from classes import User, FilteredUser, Group, Environment, Node, Service, Task, Notification
+from classes import User, FilteredUser, Group, Environment, Node, Service, Task, Notification, ConnectionStrings
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -295,6 +295,33 @@ async def get_groups(request: Request, session = Depends(get_session), token: Au
     print(groups_json)
     return JSONResponse(content={'groups': groups_json}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+class InputConnString(BaseModel):
+  name: str
+  source: str
+  ip: Optional[str] = None
+
+@app.post("/add_connection_string")
+async def post_connection_string(input: InputConnString, session = Depends(get_session)) -> JSONResponse:
+  # if token:
+  conn_string = None
+  if input.source == 'remote':
+    if input.ip is None:
+      return JSONResponse(content={'message': 'Invalid request'}, status_code=400)
+    conn_string = f"http+ssh://root@{input.ip}/run/podman/podman.sock"
+  elif input.source == 'local':
+    conn_string = "http+unix:///run/podman/podman.sock"
+  else:
+    return JSONResponse(content={'message': 'Invalid request'}, status_code=400)
+  db.create_connection_string(session, input.name, conn_string)
+  return JSONResponse(content={'message': 'Connection string added successfully'}, status_code=200)
+  # return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@app.get("/get_node_locations")
+async def get_node_locations(request: Request, session = Depends(get_session)) -> JSONResponse:
+  node_locations = db.get_connection_strings(session)
+  node_locations_json = [ConnectionStrings(name=location.name, connection_string=location.connection_string).model_dump_json() for location in node_locations]
+  return JSONResponse(content={'node_locations': node_locations_json}, status_code=200)
 
 # test data for now
 @app.post('/node-data')

@@ -1,5 +1,5 @@
 from sqlalchemy import and_, func
-from .models import User, Group, Node, Environment
+from .models import User, Group, Node, Environment, ConnectionStrings
 import datetime
 
 def get_hash_for_user(db, username):
@@ -51,6 +51,20 @@ def create_user(db, username, password, admin):
         user.groups.append(group)
     db.add(user)
     db.commit()
+
+def create_connection_string(db, name, connection_string):
+    exists = db.query(ConnectionStrings).filter(ConnectionStrings.name == name).first()
+    if exists is not None:
+        print(f"Connection string {name} already exists")
+        exists.connection_string = connection_string
+        db.commit()
+        return
+    connection_string = ConnectionStrings(name=name, connection_string=connection_string)
+    db.add(connection_string)
+    db.commit()
+
+def get_connection_strings(db):
+    return db.query(ConnectionStrings).all()
 
 def delete_user(db, username):
     user = db.query(User).filter(User.username == username).first()

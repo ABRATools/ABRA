@@ -370,3 +370,8 @@
 2024-12-08 11:29:05,344 | INFO | Email changed successfully for user admin
 2024-12-08 11:29:43,587 | INFO | Email change request for user sysadmin1
 2024-12-08 11:29:43,604 | INFO | Email changed successfully for user sysadmin1
+2024-12-08 12:53:18,700 | INFO | No auth header found
+2024-12-08 12:53:18,700 | INFO | No token found
+2024-12-08 12:53:23,718 | INFO | User admin is attempting to log in
+2024-12-08 12:53:23,998 | INFO | User admin has successfully logged in
+2024-12-08 12:53:24,002 | INFO | User admin has successfully logged in

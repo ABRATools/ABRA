@@ -29,6 +29,10 @@ class Group(BaseModel):
   permissions: Optional[str]
   users: List[str]
 
+class ConnectionStrings(BaseModel):
+  name: str
+  connection_string: str
+
 class Environment(BaseModel):
   env_id: int
   name: str
