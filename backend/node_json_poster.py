@@ -7,7 +7,7 @@ import json
 node_connection_strings = []
 
 async def get_node_locations():
-  url = "http://127.0.0.1:7000/get_node_locations"
+  url = "http://127.0.0.1:8000/get_node_locations"
 
   async with aiohttp.ClientSession() as session:
     try:

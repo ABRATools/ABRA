@@ -355,3 +355,18 @@
 2024-12-04 23:22:58,895 | INFO | User admin is attempting to log in
 2024-12-04 23:22:59,091 | INFO | User admin has successfully logged in
 2024-12-04 23:22:59,094 | INFO | User admin has successfully logged in
+2024-12-08 11:22:10,740 | INFO | User admin is attempting to log in
+2024-12-08 11:22:11,022 | WARNING | User admin has failed to log in
+2024-12-08 11:22:54,882 | INFO | User admin is attempting to log in
+2024-12-08 11:22:55,151 | INFO | User admin has successfully logged in
+2024-12-08 11:23:27,691 | INFO | User admin is attempting to log in
+2024-12-08 11:23:27,960 | INFO | User admin has successfully logged in
+2024-12-08 11:25:04,566 | INFO | User admin is attempting to log in
+2024-12-08 11:25:04,846 | INFO | User admin has successfully logged in
+2024-12-08 11:25:31,001 | INFO | User admin is attempting to log in
+2024-12-08 11:25:31,281 | INFO | User admin has successfully logged in
+2024-12-08 11:25:31,294 | INFO | User admin has successfully logged in
+2024-12-08 11:29:05,325 | INFO | Email change request for user admin
+2024-12-08 11:29:05,344 | INFO | Email changed successfully for user admin
+2024-12-08 11:29:43,587 | INFO | Email change request for user sysadmin1
+2024-12-08 11:29:43,604 | INFO | Email changed successfully for user sysadmin1

@@ -83,10 +83,10 @@ class AuthToken(BaseModel):
 def create_access_token(data: dict, expires_delta: Optional[datetime.timedelta] = None):
   to_encode = data.copy()
   if expires_delta:
-    expire = datetime.datetime.now(datetime.UTC) + expires_delta
+    expire = datetime.datetime.now(datetime.timezone.utc) + expires_delta
   else:
     # default expiration time is 15 minutes
-    expire = datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=15)
+    expire = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=15)
   to_encode.update({"exp": expire})
   encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
   return encoded_jwt

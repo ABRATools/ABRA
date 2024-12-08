@@ -818,33 +818,18 @@ html {
 }
 
 body {
-  background-color: hsl(var(--muted));
+  background-color: hsl(var(--secondary));
   color: hsl(var(--foreground));
-}
-
-body:is(.dark *) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(41 37 36 / var(--tw-bg-opacity, 1));
 }
 
 html {
-  background-color: hsl(var(--muted));
+  background-color: hsl(var(--secondary));
   color: hsl(var(--foreground));
-}
-
-html:is(.dark *) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(41 37 36 / var(--tw-bg-opacity, 1));
 }
 
 #main {
-  background-color: hsl(var(--muted));
+  background-color: hsl(var(--secondary));
   color: hsl(var(--foreground));
-}
-
-#main:is(.dark *) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(41 37 36 / var(--tw-bg-opacity, 1));
 }
 
 .container {

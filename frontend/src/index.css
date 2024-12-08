@@ -88,12 +88,12 @@ html, body {
     @apply border-border;
   }
   body {
-    @apply dark:bg-stone-800 bg-muted text-foreground;
+    @apply bg-secondary text-foreground;
   }
   html {
-    @apply dark:bg-stone-800 bg-muted text-foreground;
+    @apply bg-secondary text-foreground;
   }
   #main {
-    @apply dark:bg-stone-800 bg-muted text-foreground;
+    @apply bg-secondary text-foreground;
   }
 }
