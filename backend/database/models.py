@@ -48,31 +48,45 @@ class Group(Base):
     permissions = Column(String(255), nullable=True)
     users = relationship("User", secondary=user_groups, back_populates="groups")
 
+class ConnectionStrings(Base):
+    __tablename__ = 'connection_strings'
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(50), nullable=False)
+    connection_string = Column(String(255), nullable=False)
+
 class Node(Base):
     __tablename__ = 'nodes'
     id = Column(Integer, primary_key=True, index=True)
+    active = Column(Boolean, default=True)
     name = Column(String(50), nullable=False)
     ip = Column(String(50), nullable=False)
-    port = Column(Integer, nullable=False)
+    os = Column(String(50), nullable=False)
     status = Column(String(50), default="undefined", nullable=False)
+    uptime = Column(String(50), nullable=False)
+    cpu_percent = Column(Integer, nullable=False)
+    memory = Column(Float, nullable=False)
+    disk = Column(Float, nullable=False)
+    max_cpus = Column(Integer, nullable=False)
+    max_memory = Column(Float, nullable=False)
+    max_disk = Column(Float, nullable=False)
     # node can have multiple environments
     environments = relationship("Environment", back_populates="nodes")
 
 class Environment(Base):
     __tablename__ = 'environments'
-
     id = Column(Integer, primary_key=True, index=True)
-    machine_name = Column(String(50), nullable=False)
-    description = Column(String(255), nullable=True)
-    os = Column(String(50), default="undefined", nullable=False)
+    active = Column(Boolean, default=True)
+    name = Column(String(50), nullable=False)
     ip = Column(String(50), nullable=True)
+    os = Column(String(50), default="undefined", nullable=False)
     status = Column(String(50), default="undefined", nullable=False)
+    uptime = Column(String(50), nullable=False)
+    cpu_percent = Column(Integer, nullable=False)
+    memory = Column(Float, nullable=False)
+    disk = Column(Float, nullable=False)
     max_cpus = Column(Integer, nullable=False)
     max_memory = Column(Integer, nullable=False)
     max_disk = Column(Integer, nullable=False)
-    current_cpu_percent = Column(Integer, nullable=False)
-    current_memory_percent = Column(Integer, nullable=False)
-    current_disk_percent = Column(Integer, nullable=False)
     # environment can only have one node
     node_id = Column(Integer, ForeignKey('nodes.id'))
     nodes = relationship("Node", back_populates="environments")
