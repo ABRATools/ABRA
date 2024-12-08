@@ -1,5 +1,5 @@
 from sqlalchemy import and_, func
-from .models import User, Group
+from .models import User, Group, Node, Environment
 import datetime
 
 def get_hash_for_user(db, username):
@@ -106,4 +106,24 @@ def reset_totp_secret(db, username):
     user.totp_secret = None
     user.is_totp_enabled = False
     user.is_totp_confirmed = False
+    db.commit()
+
+"""
+NODE STUFF
+"""
+
+def get_nodes(db):
+    nodes = db.query(Node).all()
+    # print(nodes)
+    return nodes
+
+def get_nodes_and_environments(db):
+    # need to left join nodes and environments on node.id = environment.node_id
+    nodes = db.query(Node).outerjoin(Environment, Node.id == Environment.node_id).all()
+    return nodes
+
+def add_node(db, node : Node):
+    # add the node to the Node table in the db
+    print("Trying to add", node)
+    db.add(node)
     db.commit()

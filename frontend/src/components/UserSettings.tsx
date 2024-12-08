@@ -19,9 +19,6 @@ function UserSettings({ user }: { user: User }) {
     const [displayChangePassword, setDisplayChangePassword] = useState(false);
     // const [displayUpdate2FA, setDisplayUpdate2FA] = useState(false);
 
-    const permissions = ['read', 'write', 'delete', 'admin', 'superadmin', 'owner', 'superduperadmin'];
-    const [groups, setGroups] = useState<Group[]>([]);
-
     const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
     const [passwordResetError, setPasswordResetError] = useState('');
 
@@ -259,7 +256,7 @@ function UserSettings({ user }: { user: User }) {
                     </div>
                 )}
 
-            {/* <div className="flex flex-row w-full justify-between px-[10px] min-w-max">
+                {/* <div className="flex flex-row w-full justify-between px-[10px] min-w-max">
                     <div>
                         <h3 className="text-xl font-semibold self-center align-middle">2FA Confirmed: {user.is_totp_confirmed ? "Yes" : "No"}</h3>
                     </div>

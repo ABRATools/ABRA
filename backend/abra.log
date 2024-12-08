@@ -194,3 +194,164 @@
 2024-12-03 22:57:02,264 | INFO | User admin is attempting to log in
 2024-12-03 22:57:02,532 | INFO | User admin has successfully logged in
 2024-12-03 22:57:02,534 | INFO | User admin has successfully logged in
+2024-11-18 19:52:58,375 | INFO | Password change request for user sysadmin1
+2024-11-18 19:52:58,702 | INFO | Password changed successfully for user sysadmin1
+2024-11-18 19:52:58,702 | INFO | Unauthorized request to change password for user... redirecting to login
+2024-11-18 19:53:36,029 | INFO | User admin is attempting to log in
+2024-11-18 19:53:36,332 | INFO | User admin has successfully logged in
+2024-11-18 19:53:36,333 | INFO | User admin is in group admin
+2024-11-18 19:54:08,253 | INFO | Password change request for user sysadmin1
+2024-11-18 19:54:08,577 | INFO | Password changed successfully for user sysadmin1
+2024-11-18 19:54:08,577 | INFO | Unauthorized request to change password for user... redirecting to login
+2024-11-18 19:55:10,263 | INFO | Password change request for user sysadmin1
+2024-11-18 19:55:10,597 | INFO | Password changed successfully for user sysadmin1
+2024-11-18 19:55:35,913 | INFO | User sysadmin1 is attempting to log in
+2024-11-18 19:55:36,217 | INFO | User sysadmin1 has successfully logged in
+2024-11-18 19:56:33,999 | INFO | Password change request for user sysadmin1
+2024-11-18 19:56:34,315 | INFO | Password changed successfully for user sysadmin1
+2024-11-30 11:15:50,792 | INFO | User admin is attempting to log in
+2024-11-30 11:15:51,103 | INFO | User admin has successfully logged in
+2024-11-30 11:15:51,110 | INFO | User admin is in group admin
+2024-11-30 12:36:48,558 | INFO | No auth header found
+2024-11-30 12:36:48,558 | INFO | No token found
+2024-11-30 12:43:58,382 | INFO | User admin is attempting to log in
+2024-11-30 12:43:58,708 | INFO | User admin has successfully logged in
+2024-11-30 12:43:58,871 | INFO | User admin has successfully logged in
+2024-11-30 12:44:01,220 | INFO | Token successfully decoded
+2024-11-30 12:44:01,654 | INFO | Token successfully decoded
+2024-11-30 12:45:26,595 | INFO | User admin is attempting to log in
+2024-11-30 12:45:26,887 | INFO | User admin has successfully logged in
+2024-11-30 12:45:26,891 | INFO | User admin has successfully logged in
+2024-11-30 12:45:36,256 | INFO | Token successfully decoded
+2024-11-30 12:45:36,602 | INFO | Token successfully decoded
+2024-11-30 12:46:24,574 | INFO | Token successfully decoded
+2024-11-30 12:46:43,915 | INFO | Token successfully decoded
+2024-11-30 12:46:44,124 | INFO | Token successfully decoded
+2024-11-30 12:46:51,284 | INFO | Token successfully decoded
+2024-11-30 12:50:44,082 | INFO | Token successfully decoded
+2024-11-30 12:55:00,989 | INFO | Token successfully decoded
+2024-11-30 13:15:06,951 | INFO | Token successfully decoded
+2024-11-30 13:15:07,119 | INFO | Token successfully decoded
+2024-11-30 13:15:07,120 | INFO | Token successfully decoded
+2024-11-30 13:15:37,139 | INFO | JWTError: Signature has expired.
+2024-11-30 13:16:07,133 | INFO | JWTError: Signature has expired.
+2024-11-30 13:16:37,520 | INFO | JWTError: Signature has expired.
+2024-11-30 13:17:07,175 | INFO | JWTError: Signature has expired.
+2024-11-30 13:17:37,157 | INFO | JWTError: Signature has expired.
+2024-11-30 13:18:07,307 | INFO | JWTError: Signature has expired.
+2024-11-30 13:18:37,173 | INFO | JWTError: Signature has expired.
+2024-11-30 13:19:07,191 | INFO | JWTError: Signature has expired.
+2024-11-30 13:20:24,875 | INFO | JWTError: Signature has expired.
+2024-11-30 13:20:26,742 | INFO | JWTError: Signature has expired.
+2024-11-30 13:20:26,745 | INFO | JWTError: Signature has expired.
+2024-11-30 13:21:46,918 | INFO | User admin is attempting to log in
+2024-11-30 13:21:47,256 | INFO | User admin has successfully logged in
+2024-11-30 13:21:47,265 | INFO | User admin has successfully logged in
+2024-11-30 13:29:06,696 | INFO | No auth header found
+2024-11-30 13:29:06,696 | INFO | No token found
+2024-11-30 13:36:10,637 | INFO | No auth header found
+2024-11-30 13:36:10,638 | INFO | No token found
+2024-11-30 13:57:23,773 | INFO | JWTError: Signature has expired.
+2024-11-30 13:57:24,717 | INFO | JWTError: Signature has expired.
+2024-11-30 13:57:31,483 | INFO | User admin is attempting to log in
+2024-11-30 13:57:31,817 | INFO | User admin has successfully logged in
+2024-11-30 13:57:31,827 | INFO | User admin has successfully logged in
+2024-11-30 16:58:02,845 | INFO | JWTError: Signature has expired.
+2024-11-30 16:58:04,360 | INFO | JWTError: Signature has expired.
+2024-11-30 17:03:35,925 | INFO | User admin is attempting to log in
+2024-11-30 17:03:36,250 | INFO | User admin has successfully logged in
+2024-11-30 17:03:36,258 | INFO | User admin has successfully logged in
+2024-11-30 17:04:19,532 | INFO | No auth header found
+2024-11-30 17:04:19,533 | INFO | No token found
+2024-11-30 17:04:19,747 | INFO | No auth header found
+2024-11-30 17:04:19,751 | INFO | No token found
+2024-11-30 17:11:48,002 | INFO | User admin is attempting to log in
+2024-11-30 17:11:48,308 | INFO | User admin has successfully logged in
+2024-11-30 17:11:48,315 | INFO | User admin has successfully logged in
+2024-11-30 17:58:34,925 | INFO | No auth header found
+2024-11-30 17:58:34,927 | INFO | No token found
+2024-11-30 17:58:35,158 | INFO | No auth header found
+2024-11-30 17:58:35,158 | INFO | No token found
+2024-11-30 18:06:54,602 | INFO | User admin is attempting to log in
+2024-11-30 18:06:54,943 | INFO | User admin has successfully logged in
+2024-11-30 18:06:54,991 | INFO | User admin has successfully logged in
+2024-11-30 18:08:16,062 | INFO | No auth header found
+2024-11-30 18:08:16,063 | INFO | No token found
+2024-11-30 18:08:33,313 | INFO | User admin is attempting to log in
+2024-11-30 18:08:33,644 | INFO | User admin has successfully logged in
+2024-11-30 18:08:33,655 | INFO | User admin has successfully logged in
+2024-11-30 18:15:15,200 | INFO | No auth header found
+2024-11-30 18:15:15,200 | INFO | No token found
+2024-11-30 18:15:20,442 | INFO | User admin is attempting to log in
+2024-11-30 18:15:20,737 | INFO | User admin has successfully logged in
+2024-11-30 18:15:20,742 | INFO | User admin has successfully logged in
+2024-11-30 18:23:59,006 | INFO | No auth header found
+2024-11-30 18:23:59,007 | INFO | No token found
+2024-11-30 18:24:06,841 | INFO | User admin is attempting to log in
+2024-11-30 18:24:07,216 | INFO | User admin has successfully logged in
+2024-11-30 18:24:07,230 | INFO | User admin has successfully logged in
+2024-11-30 18:26:10,902 | INFO | No auth header found
+2024-11-30 18:26:10,906 | INFO | No token found
+2024-11-30 18:27:08,793 | INFO | User admin is attempting to log in
+2024-11-30 18:27:09,107 | INFO | User admin has successfully logged in
+2024-11-30 18:27:09,114 | INFO | User admin has successfully logged in
+2024-11-30 20:08:15,403 | INFO | No auth header found
+2024-11-30 20:08:15,404 | INFO | No token found
+2024-11-30 20:08:19,641 | INFO | User admin is attempting to log in
+2024-11-30 20:08:19,944 | INFO | User admin has successfully logged in
+2024-11-30 20:08:19,951 | INFO | User admin has successfully logged in
+2024-11-30 21:42:30,132 | INFO | No auth header found
+2024-11-30 21:42:30,133 | INFO | No token found
+2024-11-30 21:42:47,484 | INFO | User admin is attempting to log in
+2024-11-30 21:42:47,770 | INFO | User admin has successfully logged in
+2024-11-30 21:42:47,775 | INFO | User admin has successfully logged in
+2024-12-01 09:26:10,430 | INFO | User admin is attempting to log in
+2024-12-01 09:26:10,719 | INFO | User admin has successfully logged in
+2024-12-01 09:26:10,776 | INFO | User admin has successfully logged in
+2024-12-01 11:53:23,581 | INFO | No auth header found
+2024-12-01 11:53:23,582 | INFO | No token found
+2024-12-01 11:53:53,616 | INFO | User admin is attempting to log in
+2024-12-01 11:53:53,896 | INFO | User admin has successfully logged in
+2024-12-01 11:53:53,900 | INFO | User admin has successfully logged in
+2024-12-01 13:52:23,655 | INFO | User admin is attempting to log in
+2024-12-01 13:52:23,950 | INFO | User admin has successfully logged in
+2024-12-01 13:52:23,993 | INFO | User admin has successfully logged in
+2024-12-01 16:57:26,276 | INFO | User admin is attempting to log in
+2024-12-01 16:57:26,587 | INFO | User admin has successfully logged in
+2024-12-01 16:57:26,650 | INFO | User admin has successfully logged in
+2024-12-01 17:21:54,552 | INFO | No auth header found
+2024-12-01 17:21:54,553 | INFO | No token found
+2024-12-01 17:22:05,884 | INFO | User admin is attempting to log in
+2024-12-01 17:22:06,180 | INFO | User admin has successfully logged in
+2024-12-01 17:22:06,188 | INFO | User admin has successfully logged in
+2024-12-02 14:34:57,333 | INFO | User admin is attempting to log in
+2024-12-02 14:34:57,615 | INFO | User admin has successfully logged in
+2024-12-02 14:34:57,655 | INFO | User admin has successfully logged in
+2024-12-02 15:24:04,481 | INFO | No auth header found
+2024-12-02 15:24:04,482 | INFO | No token found
+2024-12-03 12:15:51,893 | INFO | User admin is attempting to log in
+2024-12-03 12:15:52,173 | INFO | User admin has successfully logged in
+2024-12-03 12:15:52,206 | INFO | User admin has successfully logged in
+2024-12-03 20:24:08,847 | INFO | User admin is attempting to log in
+2024-12-03 20:24:09,119 | INFO | User admin has successfully logged in
+2024-12-03 20:24:09,154 | INFO | User admin has successfully logged in
+2024-12-04 13:40:43,265 | INFO | User admin is attempting to log in
+2024-12-04 13:40:43,463 | INFO | User admin has successfully logged in
+2024-12-04 13:40:43,467 | INFO | User admin has successfully logged in
+2024-12-04 14:17:30,991 | INFO | No auth header found
+2024-12-04 14:17:30,991 | INFO | No token found
+2024-12-04 14:17:32,319 | INFO | User admin is attempting to log in
+2024-12-04 14:17:32,526 | INFO | User admin has successfully logged in
+2024-12-04 14:17:32,528 | INFO | User admin has successfully logged in
+2024-12-04 22:02:33,815 | INFO | User admin is attempting to log in
+2024-12-04 22:02:34,027 | INFO | User admin has successfully logged in
+2024-12-04 22:02:34,031 | INFO | User admin has successfully logged in
+2024-12-04 22:40:05,371 | INFO | User admin is attempting to log in
+2024-12-04 22:40:05,572 | INFO | User admin has successfully logged in
+2024-12-04 22:40:05,573 | INFO | User admin has successfully logged in
+2024-12-04 22:42:59,054 | INFO | User admin is attempting to log in
+2024-12-04 22:42:59,248 | INFO | User admin has successfully logged in
+2024-12-04 22:42:59,249 | INFO | User admin has successfully logged in
+2024-12-04 23:22:58,895 | INFO | User admin is attempting to log in
+2024-12-04 23:22:59,091 | INFO | User admin has successfully logged in
+2024-12-04 23:22:59,094 | INFO | User admin has successfully logged in

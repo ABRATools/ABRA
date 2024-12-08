@@ -40,6 +40,16 @@ export default function NodeSelect( nodes: Node[] ) {
         selectedIndexRef.current = newIndex;
         setSelectedNode(data[newIndex] || null);
     };
+    // fetchNodes();
+    // if (nodes && nodes.length !== 0) { 
+    //   setSelectedNode(nodes[0]);
+    //   console.log("Selected node: ", nodes[0]);
+    // }
+    // else {
+    //   setSelectedNode(nodes[0]); // forcing it to have a value
+    //   console.log("Nodes are null or empty");
+    // }
+  // }, []); 
 
     return (
         <div className='flex flex-row w-full h-full min-h-[70vh] shadow-xl'>
@@ -87,4 +97,4 @@ export default function NodeSelect( nodes: Node[] ) {
             </ResizablePanelGroup>
         </div>
     );
-}
+  }
