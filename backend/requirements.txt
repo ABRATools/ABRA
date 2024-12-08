@@ -22,6 +22,7 @@ Jinja2==3.1.4
 ldap3==2.9.1
 MarkupSafe==2.1.5
 nanoid==2.0.0
+netifaces==0.11.0
 paramiko==3.4.0
 passlib==1.7.4
 podman==5.2.0
