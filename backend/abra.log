@@ -377,3 +377,6 @@
 2024-12-08 12:53:24,002 | INFO | User admin has successfully logged in
 2024-12-08 15:30:53,011 | INFO | No auth header found
 2024-12-08 15:30:53,011 | INFO | No token found
+2024-12-08 17:02:37,853 | INFO | User admin is attempting to log in
+2024-12-08 17:02:38,122 | INFO | User admin has successfully logged in
+2024-12-08 17:02:38,128 | INFO | User admin has successfully logged in

@@ -327,49 +327,21 @@ async def get_node_locations(request: Request, session = Depends(get_session)) -
 @app.post('/node-data')
 async def get_node_data(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
-    env1_1 = Environment(env_id = 1, name='Env 1', ip='10.0.2.1', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=10, memory=2.1, disk=30, max_cpus=4, max_memory=8, max_disk=100, node_id=1)
-    env2_1 = Environment(env_id = 2, name='Env 2', ip='10.0.2.2', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=22, memory=14, disk=88, max_cpus=4, max_memory=16, max_disk=100, node_id=1)
-    node1 = Node(node_id=1,name='Node 1',ip='10.0.11',os='Linux',status='Active',uptime='1d 2h 3m',cpu_percent=20,memory=2,disk=200,max_cpus=4,max_memory=8,max_disk=1000,environments=[])
-    node1.environments.append(env1_1)
-    node1.environments.append(env2_1)
-
-    env1_2 = Environment(env_id = 1, name='Env 1', ip='10.0.2.1', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=10, memory=2.1, disk=30, max_cpus=4, max_memory=8, max_disk=100, node_id=2)
-    node2 = Node(node_id=2,name='Node 2',ip='10.0.12',os='Linux',status='Active',uptime='1d 2h 3m',cpu_percent=30,memory=7.7,disk=30,max_cpus=4,max_memory=8,max_disk=100,environments=[])
-    node2.environments.append(env1_2)
-
-    env1_3 = Environment(env_id = 1, name='Env 1', ip='10.0.2.1', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=10, memory=2.1, disk=30, max_cpus=4, max_memory=8, max_disk=100, node_id=3)
-    env2_3 = Environment(env_id = 2, name='Env 2', ip='10.0.2.2', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=22, memory=14, disk=88, max_cpus=4, max_memory=16, max_disk=100, node_id=3)
-    env3_3 = Environment(env_id = 3, name='Env 3', ip='10.0.2.3', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=40, memory=4.8, disk=30.4, max_cpus=4, max_memory=8, max_disk=100, node_id=3)
-    node3 = Node(node_id=3,name='Node 3',ip='10.0.13',os='Linux',status='Active',uptime='1d 2h 3m',cpu_percent=70,memory=20,disk=300,max_cpus=4,max_memory=32,max_disk=2000,environments=[])
-    node3.environments.append(env1_3)
-    node3.environments.append(env2_3)
-    node3.environments.append(env3_3)
-    sample_data1 = [node1, node2, node3]
-
-    env1_1 = Environment(env_id = 1, name='Env 1', ip='10.0.2.1', os='Linux', status='Active', uptime='2d 2h 3m', cpu_percent=60, memory=8.1, disk=20, max_cpus=4, max_memory=8, max_disk=100, node_id=1)
-    env2_1 = Environment(env_id = 2, name='Env 2', ip='10.0.2.2', os='Linux', status='Active', uptime='2d 2h 3m', cpu_percent=42, memory=4, disk=8, max_cpus=4, max_memory=16, max_disk=100, node_id=1)
-    node1 = Node(node_id=1,name='Node 1',ip='10.0.11',os='Linux',status='Active',uptime='2d 2h 3m',cpu_percent=40,memory=7,disk=300,max_cpus=4,max_memory=8,max_disk=1000,environments=[])
-    node1.environments.append(env1_1)
-    node1.environments.append(env2_1)
-
-    env1_2 = Environment(env_id = 1, name='Env 1', ip='10.0.2.1', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=10, memory=2.1, disk=30, max_cpus=4, max_memory=8, max_disk=100, node_id=2)
-    node2 = Node(node_id=2,name='Node 2',ip='10.0.12',os='Linux',status='Active',uptime='0d 2h 3m',cpu_percent=60,memory=2.7,disk=10,max_cpus=4,max_memory=8,max_disk=100,environments=[])
-    node2.environments.append(env1_2)
-
-    env1_3 = Environment(env_id = 1, name='Env 1', ip='10.0.2.1', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=10, memory=2.1, disk=30, max_cpus=4, max_memory=8, max_disk=100, node_id=3)
-    env2_3 = Environment(env_id = 2, name='Env 2', ip='10.0.2.2', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=22, memory=14, disk=88, max_cpus=4, max_memory=16, max_disk=100, node_id=3)
-    env3_3 = Environment(env_id = 3, name='Env 3', ip='10.0.2.3', os='Linux', status='Active', uptime='1d 2h 3m', cpu_percent=40, memory=4.8, disk=30.4, max_cpus=4, max_memory=8, max_disk=100, node_id=3)
-    node3 = Node(node_id=3,name='Node 3',ip='10.0.13',os='Linux',status='Active',uptime='1d 2h 3m',cpu_percent=70,memory=20,disk=300,max_cpus=4,max_memory=32,max_disk=2000,environments=[])
-    node3.environments.append(env1_3)
-    node3.environments.append(env2_3)
-    node3.environments.append(env3_3)
-    sample_data2 = [node1, node2, node3]
-
-    random_choice = random.choice([sample_data1, sample_data2])
-    # nodes = db.get_all_nodes(session)
-    nodes_json = [node.model_dump() for node in random_choice]
+    nodes = db.get_nodes(session)
+    nodes_json = [Node(node_id=node.id, name=node.name, ip=node.ip, os=node.os, status=node.status, uptime=node.uptime, cpu_percent=node.cpu_percent, memory=node.memory, disk=node.disk, max_cpus=node.max_cpus, max_memory=node.max_memory, max_disk=node.max_disk, environments=[Environment(env_id=env.id, name=env.name, ip=env.ip, os=env.os, status=env.status, uptime=env.uptime, cpu_percent=env.cpu_percent, memory=env.memory, disk=env.disk, max_cpus=env.max_cpus, max_memory=env.max_memory, max_disk=env.max_disk, node_id=env.node_id) for env in node.environments]).model_dump_json() for node in nodes]
     return JSONResponse(content={'nodes': nodes_json}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@app.post("/post_node")
+async def post_node(request: Request, session = Depends(get_session)) -> JSONResponse:
+  # if token:
+  data = await request.json()
+  node = Node.model_validate_json(data)
+  if node:
+    db.create_node(session, node)
+    return JSONResponse(content={'message': 'Nodes added successfully'}, status_code=200)
+  return JSONResponse(content={'message': 'Unproccessable Data'}, status_code=422)
+  # return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 @app.get("/logout")
 async def process_logout(request: Request, token: AuthToken = Depends(authenticate_cookie)):

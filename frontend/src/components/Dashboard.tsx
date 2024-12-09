@@ -23,7 +23,11 @@ async function FetchNodes(): Promise<Node[]> {
 	  });
 	  if (response.ok) {
 		const json = await response.json();
-		return json.nodes;
+		const nodes = [];
+		for (const node of json.nodes) {
+			nodes.push(JSON.parse(node));
+		}
+		return nodes;
 	  } else {
 		console.error('Failed to fetch nodes');
 	  }

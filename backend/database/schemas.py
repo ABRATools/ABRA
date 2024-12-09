@@ -126,6 +126,69 @@ def reset_totp_secret(db, username):
 NODE STUFF
 """
 
+def create_environment(db, env):
+    exists = db.query(Environment).filter(Environment.name == env.name).first()
+    if exists is not None:
+        exists.ip = env.ip
+        exists.os = env.os
+        exists.status = env.status
+        exists.uptime = env.uptime
+        exists.cpu_percent = env.cpu_percent
+        exists.memory = env.memory
+        exists.disk = env.disk
+        exists.max_cpus = env.max_cpus
+        exists.max_memory = env.max_memory
+        exists.max_disk = env.max_disk
+        db.commit()
+        return None
+    # get max id
+    max_id = db.query(func.max(Environment.id)).scalar()
+    if max_id is None:
+        max_id = 0
+    # increment max id
+    max_id += 1
+
+    new_env = Environment(id=max_id, name=env.name, ip=env.ip, os=env.os, status=env.status, uptime=env.uptime, cpu_percent=env.cpu_percent, memory=env.memory, disk=env.disk, max_cpus=env.max_cpus, max_memory=env.max_memory, max_disk=env.max_disk)
+    db.add(new_env)
+    db.commit()
+    return new_env
+
+def create_node(db, node):
+    exists = db.query(Node).filter(Node.name == node.name).first()
+    if exists is not None:
+        exists.ip = node.ip
+        exists.os = node.os
+        exists.status = node.status
+        exists.uptime = node.uptime
+        exists.cpu_percent = node.cpu_percent
+        exists.memory = node.memory
+        exists.disk = node.disk
+        exists.max_cpus = node.max_cpus
+        exists.max_memory = node.max_memory
+        exists.max_disk = node.max_disk
+        db.commit()
+        for env in node.environments:
+            new_env = create_environment(db, env)
+            if new_env is not None:
+                exists.environments.append(new_env)
+        return None
+    # get max id
+    max_id = db.query(func.max(Node.id)).scalar()
+    if max_id is None:
+        max_id = 0
+    # increment max id
+    max_id += 1
+
+    new_node = Node(id=max_id, name=node.name, ip=node.ip, os=node.os, status=node.status, uptime=node.uptime, cpu_percent=node.cpu_percent, memory=node.memory, disk=node.disk, max_cpus=node.max_cpus, max_memory=node.max_memory, max_disk=node.max_disk)
+    db.add(new_node)
+    db.commit()
+
+    for env in node.environments:
+        new_env = create_environment(db, env)
+        new_node.environments.append(new_env)
+    
+    db.commit()
+
 def get_nodes(db):
     nodes = db.query(Node).all()
     # print(nodes)
@@ -135,9 +198,3 @@ def get_nodes_and_environments(db):
     # need to left join nodes and environments on node.id = environment.node_id
     nodes = db.query(Node).outerjoin(Environment, Node.id == Environment.node_id).all()
     return nodes
-
-def add_node(db, node : Node):
-    # add the node to the Node table in the db
-    print("Trying to add", node)
-    db.add(node)
-    db.commit()

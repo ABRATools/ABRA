@@ -28,7 +28,6 @@ async def get_node_info(connection_string: ConnectionStrings, message: str, time
     
     writer.write(message.encode())
     await writer.drain()
-    print(f"Sent: {message}")
     
     response_text = ""
     try:
@@ -56,14 +55,22 @@ async def main():
   for connection_string in connection_strings:
     tasks.append(asyncio.create_task(get_node_info(connection_string, "node")))
   responses = await asyncio.gather(*tasks)
-  print(responses)
   
-async def generate_and_post_json(data, url = "http://127.0.0.1:8000/post_nodes"):
+  send_tasks = []
+  for response in responses:
+    if response is None:
+      continue
+    send_tasks.append(asyncio.create_task(post_json(response)))
+
+async def post_json(data, url = "http://127.0.0.1:8000/post_node"):
   async with aiohttp.ClientSession() as session:
     try:
       async with session.post(url, json=data) as response:
-        print(f"Response Code: {response.status}")
-        print(f"Response Body: {await response.text()}")
+        if response.status != 200:
+          print(f"Response Code: {response.status}")
+          print(f"Response Body: {await response.text()}")
+          return
+        print("Successfully posted JSON")
     except Exception as e:
       print(f"Error while posting JSON: {e}")
 
@@ -73,4 +80,4 @@ async def fetch_all_nodes(interval):
     await asyncio.sleep(interval)
 
 if __name__ == "__main__":
-  asyncio.run(fetch_all_nodes(30))
+  asyncio.run(fetch_all_nodes(120))
