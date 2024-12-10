@@ -3,7 +3,7 @@ From almalinux:latest
 LABEL maintainer="ABRA Demonstration Team"
 ENV REFRESHED_AT=2024-12-10
 
-LABEL io.containers.capabilities=VNC,Xfce,Firefox
+#LABEL io.containers.capabilities=VNC,Xfce,Firefox
 
 ## Connection ports for controlling the UI:
 # VNC port:5901
@@ -16,9 +16,9 @@ EXPOSE $VNC_PORT $NO_VNC_PORT
 ## Envrionment config
 ENV HOME=/srv/headless \
     TERM=xterm \
-    STARTUPDIR=/srv/podmanstartup \
-    INST_SCRIPTS=/srv/headless/install \
-    NO_VNC_HOME=/srv/headless/noVNC \
+    STARTUPDIR=/podmanstartup \
+    INST_SCRIPTS=/headless/install \
+    NO_VNC_HOME=/headless/noVNC \
     VNC_COL_DEPTH=24 \
     VNC_RESOLUTION=1280x1024 \
     VNC_PW=vncpassword \
@@ -51,5 +51,5 @@ RUN $INST_SCRIPTS/set_permissions.sh $STARTUPDIR $HOME
 
 USER 1000
 
-ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
+ENTRYPOINT ["/podmanstartup/vnc_startup.sh"]
 CMD ["--wait"]
