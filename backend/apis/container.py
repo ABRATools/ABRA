@@ -3,7 +3,7 @@
 #'container_type':'os_name','python version',['driver','set'],['special','ebpf','rules']
 container_types = {
   'dev_nightly':('rhel-9.5','3.11',
-         [],['test']),
+         ['vnc'],['test']),
   'prod':('rhel-9.4','3.10',
          ['visual studio','gcc-devel'],['record history','monitor usage']),
   'research':('rhel-9.4','3.8',
@@ -18,3 +18,6 @@ ebpf_rules = {
   'test':'./ebpf/test.py'
 }
 
+
+#look at the image folder to view different options
+#work on making them variable
