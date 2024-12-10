@@ -66,6 +66,14 @@ def create_connection_string(db, name, connection_string, conn_str_type, ip=None
 def get_connection_strings(db):
     return db.query(ConnectionStrings).all()
 
+def delete_connection_string(db, name):
+    conn_str = db.query(ConnectionStrings).filter(ConnectionStrings.name == name).first()
+    if conn_str is None:
+        return False
+    db.delete(conn_str)
+    db.commit()
+    return True
+
 def delete_user(db, username):
     user = db.query(User).filter(User.username == username).first()
     db.delete(user)

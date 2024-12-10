@@ -1220,3 +1220,77 @@
 2024-12-09 22:23:07,726 | INFO | JWTError: Signature has expired.
 2024-12-09 22:23:17,726 | INFO | JWTError: Signature has expired.
 2024-12-09 22:23:27,727 | INFO | JWTError: Signature has expired.
+2024-12-10 09:31:49,815 | INFO | JWTError: Signature has expired.
+2024-12-10 09:31:59,814 | INFO | JWTError: Signature has expired.
+2024-12-10 09:32:09,814 | INFO | JWTError: Signature has expired.
+2024-12-10 09:32:19,814 | INFO | JWTError: Signature has expired.
+2024-12-10 09:32:29,815 | INFO | JWTError: Signature has expired.
+2024-12-10 09:32:39,815 | INFO | JWTError: Signature has expired.
+2024-12-10 09:32:49,816 | INFO | JWTError: Signature has expired.
+2024-12-10 09:32:59,817 | INFO | JWTError: Signature has expired.
+2024-12-10 09:33:09,817 | INFO | JWTError: Signature has expired.
+2024-12-10 09:33:19,816 | INFO | JWTError: Signature has expired.
+2024-12-10 09:33:29,817 | INFO | JWTError: Signature has expired.
+2024-12-10 09:33:39,817 | INFO | JWTError: Signature has expired.
+2024-12-10 09:33:49,817 | INFO | JWTError: Signature has expired.
+2024-12-10 09:33:59,818 | INFO | JWTError: Signature has expired.
+2024-12-10 09:34:09,818 | INFO | JWTError: Signature has expired.
+2024-12-10 09:34:19,818 | INFO | JWTError: Signature has expired.
+2024-12-10 09:34:29,819 | INFO | JWTError: Signature has expired.
+2024-12-10 09:34:39,819 | INFO | JWTError: Signature has expired.
+2024-12-10 09:34:50,540 | INFO | JWTError: Signature has expired.
+2024-12-10 09:34:59,820 | INFO | JWTError: Signature has expired.
+2024-12-10 09:35:09,876 | INFO | JWTError: Signature has expired.
+2024-12-10 09:35:19,821 | INFO | JWTError: Signature has expired.
+2024-12-10 09:35:29,821 | INFO | JWTError: Signature has expired.
+2024-12-10 09:35:39,821 | INFO | JWTError: Signature has expired.
+2024-12-10 09:35:49,821 | INFO | JWTError: Signature has expired.
+2024-12-10 09:35:59,822 | INFO | JWTError: Signature has expired.
+2024-12-10 09:36:09,823 | INFO | JWTError: Signature has expired.
+2024-12-10 09:36:19,823 | INFO | JWTError: Signature has expired.
+2024-12-10 09:36:29,823 | INFO | JWTError: Signature has expired.
+2024-12-10 09:36:39,822 | INFO | JWTError: Signature has expired.
+2024-12-10 09:36:49,823 | INFO | JWTError: Signature has expired.
+2024-12-10 09:36:59,823 | INFO | JWTError: Signature has expired.
+2024-12-10 09:37:09,824 | INFO | JWTError: Signature has expired.
+2024-12-10 09:37:19,824 | INFO | JWTError: Signature has expired.
+2024-12-10 09:37:29,825 | INFO | JWTError: Signature has expired.
+2024-12-10 09:37:39,824 | INFO | JWTError: Signature has expired.
+2024-12-10 09:37:49,824 | INFO | JWTError: Signature has expired.
+2024-12-10 09:37:59,825 | INFO | JWTError: Signature has expired.
+2024-12-10 09:38:09,825 | INFO | JWTError: Signature has expired.
+2024-12-10 09:38:19,833 | INFO | JWTError: Signature has expired.
+2024-12-10 09:38:29,043 | INFO | Email change request for user admin
+2024-12-10 09:38:29,054 | INFO | Email changed successfully for user admin
+2024-12-10 09:38:29,826 | INFO | JWTError: Signature has expired.
+2024-12-10 09:38:39,826 | INFO | JWTError: Signature has expired.
+2024-12-10 09:38:49,827 | INFO | JWTError: Signature has expired.
+2024-12-10 09:38:59,827 | INFO | JWTError: Signature has expired.
+2024-12-10 09:39:09,827 | INFO | JWTError: Signature has expired.
+2024-12-10 09:39:19,829 | INFO | JWTError: Signature has expired.
+2024-12-10 09:39:29,828 | INFO | JWTError: Signature has expired.
+2024-12-10 09:39:39,828 | INFO | JWTError: Signature has expired.
+2024-12-10 09:39:45,096 | INFO | User admin is attempting to log in
+2024-12-10 09:39:45,362 | WARNING | User admin has failed to log in
+2024-12-10 09:39:47,866 | INFO | User admin is attempting to log in
+2024-12-10 09:39:48,131 | INFO | User admin has successfully logged in
+2024-12-10 09:39:48,133 | INFO | User admin has successfully logged in
+2024-12-10 09:39:49,828 | INFO | JWTError: Signature has expired.
+2024-12-10 09:39:59,828 | INFO | JWTError: Signature has expired.
+2024-12-10 09:40:09,829 | INFO | JWTError: Signature has expired.
+2024-12-10 09:40:19,829 | INFO | JWTError: Signature has expired.
+2024-12-10 09:40:29,829 | INFO | JWTError: Signature has expired.
+2024-12-10 09:40:39,830 | INFO | JWTError: Signature has expired.
+2024-12-10 09:40:49,831 | INFO | JWTError: Signature has expired.
+2024-12-10 09:40:59,831 | INFO | JWTError: Signature has expired.
+2024-12-10 09:41:09,832 | INFO | JWTError: Signature has expired.
+2024-12-10 09:41:19,831 | INFO | JWTError: Signature has expired.
+2024-12-10 09:41:29,832 | INFO | JWTError: Signature has expired.
+2024-12-10 09:41:32,728 | INFO | Password change request for user sysadmin1
+2024-12-10 09:41:33,039 | INFO | Password changed successfully for user sysadmin1
+2024-12-10 09:41:39,832 | INFO | JWTError: Signature has expired.
+2024-12-10 09:41:49,832 | INFO | JWTError: Signature has expired.
+2024-12-10 09:41:59,833 | INFO | JWTError: Signature has expired.
+2024-12-10 09:42:09,833 | INFO | JWTError: Signature has expired.
+2024-12-10 09:42:19,833 | INFO | JWTError: Signature has expired.
+2024-12-10 09:42:29,833 | INFO | JWTError: Signature has expired.

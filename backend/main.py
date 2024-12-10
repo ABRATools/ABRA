@@ -241,11 +241,16 @@ async def get_audit_log(request: Request, token: AuthToken = Depends(authenticat
 @app.post("/change_password")
 async def get_change_password(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
-    logger.info(f"Password change request for user {username}")
     data = await request.json()
     username = data['username']
     new_password = data['password']
     confirm_password = data['confirmPassword']
+    
+    if new_password == '':
+      logger.error(f"Password cannot be empty")
+      return JSONResponse(content={'message': 'Password cannot be empty'}, status_code=400)
+
+    logger.info(f"Password change request for user {username}")
 
     if new_password != confirm_password:
       logger.error(f"Passwords do not match")

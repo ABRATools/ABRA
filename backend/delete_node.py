@@ -16,12 +16,19 @@ session = obtain_session()
 
 def main(args):
   print([node.name for node in db.get_nodes(session)])
+  print([f"{conn_str.name}: {conn_str.ip}" for conn_str in db.get_connection_strings(session)])
 
   if db.delete_node(session, args.name):
     print(f"Node {args.name} deleted successfully")
   else:
     print(f"Node {args.name} not found")
 
+  if db.delete_connection_string(session, args.name):
+    print(f"Connection string {args.name} deleted successfully")
+  else:
+    print(f"Connection string {args.name} not found")
+
+  print([conn_str.name for conn_str in db.get_connection_strings(session)])
   print([node.name for node in db.get_nodes(session)])
 
 if __name__ == '__main__':
