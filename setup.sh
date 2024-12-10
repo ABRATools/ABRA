@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ -z $1 ]; then
 echo "Node Type Required" && exit 1;
 fi
