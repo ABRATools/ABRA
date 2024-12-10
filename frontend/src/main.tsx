@@ -8,11 +8,13 @@ import LoginPage from './components/LoginPage';
 import ManageUsers from './components/ManageUsers';
 import Audit from './components/Audit';
 import Settings from './components/Settings';
-import ManageNodes from './components/Management/ManageNodes';
+import ManageNodes from './components/Management/ListNodeSettings';
 
 // import SubmitEntry from './components/SubmitEntry'
 
 import './output.css' // output of tailwind css render
+import ListNodeSettings from './components/Management/ListNodeSettings';
+import NodeManager from './components/Management/NodeManager';
 
 const domNode = document.getElementById('root');
 if (!domNode) {
@@ -29,7 +31,7 @@ root.render(
       <Route path="/users" element={<ManageUsers />} />
       <Route path="/audit" element={<Audit />} />
       <Route path="/settings" element={<Settings />} />
-      <Route path="/nodes" element={<ManageNodes />} />
+      <Route path="/nodes" element={<NodeManager />} />
       {/* non-included path */}
       <Route path="*" element={<IndexPage />} />
     </Routes>
