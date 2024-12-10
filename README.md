@@ -1,5 +1,11 @@
 # ABRA-Tools
 
+## Head Node Build
+```curl -o- https://raw.githubusercontent.com/aparkerson/ABRA-Tools/refs/heads/main/setup.sh | bash -s -- head```
+
+## Compute Node Build
+```curl -o- https://raw.githubusercontent.com/aparkerson/ABRA-Tools/refs/heads/main/setup.sh | bash -s -- compute```
+
 ## Frontend / Log Aggregator
 
 ### Frontend: React w/ TS built with Vite
