@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+from datetime import datetime
 from typing import Dict, List, Any
 from logging.handlers import RotatingFileHandler
 
@@ -336,4 +337,99 @@ example_json_data = [
 	}
 ]
 
-# valid = validator.validate_json_structure(example_json_data)
+
+
+class ValidationReporter:
+	# constructor
+	def __init__(self, report_dir: str = "reports"):
+		self.report_dir = report_dir
+
+		try:
+			if not os.path.exists(report_dir):
+				os.makedirs(report_dir)
+			
+		except OSError as e:
+			raise RuntimeError(f"Error creating directory {report_dir}: {e}")
+
+	
+	# generates validation reoprt based on validation results
+	def generate_report(self, input_file: str, results: List[Dict[str, Any]]) -> Dict[str, Any]:
+		if not input_file:
+			raise ValueError("Input file name must have a value.")
+		
+		if not results:
+			raise ValueError("Given validation results list is empty.")
+
+		if not isinstance(results, list):
+			raise ValueError("Expected a filled list of dictionaries.")
+		
+		timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+		ifile = os.path.basename(input_file).replace(".json", "").replace(" ", "_")
+		report_name = f"validation_report_{ifile}_{timestamp}"
+		path = os.path.join(self.report_dir, report_name)
+		
+		try:
+			# calculate results
+			total_entries = len(results)
+			total_valid_entries = 0
+			for result in results:
+				if result.get("is_valid", True):
+					total_valid_entries += 1
+
+			invalid_entries = total_entries - total_valid_entries
+
+			# report structure
+			report = {
+				"structure": {
+					"timestamp": timestamp,
+					"input_file": input_file,
+					"valid_entries": total_valid_entries,
+					"invalid_entries": invalid_entries,
+					"total_entries": total_entries
+				},
+				
+				"results": results
+			}
+
+			# save report
+			with open(path, "w") as ofile:
+				json.dump(report, ofile, indent=4)
+
+			return report
+		
+		except OSError as e:
+			raise RuntimeError(f"Error witing report to {path}: {e}")
+		
+		except IOError as e:
+			raise RuntimeError(f"Error witing report to {path}: {e}")
+		
+	
+	# export to plaintext file
+	def export_to_plaintext(self, report: Dict[str, Any], ofile: str="validation_report.txt"):
+		if not report:
+			raise ValueError("Report data missing.")
+		
+		if not isinstance(report, dict):
+			raise ValueError("Invalid report data, expected type dictionary.")
+			
+		plaintext_path = os.path.join(self.report_dir, ofile)
+		try:
+			with open(plaintext_path, "w") as plaintext_file:
+				plaintext_file.write("JSON Validation Report")
+				plaintext_file.write("\n")
+				plaintext_file.write("\nTimestamp: {report['structure']['timestamp']}")
+				plaintext_file.write("\nInput File: {report['structure']['input_file']}")
+				plaintext_file.write("\nValid Entries: {report['structure']['valid_entries']}")
+				plaintext_file.write("\nInvalid Entries: {report['structure']['invalid_entries']}")
+				plaintext_file.write("\nTotal Entries: {report['structure']['total_entries']}")
+				plaintext_file.write("\n\nDetails:\n")
+
+				for detail in report["details"]:
+					plaintext_file.write(f"{json.dumps(detail, indent=4)}")
+
+		except OSError as e:
+			raise RuntimeError(f"Error writing report to {plaintext_path}: {e}")
+		
+		except IOError as e:
+			raise RuntimeError(f"Error writing report to {plaintext_path}: {e}")
+				
