@@ -40,25 +40,19 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 ### Install xvnc-server & noVNC - HTML5 based VNC viewer
 RUN $INST_SCRIPTS/tigervnc.sh
-RUN $INST_SCRIPTS/no_vnc.sh
+RUN $INST_SCRIPTS/vnc.sh
 
 ### Install firefox
 RUN $INST_SCRIPTS/firefox.sh
 
 ### Install xfce UI
-RUN $INST_SCRIPTS/xfce_ui.sh
+RUN $INST_SCRIPTS/xfce.sh
 ADD ./src/common/xfce/ $HOME/
 
 ### configure startup
 RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
-RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
-RUN $INST_SCRIPTS/rocky.sh
-
-USER 1000
-
-ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
-CMD ["--wait"]
+RUN $INST_SCRIPTS/set_permissions.sh $STARTUPDIR $HOME
 
 USER 1000
 
