@@ -1,0 +1,55 @@
+From almalinux:latest
+
+LABEL maintainer="ABRA Demonstration Team"
+ENV REFRESHED_AT=2024-12-10
+
+#LABEL io.containers.capabilities=VNC,Xfce,Firefox
+
+## Connection ports for controlling the UI:
+# VNC port:5901
+# noVNC webport, connect via http://IP:6901/?password=vncpassword
+ENV DISPLAY=:1 \
+    VNC_PORT=5901 \
+    NO_VNC_PORT=6901
+EXPOSE $VNC_PORT $NO_VNC_PORT
+
+## Envrionment config
+ENV HOME=/srv/headless \
+    TERM=xterm \
+    STARTUPDIR=/podmanstartup \
+    INST_SCRIPTS=/headless/install \
+    NO_VNC_HOME=/headless/noVNC \
+    VNC_COL_DEPTH=24 \
+    VNC_RESOLUTION=1280x1024 \
+    VNC_PW=vncpassword \
+    VNC_VIEW_ONLY=false
+WORKDIR $HOME
+
+### Add all install scripts for further steps
+ADD ./build/common/install/ $INST_SCRIPTS/
+ADD ./build/almalinux/install/ $INST_SCRIPTS/
+
+### Install some common tools
+RUN $INST_SCRIPTS/requirements.sh
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+### Install xvnc-server & noVNC - HTML5 based VNC viewer
+RUN $INST_SCRIPTS/tigervnc.sh
+RUN $INST_SCRIPTS/vnc.sh
+
+### Install firefox
+RUN $INST_SCRIPTS/firefox.sh
+
+### Install xfce UI
+RUN $INST_SCRIPTS/xfce.sh
+ADD ./build/common/xfce/ $HOME/
+
+### configure startup
+RUN $INST_SCRIPTS/libnss_wrapper.sh
+ADD ./build/common/scripts $STARTUPDIR
+RUN $INST_SCRIPTS/set_permissions.sh $STARTUPDIR $HOME
+
+USER 1000
+
+ENTRYPOINT ["/podmanstartup/vnc_startup.sh"]
+CMD ["--wait"]
