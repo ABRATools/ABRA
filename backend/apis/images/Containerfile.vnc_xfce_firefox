@@ -3,11 +3,7 @@ From almalinux:latest
 LABEL maintainer="ABRA Demonstration Team"
 ENV REFRESHED_AT=2024-12-10
 
-LABEL io.k8s.description="Headless VNC Container with firefox" \
-      io.k8s.display-name="Headless VNC Container based on AlmaLinux" \
-      io.openshift.expose-services="6901:http,5901:xvnc" \
-      io.openshift.tags="vnc, almalinux, xfce" \
-      io.openshift.non-scalable=true
+LABEL io.containers.capabilities=VNC,Xfce,Firefox
 
 ## Connection ports for controlling the UI:
 # VNC port:5901
