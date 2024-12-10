@@ -14,12 +14,11 @@ ENV DISPLAY=:1 \
 EXPOSE $VNC_PORT $NO_VNC_PORT
 
 ## Envrionment config
-ENV HOME=/headless \
+ENV HOME=/srv/headless \
     TERM=xterm \
-    STARTUPDIR=/dockerstartup \
-    INST_SCRIPTS=/headless/install \
-    NO_VNC_HOME=/headless/noVNC \
-    DEBIAN_FRONTEND=noninteractive \
+    STARTUPDIR=/srv/podmanstartup \
+    INST_SCRIPTS=/srv/headless/install \
+    NO_VNC_HOME=/srv/headless/noVNC \
     VNC_COL_DEPTH=24 \
     VNC_RESOLUTION=1280x1024 \
     VNC_PW=vncpassword \
@@ -27,8 +26,8 @@ ENV HOME=/headless \
 WORKDIR $HOME
 
 ### Add all install scripts for further steps
-ADD ./src/common/install/ $INST_SCRIPTS/
-ADD ./src/almalinux/install/ $INST_SCRIPTS/
+ADD ./build/common/install/ $INST_SCRIPTS/
+ADD ./build/almalinux/install/ $INST_SCRIPTS/
 
 ### Install some common tools
 RUN $INST_SCRIPTS/requirements.sh
@@ -43,11 +42,11 @@ RUN $INST_SCRIPTS/firefox.sh
 
 ### Install xfce UI
 RUN $INST_SCRIPTS/xfce.sh
-ADD ./src/common/xfce/ $HOME/
+ADD ./build/common/xfce/ $HOME/
 
 ### configure startup
 RUN $INST_SCRIPTS/libnss_wrapper.sh
-ADD ./src/common/scripts $STARTUPDIR
+ADD ./build/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_permissions.sh $STARTUPDIR $HOME
 
 USER 1000
