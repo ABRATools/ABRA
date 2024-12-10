@@ -33,7 +33,7 @@ fi
  
 #install backend scripts
 cd /srv/ABRA-Tools/backend/
-python3 -m pip install venv
+#python3 -m pip install venv
 python3 -m venv venv
 source ./venv/bin/activate
 #installing python dependancies
@@ -43,7 +43,7 @@ deactivate
 
 #section installer
 #for control node only
-if [ node_type == "head" ]
+if [ node_type == "head" ]; then
   dnf -y install nodejs npm git
   cd /srv/ABRA-Tools/frontend/
   npm i typescript vite
