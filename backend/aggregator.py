@@ -19,7 +19,9 @@ logger.addHandler(file_handler)
 os.makedirs("aggregator_logs", exist_ok=True)
 
 # current nodes
-nodes = ["http://192.168.14.15", "http://192.168.14.16"]
+nodes = ["http://192.168.14.15",
+	 "http://192.168.14.16",
+	 "http://192.168.14.17"]
 # need to update as more are created
 
 node_uris = [NodeAPI(node_uri) for node_uri in nodes]
