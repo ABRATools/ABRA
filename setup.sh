@@ -7,7 +7,7 @@ node_type="${1}"
 
 #install podman
 cd /srv/
-dnf install podman
+dnf install podman -y
 git clone https://github.com/aparkerson/ABRA-Tools
 
 #load container images
@@ -44,7 +44,7 @@ deactivate
 #section installer
 #for control node only
 if [ node_type == "head" ]
-  dnf install nodejs npm git
+  dnf install nodejs npm git -y
   cd /srv/ABRA-Tools/frontend/
   npm i typescript vite
   npm install
