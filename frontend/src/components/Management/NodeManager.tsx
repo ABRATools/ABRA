@@ -23,7 +23,11 @@ async function FetchNodes(): Promise<Node[]> {
       });
       if (response.ok) {
         const json = await response.json();
-        return json.nodes;
+        const all_nodes: Node[] = []
+        for (const node of json.nodes) {
+          all_nodes.push(JSON.parse(node));
+        }
+        return all_nodes;
       } else {
         console.error('Failed to fetch nodes');
       }
@@ -37,8 +41,6 @@ const Manager = () => {
     const [, forceUpdate] = useState(true);
     const [data, setData] = useState<Node[]>([]);
     const [loading, setLoading] = useState(true);
-
-    
 
     // on mount
     useEffect(() => {
@@ -68,8 +70,6 @@ const Manager = () => {
     if (!data) {
         return <p>No data</p>;
     }
-
-    console.log("Data: ", data);
 
     return (
         <ThemeProvider>

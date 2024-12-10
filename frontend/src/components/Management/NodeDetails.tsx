@@ -6,7 +6,7 @@ import { Progress } from '@/components/ui/progress';
 const NodeDetails = ({ node }: { node: Node }) => {
     if (!node) return null;
 
-    console.log("Node details: ", node);
+    // console.log("Node details: ", node);
     
     return (
       <div className="p-6 space-y-6">

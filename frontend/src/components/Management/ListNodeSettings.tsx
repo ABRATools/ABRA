@@ -30,8 +30,6 @@ const ListNodeSettings = ({ nodes = [] }: { nodes?: Node[] }) => {
     ip: ''
   });
 
-  console.log("List Node settings: ", nodes);
-
   const handleAddNode = async (e: React.FormEvent) => {
     const token = sessionStorage.getItem('token');
     

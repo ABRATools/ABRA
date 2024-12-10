@@ -15,7 +15,7 @@ const NodeListItem = ({ node, onEditEnvironments }: { node: Node; onEditEnvironm
       }
     };
 
-    console.log("Node list item: ", node);
+    // console.log("Node list item: ", node);
   
     return (
         <Card className="w-full hover:bg-secondary/10 cursor-pointer transition-colors">

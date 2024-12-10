@@ -15,14 +15,14 @@ export default function NodeSettings(nodeData: Node) {
     return (
         <div className="flex flex-row w-full justify-between min-w-max py-[25px]">
             <div>
-                <h1 className="text-3xl font-semibold align-middle">{nodeData.name}</h1>
+                <h1 className="text-3xl font-semibold align-middle">{data ? data.name : ""}</h1>
                 {/* Example of safely displaying environments */}
                 <ul>
-                    {nodeData.environments?.map((env) => (
+                    {data ? data.environments?.map((env) => (
                         <li key={env.env_id}>
                             {env.name} - {env.os}
                         </li>
-                    ))}
+                    )) : ""}
                 </ul>
             </div>
             <div>
