@@ -7,7 +7,7 @@ node_type="${1}"
 
 #install podman
 cd /srv/
-dnf -y install podman
+dnf -y install podman git
 git clone https://github.com/aparkerson/ABRA-Tools
 
 #load container images
