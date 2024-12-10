@@ -152,3 +152,188 @@ class QueryParser:
 
 		except Exception as e:
 			self.logger.error(f"Unexpected error during parsing process: {e}")
+
+
+
+# validates structure and fields of json outputs
+class JSONValidator:
+	# constructor
+	def __init__(self, schemas: Dict[str, Dict[str, type]]):
+		self.schemas = schemas
+		self.report = []
+		self.logger = logging.getLogger(__name__)
+		self.logger.setLevel(logging.INFO)
+
+		formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
+		file_handler = RotatingFileHandler("json_validator.log", maxBytes=5242800, backupCount=2)
+		file_handler.setFormatter(formatter)
+		self.logger.addHandler(file_handler)
+
+	
+	# validate single JSON entry using correct schema
+	def validate_entry(self, entry: Dict[str, Any]) -> bool:
+		action = entry.get("action")
+		if not action:
+			self.report.append(f"Invalid or missing action in entry: {entry}")
+			self.logger.warning(f"Invalid or missing action in entry: {entry}")
+			return False
+		
+		if action not in self.schemas:
+			self.report.append(f"Invalid or missing action in entry: {entry}")
+			self.logger.warning(f"Invalid or missing action in entry: {entry}")
+			return False
+		
+		schema = self.schemas[action]
+		is_valid = True
+
+		for field, type in schema.items():
+			if field not in entry:
+				self.report.append(f"Missing field {field} in entry: {entry}")
+				self.logger.warning(f"Missing field {field} in entry: {entry}")
+				is_valid = False
+
+			elif not isinstance(entry[field], type):
+				self.report.append(f"Incorrect type for {field} in entry: {entry}")
+				self.logger.warning(f"Incorrect type for {field} in entry: {entry}")
+				is_valid = False
+
+		# verify extra fields
+		for field in entry.keys():
+			if field not in schema:
+				self.report.append(f"Unexpected field {field} in entry: {entry}")
+				self.logger.warning(f"Unexpected field {field} in entry: {entry}")
+
+		return is_valid
+		
+	
+	# validates structure of each entry item in json data
+	def validate_json_structure(self, data: List[Dict]) -> bool:
+		for item in data:
+			for field, type in self.schemas.items():
+				if field not in item:
+					self.report.append(f"Validation error: Missing {field} in {item}")
+					return False
+
+				if not isinstance(item[field], type):
+					self.report.append(f"Validation error: Field '{field}' in entry {item} is not of type {type.__name__}")
+					return False
+				
+		return True
+	
+
+	# validate against schema
+	def validate(self, input_file: str) -> None:
+		if not os.path.exists(input_file):
+			self.logger.error(f"Input file {input_file} could not be found.")
+			return
+		
+		try:
+			with open(input_file, "r") as ifile:
+				data = json.load(ifile)
+
+			if not isinstance(data, list):
+				self.logger.error("JSON structure invalid, expected type list.")
+				return
+			
+			if self.validate_json_structure(data):
+				self.logger.info(f"Successfully validated {input_file}.")
+				pass
+			else:
+				self.logger.error(f"Validation failed for file '{input_file}'.")
+				pass
+
+		except json.JSONDecodeError as e:
+			self.logger.error(f"Error decoding JSON file: {e}")
+			pass
+		
+		except Exception as e:
+			self.logger.error(f"Error occured during validation: {e}")
+			pass
+
+	
+	# generate detailed validation report
+	def generate_JSON_validation_report(self, report_file: str="validation_report.log") -> None:
+		try:
+			with open(report_file, "w") as ofile:
+				if self.report:
+					ofile.write("\n".join(self.report))
+				
+				else:
+					ofile.write("Entries passed validation.\n")
+			
+			self.logger.info(f"JSON validation report saved to {report_file}")
+
+		except Exception as e:
+			self.logger.error(f"Error writing JSON validation report: {e}")
+
+
+
+schemas = {
+	# create container schema
+    "create": {
+        "action": str,
+        "container_name": str,
+        "template": str,
+        "template_style": str,
+        "extra_parameters": list
+    },
+
+	# start container schema
+    "start": {
+        "action": str,
+        "container_name": str,
+        "extra_parameters": list
+    },
+
+	# stop container schema
+    "stop": {
+        "action": str,
+        "container_name": str,
+        "extra_parameters": list
+    },
+
+	# delete container schema
+    "delete": {
+        "action": str,
+        "container_name": str,
+        "extra_parameters": list
+    },
+	
+	# update container schema
+    "update": {
+        "action": str,
+        "container_name": str,
+        "template": str,
+        "extra_parameters": list
+    }
+}
+
+# query_validator = JSONValidator(schemas)
+
+# example usage
+example_json_data = [
+	# create container
+	{
+		"action": "create",
+		"container_name": "test_container",
+		"template": "ubuntu",
+		"template_style": "alpine",
+		"extra_parameters": ["--flag"]
+	},
+
+	# start container
+	{
+		"action": "start",
+		"container_name": "test_container",
+		"extra_parameters": []
+	},
+
+	# other action on container
+	{
+		"action": "other",
+		"container_name": "test_container",
+		"extra_parameters": []
+	}
+]
+
+# valid = validator.validate_json_structure(example_json_data)
