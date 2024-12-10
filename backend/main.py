@@ -302,20 +302,20 @@ class InputConnString(BaseModel):
   ip: Optional[str] = None
 
 @app.post("/add_connection_string")
-async def post_connection_string(input: InputConnString, session = Depends(get_session)) -> JSONResponse:
-  # if token:
-  conn_string = None
-  if input.source == 'remote':
-    if input.ip is None:
+async def post_connection_string(input: InputConnString, session = Depends(get_session), token = Depends(authenticate_cookie)) -> JSONResponse:
+  if token:
+    conn_string = None
+    if input.source == 'remote':
+      if input.ip is None:
+        return JSONResponse(content={'message': 'Invalid request'}, status_code=400)
+      conn_string = f"http+ssh://root@{input.ip}/run/podman/podman.sock"
+    elif input.source == 'local':
+      conn_string = "http+unix:///run/podman/podman.sock"
+    else:
       return JSONResponse(content={'message': 'Invalid request'}, status_code=400)
-    conn_string = f"http+ssh://root@{input.ip}/run/podman/podman.sock"
-  elif input.source == 'local':
-    conn_string = "http+unix:///run/podman/podman.sock"
-  else:
-    return JSONResponse(content={'message': 'Invalid request'}, status_code=400)
-  db.create_connection_string(session, input.name, conn_string, input.source, input.ip)
-  return JSONResponse(content={'message': 'Connection string added successfully'}, status_code=200)
-  # return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+    db.create_connection_string(session, input.name, conn_string, input.source, input.ip)
+    return JSONResponse(content={'message': 'Connection string added successfully', 'connection_string': conn_string}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 @app.get("/get_node_locations")
 async def get_node_locations(request: Request, session = Depends(get_session)) -> JSONResponse:

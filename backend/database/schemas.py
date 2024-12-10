@@ -189,6 +189,16 @@ def create_node(db, node):
     
     db.commit()
 
+def delete_node(db, node_name):
+    node = db.query(Node).filter(Node.name == node_name).first()
+    if node is None:
+        return False
+    for env in node.environments:
+        db.delete(env)
+    db.delete(node)
+    db.commit()
+    return True
+
 def get_nodes(db):
     nodes = db.query(Node).all()
     # print(nodes)

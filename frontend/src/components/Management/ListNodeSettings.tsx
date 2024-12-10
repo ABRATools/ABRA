@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 // import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { ScrollArea } from "@/components/ui/scroll-area";
 // import { Progress } from "@/components/ui/progress";
 import { Node } from "@/types/node";
@@ -22,18 +23,38 @@ const ListNodeSettings = ({ nodes = [] }: { nodes?: Node[] }) => {
   const [isAddNodeOpen, setIsAddNodeOpen] = useState(false);
   const [isEditEnvOpen, setIsEditEnvOpen] = useState(false);
   const [selectedNode, setSelectedNode] = useState<Node | null>(nodes[0] || null);
+  const [newNodeError, setNewNodeError] = useState('');
   const [newNodeData, setNewNodeData] = useState({
     name: '',
-    ip: '',
-    os: ''
+    source: '',
+    ip: ''
   });
 
   console.log("List Node settings: ", nodes);
 
-  const handleAddNode = (e: React.FormEvent) => {
+  const handleAddNode = async (e: React.FormEvent) => {
+    const token = sessionStorage.getItem('token');
+    
     e.preventDefault();
-    // Add node creation logic here
-    setIsAddNodeOpen(false);
+    
+    console.log("Adding node: ", newNodeData);
+    try {
+      const response = await fetch('/add_connection_string', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(newNodeData),
+      });
+      if (response.ok) {
+        setIsAddNodeOpen(false);
+      } else {
+        setNewNodeError('Failed to add node');
+      }
+    } catch (error) {
+      setNewNodeError('Authorization check failed');
+    }
   };
 
   const handleEditEnvironments = (node: Node) => {
@@ -52,8 +73,8 @@ const ListNodeSettings = ({ nodes = [] }: { nodes?: Node[] }) => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Add New Node</DialogTitle>
-              <DialogDescription>
-                Enter the details for the new node
+              <DialogDescription className="text-sm text-red">
+                Enter the details for the new node. If the node is remote, make sure you can access port 5555.
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleAddNode} className="space-y-4">
@@ -67,25 +88,33 @@ const ListNodeSettings = ({ nodes = [] }: { nodes?: Node[] }) => {
                 />
               </div>
               <div className="space-y-2">
+                <Label htmlFor="type">Node Type</Label>
+                <RadioGroup defaultValue="comfortable">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="local" id="r1" onClick={() => setNewNodeData(oldData => ({...oldData, ip: '127.0.0.1', source: 'local'}))} />
+                    <Label htmlFor="r1">Local</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="remote" id="r2" onClick={() => setNewNodeData(oldData => ({...oldData, source: 'remote'}))} />
+                    <Label htmlFor="r2">Remote</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+              <div className="space-y-2">
                 <Label htmlFor="ip">IP Address</Label>
                 <Input
                   id="ip"
-                  value={newNodeData.ip}
+                  value={newNodeData && newNodeData.source == "local" ? "127.0.0.1" : newNodeData.ip}
+                  disabled={newNodeData && newNodeData.source == "local"}
                   onChange={(e) => setNewNodeData({ ...newNodeData, ip: e.target.value })}
                   placeholder="Enter IP address"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="os">Operating System</Label>
-                <Input
-                  id="os"
-                  value={newNodeData.os}
-                  onChange={(e) => setNewNodeData({ ...newNodeData, os: e.target.value })}
-                  placeholder="Enter operating system"
-                />
-              </div>
               <Button type="submit" className="w-full">Add Node</Button>
             </form>
+            <DialogFooter>
+              <p className='text-sm text-red-500'>{newNodeError}</p>
+            </DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
