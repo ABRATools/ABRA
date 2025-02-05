@@ -1,15 +1,23 @@
 #!/bin/bash
 
-#compile tailwind
+# Create necessary directories if they don't exist
+mkdir -p ../backend/static
+mkdir -p ../backend/static/assets
+
+# Compile tailwind
 npx tailwindcss -i ./src/index.css -o ./src/output.css
 
 # Build the frontend
 tsc && vite build
 
-find ./dist/assets/ -type f -name 'index*.js' -exec mv {} ./dist/assets/index.js \;
-find ./dist/assets/ -type f -name 'index*.css' -exec mv {} ./dist/assets/index.css \;
+# Copy all assets to backend static folder
+cp -r ./dist/assets/* ../backend/static/assets/
 
-# Copy the compiled frontend to be rendered by the backend
-mv ./dist/assets/index.js ../backend/static/index.js
-mv ./dist/assets/index.css ../backend/static/index.css
+# Copy public assets (like vite.svg)
+cp -r ./public/* ../backend/static/
+
+# Copy the index.html to templates
+cp ./dist/index.html ../backend/templates/index.html
+
+# Copy the output.css
 cp -p ./src/output.css ../backend/static/output.css

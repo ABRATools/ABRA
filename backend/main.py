@@ -22,6 +22,9 @@ from starlette.middleware.sessions import SessionMiddleware
 from fastapi import FastAPI, Request, Depends, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.routing import APIRouter
+from functools import partial
+from frontend_routing import frontend, api
 from starlette.responses import HTMLResponse, RedirectResponse, JSONResponse
 
 from classes import User, FilteredUser, Group, Environment, Node, Service, Task, Notification, ConnectionStrings
@@ -63,7 +66,23 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 templates = Jinja2Templates(directory='templates')
-app.mount('/static', StaticFiles(directory='static'), name='static')
+# mount static files
+app.mount("/static", StaticFiles(
+    directory="static",
+    html=True,
+    check_dir=True
+), name="static")
+
+app.mount("/assets", StaticFiles(
+    directory="static/assets",
+    html=True,
+    check_dir=True
+), name="assets")
+
+
+# include routers
+app.include_router(frontend.router)
+app.include_router(api.router)
 
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_value())
 
@@ -132,34 +151,51 @@ async def validate_token(request: Request, token: AuthToken = Depends(authentica
     return JSONResponse(content={"token": token_json}, status_code=200)
   return JSONResponse(content={"token": None}, status_code=401)
 
-# endpoints to render index page with react-router
-@app.get("/")
-async def root(request: Request):
-  return templates.TemplateResponse('index.html', {'request': request})
+@app.get("/test-static")
+async def test_static():
+    from pathlib import Path
+    static_dir = Path("static")
+    assets_dir = Path("static/assets")
+    
+    files = {
+        "static_files": [f.name for f in static_dir.iterdir() if f.is_file()],
+        "asset_files": [f.name for f in assets_dir.iterdir() if f.is_file()]
+    }
+    return files
 
-@app.get("/users")
-async def display_users(request: Request):
-  return templates.TemplateResponse('index.html', {'request': request})
+# catch all route for client-side routing
+@app.get("/{full_path:path}", response_class=HTMLResponse)
+async def catch_all(request: Request, full_path: str):
+    return templates.TemplateResponse('index.html', {'request': request})
 
-@app.get("/audit")
-async def display_audit(request: Request):
-  return templates.TemplateResponse('index.html', {'request': request})
+# # endpoints to render index page with react-router
+# @app.get("/")
+# async def root(request: Request):
+#   return templates.TemplateResponse('index.html', {'request': request})
 
-@app.get("/settings")
-async def display_settings(request: Request):
-  return templates.TemplateResponse('index.html', {'request': request})
+# @app.get("/users")
+# async def display_users(request: Request):
+#   return templates.TemplateResponse('index.html', {'request': request})
 
-@app.get("/login")
-async def get_login(request: Request):
-  return templates.TemplateResponse('index.html', {'request': request})
+# @app.get("/audit")
+# async def display_audit(request: Request):
+#   return templates.TemplateResponse('index.html', {'request': request})
 
-@app.get("/dashboard")
-async def get_dashboard(request: Request):
-  return templates.TemplateResponse('index.html', {'request': request})
+# @app.get("/settings")
+# async def display_settings(request: Request):
+#   return templates.TemplateResponse('index.html', {'request': request})
 
-@app.get("/nodes")
-async def get_nodes(request: Request):
-  return templates.TemplateResponse('index.html', {'request': request})
+# @app.get("/login")
+# async def get_login(request: Request):
+#   return templates.TemplateResponse('index.html', {'request': request})
+
+# @app.get("/dashboard")
+# async def get_dashboard(request: Request):
+#   return templates.TemplateResponse('index.html', {'request': request})
+
+# @app.get("/nodes")
+# async def get_nodes(request: Request):
+#   return templates.TemplateResponse('index.html', {'request': request})
 
 @app.post("/login")
 async def process_login(request: Request, session = Depends(get_session)) -> JSONResponse:
@@ -356,4 +392,4 @@ async def process_logout(request: Request, token: AuthToken = Depends(authentica
 
 if __name__ == "__main__":
   print("hello bingus!")
-  uvicorn.run('main:app', host='127.0.0.1', port=8000, reload=True)
+  uvicorn.run('main:app', host='127.0.0.1', port=7653, reload=True)
