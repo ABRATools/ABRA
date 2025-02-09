@@ -12,7 +12,7 @@ const NodeDetail = React.lazy(() => import("./pages/display/NodeDetail.tsx"));
 const EnvironmentDetail = React.lazy(() => import("./pages/display/EnvironmentDetail.tsx"));
 
 // config pages
-const SystemsConfig = React.lazy(() => import("./pages/config/SystemConfigDetail.tsx"));
+const SystemsConfig = React.lazy(() => import("./pages/config/SystemsConfig.tsx"));
 const SystemConfigDetail = React.lazy(() => import("./pages/config/SystemConfigDetail.tsx"));
 const NodeConfigDetail = React.lazy(() => import("./pages/config/NodeConfigDetail.tsx"));
 const EnvironmentConfigDetail = React.lazy(() => import("./pages/config/EnvironmentConfigDetail.tsx"));
