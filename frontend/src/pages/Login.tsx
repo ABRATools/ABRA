@@ -4,24 +4,54 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/auth/AuthContext";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  const { setToken } = useAuth();
 
-    // FIX LATER: USE TOKEN AUTH LIKE OLD DASHBOARD DID 
-    if (username && password) {
-      toast({
-        title: "Login successful",
-        description: "Welcome to the dashboard",
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
       });
-      navigate("/system");
+
+      if (response.status === 200) {
+        const data = await response.json();
+        
+        toast({
+          title: "Login successful",
+          description: "Welcome to the dashboard",
+        });
+
+        // set token and redirect with delay
+        setTimeout(() => {
+          setToken(data.token);
+          navigate('/system');
+          setLoading(false);
+        }, 1500);
+      } else {
+        throw new Error('Login failed');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred during login",
+        variant: "destructive",
+      });
+      setLoading(false);
     }
   };
 
@@ -42,6 +72,7 @@ export default function Login() {
               placeholder="Enter your username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              required
             />
           </div>
           <div className="space-y-2">
@@ -52,10 +83,11 @@ export default function Login() {
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
-          <Button type="submit" className="w-full">
-            Sign In
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Signing in..." : "Sign In"}
           </Button>
         </form>
       </div>

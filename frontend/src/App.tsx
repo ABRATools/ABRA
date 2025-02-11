@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DashboardLayout } from "./layouts/DashboardLayout.tsx";
+import { AuthProvider } from "./auth/AuthContext.tsx";
+import { ProtectedRoute } from "./auth/ProtectedRoute.tsx";
 import Login from "./pages/Login.tsx";
+import { ApiErrorHandler } from "./lib/api-error-handler.ts";
 
 // display pages
 const SystemsDisplay = React.lazy(() => import("./pages/display/SystemsDisplay.tsx"));
@@ -23,39 +26,54 @@ const UserManagement = React.lazy(() => import("./pages/UserManagement.tsx"));
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/system" element={<Navigate to="/display/systems" replace />} />
-        <Route path="/display/nodes" element={<Navigate to="/display/systems" replace />} />
-        <Route path="/display/environments" element={<Navigate to="/display/systems" replace />} />
-        <Route path="/config/nodes" element={<Navigate to="/config/systems" replace />} />
-        <Route path="/config/environments" element={<Navigate to="/config/systems" replace />} />
-        
-        {/* dashboard */}
+
+const AppRoutes = () => {
+  return (
+    <Routes>
+      {/* Public routes */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Navigate to="/login" replace />} />
+
+      {/* Protected routes */}
+      <Route element={<ProtectedRoute />}>
         <Route element={<DashboardLayout />}>
-          {/* display */}
+          {/* Redirects */}
+          <Route path="/system" element={<Navigate to="/display/systems" replace />} />
+          <Route path="/display/nodes" element={<Navigate to="/display/systems" replace />} />
+          <Route path="/display/environments" element={<Navigate to="/display/systems" replace />} />
+          <Route path="/config/nodes" element={<Navigate to="/config/systems" replace />} />
+          <Route path="/config/environments" element={<Navigate to="/config/systems" replace />} />
+          
+          {/* Display routes */}
           <Route path="/display/systems" element={<SystemsDisplay />} />
           <Route path="/display/systems/:systemId" element={<SystemDetail />} />
           <Route path="/display/systems/:systemId/nodes/:nodeId" element={<NodeDetail />} />
           <Route path="/display/systems/:systemId/nodes/:nodeId/environments/:envId" element={<EnvironmentDetail />} />
-
-          {/* config */}
+          
+          {/* Config routes */}
           <Route path="/config/systems" element={<SystemsConfig />} />
           <Route path="/config/systems/:systemId" element={<SystemConfigDetail />} />
           <Route path="/config/systems/:systemId/nodes/:nodeId" element={<NodeConfigDetail />} />
           <Route path="/config/systems/:systemId/nodes/:nodeId/environments/:envId" element={<EnvironmentConfigDetail />} />
           <Route path="/config/profiles" element={<ConfigurationProfiles />} />
-
-          {/* management */}
+          
+          {/* Management routes */}
           <Route path="/users" element={<UserManagement />} />
         </Route>
-      </Routes>
+      </Route>
+    </Routes>
+  );
+};
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <AuthProvider>
+        <ApiErrorHandler />
+        <AppRoutes />
+      </AuthProvider>
+      <Toaster />
     </BrowserRouter>
-    <Toaster />
   </QueryClientProvider>
 );
 

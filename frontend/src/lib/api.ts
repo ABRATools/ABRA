@@ -1,13 +1,14 @@
 import axios from 'axios';
-import { useToast } from '@/hooks/use-toast';
 
+// Create a single axios instance
 const api = axios.create({
     baseURL: '/',
     headers: {
         'Content-Type': 'application/json'
     }
-})
+});
 
+// Setup the interceptors that don't require hooks
 api.interceptors.request.use(
     (config) => {
         const token = sessionStorage.getItem('token');
@@ -23,19 +24,15 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
     (response) => response.data,
-    (error) => {
-        const toast = useToast();
-
+    async (error) => {
         if (error.response?.status === 401) {
+            // Instead of using hooks here, we'll just redirect
+            sessionStorage.removeItem('token');
             window.location.href = '/login';
         }
 
-        toast({ // make a nice toast for them when something is wrong
-            title: 'Error',
-            description: error.response?.data?.message || 'An error occurred',
-            variant: 'destructive',
-        });
-
+        // Log the error but don't use toast here
+        console.error('API Error:', error.response?.data?.message || 'An error occurred');
         return Promise.reject(error);
     }
 );
