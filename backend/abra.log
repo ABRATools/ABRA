@@ -119,3 +119,41 @@
 2025-02-04 14:06:14,999 | INFO | JWTError: Signature has expired.
 2025-02-04 14:06:14,999 | INFO | JWTError: Signature has expired.
 2025-02-04 14:06:14,999 | INFO | JWTError: Signature has expired.
+2025-02-10 17:55:35,120 | INFO | User admin is attempting to log in
+2025-02-10 17:55:35,397 | INFO | User admin has successfully logged in
+2025-02-10 17:55:35,403 | INFO | User admin has successfully logged in
+2025-02-10 18:06:05,343 | INFO | User admin is attempting to log in
+2025-02-10 18:06:05,607 | INFO | User admin has successfully logged in
+2025-02-10 18:06:05,609 | INFO | User admin has successfully logged in
+2025-02-10 18:17:49,103 | INFO | User admin is attempting to log in
+2025-02-10 18:17:49,381 | INFO | User admin has successfully logged in
+2025-02-10 18:17:49,386 | INFO | User admin has successfully logged in
+2025-02-10 18:19:16,937 | INFO | User admin is attempting to log in
+2025-02-10 18:19:17,201 | INFO | User admin has successfully logged in
+2025-02-10 18:19:17,202 | INFO | User admin has successfully logged in
+2025-02-10 18:19:23,353 | INFO | User admin is attempting to log in
+2025-02-10 18:19:23,617 | INFO | User admin has successfully logged in
+2025-02-10 18:19:23,619 | INFO | User admin has successfully logged in
+2025-02-10 18:45:30,784 | INFO | No auth header found
+2025-02-10 18:45:30,784 | INFO | No token found
+2025-02-10 18:45:51,720 | INFO | No auth header found
+2025-02-10 18:45:51,720 | INFO | No token found
+2025-02-10 18:47:37,243 | INFO | User admin is attempting to log in
+2025-02-10 18:47:37,521 | INFO | User admin has successfully logged in
+2025-02-10 18:47:37,526 | INFO | User admin has successfully logged in
+2025-02-10 18:47:40,526 | INFO | No auth header found
+2025-02-10 18:47:40,526 | INFO | No token found
+2025-02-10 18:48:51,197 | INFO | No auth header found
+2025-02-10 18:48:51,197 | INFO | No token found
+2025-02-10 18:49:00,904 | INFO | No auth header found
+2025-02-10 18:49:00,904 | INFO | No token found
+2025-02-10 18:50:36,722 | INFO | No auth header found
+2025-02-10 18:50:36,723 | INFO | No token found
+2025-02-10 18:54:55,643 | INFO | JWTError: Not enough segments
+2025-02-10 18:55:14,111 | INFO | JWTError: Not enough segments
+2025-02-10 18:55:33,405 | INFO | JWTError: Not enough segments
+2025-02-10 19:06:31,611 | INFO | JWTError: Not enough segments
+2025-02-10 19:06:52,599 | INFO | JWTError: Not enough segments
+2025-02-10 19:06:52,601 | INFO | JWTError: Not enough segments
+2025-02-10 19:07:27,287 | INFO | JWTError: Not enough segments
+2025-02-10 19:07:27,288 | INFO | JWTError: Not enough segments

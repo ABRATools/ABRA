@@ -111,12 +111,22 @@ def create_access_token(data: dict, expires_delta: Optional[datetime.timedelta] 
   return encoded_jwt
 
 async def get_cookie_or_token(request: Request):
-  # access_token = request.cookies.get("access_token")
-  auth_header = request.headers.get("Authorization")
-  if auth_header:
-    return auth_header
-  else:
-    logger.info("No auth header found")
+    # debug print
+    print("Cookies:", request.cookies)
+    print("Headers:", request.headers)
+    
+    auth_header = request.headers.get("Authorization")
+    if auth_header:
+        print("Found auth header:", auth_header)
+        return auth_header
+        
+    access_token = request.cookies.get("access_token")
+    if access_token:
+        print("Found access token in cookies:", access_token)
+        # return f"Bearer {access_token}"
+        return access_token
+        
+    print("No auth token found in header or cookies")
     return None
 
 async def authenticate_cookie(auth_header: str = Depends(get_cookie_or_token)):
@@ -223,7 +233,7 @@ async def process_login(request: Request, session = Depends(get_session)) -> JSO
   logger.warning(f"User {username} has failed to log in")
   return JSONResponse(content={"token": None}, status_code=401)
 
-@app.post("/get_user_settings")
+@app.post("/api/get_user_settings")
 async def get_current_user_details(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
     user = db.get_user(session, request.session['user'])
@@ -240,28 +250,27 @@ async def get_current_user_details(request: Request, session = Depends(get_sessi
     return JSONResponse(content={'user': user_json.model_dump()}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-@app.post("/get_users")
-async def get_users(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
-  if token:
-    users = db.get_users(session)
-    # filter out passwords and totp secret
-    users_json = []
-    for user in users:
-      filtered_user = FilteredUser(
-        user_id=user.id,
-        username=user.username,
-        email=user.email,
-        groups=[group.name for group in user.groups],
-        passwordChangeDate=user.passwordChangeDate.strftime('%Y-%m-%d %H:%M:%S'),
-        is_active=user.is_active,
-        is_totp_enabled=user.is_totp_enabled,
-        is_totp_confirmed=user.is_totp_confirmed,
-      )
-      users_json.append(filtered_user.model_dump())
-    return JSONResponse(content={'users': users_json}, status_code=200)
-  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+@app.post("/api/get_users")
+async def get_users(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)):
+    if token:
+        users = db.get_users(session)
+        users_json = []
+        for user in users:
+            filtered_user = FilteredUser(
+                user_id=user.id,
+                username=user.username,
+                email=user.email,
+                groups=[group.name for group in user.groups],
+                passwordChangeDate=user.passwordChangeDate.strftime('%Y-%m-%d %H:%M:%S'),
+                is_active=user.is_active,
+                is_totp_enabled=user.is_totp_enabled,
+                is_totp_confirmed=user.is_totp_confirmed,
+            )
+            users_json.append(filtered_user.model_dump())
+        return JSONResponse(content={'users': users_json})
+    return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-@app.post("/audit_log")
+@app.post("/api/audit_log")
 # this is a simple example of how to read a log file, it rly sux and should be replaced with a proper logging solution lol
 async def get_audit_log(request: Request, token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
@@ -274,7 +283,7 @@ async def get_audit_log(request: Request, token: AuthToken = Depends(authenticat
     return JSONResponse(content={'audit_log': audit_str}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-@app.post("/change_password")
+@app.post("/api/change_password")
 async def get_change_password(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
     data = await request.json()
@@ -308,7 +317,7 @@ async def get_change_password(request: Request, session = Depends(get_session), 
   logger.warning(f"Unauthorized request to change password for user... redirecting to login")
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-@app.post("/change_email")
+@app.post("/api/change_email")
 async def post_change_email(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
     # expect json: { 'username': 'username', 'email': 'new_email' }
@@ -322,7 +331,7 @@ async def post_change_email(request: Request, session = Depends(get_session), to
   logger.warning(f"Unauthorized request to change email for user... redirecting to login")
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-@app.get('/get_groups')
+@app.post('/api/get_groups')
 async def get_groups(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
     db_groups = db.get_all_groups(session)
@@ -342,7 +351,7 @@ class InputConnString(BaseModel):
   source: str
   ip: Optional[str] = None
 
-@app.post("/add_connection_string")
+@app.post("/api/add_connection_string")
 async def post_connection_string(input: InputConnString, session = Depends(get_session), token = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
     conn_string = None
@@ -358,7 +367,7 @@ async def post_connection_string(input: InputConnString, session = Depends(get_s
     return JSONResponse(content={'message': 'Connection string added successfully', 'connection_string': conn_string}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-@app.get("/get_node_locations")
+@app.get("/api/get_node_locations")
 async def get_node_locations(request: Request, session = Depends(get_session)) -> JSONResponse:
   node_locations = db.get_connection_strings(session)
   node_locations_json = [ConnectionStrings(name=location.name, connection_string=location.connection_string, type=location.type, ip=location.ip).model_dump_json() for location in node_locations]
