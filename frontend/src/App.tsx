@@ -20,6 +20,7 @@ const SystemConfigDetail = React.lazy(() => import("./pages/config/SystemConfigD
 const NodeConfigDetail = React.lazy(() => import("./pages/config/NodeConfigDetail.tsx"));
 const EnvironmentConfigDetail = React.lazy(() => import("./pages/config/EnvironmentConfigDetail.tsx"));
 const ConfigurationProfiles = React.lazy(() => import("./pages/config/ConfigurationProfiles.tsx"));
+const ContainerUpload = React.lazy(() => import("./pages/config/ContainerUpload.tsx"));
 
 // management pages
 const UserManagement = React.lazy(() => import("./pages/UserManagement.tsx"));
@@ -56,7 +57,8 @@ const AppRoutes = () => {
           <Route path="/config/systems/:systemId/nodes/:nodeId" element={<NodeConfigDetail />} />
           <Route path="/config/systems/:systemId/nodes/:nodeId/environments/:envId" element={<EnvironmentConfigDetail />} />
           <Route path="/config/profiles" element={<ConfigurationProfiles />} />
-          
+          <Route path="/config/containers" element={<ContainerUpload />} />
+
           {/* Management routes */}
           <Route path="/users" element={<UserManagement />} />
         </Route>

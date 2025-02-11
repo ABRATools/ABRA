@@ -157,3 +157,20 @@
 2025-02-10 19:06:52,601 | INFO | JWTError: Not enough segments
 2025-02-10 19:07:27,287 | INFO | JWTError: Not enough segments
 2025-02-10 19:07:27,288 | INFO | JWTError: Not enough segments
+2025-02-10 19:12:07,919 | INFO | User admin is attempting to log in
+2025-02-10 19:12:08,197 | INFO | User admin has successfully logged in
+2025-02-10 19:12:08,202 | INFO | User admin has successfully logged in
+2025-02-10 19:12:12,258 | INFO | User admin is attempting to log in
+2025-02-10 19:12:12,522 | INFO | User admin has successfully logged in
+2025-02-10 19:12:12,524 | INFO | User admin has successfully logged in
+2025-02-10 20:59:01,771 | INFO | User abra is attempting to log in
+2025-02-10 20:59:01,772 | ERROR | User abra does not exist
+2025-02-10 20:59:06,313 | INFO | User admin is attempting to log in
+2025-02-10 20:59:06,579 | INFO | User admin has successfully logged in
+2025-02-10 20:59:06,581 | INFO | User admin has successfully logged in
+2025-02-10 20:59:19,694 | INFO | User admin is attempting to log in
+2025-02-10 20:59:19,956 | INFO | User admin has successfully logged in
+2025-02-10 20:59:19,958 | INFO | User admin has successfully logged in
+2025-02-10 21:55:04,315 | INFO | User admin is attempting to log in
+2025-02-10 21:55:04,584 | INFO | User admin has successfully logged in
+2025-02-10 21:55:04,587 | INFO | User admin has successfully logged in

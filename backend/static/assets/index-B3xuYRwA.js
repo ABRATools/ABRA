@@ -1,0 +1,1 @@
+import{r as s,g as u,p as e}from"./index-CEwaw2xf.js";var c=e.useId||(()=>{}),f=0;function p(t){const[a,r]=s.useState(c());return u(()=>{t||r(o=>o??String(f++))},[t]),t||(a?`radix-${a}`:"")}export{p as u};

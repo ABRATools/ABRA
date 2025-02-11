@@ -26,6 +26,7 @@ async def root(
 @router.get("/config/systems/{system_id}/nodes/{node_id}", response_class=HTMLResponse)
 @router.get("/config/systems/{system_id}/nodes/{node_id}/environments/{env_id}", response_class=HTMLResponse)
 @router.get("/config/profiles", response_class=HTMLResponse)
+@router.get("/config/containers", response_class=HTMLResponse)
 @router.get("/users", response_class=HTMLResponse)
 async def serve_frontend(
     request: Request,
