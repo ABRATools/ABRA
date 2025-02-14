@@ -2,5 +2,5 @@
 
 export type Configuration {
     name: string;
-    config: string;
+    content: string;
 }

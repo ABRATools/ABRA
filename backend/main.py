@@ -28,6 +28,7 @@ from frontend_routing import frontend, api
 from starlette.responses import HTMLResponse, RedirectResponse, JSONResponse
 
 from classes import User, FilteredUser, Group, Environment, Node, Service, Task, Notification, ConnectionStrings
+from containers import *
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -177,35 +178,6 @@ async def test_static():
 @app.get("/{full_path:path}", response_class=HTMLResponse)
 async def catch_all(request: Request, full_path: str):
     return templates.TemplateResponse('index.html', {'request': request})
-
-# # endpoints to render index page with react-router
-# @app.get("/")
-# async def root(request: Request):
-#   return templates.TemplateResponse('index.html', {'request': request})
-
-# @app.get("/users")
-# async def display_users(request: Request):
-#   return templates.TemplateResponse('index.html', {'request': request})
-
-# @app.get("/audit")
-# async def display_audit(request: Request):
-#   return templates.TemplateResponse('index.html', {'request': request})
-
-# @app.get("/settings")
-# async def display_settings(request: Request):
-#   return templates.TemplateResponse('index.html', {'request': request})
-
-# @app.get("/login")
-# async def get_login(request: Request):
-#   return templates.TemplateResponse('index.html', {'request': request})
-
-# @app.get("/dashboard")
-# async def get_dashboard(request: Request):
-#   return templates.TemplateResponse('index.html', {'request': request})
-
-# @app.get("/nodes")
-# async def get_nodes(request: Request):
-#   return templates.TemplateResponse('index.html', {'request': request})
 
 @app.post("/login")
 async def process_login(request: Request, session = Depends(get_session)) -> JSONResponse:
@@ -372,6 +344,65 @@ async def get_node_locations(request: Request, session = Depends(get_session)) -
   node_locations = db.get_connection_strings(session)
   node_locations_json = [ConnectionStrings(name=location.name, connection_string=location.connection_string, type=location.type, ip=location.ip).model_dump_json() for location in node_locations]
   return JSONResponse(content={'node_locations': node_locations_json}, status_code=200)
+
+
+# container file logic
+@app.get('/api/get_containers')
+async def get_containers(request: Request, token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+    logger.info("Fetching containers")
+    try:
+        if token:
+            containers = get_containers()
+            logger.info(f"Successfully retrieved containers: {containers}")
+            return JSONResponse(content={
+                'images': containers,
+                'success': True
+            }, status_code=200)  
+        else:
+            logger.warning("Unauthorized access attempt to get_containers")
+            return JSONResponse(content={
+                'message': 'Unauthorized', 
+                'redirect': '/login'
+            }, status_code=401)
+    except Exception as e:
+        logger.error(f"Error fetching containers: {str(e)}", exc_info=True)
+        return JSONResponse(content={
+            'message': 'Internal server error',
+            'success': False
+        }, status_code=500)
+
+@app.post('/api/write_containers')
+async def write_container(request: Request, token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  try:
+    if token:
+      data = await request.json()
+      filename = data['filename']
+      content = data['content']
+      result = edit_container(filename, content)
+      return {
+        'success': result
+      }
+    else:
+      return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+  except Exception as e:
+    print(f"Exception occurred: {e}")
+    return {}
+
+@app.post('/api/delete_container')
+async def delete_container(request: Request, token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  try:
+    if token:
+      data = await request.json()
+      filename = data['filename']
+      result = delete_container(filename)
+      return {
+        'success': result 
+      }
+    else:
+      return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+  except Exception as e:
+    print(f"Exception occurred: {e}")
+    return {}
 
 # test data for now
 @app.post('/node-data')

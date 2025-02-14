@@ -37,6 +37,11 @@ const menuItems = [
         icon: FileText,
         href: "/config/profiles",
       },
+      {
+        title: "Container Image Config",
+        icon: Container,
+        href: "/config/containers"
+      }
     ],
   },
   {
