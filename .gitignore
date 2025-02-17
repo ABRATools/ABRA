@@ -8,3 +8,4 @@ backend/__pycache__/*
 backend/__pycache__
 *cpython*
 backend/winvenv
+backend/static/
