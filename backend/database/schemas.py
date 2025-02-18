@@ -216,3 +216,6 @@ def get_nodes_and_environments(db):
     # need to left join nodes and environments on node.id = environment.node_id
     nodes = db.query(Node).outerjoin(Environment, Node.id == Environment.node_id).all()
     return nodes
+
+def get_next_node_id(db):
+    return db.query(func.max(Node.id)).scalar() + 1

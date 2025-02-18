@@ -36,33 +36,31 @@ class ConnectionStrings(BaseModel):
   ip: Optional[str]
 
 class Environment(BaseModel):
-  env_id: int
-  name: str
+  env_id: str
+  image: str
+  names: List[str]
+  state: str
+  started_at: int
+  ports: List[int]
   ip: str
-  os: str
+  networks: List[str]
+  exited: bool
+  exit_code: int
+  exited_at: int
   status: str
-  uptime: str
-  cpu_percent: int
-  memory: float
-  disk: float
-  max_cpus: int
-  max_memory: float
-  max_disk: float
-  node_id: int
+  cpu_percentage: float
+  memory_percent: float 
+  uptime: int
 
 class Node(BaseModel):
-  node_id: int
-  name: str
-  ip: str
-  os: str
-  status: str
-  uptime: str
-  cpu_percent: int
-  memory: float
-  disk: float
-  max_cpus: int
-  max_memory: float
-  max_disk: float
+  node_id: str
+  os_name: str
+  os_version: str
+  cpu_count: int
+  cpu_percent: float
+  mem_percent: float
+  total_memory: float
+  num_containers: int
   environments: List[Environment]
 
 class Service(BaseModel):
