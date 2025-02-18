@@ -424,4 +424,4 @@ async def catch_all(request: Request, full_path: str):
 
 if __name__ == "__main__":
   print("hello bingus!")
-  uvicorn.run('main:app', host='127.0.0.1', port=7653, reload=True)
+  uvicorn.run('main:app', host='127.0.0.1', port=7777, reload=True)

@@ -1,13 +1,37 @@
+#cringe path hack
+import sys, os
+sys.path.insert(0, os.path.abspath('..'))
+
 import os
 import time
 import asyncio
 import requests
+import logging
 from classes import *
 import database as db
 import multiprocessing
 from typing import List
+
+from .db_interface import init_processor
+
 from multiprocessing import Process, Queue, Manager
 # create a process for each connection string in the database for concurrent polling
+
+class existingProcess:
+  def __init__(self, process, connection_string):
+    self.process = process
+    self.connection_string = connection_string
+  # Override __eq__ and __hash__ to allow for comparison of existingProcess objects, so duplicates are not added to the list
+  def __eq__(self, other):
+    return self.connection_string == other.connection_string
+  def __hash__(self):
+    return hash(self.connection_string)
+  # Get the process object
+  def get_process(self):
+    return self.process
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 processes: List[multiprocessing.Process] = []
 manager = multiprocessing.Manager()
@@ -15,41 +39,12 @@ manager = multiprocessing.Manager()
 command_queues: List[Queue] = []
 output_queue = manager.Queue()
 
-class Poller:
-
-  def __init__(self, connection_string:str, output_queue:Queue, poller_id:int):
-    self.connection_string = connection_string
-    self.output_queue = output_queue
-    self.poller_id = poller_id
-
-  def exec_request(self, endpoint: str, method: str = "GET", data=None):
-    full_url = f"{self.connection_string}/{endpoint}"
-    try:
-      if method.upper() == "GET":
-        response = requests.get(full_url, data=data)
-      elif method.upper() == "POST":
-        response = requests.post(full_url, data=data)
-      else:
-        response = None
-      self.output_queue.put({
-        'poller_id': self.poller_id,
-        'url': full_url,
-        'status_code': response.status_code if response else None,
-        'content': response.text[:200] if response else None
-      })
-    except Exception as e:
-      self.output_queue.put({
-        'poller_id': self.poller_id,
-        'url': full_url,
-        'error': str(e)
-      })
-
 def init_pollers(connection_string:str, command_queue:Queue):
   """
   Poll the connection string for data
   """
   poller_id = os.getpid()
-  poller = Poller(connection_string=connection_string, output_queue=output_queue, poller_id=poller_id)
+  poller = Poller(connection_string=connection_string, poller_id=poller_id)
   while True:
     try:
       # Check for a command in the queue
@@ -64,31 +59,78 @@ def init_pollers(connection_string:str, command_queue:Queue):
       poller.exec_request(endpoint, method, data)
     time.sleep(5)
 
-def get_connection_strings():
-  return db.get_connection_strings()
+class Poller:
+  def __init__(self, connection_string:str, poller_id:int):
+    self.connection_string = connection_string
+    self.poller_id = poller_id
 
-def create_processes():
+  def exec_request(self, endpoint: str, method: str = "GET", data=None):
+    full_url = f"{self.connection_string}/{endpoint}"
+    try:
+      if method.upper() == "GET":
+        response = requests.get(full_url, data=data)
+      elif method.upper() == "POST":
+        response = requests.post(full_url, data=data)
+      else:
+        response = None
+      response: requests.Response
+      output_queue.put({
+        'poller_id': self.poller_id,
+        'url': full_url,
+        'status_code': response.status_code if response else None,
+        'content': response.json() if response else None
+      })
+    except Exception as e:
+      output_queue.put({
+        'poller_id': self.poller_id,
+        'url': full_url,
+        'error': str(e)
+      })
+
+class PollerService:
   """
-  Create a process (with its own command queue) for each connection string in the database.
+  A service that spawns a process per connection string from the database
+  and manages polling via asynchronous looping.
   """
-  while True:
-    conn_strs = db.get_connection_strings()
+  def __init__(self, db_session, poll_interval=15, update_database=False):
+    """
+    Initialize the service with a database session.
+    """
+    self.db_session = db_session
+    self.poll_interval = poll_interval
+
+    if update_database:
+      init_processor(output_queue, db_session)
+
+    self.logger = logging.getLogger(self.__class__.__name__)
+    logging.basicConfig(level=logging.DEBUG)
+    self.processes: List[existingProcess] = [] 
+    self.manager = Manager()
+    self.command_queues: List[Queue] = []
+
+  def create_processes(self):
+    """
+    Create a process (with its own command queue) for each connection string in the database.
+    """
+    conn_strs = db.get_connection_strings(self.db_session)
+    if len(conn_strs) == 0:
+      self.logger.info("No connection strings found in database")
     for conn in conn_strs:
       conn_str = conn.connection_string
-      cmd_q = manager.Queue()
+      self.logger.info(f"Creating process for {conn_str}")
+      cmd_q = self.manager.Queue()
+      # Create a new process if one doesn't already exist for this connection string.
       p = multiprocessing.Process(target=init_pollers, args=(conn_str, cmd_q))
+      # use special class to compare existing processes
+      existing = existingProcess(p, conn_str)
+      # Check if the process already exists in the list
+      if existing not in self.processes:
+        self.processes.append(existing)
+        self.command_queues.append(cmd_q)
 
-      if p not in processes:
-        processes.append(p)
-      if cmd_q not in command_queues:
-        command_queues.append(cmd_q)
-
-    asyncio.sleep(30)
-
-def force_poll_all(endpoint: str, method: str = "GET", data=None):
+  def force_poll_all(self, endpoint: str, method: str = "GET", data=None):
     """
-    This function sends a command to every poller to immediately execute a poll
-    with the given endpoint, HTTP method, and data.
+    Send a command to every poller to execute a poll immediately.
     """
     command = {
       'action': 'poll',
@@ -96,24 +138,29 @@ def force_poll_all(endpoint: str, method: str = "GET", data=None):
       'method': method,
       'data': data
     }
-    for cmd_q in command_queues:
+    for cmd_q in self.command_queues:
       cmd_q.put(command)
 
+  async def run(self):
+    """
+    The main async loop that starts the poller processes, dispatches poll commands,
+    and handles output.
+    """
+    self.logger.info("Starting main loop")
+    while True:
+      self.create_processes()
 
-def main():
-  create_processes()
-  while True:
+      # Start processes that are not already alive
+      for existing_process in self.processes:
+        p = existing_process.get_process()
+        if not p.is_alive():
+          p.start()
 
-    for p in processes:
-      if not p.is_alive():
-        p.start()
+      self.force_poll_all(endpoint="node-info", method="GET")
+      await asyncio.sleep(self.poll_interval)
 
-    while not output_queue.empty():
-      result = output_queue.get()
-      print("Response Received:", result)
-
-    force_poll_all(endpoint="containers/list", method="GET")
-    asyncio.sleep(10)
-
-if __name__ == "__main__":
-  main()
+  def start(self):
+    """
+    A blocking call that starts the asyncio event loop and runs the service.
+    """
+    asyncio.run(self.run())
