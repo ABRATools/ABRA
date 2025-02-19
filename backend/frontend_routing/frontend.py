@@ -28,6 +28,7 @@ async def root(
 @router.get("/config/profiles", response_class=HTMLResponse)
 @router.get("/config/containers", response_class=HTMLResponse)
 @router.get("/users", response_class=HTMLResponse)
+@router.get("/access", response_class=HTMLResponse)
 async def serve_frontend(
     request: Request,
     templates: Annotated[Jinja2Templates, Depends(get_templates)]
