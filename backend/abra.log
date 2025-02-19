@@ -196,3 +196,106 @@
 2025-02-13 16:16:12,012 | INFO | User admin is attempting to log in
 2025-02-13 16:16:12,288 | INFO | User admin has successfully logged in
 2025-02-13 16:16:12,292 | INFO | User admin has successfully logged in
+2025-02-14 08:53:24,653 | INFO | No token found
+2025-02-14 08:53:24,656 | INFO | No token found
+2025-02-14 08:53:46,531 | INFO | No token found
+2025-02-14 08:53:46,531 | INFO | No token found
+2025-02-14 08:53:58,840 | INFO | User admin is attempting to log in
+2025-02-14 08:53:59,114 | INFO | User admin has successfully logged in
+2025-02-14 08:53:59,119 | INFO | User admin has successfully logged in
+2025-02-16 21:58:56,801 | INFO | User admin is attempting to log in
+2025-02-16 21:58:57,076 | INFO | User admin has successfully logged in
+2025-02-16 21:58:57,081 | INFO | User admin has successfully logged in
+2025-02-16 21:59:10,977 | INFO | User admin is attempting to log in
+2025-02-16 21:59:11,239 | WARNING | User admin has failed to log in
+2025-02-16 21:59:19,641 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:19,642 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:20,464 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:20,465 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:20,694 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:20,695 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:20,878 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:20,879 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:21,011 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:21,012 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:21,336 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:21,337 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:21,494 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:21,495 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:21,633 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:21,635 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:21,799 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:21,800 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:22,079 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:22,080 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:22,223 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:22,224 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:22,390 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:22,391 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:22,529 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:22,530 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:22,667 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:22,668 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:22,800 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:22,801 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:23,007 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:23,008 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:23,102 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:23,102 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:23,256 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:23,257 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:23,401 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:23,402 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:23,603 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:23,604 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:23,720 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:23,721 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:23,888 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:23,889 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:24,518 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:24,519 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:24,672 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:24,673 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:24,840 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:24,841 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:25,003 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:25,004 | ERROR | User sysadmin does not exist
+2025-02-16 21:59:25,320 | INFO | User sysadmin is attempting to log in
+2025-02-16 21:59:25,321 | ERROR | User sysadmin does not exist
+2025-02-16 22:09:23,004 | INFO | User admin is attempting to log in
+2025-02-16 22:09:23,277 | INFO | User admin has successfully logged in
+2025-02-16 22:09:23,279 | INFO | User admin has successfully logged in
+2025-02-17 12:25:20,038 | INFO | No token found
+2025-02-17 12:25:20,039 | INFO | No token found
+2025-02-17 12:25:30,916 | INFO | No token found
+2025-02-17 12:25:30,917 | INFO | No token found
+2025-02-17 12:25:36,028 | INFO | No token found
+2025-02-17 12:25:36,032 | INFO | No token found
+2025-02-17 12:25:44,564 | INFO | No token found
+2025-02-17 12:25:44,565 | INFO | No token found
+2025-02-18 11:29:04,759 | INFO | User admin is attempting to log in
+2025-02-18 11:29:05,024 | INFO | User admin has successfully logged in
+2025-02-18 11:29:05,026 | INFO | User admin has successfully logged in
+2025-02-18 11:29:10,943 | INFO | User admin is attempting to log in
+2025-02-18 11:29:11,215 | INFO | User admin has successfully logged in
+2025-02-18 11:29:11,217 | INFO | User admin has successfully logged in
+2025-02-18 21:03:46,862 | INFO | No token found
+2025-02-18 21:03:46,862 | INFO | Fetching containers
+2025-02-18 21:03:46,862 | WARNING | Unauthorized access attempt to get_containers
+2025-02-18 21:03:59,187 | INFO | User admin is attempting to log in
+2025-02-18 21:03:59,468 | INFO | User admin has successfully logged in
+2025-02-18 21:03:59,472 | INFO | User admin has successfully logged in
+2025-02-18 21:04:04,789 | INFO | Fetching containers
+2025-02-18 21:04:04,789 | INFO | Successfully retrieved containers: [{'name': 'test', 'content': 'realycool\n\nASdfasdf'}]
+2025-02-18 21:05:25,818 | INFO | Fetching containers
+2025-02-18 21:05:25,818 | INFO | Successfully retrieved containers: [{'name': 'test', 'content': 'realycool\n\nASdfasdf'}]
+2025-02-18 21:10:06,834 | INFO | User admin is attempting to log in
+2025-02-18 21:10:07,104 | INFO | User admin has successfully logged in
+2025-02-18 21:10:07,106 | INFO | User admin has successfully logged in
+2025-02-18 21:11:30,554 | INFO | User admin is attempting to log in
+2025-02-18 21:11:30,824 | INFO | User admin has successfully logged in
+2025-02-18 21:11:30,827 | INFO | User admin has successfully logged in
+2025-02-18 21:12:00,427 | INFO | Fetching containers
+2025-02-18 21:12:00,427 | INFO | Successfully retrieved containers: [{'name': 'test', 'content': 'realycool\n\nASdfasdf'}]
+2025-02-18 21:20:57,847 | INFO | Fetching containers
+2025-02-18 21:20:57,847 | INFO | Successfully retrieved containers: [{'name': 'test', 'content': 'realycool\n\nASdfasdf'}]
