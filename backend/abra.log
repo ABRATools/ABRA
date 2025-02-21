@@ -307,3 +307,23 @@
 2025-02-18 21:32:34,909 | INFO | User admin is attempting to log in
 2025-02-18 21:32:35,178 | INFO | User admin has successfully logged in
 2025-02-18 21:32:35,179 | INFO | User admin has successfully logged in
+2025-02-19 17:37:33,453 | INFO | User admin is attempting to log in
+2025-02-19 17:37:33,741 | INFO | User admin has successfully logged in
+2025-02-19 17:37:33,746 | INFO | User admin has successfully logged in
+2025-02-19 17:37:40,132 | INFO | User admin is attempting to log in
+2025-02-19 17:37:40,402 | INFO | User admin has successfully logged in
+2025-02-19 17:37:40,404 | INFO | User admin has successfully logged in
+2025-02-19 18:24:08,836 | INFO | User admin is attempting to log in
+2025-02-19 18:24:09,105 | INFO | User admin has successfully logged in
+2025-02-19 18:24:09,107 | INFO | User admin has successfully logged in
+2025-02-19 18:26:44,614 | INFO | Fetching containers
+2025-02-19 18:26:44,614 | INFO | Successfully retrieved containers: [{'name': 'test', 'content': 'realycool\n\nASdfasdf'}]
+2025-02-19 19:40:31,180 | INFO | No token found
+2025-02-19 19:40:31,180 | INFO | Fetching containers
+2025-02-19 19:40:31,180 | WARNING | Unauthorized access attempt to get_containers
+2025-02-19 19:40:34,226 | INFO | No token found
+2025-02-19 19:40:34,226 | INFO | No token found
+2025-02-19 20:35:31,045 | INFO | Fetching containers
+2025-02-19 20:35:31,045 | INFO | Successfully retrieved containers: [{'name': 'test', 'content': 'realycool\n\nASdfasdf'}]
+2025-02-19 20:35:43,172 | INFO | Fetching containers
+2025-02-19 20:35:43,172 | INFO | Successfully retrieved containers: [{'name': 'test', 'content': 'realycool\n\nASdfasdf'}]
