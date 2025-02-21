@@ -4,10 +4,6 @@ import datetime
 from pydantic import BaseModel
 from typing import Optional, List
 
-import random
-import os
-import sys
-import redis
 import bcrypt
 import logging
 import database as db
@@ -26,6 +22,7 @@ from fastapi.routing import APIRouter
 from functools import partial
 from frontend_routing import frontend, api
 from starlette.responses import HTMLResponse, RedirectResponse, JSONResponse
+
 
 from classes import User, FilteredUser, Group, Environment, Node, Service, Task, Notification, ConnectionStrings
 from containers import *
@@ -90,7 +87,7 @@ app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_
 # Define secret key and algorithm
 SECRET_KEY = settings.SECRET_KEY.get_secret_value()
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_SECONDS = 3 * 60 * 60 # 3 hours
+ACCESS_TOKEN_EXPIRE_SECONDS = 24 * 60 * 60 # 1 day
 
 # Password hashing context
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -113,20 +110,15 @@ def create_access_token(data: dict, expires_delta: Optional[datetime.timedelta] 
 
 async def get_cookie_or_token(request: Request):
     # debug print
-    print("Cookies:", request.cookies)
-    print("Headers:", request.headers)
-    
     auth_header = request.headers.get("Authorization")
     if auth_header:
         print("Found auth header:", auth_header)
         return auth_header
-        
     access_token = request.cookies.get("access_token")
     if access_token:
         print("Found access token in cookies:", access_token)
         # return f"Bearer {access_token}"
         return access_token
-        
     print("No auth token found in header or cookies")
     return None
 
@@ -143,7 +135,6 @@ async def authenticate_cookie(auth_header: str = Depends(get_cookie_or_token)):
         )
         return token_data
       except JWTError as e:
-        logger.info("JWTError: " + str(e))
         return False
     logger.info("No token found")
     return False

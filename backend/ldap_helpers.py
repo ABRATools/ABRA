@@ -7,6 +7,7 @@ Purpose: helpers for processing ldap conections
 
 # imports
 from ldap3 import Server, Connection, ALL
+from ldap3.core.exceptions import LDAPException, LDAPBindError
 
 def LDAPAuth(domain : str, username : str, password : str) -> bool:
     """

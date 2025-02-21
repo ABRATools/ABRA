@@ -1,6 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Enum, DateTime, Float, Table
-# sqlite does not support mutable lists lol
-# from sqlalchemy.ext.mutable import MutableList
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, DateTime, Float, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 import datetime

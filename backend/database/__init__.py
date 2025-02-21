@@ -1,9 +1,8 @@
 from config import settings
 
 from sqlalchemy import *
-from sqlalchemy.orm import create_session, sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from .models import User, Group, Node, Environment, Service, Task, Notification, Base
+from sqlalchemy.orm import sessionmaker
+from .models import Base
 from .schemas import *
 
 if not settings.LOCAL_DB:
