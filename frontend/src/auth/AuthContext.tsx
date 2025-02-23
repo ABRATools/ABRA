@@ -13,7 +13,32 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(sessionStorage.getItem('token'));
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!token);
+  const checkAuth = (test_token: string | null) => {
+    if (!test_token) {
+      return false;
+    }
+    fetch('/auth/validate-token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${test_token}`,
+      },
+    }).then((response) => {
+      if (response.status === 200) {
+        console.log("Authenticated");
+        return true;
+      }
+      else {
+        console.error('Not authenticated');
+        return false;
+      }
+    }).catch((error) => {
+      console.error('Not authenticated', error);
+      return false;
+    });
+    return false;
+  }
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!token && checkAuth(token));
   const navigate = useNavigate();
   const { toast } = useToast();
 

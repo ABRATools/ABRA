@@ -14,7 +14,7 @@ tsc && vite build
 cp -r ./dist/assets/* ../backend/static/assets/
 
 # Copy public assets (like vite.svg)
-cp -r ./public/* ../backend/static/
+# cp -r ./public/* ../backend/static/
 
 # Copy the index.html to templates
 cp ./dist/index.html ../backend/templates/index.html

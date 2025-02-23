@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     DB_PASSWORD: SecretStr
     DB_NAME: str
     LOCAL_DB: bool = True
+    ACCESS_TOKEN_EXPIRE_SECONDS: int = 24 * 60 * 60
 
     class Config:
         env_file = ".env"

@@ -1,16 +1,12 @@
 #!/usr/bin/env python
 
-import datetime
+from pathlib import Path
 from pydantic import BaseModel
 from typing import Optional, List
 
-import bcrypt
-import logging
 import database as db
 from config import settings
 from contextlib import asynccontextmanager
-from jose import JWTError, jwt
-from passlib.context import CryptContext
 
 # webserver stuff
 import uvicorn
@@ -19,37 +15,14 @@ from fastapi import FastAPI, Request, Depends, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.routing import APIRouter
-from functools import partial
 from frontend_routing import frontend, api
 from starlette.responses import HTMLResponse, RedirectResponse, JSONResponse
-
 
 from classes import User, FilteredUser, Group, Environment, Node, Service, Task, Notification, ConnectionStrings
 from containers import *
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s')
-# remove all handlers
-logger.propagate = False
-logger.handlers.clear()
-
-file_handler = logging.FileHandler('abra.log')
-file_handler.setFormatter(formatter)
-
-logger.addHandler(file_handler)
-
-def obtain_session():
-  try:
-    session = db.get_session()
-  except Exception as e:
-    raise
-  return next(session)
-
-session = obtain_session()
-
-def get_session():
-  return session
+from web_utils import get_session, logger
+from web_auth import AuthToken, authenticate_cookie, auth_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -77,85 +50,15 @@ app.mount("/assets", StaticFiles(
     check_dir=True
 ), name="assets")
 
-
 # include routers
 app.include_router(frontend.router)
 app.include_router(api.router)
+app.include_router(auth_router)
 
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_value())
 
-# Define secret key and algorithm
-SECRET_KEY = settings.SECRET_KEY.get_secret_value()
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_SECONDS = 24 * 60 * 60 # 1 day
-
-# Password hashing context
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-class AuthToken(BaseModel):
-  username: Optional[str] = None
-  user_type: Optional[str] = None
-  groups: Optional[List[str]] = None
-
-def create_access_token(data: dict, expires_delta: Optional[datetime.timedelta] = None):
-  to_encode = data.copy()
-  if expires_delta:
-    expire = datetime.datetime.now(datetime.timezone.utc) + expires_delta
-  else:
-    # default expiration time is 15 minutes
-    expire = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=15)
-  to_encode.update({"exp": expire})
-  encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-  return encoded_jwt
-
-async def get_cookie_or_token(request: Request):
-    # debug print
-    auth_header = request.headers.get("Authorization")
-    if auth_header:
-        print("Found auth header:", auth_header)
-        return auth_header
-    access_token = request.cookies.get("access_token")
-    if access_token:
-        print("Found access token in cookies:", access_token)
-        # return f"Bearer {access_token}"
-        return access_token
-    print("No auth token found in header or cookies")
-    return None
-
-async def authenticate_cookie(auth_header: str = Depends(get_cookie_or_token)):
-  try:
-    if auth_header:
-      access_token = auth_header.split("Bearer ")[1]
-      try:
-        payload = jwt.decode(access_token, SECRET_KEY, algorithms=[ALGORITHM])
-        token_data = AuthToken(
-          username=payload.get("username"),
-          user_type=payload.get("user_type"),
-          groups=payload.get("groups")
-        )
-        return token_data
-      except JWTError as e:
-        return False
-    logger.info("No token found")
-    return False
-  except AttributeError:
-    return False
-
-@app.post("/validate-token")
-async def validate_token(request: Request, token: AuthToken = Depends(authenticate_cookie)):
-  if token:
-    request.session['user'] = token.username
-    token_json = {
-      "username": token.username,
-      "user_type": token.user_type,
-      "groups": token.groups
-    }
-    return JSONResponse(content={"token": token_json}, status_code=200)
-  return JSONResponse(content={"token": None}, status_code=401)
-
 @app.get("/test-static")
 async def test_static():
-    from pathlib import Path
     static_dir = Path("static")
     assets_dir = Path("static/assets")
     
@@ -164,32 +67,6 @@ async def test_static():
         "asset_files": [f.name for f in assets_dir.iterdir() if f.is_file()]
     }
     return files
-
-@app.post("/login")
-async def process_login(request: Request, session = Depends(get_session)) -> JSONResponse:
-  data = await request.json()
-  username = data['username'].lower().strip()
-  password = data['password'].strip()
-  logger.info(f"User {username} is attempting to log in")
-
-  user_pw_hash = db.get_hash_for_user(session, username)
-
-  if user_pw_hash is None:
-    logger.error(f"User {username} does not exist")
-    return JSONResponse(content={'message': 'Invalid credentials'}, status_code=401)
-
-  if bcrypt.checkpw(password.encode('utf-8'), user_pw_hash):
-    logger.info(f"User {username} has successfully logged in")
-    request.session['user'] = username
-    user_data = db.get_user_info(session, username)
-    access_token_expires = datetime.timedelta(seconds=ACCESS_TOKEN_EXPIRE_SECONDS)
-    access_token = create_access_token(data=user_data, expires_delta=access_token_expires)
-    logger.info(f"User {username} has successfully logged in")
-    response = JSONResponse(content={"token": access_token}, status_code=200)
-    response.set_cookie(key="access_token", value=f"Bearer {access_token}", httponly=True, max_age=ACCESS_TOKEN_EXPIRE_SECONDS)
-    return response
-  logger.warning(f"User {username} has failed to log in")
-  return JSONResponse(content={"token": None}, status_code=401)
 
 @app.post("/api/get_user_settings")
 async def get_current_user_details(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
@@ -411,17 +288,12 @@ async def post_node(request: Request, session = Depends(get_session)) -> JSONRes
   return JSONResponse(content={'message': 'Unproccessable Data'}, status_code=422)
   # return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-@app.get("/logout")
-async def process_logout(request: Request, token: AuthToken = Depends(authenticate_cookie)):
-  if token:
-    return JSONResponse(content={'message': 'Successfully logged out', 'redirect': '/login'}, status_code=200)
-  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
-
 # catch all route for client-side routing (put at end to cover up any other ones)
 @app.get("/{full_path:path}", response_class=HTMLResponse)
 async def catch_all(request: Request, full_path: str):
-    return templates.TemplateResponse('index.html', {'request': request})
+  return HTMLResponse(content="""<h1>404 Not Found!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</h1>""", status_code=404)
+    # return templates.TemplateResponse('index.html', {'request': request})
 
 if __name__ == "__main__":
   print("hello bingus!")
-  uvicorn.run('main:app', host='127.0.0.1', port=7777, reload=True)
+  uvicorn.run('main:app', host='127.0.0.1', port=8989, reload=True)

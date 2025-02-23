@@ -37,7 +37,7 @@ const AppRoutes = () => {
       <Route path="/" element={<Navigate to="/login" replace />} />
 
       {/* Protected routes */}
-      <Route element={<ProtectedRoute />}>
+      {/* <Route element={<ProtectedRoute />}> */}
         <Route element={<DashboardLayout />}>
           {/* Redirects */}
           <Route path="/system" element={<Navigate to="/display/systems" replace />} />
@@ -64,7 +64,7 @@ const AppRoutes = () => {
           <Route path="/users" element={<UserManagement />} />
           <Route path="/access" element={<GroupManagement />} />
         </Route>
-      </Route>
+      {/* </Route> */}
     </Routes>
   );
 };
@@ -72,10 +72,10 @@ const AppRoutes = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <AuthProvider>
-        <ApiErrorHandler />
-        <AppRoutes />
-      </AuthProvider>
+      {/* <AuthProvider> */}
+      <ApiErrorHandler />
+      <AppRoutes />
+      {/* </AuthProvider> */}
       <Toaster />
     </BrowserRouter>
   </QueryClientProvider>
