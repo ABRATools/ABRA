@@ -59,7 +59,11 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="w-full max-w-md p-8 space-y-6 dashboard-card">
         <div className="space-y-2 text-center">
+<<<<<<< HEAD
           <h1 className="text-2xl font-bold">ABRA Container Management System</h1>
+=======
+          <h1 className="text-2xl font-bold">ABRATools</h1>
+>>>>>>> e9544a6411f1393d983df679e50e897fe327ac47
           <p className="text-muted-foreground">
             Enter your credentials to access the dashboard
           </p>

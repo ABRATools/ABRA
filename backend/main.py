@@ -165,11 +165,6 @@ async def test_static():
     }
     return files
 
-# catch all route for client-side routing
-@app.get("/{full_path:path}", response_class=HTMLResponse)
-async def catch_all(request: Request, full_path: str):
-    return templates.TemplateResponse('index.html', {'request': request})
-
 @app.post("/login")
 async def process_login(request: Request, session = Depends(get_session)) -> JSONResponse:
   data = await request.json()
@@ -339,11 +334,12 @@ async def get_node_locations(request: Request, session = Depends(get_session)) -
 
 # container file logic
 @app.get('/api/get_containers')
-async def get_containers(request: Request, token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+async def get_containers_endpoint(token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
     logger.info("Fetching containers")
+    print("hello")
     try:
         if token:
-            containers = get_containers()
+            containers = fetch_containers()
             logger.info(f"Successfully retrieved containers: {containers}")
             return JSONResponse(content={
                 'images': containers,
@@ -420,6 +416,11 @@ async def process_logout(request: Request, token: AuthToken = Depends(authentica
   if token:
     return JSONResponse(content={'message': 'Successfully logged out', 'redirect': '/login'}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+# catch all route for client-side routing (put at end to cover up any other ones)
+@app.get("/{full_path:path}", response_class=HTMLResponse)
+async def catch_all(request: Request, full_path: str):
+    return templates.TemplateResponse('index.html', {'request': request})
 
 if __name__ == "__main__":
   print("hello bingus!")

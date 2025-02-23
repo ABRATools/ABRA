@@ -42,7 +42,7 @@ def edit_container(name : str, content : str) -> bool:
     """
     return add_container(name, content)
 
-def get_containers() -> list:
+def fetch_containers() -> list:
     """
     get all of the containers in the container dir
     """
