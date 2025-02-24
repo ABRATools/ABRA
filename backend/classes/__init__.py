@@ -85,3 +85,8 @@ class Notification(BaseModel):
   is_read: bool
   is_active: bool
   users: List[User]
+
+class InputConnString(BaseModel):
+  name: str
+  source: str
+  ip: Optional[str] = None

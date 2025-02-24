@@ -2,7 +2,6 @@
 import sys, os
 sys.path.insert(0, os.path.abspath('..'))
 
-import os
 import time
 import asyncio
 import requests
@@ -14,7 +13,7 @@ from typing import List
 
 from .db_interface import init_processor
 
-from multiprocessing import Process, Queue, Manager
+from multiprocessing import Queue, Manager
 # create a process for each connection string in the database for concurrent polling
 
 class existingProcess:
@@ -45,19 +44,24 @@ def init_pollers(connection_string:str, command_queue:Queue):
   """
   poller_id = os.getpid()
   poller = Poller(connection_string=connection_string, poller_id=poller_id)
-  while True:
-    try:
-      # Check for a command in the queue
-      command = command_queue.get_nowait()
-    except Exception:
-      command = None
 
-    if command and command.get('action') == 'poll':
-      endpoint = command.get('endpoint', '')
-      method = command.get('method', 'GET')
-      data = command.get('data', None)
-      poller.exec_request(endpoint, method, data)
-    time.sleep(5)
+  try:
+    while True:
+      try:
+        # Check for a command in the queue
+        command = command_queue.get_nowait()
+      except Exception:
+        command = None
+
+      if command and command.get('action') == 'poll':
+        endpoint = command.get('endpoint', '')
+        method = command.get('method', 'GET')
+        data = command.get('data', None)
+        poller.exec_request(endpoint, method, data)
+      time.sleep(5)
+  except KeyboardInterrupt:
+    logger.info(f"Poller {poller_id} shutting down")
+    return
 
 class Poller:
   def __init__(self, connection_string:str, poller_id:int):
@@ -92,7 +96,7 @@ class PollerService:
   A service that spawns a process per connection string from the database
   and manages polling via asynchronous looping.
   """
-  def __init__(self, db_session, poll_interval=15, update_database=False):
+  def __init__(self, db_session, poll_interval=15, update_database=False, shared_queue=None):
     """
     Initialize the service with a database session.
     """
@@ -100,13 +104,14 @@ class PollerService:
     self.poll_interval = poll_interval
 
     if update_database:
-      init_processor(output_queue, db_session)
+      init_processor(output_queue, db_session, shared_queue)
 
     self.logger = logging.getLogger(self.__class__.__name__)
     logging.basicConfig(level=logging.DEBUG)
     self.processes: List[existingProcess] = [] 
     self.manager = Manager()
     self.command_queues: List[Queue] = []
+    self.main_task = None
 
   def create_processes(self):
     """
@@ -141,26 +146,56 @@ class PollerService:
     for cmd_q in self.command_queues:
       cmd_q.put(command)
 
+  def __del__(self):
+    """
+    Clean up the database session.
+    """
+    for existing_process in self.processes:
+      p = existing_process.get_process()
+      if (not p is None) and (p.is_alive()):
+        print(f"Terminating process {p.pid}, {p}")
+        os.kill(p.pid, 9)
+        # p.terminate()
+        # p.join()
+    self.db_session.close()
+
   async def run(self):
     """
     The main async loop that starts the poller processes, dispatches poll commands,
     and handles output.
     """
     self.logger.info("Starting main loop")
-    while True:
-      self.create_processes()
+    try:
+      while True:
+        self.create_processes()
 
-      # Start processes that are not already alive
-      for existing_process in self.processes:
-        p = existing_process.get_process()
-        if not p.is_alive():
-          p.start()
+        # Start processes that are not already alive
+        for existing_process in self.processes:
+          p = existing_process.get_process()
+          if not p.is_alive():
+            p.start()
 
-      self.force_poll_all(endpoint="node-info", method="GET")
-      await asyncio.sleep(self.poll_interval)
+        self.force_poll_all(endpoint="node-info", method="GET")
+        await asyncio.sleep(self.poll_interval)
+    except KeyboardInterrupt:
+      self.shutdown()
+      raise
+    except asyncio.CancelledError:
+      self.shutdown()
+      raise
 
-  def start(self):
+  def shutdown(self):
     """
-    A blocking call that starts the asyncio event loop and runs the service.
+    Terminate all processes and clean up.
     """
-    asyncio.run(self.run())
+    if self.main_task and not self.main_task.done():
+      self.main_task.cancel()
+    for existing_process in self.processes:
+      p = existing_process.get_process()
+      if (not p is None) and (p.is_alive()):
+        print(f"Terminating process {p.pid}")
+        p.kill()
+        p.join()
+    self.processes = []
+    self.db_session.close()
+    return

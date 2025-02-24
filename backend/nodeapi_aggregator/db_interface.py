@@ -2,8 +2,11 @@ import threading
 from classes import *
 import database as db
 import nanoid
+import asyncio
 
-def processes_stream_output(output_queue, database_session):
+async def processes_stream_output(output_queue, database_session, shared_queue):
+  print("Starting stream output")
+  print("Aggregator shared queue: ", shared_queue)
   while True:
     try:
       data = output_queue.get_nowait()
@@ -35,9 +38,17 @@ def processes_stream_output(output_queue, database_session):
       for container in container_data:
         container = Environment(**container)
         host.environments.append(container)
-      print(f"Host: {host}")
+      print("Broadcasting host data")
+      shared_queue.put(host)
 
-def init_processor(output_queue, database_session):
+def async_proccess_runner(output_queue, database_session, shared_queue):
+  loop = asyncio.new_event_loop()
+  asyncio.set_event_loop(loop)
+  loop.run_until_complete(processes_stream_output(output_queue, database_session, shared_queue))
+  loop.close()
+
+def init_processor(output_queue, database_session, shared_queue):
   print("Starting stream thread")
-  stream_thread = threading.Thread(target=processes_stream_output, args=(output_queue, database_session), daemon=True)
+  #stream_thread = threading.Thread(target=processes_stream_output, args=(output_queue, database_session), daemon=True)
+  stream_thread = threading.Thread(target=async_proccess_runner, args=(output_queue, database_session, shared_queue), daemon=True)
   stream_thread.start()
