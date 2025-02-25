@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DashboardLayout } from "./layouts/DashboardLayout.tsx";
-import { AuthProvider } from "./auth/AuthContext.tsx";
-import { ProtectedRoute } from "./auth/ProtectedRoute.tsx";
+import { WebSocketProvider } from "./data/WebSocketContext.tsx";
+
 import Login from "./pages/Login.tsx";
 import { ApiErrorHandler } from "./lib/api-error-handler.ts";
 
@@ -31,6 +31,7 @@ const queryClient = new QueryClient();
 
 const AppRoutes = () => {
   return (
+    <WebSocketProvider url="/data/ws">
     <Routes>
       {/* Public routes */}
       <Route path="/login" element={<Login />} />
@@ -66,6 +67,7 @@ const AppRoutes = () => {
         </Route>
       {/* </Route> */}
     </Routes>
+    </WebSocketProvider>
   );
 };
 

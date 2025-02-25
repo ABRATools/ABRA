@@ -4,6 +4,7 @@ sys.path.insert(0, os.path.abspath('..'))
 
 import database as db
 from classes import *
+from containers import *
 
 import bcrypt
 from fastapi import APIRouter, Request, Depends

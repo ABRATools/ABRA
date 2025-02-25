@@ -13,57 +13,30 @@ export interface System {
 }
 
 export interface Node {
-  id: string;
-  system_id: string;
-  name: string;
-  description?: string;
-  status: Status;
-  resources: {
-    cpu: {
-      allocated: number;
-      used: number;
-      available: number;
-    };
-    memory: {
-      allocated: number;
-      used: number;
-      available: number;
-    };
-    storage: {
-      allocated: number;
-      used: number;
-      available: number;
-    };
-  };
-  environment_count: number;
-  created_at: string;
-  updated_at: string;
+  node_id: string;
+  os_name: string;
+  os_version: string;
+  cpu_count: number;
+  mem_percent: number;
+  total_memory: number;
+  num_containers: number;
+  enviroments: Environment[];
 }
 
 export interface Environment {
-  id: string;
-  node_id: string;
-  system_id: string;
-  name: string;
-  description?: string;
-  status: EnvironmentStatus;
+  env_id: string;
   image: string;
-  resources: {
-    cpu: number;
-    memory: number;
-  };
-  network: string;
-  ports: Array<{
-    host: number;
-    container: number;
-    protocol: 'tcp' | 'udp';
-  }>;
-  volumes: Array<{
-    host: string;
-    container: string;
-    mode: 'rw' | 'ro';
-  }>;
-  environment_variables: Record<string, string>;
-  created_at: string;
-  updated_at: string;
+  names: string[];
+  state: string;
+  started_at: number;
+  ports: number[];
+  ip: string;
+  networks: string[];
+  exited: boolean;
+  exit_code: number;
+  exited_at: number;
+  status: string;
+  cpu_percentage: number;
+  memory_percent: number;
+  uptime: number;
 }

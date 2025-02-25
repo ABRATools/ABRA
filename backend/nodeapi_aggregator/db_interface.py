@@ -39,7 +39,7 @@ async def processes_stream_output(output_queue, database_session, shared_queue):
         container = Environment(**container)
         host.environments.append(container)
       print("Broadcasting host data")
-      shared_queue.put(host)
+      shared_queue.put(host.json())
 
 def async_proccess_runner(output_queue, database_session, shared_queue):
   loop = asyncio.new_event_loop()
