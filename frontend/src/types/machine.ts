@@ -20,7 +20,7 @@ export interface Node {
   mem_percent: number;
   total_memory: number;
   num_containers: number;
-  enviroments: Environment[];
+  environments: Environment[];
 }
 
 export interface Environment {

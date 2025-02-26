@@ -39,9 +39,19 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children, 
 
             ws.onmessage = (event: MessageEvent) => {
                 try {
-                    const receivedData: WebSocketData = JSON.parse(event.data);
+                    const receivedData: any = JSON.parse(event.data);
                     console.log("got data;", receivedData);
-                    setData(receivedData);
+                    // handle various cases of data
+                    if (Array.isArray(receivedData)) {
+                        setData({ nodes: receivedData }); // got a list of nodes
+                    } else if (receivedData.node_id) {
+                        setData({ nodes: [receivedData] }); // got a single node
+                    } else if (receivedData.nodes) {
+                        setData(receivedData); // it has nodes already
+                    } else {
+                        console.warn("Unexpected data format from WebSocket:", receivedData);
+                        setData({ nodes: [receivedData] });
+                    }
                 } catch (err) {
                     setError(new Error('Failed to parse web socket data'));
                     console.error('WebSocket data parsing error:', err);

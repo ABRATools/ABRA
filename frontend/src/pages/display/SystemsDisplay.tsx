@@ -9,18 +9,105 @@ import {
   Box,
   Network 
 } from "lucide-react";
-import { testData } from "@/lib/test-data";
+import { useWebSocket } from "@/data/WebSocketContext";
+import { useMemo } from "react";
+import { Node, Environment } from "@/types/machine";
+
+// function to group nodes by systems
+const groupNodesBySystems = (nodes: Node[]) => {
+  // for now, simplified version of systems based on unique OS types
+  // later, create actual system grouping logic
+  const systemGroups: Record<string, {
+    id: string;
+    name: string;
+    status: 'healthy' | 'warning' | 'error';
+    nodes: Node[];
+  }> = {};
+
+  nodes.forEach(node => {
+    const systemId = `${node.os_name}`;
+    
+    if (!systemGroups[systemId]) {
+      systemGroups[systemId] = {
+        id: systemId,
+        name: `${node.os_name}`,
+        status: 'healthy', // Default status, will be updated below
+        nodes: []
+      };
+    }
+    
+    systemGroups[systemId].nodes.push(node);
+  });
+
+  // determine system status based on node health
+  Object.values(systemGroups).forEach(system => {
+    // ff any node has high memory usage (>90%), mark system as warning
+    const hasWarning = system.nodes.some(node => node.mem_percent > 90);
+    
+    system.status = hasWarning ? 'warning' : 'healthy';
+  });
+
+  return Object.values(systemGroups);
+};
 
 export default function SystemsDisplay() {
-  const { systems } = testData;
-  const totalContainers = systems.reduce((acc, sys) => acc + sys.totalContainers, 0);
-  const totalNodes = systems.reduce((acc, sys) => acc + sys.nodeCount, 0);
-  const avgCpuUsage = Math.round(
-    systems.reduce((acc, sys) => acc + sys.cpuUsage, 0) / systems.length
-  );
-  const avgMemoryUsage = Math.round(
-    systems.reduce((acc, sys) => acc + sys.memoryUsage, 0) / systems.length
-  );
+  const { data, isConnected, error } = useWebSocket();
+  
+  const systems = useMemo(() => {
+    if (!data || !data.nodes) return [];
+    return groupNodesBySystems(data.nodes);
+  }, [data]);
+
+  // calculate aggregate metrics
+  const totalNodes = useMemo(() => data?.nodes?.length || 0, [data]);
+  const totalContainers = useMemo(() => {
+    if (!data?.nodes) return 0;
+    return data.nodes.reduce((acc, node) => acc + node.num_containers, 0);
+  }, [data]);
+
+  const avgCpuUsage = useMemo(() => {
+    if (!data?.nodes || data.nodes.length === 0) return 0;
+    
+    const allEnvironments = data.nodes.flatMap(node => node.environments || []);
+    if (allEnvironments.length === 0) return 0;
+    
+    const totalCpuUsage = allEnvironments.reduce((sum, env) => sum + env.cpu_percentage, 0);
+    return Math.round(totalCpuUsage / allEnvironments.length);
+  }, [data]);
+
+  const avgMemoryUsage = useMemo(() => {
+    if (!data?.nodes || data.nodes.length === 0) return 0;
+    
+    // get average memory usage per node
+    return Math.round(
+      data.nodes.reduce((sum, node) => sum + node.mem_percent, 0) / data.nodes.length
+    );
+  }, [data]);
+
+  if (!isConnected || error) {
+    return (
+      <div className="p-6">
+        <h1 className="text-3xl font-bold tracking-tight mb-4">Systems Overview</h1>
+        <Card>
+          <CardContent className="pt-6">
+            <div className="text-center py-8">
+              {error ? (
+                <div className="text-red-500">
+                  <h2 className="text-xl mb-2">Connection Error</h2>
+                  <p>{error.message}</p>
+                </div>
+              ) : (
+                <div className="text-muted-foreground">
+                  <h2 className="text-xl mb-2">Connecting to monitoring service...</h2>
+                  <p>Please wait while we establish connection</p>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -85,56 +172,72 @@ export default function SystemsDisplay() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {systems.map((system) => (
-          <Card key={system.id}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-xl font-semibold">
-                {system.name}
-              </CardTitle>
-              <div className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                system.status === 'healthy' ? 'bg-green-500/20 text-green-500' : 'bg-yellow-500/20 text-yellow-500'
-              }`}>
-                {system.status}
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Nodes</p>
-                      <p className="text-sm font-medium">{system.nodeCount}</p>
+        {systems.map((system) => {
+          // calculate system-specific metrics
+          const nodeCount = system.nodes.length;
+          const totalContainers = system.nodes.reduce((acc, node) => acc + node.num_containers, 0);
+          const avgCpuUsage = Math.round(
+            system.nodes.reduce((sum, node) => {
+              const nodeEnvs = node.environments || [];
+              const nodeCpuSum = nodeEnvs.reduce((envSum, env) => envSum + env.cpu_percentage, 0);
+              return sum + (nodeEnvs.length > 0 ? nodeCpuSum / nodeEnvs.length : 0);
+            }, 0) / (system.nodes.length || 1)
+          );
+          const avgMemoryUsage = Math.round(
+            system.nodes.reduce((sum, node) => sum + node.mem_percent, 0) / system.nodes.length
+          );
+
+          return (
+            <Card key={system.id}>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-xl font-semibold">
+                  {system.name}
+                </CardTitle>
+                <div className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                  system.status === 'healthy' ? 'bg-green-500/20 text-green-500' : 'bg-yellow-500/20 text-yellow-500'
+                }`}>
+                  {system.status}
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Nodes</p>
+                        <p className="text-sm font-medium">{nodeCount}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">Containers</p>
+                        <p className="text-sm font-medium">{totalContainers}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Containers</p>
-                      <p className="text-sm font-medium">{system.totalContainers}</p>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-muted-foreground">CPU Usage</p>
+                        <p className="text-sm font-medium">{avgCpuUsage}%</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">Memory Usage</p>
+                        <p className="text-sm font-medium">{avgMemoryUsage}%</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm text-muted-foreground">CPU Usage</p>
-                      <p className="text-sm font-medium">{system.cpuUsage}%</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Memory Usage</p>
-                      <p className="text-sm font-medium">{system.memoryUsage}%</p>
-                    </div>
+                  <div className="flex gap-2">
+                    <Button asChild className="flex-1">
+                      <Link to={`/display/systems/${system.id}`}>View Details</Link>
+                    </Button>
+                    <Button variant="outline" asChild>
+                      <Link to={`/config/systems/${system.id}`}>
+                        <Settings className="h-4 w-4" />
+                      </Link>
+                    </Button>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <Button asChild className="flex-1">
-                    <Link to={`/display/systems/${system.id}`}>View Details</Link>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <Link to={`/config/systems/${system.id}`}>
-                      <Settings className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </div>
   );
