@@ -28,6 +28,9 @@ const GroupManagement = React.lazy(() => import("./pages/GroupManagement.tsx"));
 
 const queryClient = new QueryClient();
 
+// debug
+const WebSocketDebug = React.lazy(() => import("./data/WebSocketDebug.tsx"));
+
 
 const AppRoutes = () => {
   return (
@@ -47,6 +50,9 @@ const AppRoutes = () => {
           <Route path="/config/nodes" element={<Navigate to="/config/systems" replace />} />
           <Route path="/config/environments" element={<Navigate to="/config/systems" replace />} />
           
+          {/* WebSocket Debug - Add this new route */}
+          <Route path="/debug/websocket" element={<WebSocketDebug />} />
+
           {/* Display routes */}
           <Route path="/display/systems" element={<SystemsDisplay />} />
           <Route path="/display/systems/:systemId" element={<SystemDetail />} />

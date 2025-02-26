@@ -103,7 +103,7 @@ export default function NodeDetail() {
   const usedMemory = node.total_memory * (node.mem_percent / 100);
   const totalMemory = node.total_memory;
   
-  // This is a placeholder - real implementation would depend on actual data available
+  // This is a placeholder, real implementation would depend on actual data available
   const storageUsed = 100; // GB
   const storageTotal = 500; // GB
   const storagePercent = Math.round((storageUsed / storageTotal) * 100);

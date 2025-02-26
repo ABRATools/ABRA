@@ -39,19 +39,27 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children, 
 
             ws.onmessage = (event: MessageEvent) => {
                 try {
-                    const receivedData: any = JSON.parse(event.data);
-                    console.log("got data;", receivedData);
-                    // handle various cases of data
+                    const receivedData = JSON.parse(event.data);
+                    console.log("Received WebSocket data:", receivedData);
+                    
+                    let normalizedData: WebSocketData = { nodes: [] };
+                    
                     if (Array.isArray(receivedData)) {
-                        setData({ nodes: receivedData }); // got a list of nodes
+                    // if it's an array, assume it's an array of nodes
+                    normalizedData.nodes = receivedData;
+                    } else if (receivedData.nodes && Array.isArray(receivedData.nodes)) {
+                    // if it has a nodes property that's an array
+                    normalizedData.nodes = receivedData.nodes;
                     } else if (receivedData.node_id) {
-                        setData({ nodes: [receivedData] }); // got a single node
-                    } else if (receivedData.nodes) {
-                        setData(receivedData); // it has nodes already
-                    } else {
-                        console.warn("Unexpected data format from WebSocket:", receivedData);
-                        setData({ nodes: [receivedData] });
+                    // if it's a single node
+                    normalizedData.nodes = [receivedData];
+                    } else { // fallback
+                    console.warn("Unexpected data format, attempting to use as-is:", receivedData);
+                    normalizedData.nodes = [receivedData];
                     }
+                    
+                    console.log("Normalized data:", normalizedData);
+                    setData(normalizedData);
                 } catch (err) {
                     setError(new Error('Failed to parse web socket data'));
                     console.error('WebSocket data parsing error:', err);

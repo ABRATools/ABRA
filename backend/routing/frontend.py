@@ -36,6 +36,7 @@ async def serve_frontend_public(
 @router.get("/config/profiles",)
 @router.get("/config/containers")
 @router.get("/access")
+@router.get("/debug/websocket")
 async def serve_frontend_protected(
     request: Request,
     templates: Annotated[Jinja2Templates, Depends(get_templates)],

@@ -15,8 +15,13 @@ import { Node, Environment } from "@/types/machine";
 
 // function to group nodes by systems
 const groupNodesBySystems = (nodes: Node[]) => {
-  // for now, simplified version of systems based on unique OS types
-  // later, create actual system grouping logic
+  if (!nodes || !Array.isArray(nodes) || nodes.length === 0) {
+    console.warn("No nodes data available for grouping");
+    return [];
+  }
+
+  console.log("Grouping nodes:", nodes);
+  
   const systemGroups: Record<string, {
     id: string;
     name: string;
@@ -25,13 +30,21 @@ const groupNodesBySystems = (nodes: Node[]) => {
   }> = {};
 
   nodes.forEach(node => {
-    const systemId = `${node.os_name}`;
+    // check if node has required properties
+    if (!node || !node.os_name) {
+      console.warn("Invalid node data:", node);
+      return; // skip this node
+    }
+    
+    const osName = node.os_name || 'Unknown';
+    const osVersion = node.os_version || 'Unknown';
+    const systemId = `${osName}-${osVersion}`;
     
     if (!systemGroups[systemId]) {
       systemGroups[systemId] = {
         id: systemId,
-        name: `${node.os_name}`,
-        status: 'healthy', // Default status, will be updated below
+        name: `${osName} ${osVersion}`,
+        status: 'healthy',
         nodes: []
       };
     }
@@ -39,16 +52,19 @@ const groupNodesBySystems = (nodes: Node[]) => {
     systemGroups[systemId].nodes.push(node);
   });
 
-  // determine system status based on node health
-  Object.values(systemGroups).forEach(system => {
-    // ff any node has high memory usage (>90%), mark system as warning
-    const hasWarning = system.nodes.some(node => node.mem_percent > 90);
+  const processedSystems = Object.values(systemGroups).map(system => {
+    const hasError = system.nodes.some(node => node.mem_percent > 95);
+    const hasWarning = system.nodes.some(node => node.mem_percent > 80);
     
-    system.status = hasWarning ? 'warning' : 'healthy';
+    system.status = hasError ? 'error' : (hasWarning ? 'warning' : 'healthy');
+    
+    return system;
   });
 
-  return Object.values(systemGroups);
+  console.log("Grouped systems:", processedSystems);
+  return processedSystems;
 };
+
 
 export default function SystemsDisplay() {
   const { data, isConnected, error } = useWebSocket();

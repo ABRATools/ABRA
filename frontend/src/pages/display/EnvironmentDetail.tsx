@@ -12,7 +12,8 @@ import {
   Square,
   RefreshCcw,
   Layers,
-  Monitor
+  Monitor,
+  Clock
 } from "lucide-react";
 import { useWebSocket } from "@/data/WebSocketContext";
 import { useState, useMemo } from "react";
