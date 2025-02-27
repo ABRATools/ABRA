@@ -5,15 +5,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, Server, Settings } from "lucide-react";
 import { useWebSocket } from "@/data/WebSocketContext";
-import { Node } from "@/types/machine";
+import { Node, System } from "@/types/machine";
 
 // helper for goruping nodes
 const groupNodesBySystems = (nodes : Node[]) => {
+  const [sysIds, setSysIds] = useState<string[]>([]);
   if (!nodes || !Array.isArray(nodes) || nodes.length === 0) {
     return [];
   }
-  
-  const systemGroups = {};
+  // default 'all' system
+  const systemGroups: { [systemId: string] : System; } = {
+    'all': {
+      id: 'all',
+      name: 'All Systems',
+      status: 'healthy',
+      nodeCount: 0,
+      totalContainers: 0,
+      nodes: []
+    }
+  };
 
   nodes.forEach(node => {
     if (!node || !node.os_name) return;
@@ -22,26 +32,31 @@ const groupNodesBySystems = (nodes : Node[]) => {
     const osVersion = node.os_version || 'Unknown';
     const systemId = `${osName}-${osVersion}`;
     
-    if (!systemGroups[systemId]) {
-      systemGroups[systemId] = {
-        id: systemId,
-        name: `${osName} ${osVersion}`,
-        status: 'healthy',
-        nodeCount: 0,
-        totalContainers: 0,
-        nodes: []
-      };
-    }
+    sysIds.forEach(sysid => {
+      if (!systemGroups[sysid]) {
+        systemGroups[sysid] = {
+          id: systemId,
+          name: `${osName} ${osVersion}`,
+          status: 'healthy',
+          nodeCount: 0,
+          totalContainers: 0,
+          nodes: []
+        };
+      }
+    });
     
-    systemGroups[systemId].nodes.push(node);
-    systemGroups[systemId].nodeCount++;
-    systemGroups[systemId].totalContainers += node.num_containers || 0;
-    
-    if (node.mem_percent > 90) {
-      systemGroups[systemId].status = 'warning';
+    var allSystemNodeList = systemGroups['all'].nodes;
+    if (!allSystemNodeList.includes(node)) {
+      allSystemNodeList.push(node);
+      systemGroups['all'].nodeCount++;
+      systemGroups['all'].totalContainers += node.num_containers || 0;
+      if (node.mem_percent > 90) {
+        systemGroups['all'].status = 'warning';
+      }
     }
   });
 
+  console.log(systemGroups);
   return Object.values(systemGroups);
 };
 

@@ -18,7 +18,9 @@ const formatMemory = (bytes) => {
 
 export default function NodeConfigDetail() {
   const { systemId, nodeId } = useParams();
+  console.log(systemId, nodeId);
   const { data, isConnected, error } = useWebSocket();
+  console.log(data, isConnected, error);
   const { toast } = useToast();
   
   const [nodeName, setNodeName] = useState("");
@@ -30,22 +32,30 @@ export default function NodeConfigDetail() {
   const [subnet, setSubnet] = useState("172.17.0.0/16");
   
   const node = useMemo(() => {
-    if (!data?.nodes || !nodeId) return null;
+    if (!data?.nodes || !nodeId) {
+      console.log("node not found or nodeId not set");
+      return null;
+    }
+    console.log(data.nodes.find(n => n.node_id === nodeId));
     return data.nodes.find(n => n.node_id === nodeId);
   }, [data, nodeId]);
   
   const system = useMemo(() => {
-    if (!node || !systemId) return null;
-    
-    const [osName, osVersion] = systemId.split('-');
-    
-    if (node.os_name !== osName || node.os_version !== osVersion) {
+    if (!node || !systemId){
+      console.log("system not found");
       return null;
     }
     
+    // const [osName, osVersion] = systemId.split('-');
+    
+    // if (node.os_name !== osName || node.os_version !== osVersion) {
+    //   return null;
+    // }
+    
     return {
       id: systemId,
-      name: `${osName} ${osVersion}`
+      name: node.node_id
+      // name: `${osName} ${osVersion}`
     };
   }, [node, systemId]);
   
@@ -59,8 +69,15 @@ export default function NodeConfigDetail() {
       const memGB = node.total_memory ? Math.ceil(node.total_memory / (1024 * 1024 * 1024)) : 16;
       setMemoryGB(memGB);
       
-      // assume storage is 5x memory for now
+      // assume storage is 5x memory for now (???)
       setStorageGB(memGB * 5);
+    }
+    else {
+      setNodeName("undefined!!!");
+      setNodeDescription("");
+      setCpuCores(4);
+      setMemoryGB(16);
+      setStorageGB(100);
     }
   }, [node]);
   
@@ -111,6 +128,7 @@ export default function NodeConfigDetail() {
     );
   }
 
+  console.log(nodeId, systemId, node, system);
   if (!nodeId || !systemId || !node || !system) {
     return (
       <div className="p-6">
@@ -308,8 +326,8 @@ export default function NodeConfigDetail() {
                       <div className="pt-2">
                         <p className="text-sm text-muted-foreground">Resources</p>
                         <div className="grid grid-cols-2 gap-2">
-                          <p className="text-sm">CPU: {env.cpu_percentage}%</p>
-                          <p className="text-sm">Memory: {env.memory_percent}%</p>
+                          <p className="text-sm">CPU: {env.cpu_percentage.toFixed(2)}%</p>
+                          <p className="text-sm">Memory: {env.memory_percent.toFixed(2)}%</p>
                         </div>
                       </div>
                     </div>

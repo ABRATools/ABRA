@@ -24,7 +24,9 @@ const formatTimestamp = (timestamp: number): string => {
 };
 
 // Helper to format uptime
-const formatUptime = (seconds: number): string => {
+const formatUptime = (timestamp: number): string => {
+  const now = Date.now() / 1000;
+  const seconds = now - timestamp;
   const days = Math.floor(seconds / (24 * 60 * 60));
   const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
   const minutes = Math.floor((seconds % (60 * 60)) / 60);
@@ -59,16 +61,17 @@ export default function EnvironmentDetail() {
   const system = useMemo(() => {
     if (!node || !systemId) return null;
     
-    const [osName, osVersion] = systemId.split('-');
+    // const [osName, osVersion] = systemId.split('-');
     
-    // Verify if this node belongs to this system
-    if (node.os_name !== osName || node.os_version !== osVersion) {
-      return null;
-    }
+    // // Verify if this node belongs to this system
+    // if (node.os_name !== osName || node.os_version !== osVersion) {
+    //   return null;
+    // }
     
     return {
       id: systemId,
-      name: `${osName} ${osVersion}`
+      name: node.node_id
+      // name: `${osName} ${osVersion}`
     };
   }, [node, systemId]);
 
@@ -126,7 +129,7 @@ export default function EnvironmentDetail() {
             {environment.names[0] || environment.env_id}
           </h1>
           <p className="text-muted-foreground">
-            Environment on {node.node_id} in {system.name}
+            Environment on {node.node_id} in {system.id}
           </p>
         </div>
         <div className="flex gap-2">
@@ -209,7 +212,7 @@ export default function EnvironmentDetail() {
             {isConsoleConnected ? (
               <iframe
                 className="absolute inset-0 w-full h-full"
-                src="about:blank"  // This would be replaced with actual VNC URL
+                src={`http://127.0.0.1:9000/${environment.names[0]}/novnc/vnc.html?path=/${environment.names[0]}/novnc/websockify&autoconnect=true&resize=remote&quality=1&compression=10`}
                 title="VNC Console"
               />
             ) : (
@@ -239,7 +242,7 @@ export default function EnvironmentDetail() {
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{environment.cpu_percentage}%</div>
+            <div className="text-2xl font-bold">{environment.cpu_percentage.toFixed(2)}%</div>
             <p className="text-xs text-muted-foreground">
               Currently used
             </p>
@@ -251,7 +254,7 @@ export default function EnvironmentDetail() {
             <HardDrive className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{environment.memory_percent}%</div>
+            <div className="text-2xl font-bold">{environment.memory_percent.toFixed(2)}%</div>
             <p className="text-xs text-muted-foreground">
               Currently used
             </p>
@@ -263,7 +266,7 @@ export default function EnvironmentDetail() {
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatUptime(environment.uptime)}</div>
+            <div className="text-2xl font-bold">{formatUptime(environment.started_at)}</div>
             <p className="text-xs text-muted-foreground">
               Started: {formatTimestamp(environment.started_at)}
             </p>

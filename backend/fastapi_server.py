@@ -21,6 +21,11 @@ from web_auth import auth_router
 
 shared_queue = None
 
+inMemoryJSON = ""
+
+def get_inMemoryJSON():
+  yield inMemoryJSON
+
 def set_queue(queue):
   global shared_queue
   shared_queue = queue
@@ -74,14 +79,20 @@ app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_
 #     return files
 
 @data_router.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket, q = Depends(get_queue)):
+async def websocket_endpoint(websocket: WebSocket, q = Depends(get_queue), inMemoryJSON = Depends(get_inMemoryJSON)):
+  initJSONUsed = False
   await ws_manager.connect(websocket)
   print("/ws endpoint connected")
   try:
     while True:
+      if not initJSONUsed and inMemoryJSON != "":
+        await websocket.send_text(inMemoryJSON)
+        initJSONUsed = True
       if q:
         try:
           msg = q.get_nowait()
+          if not initJSONUsed:
+            inMemoryJSON = str(msg)
         except:
           msg = None
         if msg:
