@@ -18,13 +18,15 @@ import {
 import { useWebSocket } from "@/data/WebSocketContext";
 import { useState, useMemo } from "react";
 
-// helper to format timestamp
+// Helper to format timestamp
 const formatTimestamp = (timestamp: number): string => {
   return new Date(timestamp * 1000).toLocaleString();
 };
 
-// helper to format uptime
-const formatUptime = (seconds: number): string => {
+// Helper to format uptime
+const formatUptime = (timestamp: number): string => {
+  const now = Date.now() / 1000;
+  const seconds = now - timestamp;
   const days = Math.floor(seconds / (24 * 60 * 60));
   const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
   const minutes = Math.floor((seconds % (60 * 60)) / 60);
@@ -43,27 +45,28 @@ export default function EnvironmentDetail() {
   const { data, isConnected: wsConnected, error } = useWebSocket();
   const [isConsoleConnected, setIsConsoleConnected] = useState(false);
   
-  // find the node
+  // Find the node
   const node = useMemo(() => {
     if (!data?.nodes || !nodeId) return null;
     return data.nodes.find(n => n.node_id === nodeId);
   }, [data, nodeId]);
   
-  // find the environment
+  // Find the environment
   const environment = useMemo(() => {
     if (!node || !envId) return null;
     return node.environments?.find(e => e.env_id === envId) || null;
   }, [node, envId]);
   
-  // get the system information
+  // Get the system information
   const system = useMemo(() => {
     if (!node || !systemId) return null;
     
     // const [osName, osVersion] = systemId.split('-');
     
-    if (node.os_name !== osName || node.os_version !== osVersion) {
-      return null;
-    }
+    // // Verify if this node belongs to this system
+    // if (node.os_name !== osName || node.os_version !== osVersion) {
+    //   return null;
+    // }
     
     return {
       id: systemId,
@@ -102,7 +105,8 @@ export default function EnvironmentDetail() {
     );
   }
 
-  // simulate environment variables since they aren't directly in the data model
+  // Extract environment variables from the names
+  // This simulates environment variables since they aren't directly in the data model
   const envVariables = environment.names.reduce((vars, name) => {
     const varMatches = name.match(/(\w+)=(\w+)/);
     if (varMatches) {
@@ -111,7 +115,7 @@ export default function EnvironmentDetail() {
     return vars;
   }, {} as Record<string, string>);
 
-  // if no environment variables were found, add some defaults
+  // If no environment variables were found, add some defaults
   if (Object.keys(envVariables).length === 0) {
     envVariables.PORT = "8080";
     envVariables.NODE_ENV = "production";

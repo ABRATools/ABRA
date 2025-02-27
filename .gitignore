@@ -7,3 +7,5 @@ backend/__pycache__
 *cpython*
 backend/winvenv
 backend/static/
+
+backend/abra.log
