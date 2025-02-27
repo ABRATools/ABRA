@@ -33,11 +33,11 @@ const menuItems = [
         icon: Settings,
         href: "/config/systems",
       },
-      {
-        title: "Config Profiles",
-        icon: FileText,
-        href: "/config/profiles",
-      },
+      // {
+      //   title: "Config Profiles",
+      //   icon: FileText,
+      //   href: "/config/profiles",
+      // },
       {
         title: "Container Image Config",
         icon: Container,
