@@ -33,8 +33,7 @@ async def processes_stream_output(output_queue, database_session, shared_queue):
       if not container_data:
         logger.warning(f"No container data for {connection_url}")
         continue
-
-      host = Node(**host_data, node_id=nanoid.generate(), environments=[])
+      host = Node(**host_data, environments=[])
       for container in container_data:
         container = Environment(**container)
         host.environments.append(container)

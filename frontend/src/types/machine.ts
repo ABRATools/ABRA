@@ -2,14 +2,15 @@ export type Status = 'healthy' | 'warning' | 'error';
 export type EnvironmentStatus = 'running' | 'stopped' | 'error';
 
 export interface System {
-  id: string;
-  name: string;
-  description?: string;
-  status: Status;
-  node_count: number; 
-  total_containers: number;
-  created_at: string;
-  updated_at: string;
+  id: string,
+  name: string,
+  description?: string,
+  status: Status,
+  nodeCount: number,
+  totalContainers: number,
+  createdAt?: Date,
+  updatedAt?: Date,
+  nodes: Node[]
 }
 
 export interface Node {

@@ -29,10 +29,14 @@ export default function SystemDetail() {
   const systemNodes = useMemo(() => {
     if (!data?.nodes || !systemId) return [];
     
-    // the systemId is a combination of os_name-os_version
+    // if the system ID is 'all-nodes', return all nodes
+    if (systemId === 'all-nodes') return data.nodes;
+
+    // the systemId
     const [osName, osVersion] = systemId.split('-');
     
     return data.nodes.filter(
+
       node => node.os_name === osName && node.os_version === osVersion
     );
   }, [data, systemId]);
@@ -222,7 +226,7 @@ export default function SystemDetail() {
                       <p className="text-sm text-muted-foreground">Image: {env.image}</p>
                       <p className="text-sm text-muted-foreground">Node: {parentNode?.node_id || 'Unknown'}</p>
                       <p className="text-sm text-muted-foreground">
-                        Resources: CPU {env.cpu_percentage}%, Memory {env.memory_percent}%
+                        Resources: CPU {env.cpu_percentage.toFixed(2)}%, Memory {env.memory_percent.toFixed(2)}%
                       </p>
                     </div>
                     {parentNode && (

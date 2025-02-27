@@ -19,7 +19,9 @@ const formatMemory = (bytes: number): string => {
   return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
 };
 
-const formatUptime = (seconds: number): string => {
+const formatUptime = (timestamp: number): string => {
+  const now = Date.now() / 1000;
+  const seconds = now - timestamp;
   const days = Math.floor(seconds / (24 * 60 * 60));
   const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
   const minutes = Math.floor((seconds % (60 * 60)) / 60);
@@ -47,16 +49,9 @@ export default function NodeDetail() {
   const system = useMemo(() => {
     if (!node || !systemId) return null;
     
-    const [osName, osVersion] = systemId.split('-');
-    
-    // verify if this node belongs to this system
-    if (node.os_name !== osName || node.os_version !== osVersion) {
-      return null;
-    }
-    
     return {
       id: systemId,
-      name: `${osName} ${osVersion}`
+      name: node.node_id,
     };
   }, [node, systemId]);
 
@@ -100,8 +95,10 @@ export default function NodeDetail() {
     ? Math.round(nodeEnvironments.reduce((sum, env) => sum + env.cpu_percentage, 0) / nodeEnvironments.length)
     : 0;
   
-  const usedMemory = node.total_memory * (node.mem_percent / 100);
-  const totalMemory = node.total_memory;
+  const um = node.total_memory * (node.mem_percent / 100);
+  const usedMemory = parseFloat(um.toFixed(2));
+  const tm = node.total_memory;
+  const totalMemory = parseFloat(tm.toFixed(2));
   
   // This is a placeholder, real implementation would depend on actual data available
   const storageUsed = 100; // GB
@@ -109,7 +106,7 @@ export default function NodeDetail() {
   const storagePercent = Math.round((storageUsed / storageTotal) * 100);
 
   const avgUptime = nodeEnvironments.length
-    ? Math.round(nodeEnvironments.reduce((sum, env) => sum + env.uptime, 0) / nodeEnvironments.length)
+    ? Math.round(nodeEnvironments.reduce((sum, env) => sum + env.started_at, 0) / nodeEnvironments.length)
     : 0;
 
   return (
@@ -118,7 +115,7 @@ export default function NodeDetail() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{node.node_id}</h1>
           <p className="text-muted-foreground">
-            Node in {system.name}
+            Node in {system.id}
           </p>
         </div>
         <div className="flex gap-2">
@@ -157,7 +154,7 @@ export default function NodeDetail() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {node.mem_percent}%
+              {node.mem_percent.toFixed(2)}%
             </div>
             <p className="text-xs text-muted-foreground">
               {formatMemory(usedMemory)}/{formatMemory(totalMemory)}
@@ -221,11 +218,11 @@ export default function NodeDetail() {
                     <div className="grid grid-cols-2 gap-2">
                       <div>
                         <p className="text-sm text-muted-foreground">CPU</p>
-                        <p className="text-sm">{env.cpu_percentage}%</p>
+                        <p className="text-sm">{env.cpu_percentage.toFixed(2)}%</p>
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">Memory</p>
-                        <p className="text-sm">{env.memory_percent}%</p>
+                        <p className="text-sm">{env.memory_percent.toFixed(2)}%</p>
                       </div>
                     </div>
                   </div>

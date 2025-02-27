@@ -11,47 +11,55 @@ import {
 } from "lucide-react";
 import { useWebSocket } from "@/data/WebSocketContext";
 import { useMemo } from "react";
-import { Node, Environment } from "@/types/machine";
+import { Node, Environment, System } from "@/types/machine";
 
-// function to group nodes by systems
-const groupNodesBySystems = (nodes: Node[]) => {
+const groupNodesBySystems = (nodes : Node[]) => {
+  const sysIds: string[] = [];
   if (!nodes || !Array.isArray(nodes) || nodes.length === 0) {
-    console.warn("No nodes data available for grouping");
     return [];
   }
-
-  console.log("Grouping nodes:", nodes);
-  
-  const systemGroups: Record<string, {
-    id: string;
-    name: string;
-    status: 'healthy' | 'warning' | 'error';
-    nodes: Node[];
-  }> = {};
+  // default 'all' system
+  const systemGroups: { [systemId: string] : System; } = {
+    'all-nodes': {
+      id: 'all-nodes',
+      name: 'All Nodes',
+      status: 'healthy',
+      nodeCount: 0,
+      totalContainers: 0,
+      nodes: []
+    }
+  };
 
   nodes.forEach(node => {
-    // check if node has required properties
-    if (!node || !node.os_name) {
-      console.warn("Invalid node data:", node);
-      return; // skip this node
-    }
+    if (!node || !node.os_name) return;
     
     const osName = node.os_name || 'Unknown';
     const osVersion = node.os_version || 'Unknown';
     const systemId = `${osName}-${osVersion}`;
     
-    if (!systemGroups[systemId]) {
-      systemGroups[systemId] = {
-        id: systemId,
-        name: `${osName} ${osVersion}`,
-        status: 'healthy',
-        nodes: []
-      };
-    }
+    sysIds.forEach(sysid => {
+      if (!systemGroups[sysid]) {
+        systemGroups[sysid] = {
+          id: systemId,
+          name: `${osName} ${osVersion}`,
+          status: 'healthy',
+          nodeCount: 0,
+          totalContainers: 0,
+          nodes: []
+        };
+      }
+    });
     
-    systemGroups[systemId].nodes.push(node);
+    var allSystemNodeList = systemGroups['all-nodes'].nodes;
+    if (!allSystemNodeList.includes(node)) {
+      allSystemNodeList.push(node);
+      systemGroups['all-nodes'].nodeCount++;
+      systemGroups['all-nodes'].totalContainers += node.num_containers || 0;
+      if (node.mem_percent > 90) {
+        systemGroups['all-nodes'].status = 'warning';
+      }
+    }
   });
-
   const processedSystems = Object.values(systemGroups).map(system => {
     const hasError = system.nodes.some(node => node.mem_percent > 95);
     const hasWarning = system.nodes.some(node => node.mem_percent > 80);
@@ -187,7 +195,8 @@ export default function SystemsDisplay() {
         </Card>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {/* md:grid-cols-2 lg:grid-cols-3 */}
+      <div className="grid gap-6">
         {systems.map((system) => {
           // calculate system-specific metrics
           const nodeCount = system.nodes.length;

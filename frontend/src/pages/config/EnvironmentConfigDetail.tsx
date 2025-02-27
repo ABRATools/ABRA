@@ -355,7 +355,7 @@ export default function EnvironmentConfigDetail() {
                   step={512}
                 />
                 <p className="text-sm text-muted-foreground">
-                  Current Usage: {environment.memory_percent}%
+                  Current Usage: {environment.memory_percent.toFixed(2)}%
                 </p>
               </div>
               <div className="space-y-2">

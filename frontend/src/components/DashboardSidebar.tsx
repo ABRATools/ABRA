@@ -74,14 +74,11 @@ export function DashboardSidebar() {
       )}
     >
       <div className="flex items-center justify-between p-4 border-b border-border">
-        <h1
-          className={cn(
-            "font-bold transition-all duration-300",
-            collapsed ? "scale-0 w-0" : "scale-100"
-          )}
-        >
-          Admin Dashboard
-        </h1>
+        <Link to="/display/systems" className="padding-2">
+          <h1
+            className={cn("font-bold transition-all duration-300",collapsed ? "scale-0 w-0" : "scale-100")}>Admin Dashboard
+          </h1>
+        </Link>
         <button
           onClick={() => setCollapsed(!collapsed)}
           className="p-2 hover:bg-accent rounded-lg"
