@@ -23,10 +23,8 @@ const formatTimestamp = (timestamp: number): string => {
   return new Date(timestamp * 1000).toLocaleString();
 };
 
-// Helper to format uptime
-const formatUptime = (timestamp: number): string => {
-  const now = Date.now() / 1000;
-  const seconds = now - timestamp;
+// helper to format uptime
+const formatUptime = (seconds: number): string => {
   const days = Math.floor(seconds / (24 * 60 * 60));
   const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
   const minutes = Math.floor((seconds % (60 * 60)) / 60);
@@ -63,10 +61,9 @@ export default function EnvironmentDetail() {
     
     // const [osName, osVersion] = systemId.split('-');
     
-    // // Verify if this node belongs to this system
-    // if (node.os_name !== osName || node.os_version !== osVersion) {
-    //   return null;
-    // }
+    if (node.os_name !== osName || node.os_version !== osVersion) {
+      return null;
+    }
     
     return {
       id: systemId,
