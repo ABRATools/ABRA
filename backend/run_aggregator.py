@@ -12,7 +12,7 @@ def obtain_session():
   return next(session)
 
 async def service_main(session, shared_queue):
-  service = PollerService(db_session=session, poll_interval=15, update_database=True, shared_queue=shared_queue)
+  service = PollerService(db_session=session, update_database=True, shared_queue=shared_queue)
   loop = asyncio.get_running_loop()
 
   service.main_task = asyncio.create_task(service.run())

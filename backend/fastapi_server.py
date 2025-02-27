@@ -15,7 +15,8 @@ import asyncio
 import database as db
 from classes import *
 from containers import *
-from web_utils import get_session, logger, ws_manager
+from web_utils import get_session, ws_manager
+from logger import logger
 from web_auth import auth_router
 
 shared_queue = None

@@ -1,17 +1,17 @@
 #cringe path hack
 import sys, os
 sys.path.insert(0, os.path.abspath('..'))
+from logger import logger
 
 import time
 import asyncio
 import requests
-import logging
 from classes import *
 import database as db
 import multiprocessing
 from typing import List
-
-from .db_interface import init_processor
+from config import settings
+from .processor import init_processor
 
 from multiprocessing import Queue, Manager
 # create a process for each connection string in the database for concurrent polling
@@ -28,9 +28,6 @@ class existingProcess:
   # Get the process object
   def get_process(self):
     return self.process
-
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
 
 processes: List[multiprocessing.Process] = []
 manager = multiprocessing.Manager()
@@ -96,18 +93,17 @@ class PollerService:
   A service that spawns a process per connection string from the database
   and manages polling via asynchronous looping.
   """
-  def __init__(self, db_session, poll_interval=15, update_database=False, shared_queue=None):
+  def __init__(self, db_session, update_database=False, shared_queue=None):
     """
     Initialize the service with a database session.
     """
     self.db_session = db_session
-    self.poll_interval = poll_interval
+    self.poll_interval = settings.NODE_UPDATE_INTERVAL
 
     if update_database:
       init_processor(output_queue, db_session, shared_queue)
 
-    self.logger = logging.getLogger(self.__class__.__name__)
-    logging.basicConfig(level=logging.DEBUG)
+    self.logger = logger
     self.processes: List[existingProcess] = [] 
     self.manager = Manager()
     self.command_queues: List[Queue] = []
@@ -119,10 +115,10 @@ class PollerService:
     """
     conn_strs = db.get_connection_strings(self.db_session)
     if len(conn_strs) == 0:
-      self.logger.info("No connection strings found in database")
+      self.logger.warning("No connection strings found in database")
     for conn in conn_strs:
       conn_str = conn.connection_string
-      self.logger.info(f"Creating process for {conn_str}")
+      # self.logger.debug(f"Creating process for {conn_str}")
       cmd_q = self.manager.Queue()
       # Create a new process if one doesn't already exist for this connection string.
       p = multiprocessing.Process(target=init_pollers, args=(conn_str, cmd_q))
@@ -153,7 +149,7 @@ class PollerService:
     for existing_process in self.processes:
       p = existing_process.get_process()
       if (not p is None) and (p.is_alive()):
-        print(f"Terminating process {p.pid}, {p}")
+        self.logger.info(f"Terminating process {p.pid}, {p}")
         os.kill(p.pid, 9)
         # p.terminate()
         # p.join()
@@ -193,7 +189,7 @@ class PollerService:
     for existing_process in self.processes:
       p = existing_process.get_process()
       if (not p is None) and (p.is_alive()):
-        print(f"Terminating process {p.pid}")
+        self.logger.info(f"Terminating process {p.pid}")
         p.kill()
         p.join()
     self.processes = []
