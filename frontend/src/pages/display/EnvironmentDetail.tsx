@@ -25,7 +25,7 @@ const formatTimestamp = (timestamp: number): string => {
   return new Date(timestamp * 1000).toLocaleString();
 };
 
-// helper to format uptime
+// Helper to format uptime
 const formatUptime = (timestamp: number): string => {
   const now = Date.now() / 1000;
   const seconds = now - timestamp;
