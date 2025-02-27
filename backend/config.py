@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     LDAP_GROUP_DN: Optional[str] = None
     DB_CONNECTION_STRING: Optional[SecretStr] = None
     LOCAL_DB: bool = True
-    NODE_UPDATE_INTERVAL: int = 5
+    NODE_UPDATE_INTERVAL: int = 10
     ACCESS_TOKEN_EXPIRE_SECONDS: int = 1800
 
 settings = None

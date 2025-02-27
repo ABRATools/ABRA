@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2025-03-04 15:13:25,612 | INFO | Using local sqlite database
 2025-03-04 15:13:25,775 | INFO | Starting central process...
 2025-03-04 15:13:25,776 | INFO | No configuration file provided. Using default configuration.
@@ -150,3 +151,456 @@
 2025-03-04 22:24:42,162 | INFO | User admin is assigning user ID 3 to group ID 2
 2025-03-04 22:24:42,188 | INFO | User admin is listing all groups
 2025-03-04 22:24:42,192 | INFO | User admin is listing all permissions
+=======
+2025-02-27 01:04:31,773 | INFO | Using local sqlite database
+2025-02-27 01:04:31,883 | INFO | Starting central process...
+2025-02-27 01:04:31,883 | INFO | No configuration file provided. Using default configuration.
+2025-02-27 01:04:31,897 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-02-27 01:04:31,899 | INFO | Starting aggregator process...
+2025-02-27 01:08:11,644 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-02-27 01:08:15,282 | INFO | Using local sqlite database
+2025-02-27 01:08:15,393 | INFO | Starting central process...
+2025-02-27 01:08:15,393 | INFO | No configuration file provided. Using default configuration.
+2025-02-27 01:08:15,405 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-02-27 01:08:15,407 | INFO | Starting aggregator process...
+2025-02-27 01:08:15,481 | INFO | Starting main loop
+2025-02-27 01:08:31,094 | INFO | No token found
+2025-02-27 01:09:54,912 | INFO | User admin is attempting to log in
+2025-02-27 01:09:55,197 | INFO | User admin has successfully logged in
+2025-02-27 01:09:55,202 | INFO | User admin has successfully logged in
+2025-02-27 01:14:18,049 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-02-27 01:14:18,050 | INFO | Shutdown handler triggered by signal.
+2025-02-27 01:14:18,050 | INFO | Terminating process 293042
+2025-02-27 01:14:18,054 | INFO | Shutdown handler triggered by signal.
+2025-02-27 01:14:18,054 | INFO | Main task cancelled gracefully.
+2025-02-27 01:14:22,409 | INFO | Using local sqlite database
+2025-02-27 01:14:22,481 | DEBUG | loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-02-27 01:14:22,482 | DEBUG | loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-02-27 01:14:22,482 | DEBUG | loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-02-27 01:14:22,485 | DEBUG | registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-02-27 01:14:22,519 | INFO | Starting central process...
+2025-02-27 01:14:22,519 | INFO | No configuration file provided. Using default configuration.
+2025-02-27 01:14:22,533 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-02-27 01:14:22,535 | INFO | Starting aggregator process...
+2025-02-27 01:14:22,606 | DEBUG | Using selector: EpollSelector
+2025-02-27 01:14:22,606 | DEBUG | Initializing processor thread for stream output
+2025-02-27 01:14:22,607 | DEBUG | Using selector: EpollSelector
+2025-02-27 01:14:22,612 | DEBUG | Starting stream output
+2025-02-27 01:14:22,614 | DEBUG | Output queue: <queue.Queue object at 0x7fd355e14eb0>
+2025-02-27 01:14:22,616 | INFO | Starting main loop
+2025-02-27 01:14:22,637 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:14:22,654 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:14:22,907 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:14:37,664 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:14:37,926 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:14:38,178 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:14:52,685 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:14:53,196 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:14:53,448 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:15:07,705 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:15:08,459 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:15:08,712 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:15:22,725 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:15:23,731 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:15:23,984 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:15:37,739 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:15:39,002 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:15:39,255 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:15:52,760 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:15:54,274 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:15:54,527 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1008
+2025-02-27 01:16:07,770 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:16:09,546 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:16:09,798 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:16:22,792 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:16:24,814 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:16:25,067 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:16:37,813 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:16:40,082 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:16:40,336 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:16:52,821 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:16:55,352 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:16:55,605 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:17:07,839 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:17:10,621 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:17:10,875 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:17:22,853 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:17:25,890 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:17:26,143 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:17:37,873 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:17:41,162 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:17:41,414 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:17:52,879 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:17:56,432 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:17:56,684 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:18:07,900 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:18:11,702 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:18:11,954 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:18:22,921 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:18:26,972 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:18:27,224 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:18:37,938 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:18:42,243 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:18:42,496 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:18:52,946 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:18:57,512 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:18:57,764 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:19:07,966 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:19:12,783 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:19:13,035 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:19:22,975 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:19:23,048 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:19:23,300 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:19:37,995 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:19:38,316 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:19:38,568 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:19:53,015 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:19:53,587 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:19:53,840 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:20:08,027 | DEBUG | Creating process for http://192.168.14.15:8888
+2025-02-27 01:20:08,856 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:20:09,108 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:20:21,160 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-02-27 01:20:21,161 | INFO | Shutdown handler triggered by signal.
+2025-02-27 01:20:21,161 | INFO | Terminating process 298175
+2025-02-27 01:20:21,165 | INFO | Shutdown handler triggered by signal.
+2025-02-27 01:20:21,165 | INFO | Main task cancelled gracefully.
+2025-02-27 01:20:28,360 | INFO | Using local sqlite database
+2025-02-27 01:20:28,437 | DEBUG | loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-02-27 01:20:28,437 | DEBUG | loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-02-27 01:20:28,437 | DEBUG | loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-02-27 01:20:28,440 | DEBUG | registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-02-27 01:20:28,476 | INFO | Starting central process...
+2025-02-27 01:20:28,476 | INFO | No configuration file provided. Using default configuration.
+2025-02-27 01:20:28,488 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-02-27 01:20:28,490 | INFO | Starting aggregator process...
+2025-02-27 01:20:28,555 | DEBUG | Using selector: EpollSelector
+2025-02-27 01:20:28,556 | DEBUG | Initializing processor thread for stream output
+2025-02-27 01:20:28,556 | DEBUG | Using selector: EpollSelector
+2025-02-27 01:20:28,560 | DEBUG | Starting stream output
+2025-02-27 01:20:28,561 | DEBUG | Output queue: <queue.Queue object at 0x7fc4e6613eb0>
+2025-02-27 01:20:28,563 | INFO | Starting main loop
+2025-02-27 01:20:28,596 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:20:28,850 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:20:43,869 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:20:44,121 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:20:59,138 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:20:59,390 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:21:14,406 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:21:14,658 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:21:29,671 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:21:29,924 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1014
+2025-02-27 01:21:44,941 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:21:45,193 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:22:00,209 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:22:00,461 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:22:15,474 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:22:15,726 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:22:30,740 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:22:30,993 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:22:46,011 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:22:46,263 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:23:01,281 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:23:01,533 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:23:16,550 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:23:16,803 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:23:31,820 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:23:32,073 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:23:39,381 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-02-27 01:23:39,382 | INFO | Shutdown handler triggered by signal.
+2025-02-27 01:23:39,382 | INFO | Terminating process 303174
+2025-02-27 01:23:39,385 | INFO | Shutdown handler triggered by signal.
+2025-02-27 01:23:39,385 | INFO | Main task cancelled gracefully.
+2025-02-27 01:23:42,017 | INFO | Using local sqlite database
+2025-02-27 01:23:42,091 | DEBUG | loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-02-27 01:23:42,091 | DEBUG | loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-02-27 01:23:42,091 | DEBUG | loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-02-27 01:23:42,094 | DEBUG | registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-02-27 01:23:42,129 | INFO | Starting central process...
+2025-02-27 01:23:42,129 | INFO | No configuration file provided. Using default configuration.
+2025-02-27 01:23:42,142 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-02-27 01:23:42,143 | INFO | Starting aggregator process...
+2025-02-27 01:23:42,209 | DEBUG | Using selector: EpollSelector
+2025-02-27 01:23:44,558 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-02-27 01:23:58,840 | INFO | Using local sqlite database
+2025-02-27 01:23:58,913 | DEBUG | loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-02-27 01:23:58,913 | DEBUG | loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-02-27 01:23:58,913 | DEBUG | loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-02-27 01:23:58,916 | DEBUG | registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-02-27 01:23:58,950 | INFO | Starting central process...
+2025-02-27 01:23:58,950 | INFO | No configuration file provided. Using default configuration.
+2025-02-27 01:23:58,963 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-02-27 01:23:58,964 | INFO | Starting aggregator process...
+2025-02-27 01:23:59,029 | DEBUG | Using selector: EpollSelector
+2025-02-27 01:23:59,030 | DEBUG | Initializing processor thread for stream output
+2025-02-27 01:23:59,030 | DEBUG | Using selector: EpollSelector
+2025-02-27 01:23:59,034 | DEBUG | Starting stream output
+2025-02-27 01:23:59,035 | DEBUG | Output queue: <queue.Queue object at 0x7f8dc508bf40>
+2025-02-27 01:23:59,037 | INFO | Starting main loop
+2025-02-27 01:23:59,066 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:23:59,319 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:24:04,327 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:24:04,579 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:24:09,586 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:24:09,838 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:24:14,845 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:24:15,098 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:24:20,105 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:24:20,357 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:24:25,364 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:24:25,616 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:24:30,621 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:24:30,874 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:24:35,877 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:24:36,130 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:24:41,139 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:24:41,391 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:24:46,398 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:24:46,651 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1014
+2025-02-27 01:24:51,657 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:24:51,909 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:24:56,916 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:24:57,169 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:25:02,175 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:25:02,428 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:25:07,431 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:25:07,682 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:25:12,689 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:25:12,942 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:25:17,949 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:25:18,201 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:25:23,207 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:25:23,460 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:25:28,463 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:25:28,715 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1014
+2025-02-27 01:25:33,719 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:25:33,972 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:25:38,974 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:25:39,226 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:25:44,233 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:25:44,485 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:25:49,492 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:25:49,745 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:25:54,752 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:25:55,005 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:26:00,012 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:26:00,264 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:26:05,272 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:26:05,524 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:26:10,530 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:26:10,783 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:26:15,791 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:26:16,042 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:26:21,050 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:26:21,302 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:26:26,309 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:26:26,561 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:26:31,568 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:26:31,821 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:26:36,828 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:26:37,081 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:26:42,088 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:26:42,341 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1014
+2025-02-27 01:26:47,345 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:26:47,598 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:26:52,604 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:26:52,856 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:26:57,863 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:26:58,116 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:27:03,122 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:27:03,374 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:27:08,377 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:27:08,629 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:27:13,636 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:27:13,889 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:27:18,896 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:27:19,148 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:27:24,152 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:27:24,405 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1009
+2025-02-27 01:27:29,412 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:27:29,665 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:27:34,672 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:27:34,924 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:27:39,930 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:27:40,182 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:27:45,189 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:27:45,441 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1007
+2025-02-27 01:27:50,448 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:27:50,700 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:27:55,706 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:27:55,958 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:28:00,964 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:28:01,217 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:28:06,224 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:28:06,476 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:28:11,483 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:28:11,736 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:28:16,743 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:28:16,995 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:28:22,002 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:28:22,254 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1007
+2025-02-27 01:28:27,261 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:28:27,513 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:28:32,519 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:28:32,772 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:28:37,778 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:28:38,031 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:28:43,038 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:28:43,290 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:28:48,297 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:28:48,550 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:28:53,557 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:28:53,809 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:28:58,817 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:28:59,069 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:29:04,076 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:29:04,329 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:29:09,336 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:29:09,588 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:29:14,594 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:29:14,847 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:29:19,853 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:29:20,105 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:29:25,112 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:29:25,365 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:29:30,372 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:29:30,624 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:29:35,631 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:29:35,883 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:29:40,890 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:29:41,142 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:29:46,150 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:29:46,403 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:29:51,405 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:29:51,658 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:29:56,664 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:29:56,918 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:30:01,925 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:30:02,177 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:30:07,185 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:30:07,438 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:30:12,444 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:30:12,696 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:30:17,704 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:30:17,956 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:30:22,962 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:30:23,214 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:30:28,217 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:30:28,469 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:30:33,473 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:30:33,725 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:30:38,733 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:30:38,985 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:30:43,992 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:30:44,245 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:30:49,252 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:30:49,504 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:30:54,512 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:30:54,765 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:30:59,772 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:31:00,024 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:31:05,032 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:31:05,285 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:31:10,294 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:31:10,547 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:31:15,555 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:31:15,808 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:31:20,815 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:31:21,067 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:31:26,074 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:31:26,327 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:31:31,335 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:31:31,588 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:31:36,595 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:31:36,848 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:31:41,856 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:31:42,109 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:31:47,115 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:31:47,368 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:31:52,374 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:31:52,627 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:31:57,635 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:31:57,889 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:32:02,897 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:32:03,150 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1009
+2025-02-27 01:32:08,158 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:32:08,412 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:32:13,419 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:32:13,671 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:32:18,677 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:32:18,929 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:32:23,936 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:32:24,188 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:32:29,194 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:32:29,448 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:32:34,455 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:32:34,707 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1009
+2025-02-27 01:32:39,714 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:32:39,966 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:32:44,973 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:32:45,225 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:32:50,232 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:32:50,484 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:32:55,491 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:32:55,744 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:33:00,750 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:33:01,002 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:33:06,007 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:33:06,259 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:33:11,266 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:33:11,518 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:33:16,526 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:33:16,779 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:33:21,787 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:33:22,040 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:33:27,043 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:33:27,295 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:33:32,303 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:33:32,556 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:33:37,563 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:33:37,816 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1014
+2025-02-27 01:33:42,824 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:33:43,077 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:33:48,084 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:33:48,336 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:33:53,344 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:33:53,596 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:33:58,603 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:33:58,856 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:34:03,863 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:34:04,115 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:34:09,121 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:34:09,373 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:34:14,380 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:34:14,632 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:34:19,640 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:34:19,893 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:34:24,901 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:34:25,155 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:34:30,163 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:34:30,416 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:34:35,424 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:34:35,677 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:34:40,684 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:34:40,936 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1010
+2025-02-27 01:34:45,939 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:34:46,192 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:34:51,200 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:34:51,454 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:34:56,460 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:34:56,713 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:35:01,721 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:35:01,973 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:35:06,980 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:35:07,233 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:35:12,240 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:35:12,493 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+2025-02-27 01:35:17,500 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:35:17,752 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1013
+2025-02-27 01:35:22,757 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:35:23,010 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1014
+2025-02-27 01:35:28,016 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:35:28,268 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1011
+2025-02-27 01:35:33,274 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
+2025-02-27 01:35:33,527 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1012
+>>>>>>> e2f7259 (fix logging, add config file option for webserver)
