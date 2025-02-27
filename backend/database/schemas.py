@@ -1,3 +1,7 @@
+import sys, os
+sys.path.insert(0, os.path.abspath('..'))
+from logger import logger
+
 from sqlalchemy import and_, func
 from .models import User, Group, Node, Environment, ConnectionStrings
 import datetime
@@ -12,6 +16,7 @@ def create_group(db, name):
     # default permissions for a group (admin)
     group = Group(name=name, permissions="create, read, update, delete")
     db.add(group)
+    logger.debug(f"Creating group {name}")
     db.commit()
 
 def get_user_groups(db, username):
@@ -28,6 +33,7 @@ def add_user_to_group(db, username, group):
     user = db.query(User).filter(User.username == username).first()
     group = db.query(Group).filter(Group.name == group).first()
     user.groups.append(group)
+    logger.debug(f"Adding user {username} to group {group.name}")
     db.commit()
 
 def create_user(db, username, password, admin):
@@ -50,6 +56,7 @@ def create_user(db, username, password, admin):
             create_group(db, 'admin')
         user.groups.append(group)
     db.add(user)
+    logger.debug(f"Creating user {username}")
     db.commit()
 
 def create_connection_string(db, name, connection_string, conn_str_type, ip=None):
@@ -62,6 +69,7 @@ def create_connection_string(db, name, connection_string, conn_str_type, ip=None
     connection_string = ConnectionStrings(name=name, connection_string=connection_string, type=conn_str_type, ip=ip)
     db.add(connection_string)
     db.commit()
+    logger.debug(f"Adding connection string {name}")
 
 def get_connection_strings(db):
     return db.query(ConnectionStrings).all()
@@ -72,12 +80,14 @@ def delete_connection_string(db, name):
         return False
     db.delete(conn_str)
     db.commit()
+    logger.debug(f"Deleting connection string {name}")
     return True
 
 def delete_user(db, username):
     user = db.query(User).filter(User.username == username).first()
     db.delete(user)
     db.commit()
+    logger.debug(f"Deleted user {username}")
 
 def get_users(db):
     return db.query(User).all()
@@ -105,12 +115,14 @@ def update_user_email(db, username, email):
     user = db.query(User).filter(User.username == username).first()
     user.email = email
     db.commit()
+    logger.debug(f"Updating email for user {username} to {email}")
 
 def update_user_password(db, username, password):
     user = db.query(User).filter(User.username == username).first()
     user.password = password
     user.passwordChangeDate = datetime.datetime.now(tz=datetime.timezone.utc)
     db.commit()
+    logger.debug(f"Updating password for user {username}")
 
 def update_user_totp_secret(db, username, secret):
     user = db.query(User).filter(User.username == username).first()
@@ -159,6 +171,7 @@ def create_environment(db, env):
     new_env = Environment(id=max_id, name=env.name, ip=env.ip, os=env.os, status=env.status, uptime=env.uptime, cpu_percent=env.cpu_percent, memory=env.memory, disk=env.disk, max_cpus=env.max_cpus, max_memory=env.max_memory, max_disk=env.max_disk)
     db.add(new_env)
     db.commit()
+    logger.debug(f"Creating environment {env.name}")
     return new_env
 
 def create_node(db, node):
@@ -196,6 +209,7 @@ def create_node(db, node):
         new_node.environments.append(new_env)
     
     db.commit()
+    logger.debug(f"Creating node {node.name}")
 
 def delete_node(db, node_name):
     node = db.query(Node).filter(Node.name == node_name).first()
@@ -205,6 +219,7 @@ def delete_node(db, node_name):
         db.delete(env)
     db.delete(node)
     db.commit()
+    logger.debug(f"Deleting node {node_name}")
     return True
 
 def get_nodes(db):

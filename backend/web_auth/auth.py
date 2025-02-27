@@ -20,7 +20,8 @@ router = APIRouter(prefix="/auth")
 from fastapi import Request, Depends
 from fastapi.responses import JSONResponse
 
-from web_utils import logger, get_session
+from web_utils import get_session
+from logger import logger
 
 SECRET_KEY = settings.SECRET_KEY.get_secret_value()
 ALGORITHM = "HS256"

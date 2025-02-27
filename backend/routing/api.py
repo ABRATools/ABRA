@@ -10,7 +10,8 @@ import bcrypt
 from fastapi import APIRouter, Request, Depends
 from fastapi.responses import JSONResponse
 
-from web_utils import get_session, logger
+from web_utils import get_session
+from logger import logger
 from web_auth import authenticate_cookie, AuthToken
 
 router = APIRouter(prefix="/api")
