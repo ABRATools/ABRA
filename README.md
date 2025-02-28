@@ -1,7 +1,7 @@
 # ABRA-Tools
 
 ## Head Node Build
-```curl -o- https://raw.githubusercontent.com/aparkerson/ABRA-Tools/refs/heads/main/setup.sh | bash -s -- head```
+```curl -o- https://raw.githubusercontent.com/aparkerson/ABRA-Tools/refs/heads/main/setup.sh | bash -s -- controller```
 
 ## Compute Node Build
 ```curl -o- https://raw.githubusercontent.com/aparkerson/ABRA-Tools/refs/heads/main/setup.sh | bash -s -- compute```
