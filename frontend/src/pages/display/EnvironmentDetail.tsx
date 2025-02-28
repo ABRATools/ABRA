@@ -24,7 +24,9 @@ const formatTimestamp = (timestamp: number): string => {
 };
 
 // helper to format uptime
-const formatUptime = (seconds: number): string => {
+const formatUptime = (timestamp: number): string => {
+  const now = Date.now() / 1000;
+  const seconds = now - timestamp;
   const days = Math.floor(seconds / (24 * 60 * 60));
   const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
   const minutes = Math.floor((seconds % (60 * 60)) / 60);
@@ -60,10 +62,6 @@ export default function EnvironmentDetail() {
     if (!node || !systemId) return null;
     
     // const [osName, osVersion] = systemId.split('-');
-    
-    if (node.os_name !== osName || node.os_version !== osVersion) {
-      return null;
-    }
     
     return {
       id: systemId,
