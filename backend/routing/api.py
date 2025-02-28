@@ -8,7 +8,8 @@ from containers import *
 
 import bcrypt
 from fastapi import APIRouter, Request, Depends
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
+import time
 
 from web_utils import get_session
 from logger import logger
@@ -65,6 +66,26 @@ async def get_audit_log(request: Request, token: AuthToken = Depends(authenticat
     audit_str = '\n'.join(audit_log)
     return JSONResponse(content={'audit_log': audit_str}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@router.get('/stream_audit_log')
+async def stream_audit_log(request: Request, token: AuthToken = Depends(authenticate_cookie)) -> StreamingResponse:
+  """
+  use streamingresponse to generate logs from the abra.log
+  provides an actual endpoint stream that react can use
+  """
+  def generate_log():
+    log_dir = "./abra.log"
+    with open(log_dir, "r") as log_file:
+      lines = log_file.readlines()
+      yield ''.join(lines)
+      while True:
+        line = log_file.readline()
+        if line:
+          yield f"{line}"
+        else: # check for new log every 5s
+          time.sleep(5)
+  
+  return StreamingResponse(generate_log(), media_type="text/event-stream")
 
 @router.post("/change_password")
 async def get_change_password(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:

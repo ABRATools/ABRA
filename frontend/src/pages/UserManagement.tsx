@@ -142,7 +142,7 @@ export default function UserManagement() {
     }
 
     try {
-      const response = await fetch('/change_password', {
+      const response = await fetch('/api/change_password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

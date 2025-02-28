@@ -25,6 +25,7 @@ const ContainerUpload = React.lazy(() => import("./pages/config/ContainerUpload.
 // management pages
 const UserManagement = React.lazy(() => import("./pages/UserManagement.tsx"));
 const GroupManagement = React.lazy(() => import("./pages/GroupManagement.tsx"));
+const AuditAbra = React.lazy(() => import("./pages/AuditAbra.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -70,6 +71,7 @@ const AppRoutes = () => {
           {/* Management routes */}
           <Route path="/users" element={<UserManagement />} />
           <Route path="/access" element={<GroupManagement />} />
+          <Route path="/audit" element={<AuditAbra />} />
         </Route>
       {/* </Route> */}
     </Routes>

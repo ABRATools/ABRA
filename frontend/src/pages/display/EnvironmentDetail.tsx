@@ -18,12 +18,16 @@ import {
 import { useWebSocket } from "@/data/WebSocketContext";
 import { useState, useMemo } from "react";
 
-// Helper to format timestamp
+// helper to format timestamp
 const formatTimestamp = (timestamp: number): string => {
   return new Date(timestamp * 1000).toLocaleString();
 };
 
+<<<<<<< HEAD
 // Helper to format uptime
+=======
+// helper to format uptime
+>>>>>>> 05e7d6b5c035adad01fa3abbc2c6741c34050344
 const formatUptime = (timestamp: number): string => {
   const now = Date.now() / 1000;
   const seconds = now - timestamp;
@@ -45,28 +49,31 @@ export default function EnvironmentDetail() {
   const { data, isConnected: wsConnected, error } = useWebSocket();
   const [isConsoleConnected, setIsConsoleConnected] = useState(false);
   
-  // Find the node
+  // find the node
   const node = useMemo(() => {
     if (!data?.nodes || !nodeId) return null;
     return data.nodes.find(n => n.node_id === nodeId);
   }, [data, nodeId]);
   
-  // Find the environment
+  // find the environment
   const environment = useMemo(() => {
     if (!node || !envId) return null;
     return node.environments?.find(e => e.env_id === envId) || null;
   }, [node, envId]);
   
-  // Get the system information
+  // get the system information
   const system = useMemo(() => {
     if (!node || !systemId) return null;
     
     // const [osName, osVersion] = systemId.split('-');
+<<<<<<< HEAD
     
     // // Verify if this node belongs to this system
     // if (node.os_name !== osName || node.os_version !== osVersion) {
     //   return null;
     // }
+=======
+>>>>>>> 05e7d6b5c035adad01fa3abbc2c6741c34050344
     
     return {
       id: systemId,
@@ -105,8 +112,7 @@ export default function EnvironmentDetail() {
     );
   }
 
-  // Extract environment variables from the names
-  // This simulates environment variables since they aren't directly in the data model
+  // simulate environment variables since they aren't directly in the data model
   const envVariables = environment.names.reduce((vars, name) => {
     const varMatches = name.match(/(\w+)=(\w+)/);
     if (varMatches) {
@@ -115,7 +121,7 @@ export default function EnvironmentDetail() {
     return vars;
   }, {} as Record<string, string>);
 
-  // If no environment variables were found, add some defaults
+  // if no environment variables were found, add some defaults
   if (Object.keys(envVariables).length === 0) {
     envVariables.PORT = "8080";
     envVariables.NODE_ENV = "production";

@@ -146,4 +146,4 @@ async def catch_all(request: Request, full_path: str):
   return HTMLResponse(content="""<h1>404 Not Found, email the closest system administrator!</h1>""", status_code=404)
 
 if __name__ == "__main__":
-  uvicorn.run("fastapi_server:app", host='127.0.0.1', port=8989, reload=True)
+  uvicorn.run("fastapi_server:app", host='127.0.0.1', port=8976, reload=True)

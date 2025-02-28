@@ -12,7 +12,10 @@ import {
   FileText,
   ChevronLeft,
   ChevronRight,
+  LockIcon,
+  ScrollText,
 } from "lucide-react";
+import { log } from "console";
 
 const menuItems = [
   {
@@ -57,6 +60,11 @@ const menuItems = [
         title: "Access Management",
         icon: Lock,
         href: "/access",
+      },
+      {
+        title: "Abra Logs",
+        icon: ScrollText,
+        href: "/audit",
       },
     ],
   },
