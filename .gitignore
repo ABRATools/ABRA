@@ -1,10 +1,11 @@
 frontend/node_modules/*
 frontend/node_modules
-.env
-backend/.env
 backend/venv/*
 backend/venv
 backend/__pycache__/*
 backend/__pycache__
 *cpython*
 backend/winvenv
+backend/static/
+
+backend/abra.log

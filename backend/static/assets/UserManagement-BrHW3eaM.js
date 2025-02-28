@@ -1,0 +1,1 @@
+import{j as e}from"./index-CUx4AkRE.js";function a(){return e.jsxs("div",{className:"space-y-6",children:[e.jsx("h1",{className:"dashboard-title",children:"User Management"}),e.jsx("p",{className:"text-muted-foreground",children:"Manage system users"})]})}export{a as default};
