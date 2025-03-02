@@ -20,7 +20,7 @@ router = APIRouter(prefix="/api")
 @router.post("/get_user_settings")
 async def get_current_user_details(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
-    user = db.get_user(session, request.session['user'])
+    user = db.get_user_by_username(session, request.session['user'])
     user_json = FilteredUser(
       user_id=user.id,
       username=user.username,
@@ -164,6 +164,57 @@ async def post_connection_string(input: InputConnString, session = Depends(get_s
       return JSONResponse(content={'message': 'Invalid request'}, status_code=400)
     db.create_connection_string(session, input.name, conn_string, input.source, input.ip)
     return JSONResponse(content={'message': 'Connection string added successfully', 'connection_string': conn_string}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@router.post("/add_user")
+async def post_connection_string(input: InputUser, session = Depends(get_session), token = Depends(authenticate_cookie)) -> JSONResponse:
+  if token:
+    logger.info(f"User creation request for new user {input.username}")
+
+    if input.password == '':
+      logger.error(f"Password cannot be empty")
+      return JSONResponse(content={'message': 'Password cannot be empty'}, status_code=400)
+
+    if input.username == '':
+      logger.error(f"Username cannot be empty")
+      return JSONResponse(content={'message': 'Username cannot be empty'}, status_code=400)
+
+    if len(input.password) < 8:
+      logger.error(f"Password must be at least 8 characters long")
+      return JSONResponse(content={'message': 'Password must be at least 8 characters long'}, status_code=400)
+    
+    if db.get_user_by_username(session, input.username):
+      logger.error(f"User with username {input.username} already exists")
+      return JSONResponse(content={'message': 'User with that username already exists'}, status_code=400)
+    
+    if input.email and db.get_user_by_email(session, input.email):
+      logger.error(f"User with email {input.email} already exists")
+      return JSONResponse(content={'message': 'User with that email already exists'}, status_code=400)
+    
+    if input.groups:
+      groups = db.get_groups_by_names(session, input.groups)
+      if len(groups) != len(input.groups):
+        logger.error(f"Invalid group name")
+        return JSONResponse(content={'message': 'Invalid group name'}, status_code=400)
+
+    hashed_password = bcrypt.hashpw(input.password.encode('utf-8'), bcrypt.gensalt())
+    db.create_user(session, input.username, hashed_password, input.email, input.groups)
+    logger.info(f"Successfully created new user: {input.username}")
+    return JSONResponse(content={'message': 'User created successfully'}, status_code=200)
+
+  logger.warning(f"Unauthorized request to create user... redirecting to login")
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@router.post("/delete_user")
+async def post_delete_user(request: Request, session = Depends(get_session), token = Depends(authenticate_cookie)) -> JSONResponse:
+  if token:
+    logger.info(f"User deletion request")
+    data = await request.json()
+    username = data['username']
+    db.delete_user(session, username)
+    logger.info(f"User {username} deleted successfully")
+    return JSONResponse(content={'message': 'User deleted successfully'}, status_code=200)
+  logger.warning(f"Unauthorized request to delete user... redirecting to login")
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 @router.get("/get_node_locations")

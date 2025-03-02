@@ -15,7 +15,7 @@ parser.add_argument("--config", type=Optional[str], default=None, help="Path to 
 
 def run_fastapi(shared_queue):
     set_queue(shared_queue)
-    uvicorn.run(app, host="127.0.0.1", port=8976)
+    uvicorn.run(app, host="127.0.0.1", port=8989)
 
 def run_aggregator(shared_queue):
     import run_aggregator
