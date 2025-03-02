@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { 
   Settings,
@@ -17,17 +18,14 @@ import {
 } from "lucide-react";
 import { useWebSocket } from "@/data/WebSocketContext";
 import { useState, useMemo } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 // helper to format timestamp
 const formatTimestamp = (timestamp: number): string => {
   return new Date(timestamp * 1000).toLocaleString();
 };
 
-<<<<<<< HEAD
-// Helper to format uptime
-=======
 // helper to format uptime
->>>>>>> 05e7d6b5c035adad01fa3abbc2c6741c34050344
 const formatUptime = (timestamp: number): string => {
   const now = Date.now() / 1000;
   const seconds = now - timestamp;
@@ -48,6 +46,7 @@ export default function EnvironmentDetail() {
   const { systemId, nodeId, envId } = useParams();
   const { data, isConnected: wsConnected, error } = useWebSocket();
   const [isConsoleConnected, setIsConsoleConnected] = useState(false);
+  const { toast } = useToast();
   
   // find the node
   const node = useMemo(() => {
@@ -65,22 +64,85 @@ export default function EnvironmentDetail() {
   const system = useMemo(() => {
     if (!node || !systemId) return null;
     
-    // const [osName, osVersion] = systemId.split('-');
-<<<<<<< HEAD
-    
-    // // Verify if this node belongs to this system
-    // if (node.os_name !== osName || node.os_version !== osVersion) {
-    //   return null;
-    // }
-=======
->>>>>>> 05e7d6b5c035adad01fa3abbc2c6741c34050344
-    
     return {
       id: systemId,
       name: node.node_id
-      // name: `${osName} ${osVersion}`
     };
   }, [node, systemId]);
+
+  const handleStart = async (envId: string) => {
+    try {
+      const response = await fetch('/api/containers/start', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ env_id: envId, target_ip: node?.ip_address || '' })
+      });
+      
+      if (response.ok) {
+          const data = await response.json();
+          console.log("Success response:", data.message);
+          toast({
+            title: "Environment Started",
+            description: data.message,
+            variant: "default",
+          });
+      } else {
+        const data = await response.json();
+        console.error("Error response:", data.message);
+        toast({
+          title: "Error",
+          description: data.message || "Failed to start environment",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error starting container:', error);
+      toast({
+        title: "Error",
+        description: "Failed to start environment",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleStop = async (envId: string) => {
+    try {
+      const response = await fetch('/api/containers/stop', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ env_id: envId, target_ip: node?.ip_address || '' })
+      });
+      
+      if (response.ok) {
+          const data = await response.json();
+          console.log("Success response:", data.message);
+          toast({
+            title: "Environment Stopped",
+            description: data.message,
+            variant: "default",
+          });
+      } else {
+        const data = await response.json();
+        console.error("Error response:", data.message);
+        toast({
+          title: "Error",
+          description: data.message || "Failed to stop environment",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error stopping container:', error);
+      toast({
+        title: "Error",
+        description: "Failed to stop environment",
+        variant: "destructive",
+      });
+    }
+  };
 
   if (!nodeId || !systemId || !envId || !wsConnected || error || !node || !environment || !system) {
     return (
@@ -157,9 +219,9 @@ export default function EnvironmentDetail() {
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
               <div className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                environment.status === 'running' ? 'bg-green-500/20 text-green-500' : 'bg-yellow-500/20 text-yellow-500'
+                environment.state === 'running' ? 'bg-green-500/20 text-green-500' : 'bg-yellow-500/20 text-yellow-500'
               }`}>
-                {environment.status}
+                {environment.state}
               </div>
               <p className="text-sm text-muted-foreground">
                 Image: {environment.image}
@@ -167,29 +229,43 @@ export default function EnvironmentDetail() {
             </div>
             <div className="flex gap-2">
               <Button 
-                variant="outline" 
-                size="sm" 
-                disabled={environment.status === 'running'}
-              >
+                variant="outline" size="sm" disabled={environment.state === 'running'} onClick={() => handleStart(envId)}>
                 <Play className="mr-2 h-4 w-4" />
                 Start
               </Button>
-              <Button 
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm" disabled={environment.state !== 'running'}>
+                    <Square className="mr-2 h-4 w-4" />
+                    Stop
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Stopping environment</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <p className="text-sm text-muted-foreground">Are you sure you want to stop this environment?</p>
+                    </div>
+                    <Button 
+                      onClick={() => handleStop(envId)}
+                      variant="destructive"
+                      className="w-full"
+                    >
+                      Stop Environment
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
+              {/* <Button 
                 variant="outline" 
                 size="sm"
-                disabled={environment.status !== 'running'}
-              >
-                <Square className="mr-2 h-4 w-4" />
-                Stop
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm"
-                disabled={environment.status !== 'running'}
+                disabled={environment.state !== 'running'}
               >
                 <RefreshCcw className="mr-2 h-4 w-4" />
                 Restart
-              </Button>
+              </Button> */}
             </div>
           </div>
         </CardContent>
@@ -218,7 +294,7 @@ export default function EnvironmentDetail() {
             {isConsoleConnected ? (
               <iframe
                 className="absolute inset-0 w-full h-full"
-                src={`http://127.0.0.1:9000/${environment.names[0]}/novnc/vnc.html?path=/${environment.names[0]}/novnc/websockify&autoconnect=true&resize=remote&quality=1&compression=10`}
+                src={`http://${node.ip_address}:9000/${environment.names[0]}/novnc/vnc.html?path=/${environment.names[0]}/novnc/websockify&autoconnect=true&resize=remote&quality=1&compression=10`}
                 title="VNC Console"
               />
             ) : (
@@ -357,7 +433,7 @@ export default function EnvironmentDetail() {
                   <br />
                 </>
               ) : null}
-              {environment.status === 'running' ? (
+              {environment.state === 'running' ? (
                 <>
                   {formatTimestamp(Date.now() / 1000 - 60)} [INFO] Health check passed
                   <br />

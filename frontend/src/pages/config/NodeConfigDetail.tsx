@@ -201,7 +201,7 @@ export default function NodeConfigDetail() {
         </CardContent>
       </Card>
 
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Resource Configuration</CardTitle>
         </CardHeader>
@@ -253,9 +253,9 @@ export default function NodeConfigDetail() {
             </Button>
           </form>
         </CardContent>
-      </Card>
+      </Card> */}
 
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Network Configuration</CardTitle>
         </CardHeader>
@@ -286,7 +286,7 @@ export default function NodeConfigDetail() {
             </Button>
           </form>
         </CardContent>
-      </Card>
+      </Card> */}
 
       <div className="space-y-4">
         <div className="flex justify-between items-center">
@@ -313,9 +313,9 @@ export default function NodeConfigDetail() {
                         <div>
                           <p className="text-sm text-muted-foreground">Status</p>
                           <div className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-                            env.status === 'running' ? 'bg-green-500/20 text-green-500' : 'bg-yellow-500/20 text-yellow-500'
+                            env.state === 'running' ? 'bg-green-500/20 text-green-500' : 'bg-yellow-500/20 text-yellow-500'
                           }`}>
-                            {env.status}
+                            {env.state}
                           </div>
                         </div>
                         <div>

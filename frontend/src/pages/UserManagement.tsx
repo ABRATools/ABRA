@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import type { User } from "@/types/user";
+import type { User, UserCreate } from "@/types/user";
 import { 
   Plus, 
   Search, 
@@ -29,6 +29,13 @@ export default function UserManagement() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [newEmail, setNewEmail] = useState("");
+  const [newUserState, setNewUserState] = useState<UserCreate>({
+    username: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+    groups: [],
+  });
   
   useEffect(() => {
     fetchUsers();
@@ -131,6 +138,91 @@ export default function UserManagement() {
     }
   };
 
+  const handleUserDeletion = async (username: string) => {
+    try {
+      const response = await fetch('/api/delete_user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Success",
+          description: "User deleted successfully",
+        });
+        fetchUsers(); // Refresh user list
+      } else {
+        const data = await response.json();
+        toast({
+          title: "Error",
+          description: data.message || "Failed to delete user",
+          variant: "destructive",
+        });
+      }
+    }
+    catch (error) {
+      console.error('Error deleting user:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete user",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleUserCreation = async (user: UserCreate) => {
+    if (user.password !== user.confirm_password) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/add_user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Success",
+          description: "User created successfully",
+        });
+        setNewUserState({
+          username: "",
+          email: "",
+          password: "",
+          confirm_password: "",
+          groups: [],
+        });
+        fetchUsers(); // Refresh user list
+      } else {
+        const data = await response.json();
+        toast({
+          title: "Error",
+          description: data.message || "Failed to create user",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+      toast({
+        title: "Error",
+        description: "Failure encountered while creating user",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handlePasswordChange = async (username: string) => {
     if (newPassword !== confirmPassword) {
       toast({
@@ -181,7 +273,7 @@ export default function UserManagement() {
 
   const handleEmailChange = async (username: string) => {
     try {
-      const response = await fetch('/change_email', {
+      const response = await fetch('/api/change_email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -230,10 +322,58 @@ export default function UserManagement() {
             Manage user access and permissions
           </p>
         </div>
-        <Button>
-          <UserPlus className="mr-2 h-4 w-4" />
-          Add User
-        </Button>
+        {/* Add New User */}
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>
+              <UserPlus className="mr-2 h-4 w-4" />
+              Add User
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add new user</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Input placeholder="Username" value={newUserState.username}
+                  className="mb-2 border-b border-border focus:border-primary bg-foreground text-black"
+                  onChange={(e) => setNewUserState({
+                    ...newUserState,
+                    username: e.target.value,
+                    })}
+                />
+                <Input placeholder="Email" type="email" value={newUserState.email}
+                  className="mb-2 border-b border-border focus:border-primary bg-foreground text-black"
+                  onChange={(e) => setNewUserState({
+                    ...newUserState,
+                    email: e.target.value,
+                    })}
+                />
+                <Input placeholder="Password" type="password" value={newUserState.password}
+                  className="mb-2 border-b border-border focus:border-primary bg-foreground text-black"
+                  onChange={(e) => setNewUserState({
+                    ...newUserState,
+                    password: e.target.value,
+                    })}
+                />
+                <Input placeholder="Confirm password" type="password" value={newUserState.confirm_password}
+                  className="mb-2 border-b border-border focus:border-primary bg-foreground text-black"
+                  onChange={(e) => setNewUserState({
+                    ...newUserState,
+                    confirm_password: e.target.value,
+                    })}
+                />
+              </div>
+              {newUserState.password !== newUserState.confirm_password && (
+                <div className="text-red-500">Passwords do not match</div>
+              )}
+              <Button onClick={() => handleUserCreation(newUserState)} className="w-full">
+                Create User
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -351,6 +491,7 @@ export default function UserManagement() {
                   <td className="p-4 text-sm text-muted-foreground">{user.passwordChangeDate}</td>
                   <td className="p-4">
                     <div className="flex justify-end gap-2">
+                      {/* Change Email */}
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button variant="ghost" size="icon">
@@ -379,7 +520,7 @@ export default function UserManagement() {
                           </div>
                         </DialogContent>
                       </Dialog>
-
+                      {/* Change Password */}
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button variant="ghost" size="icon">
@@ -414,10 +555,31 @@ export default function UserManagement() {
                           </div>
                         </DialogContent>
                       </Dialog>
-
-                      <Button variant="ghost" size="icon">
-                        <UserX className="h-4 w-4" />
-                      </Button>
+                     {/* Change Password */}
+                     <Dialog>
+                        <DialogTrigger asChild>
+                          <Button variant="ghost" size="icon">
+                            <UserX className="h-4 w-4" />
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Delete User</DialogTitle>
+                          </DialogHeader>
+                          <div className="space-y-4 py-4">
+                            <div className="space-y-2">
+                              <p>Are you sure you want to delete this user?</p>
+                              <p>This action cannot be undone.</p>
+                            </div>
+                            <Button 
+                              onClick={() => handleUserDeletion(user.username)}
+                              className="w-full bg-red-500"
+                            >
+                              Delete User
+                            </Button>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   </td>
                 </tr>

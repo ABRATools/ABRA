@@ -203,9 +203,9 @@ export default function NodeDetail() {
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-lg font-semibold">{env.names[0] || env.env_id}</CardTitle>
                 <div className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                  env.status === 'running' ? 'bg-green-500/20 text-green-500' : 'bg-yellow-500/20 text-yellow-500'
+                  env.state === 'running' ? 'bg-green-500/20 text-green-500' : 'bg-yellow-500/20 text-yellow-500'
                 }`}>
-                  {env.status}
+                  {env.state}
                 </div>
               </CardHeader>
               <CardContent>

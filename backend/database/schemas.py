@@ -36,28 +36,40 @@ def add_user_to_group(db, username, group):
     logger.debug(f"Adding user {username} to group {group.name}")
     db.commit()
 
-def create_user(db, username, password, admin):
+def create_user(db, username, hashed_password, email, groups):
     if db.query(User).filter(User.username == username).first() is not None:
         print(f"User {username} already exists")
         return
-
-    # get max id
     max_id = db.query(func.max(User.id)).scalar()
     if max_id is None:
         max_id = 0
-    # increment max id (WE LOVE SUPPLEMENTAL PRIMARY KEYS IN THIS HOUSE NATURAL KEYS ARE FOR LOSERS)
     max_id += 1
-
-    user = User(id=max_id, username=username, email="", password=password, is_active=True)
-    if admin:
-        group = db.query(Group).filter(Group.name == 'admin').first()
-        if group is None:
-            print("Admin group does not exist... creating")
-            create_group(db, 'admin')
+    user = User(id=max_id, username=username, email=email, password=hashed_password, is_active=True)
+    for group in groups:
+        group = db.query(Group).filter(Group.name == group).first()
         user.groups.append(group)
     db.add(user)
     logger.debug(f"Creating user {username}")
     db.commit()
+
+# def create_user(db, username, password, admin):
+#     if db.query(User).filter(User.username == username).first() is not None:
+#         print(f"User {username} already exists")
+#         return
+#     max_id = db.query(func.max(User.id)).scalar()
+#     if max_id is None:
+#         max_id = 0
+#     max_id += 1
+#     user = User(id=max_id, username=username, email="", password=password, is_active=True)
+#     if admin:
+#         group = db.query(Group).filter(Group.name == 'admin').first()
+#         if group is None:
+#             print("Admin group does not exist... creating")
+#             create_group(db, 'admin')
+#         user.groups.append(group)
+#     db.add(user)
+#     logger.debug(f"Creating user {username}")
+#     db.commit()
 
 def create_connection_string(db, name, connection_string, conn_str_type, ip=None):
     exists = db.query(ConnectionStrings).filter(ConnectionStrings.name == name).first()
@@ -92,9 +104,23 @@ def delete_user(db, username):
 def get_users(db):
     return db.query(User).all()
 
-def get_user(db, username):
-    user = db.query(User).filter(User.username == username).first()
-    return user
+def get_user_by_username(db, username):
+    if username is None:
+        return None
+    try:
+        user = db.query(User).filter(User.username == username).first()
+        return user
+    except AttributeError:
+        return None
+
+def get_user_by_email(db, email):
+    if email is None:
+        return None
+    try:
+        user = db.query(User).filter(User.email == email).first()
+        return user
+    except AttributeError:
+        return None
 
 def get_user_info(db, username):
     user = db.query(User).filter(User.username == username).first()
@@ -110,6 +136,14 @@ def get_user_info(db, username):
         "user_type": user_type,
         "groups": groups,
     }
+
+def get_groups_by_names(db, group_names):
+    groups = []
+    for group_name in group_names:
+        group = db.query(Group).filter(Group.name == group_name).first()
+        if group is not None:
+            groups.append(group)
+    return groups
 
 def update_user_email(db, username, email):
     user = db.query(User).filter(User.username == username).first()

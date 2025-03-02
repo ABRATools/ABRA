@@ -15,6 +15,7 @@ export interface System {
 
 export interface Node {
   node_id: string;
+  ip_address: string;
   os_name: string;
   os_version: string;
   cpu_count: number;
