@@ -39,6 +39,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children, 
 
             ws.onmessage = (event: MessageEvent) => {
                 try {
+                    // const receivedData = JSON.parse(event.data);
                     const receivedData = JSON.parse(event.data);
                     console.log("Received WebSocket data:", receivedData);
                     

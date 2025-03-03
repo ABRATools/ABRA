@@ -3,8 +3,10 @@ sys.path.insert(0, os.path.abspath('..'))
 from logger import logger
 
 from sqlalchemy import and_, func
-from .models import User, Group, Node, Environment, ConnectionStrings
+from .models import User, Group, Node, Environment, ConnectionStrings, NodeInfo
+from typing import List
 import datetime
+import json
 
 def get_hash_for_user(db, username):
     try:
@@ -268,3 +270,33 @@ def get_nodes_and_environments(db):
 
 def get_next_node_id(db):
     return db.query(func.max(Node.id)).scalar() + 1
+
+#######################
+# Node Info (JSON)
+#######################
+
+def insert_node_info_json(db, json: str):
+    # have max 20 entries in the table
+    max_id = db.query(func.max(NodeInfo.id)).scalar()
+    if max_id is None:
+        max_id = 0
+    if max_id >= 20:
+        # delete the oldest entry
+        oldest = db.query(NodeInfo).order_by(NodeInfo.id).first()
+        db.delete(oldest)
+        db.commit()
+    # insert new entry
+    new_entry = NodeInfo(id=max_id+1, data=json)
+    db.add(new_entry)
+    db.commit()
+
+def get_newest_node_info(db) -> str:
+    newest = db.query(NodeInfo).order_by(NodeInfo.id.desc()).first()
+    return json.dumps(newest.data)
+
+def get_all_node_info_newer_than(db, time: datetime.datetime) -> List[str]:
+    data_list = List[str]
+    data = db.query(NodeInfo).filter(NodeInfo.timestamp > time).all()
+    for entry in data:
+        print(entry.data)
+        data_list.append(json.dumps(entry.data))

@@ -11,8 +11,8 @@ def obtain_session():
     raise
   return next(session)
 
-async def service_main(session, shared_queue):
-  service = PollerService(db_session=session, update_database=True, shared_queue=shared_queue)
+async def service_main(session):
+  service = PollerService(db_session=session, update_database=True)
   loop = asyncio.get_running_loop()
 
   service.main_task = asyncio.create_task(service.run())
@@ -30,6 +30,6 @@ async def shutdown_handler(service: PollerService):
   service.logger.info("Shutdown handler triggered by signal.")
   service.shutdown()
 
-def main(shared_queue):
+def main():
   session = obtain_session()
-  asyncio.run(service_main(session, shared_queue))
+  asyncio.run(service_main(session))

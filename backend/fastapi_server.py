@@ -5,12 +5,14 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 from starlette.middleware.sessions import SessionMiddleware
-from fastapi import FastAPI, Request, Depends, APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, Request, Depends, APIRouter, WebSocket, WebSocketDisconnect, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from routing import frontend, api, containers
 from starlette.responses import HTMLResponse, JSONResponse
+from fastapi.concurrency import run_in_threadpool
 import asyncio
+import datetime
 
 import database as db
 from classes import *
@@ -18,21 +20,6 @@ from containers import *
 from web_utils import get_session, ws_manager
 from logger import logger
 from web_auth import auth_router
-
-shared_queue = None
-
-inMemoryJSON = ""
-
-def get_inMemoryJSON():
-  yield inMemoryJSON
-
-def set_queue(queue):
-  global shared_queue
-  shared_queue = queue
-  print("Queue set to shared queue: ", shared_queue)
-
-def get_queue():
-  return shared_queue
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -69,45 +56,45 @@ app.include_router(containers.router)
 
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_value())
 
-# @app.get("/test-static")
-# async def test_static():
-#     static_dir = Path("static")
-#     assets_dir = Path("static/assets")
-    
-#     files = {
-#         "static_files": [f.name for f in static_dir.iterdir() if f.is_file()],
-#         "asset_files": [f.name for f in assets_dir.iterdir() if f.is_file()]
-#     }
-#     return files
+async def send_data(session):
+  try:
+    while True:
+      data = db.get_newest_node_info(session)
+      if not data:
+        await asyncio.sleep(2.5)
+        continue
+      await ws_manager.broadcast(data)
+      await asyncio.sleep(2.5)
+  except asyncio.CancelledError:
+    print("send_data cancelled")
+    await ws_manager.disconnect_all()
+    return
+  except Exception as e:
+    print(f"Error in send_data: {e}")
+    await ws_manager.disconnect_all()
+    return
 
 @data_router.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket, q = Depends(get_queue), inMemoryJSON = Depends(get_inMemoryJSON)):
-  initJSONUsed = False
+async def websocket_endpoint(websocket: WebSocket, session = Depends(get_session)):
   await ws_manager.connect(websocket)
   print("/ws endpoint connected")
   try:
-    while True:
-      if not initJSONUsed and inMemoryJSON != "":
-        await websocket.send_text(inMemoryJSON)
-        initJSONUsed = True
-      if q:
-        try:
-          msg = q.get_nowait()
-          if not initJSONUsed:
-            inMemoryJSON = str(msg)
-        except:
-          msg = None
-        if msg:
-          await websocket.send_text(str(msg))
-      else:
-        raise Exception("Queue not set")
-      await asyncio.sleep(1)
+    rst = await send_data(session)
+    return rst
   except asyncio.CancelledError:
-    print("Websocket cancelled")
+    await ws_manager.disconnect(websocket)
+    print("send_data cancelled")
+    return
+  except Exception as e:
+    await ws_manager.disconnect(websocket)
+    print(f"Error in websocket_endpoint: {e}")
+    return
   except WebSocketDisconnect:
-    print("Websocket disconnected")
-  finally:
-    ws_manager.disconnect(websocket)
+    await ws_manager.disconnect(websocket)
+    print("WebSocket disconnected")
+  await ws_manager.disconnect(websocket)
+  print("WebSocket disconnected")
+  return
 
 @data_router.get("/")
 async def get():
