@@ -1,16 +1,11 @@
 import { useParams, Link } from "react-router-dom";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useWebSocket } from "@/data/WebSocketContext";
-import { 
-  Settings,
-  Activity,
-  HardDrive,
-  Clock,
-  Box,
-  RefreshCw
-} from "lucide-react";
-import { useMemo } from "react";
+import {Settings, Activity, HardDrive, Clock, Box, RefreshCw} from "lucide-react";
+
+import CreateNewContainer from "@/pages/display/CreateNewContainer";
 
 const formatMemory = (bytes: number): string => {
   if (bytes < 1024 * 1024 * 1024) {
@@ -192,10 +187,7 @@ export default function NodeDetail() {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold tracking-tight">Environments</h2>
-          <Button variant="outline">
-            <Box className="mr-2 h-4 w-4" />
-            Add Environment
-          </Button>
+          <CreateNewContainer />
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {nodeEnvironments.map((env) => (
