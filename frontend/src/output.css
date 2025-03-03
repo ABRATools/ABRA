@@ -1764,6 +1764,9 @@ body{
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> efab628 (lead on making frontend receive container images from backend after finding out shadcn components break in this instance)
 .focus\:bg-accent:focus{
   background-color: hsl(var(--accent));
 }
@@ -1772,8 +1775,11 @@ body{
   color: hsl(var(--accent-foreground));
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> aa60c3e (view container state from frontend, change state from frontend, also:::: add and remove users from db)
+=======
+>>>>>>> efab628 (lead on making frontend receive container images from backend after finding out shadcn components break in this instance)
 .focus\:opacity-100:focus{
   opacity: 1;
 }
@@ -2141,11 +2147,14 @@ body{
   -webkit-line-clamp: 1;
 }
 
+<<<<<<< HEAD
 .\[\&\[data-state\=open\]\>svg\]\:rotate-180[data-state=open]>svg{
   --tw-rotate: 180deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+=======
+>>>>>>> efab628 (lead on making frontend receive container images from backend after finding out shadcn components break in this instance)
 .\[\&_tr\:last-child\]\:border-0 tr:last-child{
   border-width: 0px;
 }
