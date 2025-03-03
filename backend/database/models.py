@@ -1,4 +1,5 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, DateTime, Float, Table
+from sqlalchemy.types import JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 import datetime
@@ -123,3 +124,10 @@ class Notification(Base):
     is_active = Column(Boolean, default=True)
     # can have multiple users
     users = relationship("User", secondary=user_notifications, back_populates="notifications")
+
+class NodeInfo(Base):
+    __tablename__ = 'node_info'
+
+    id = Column(Integer, primary_key=True)
+    data = Column(JSON, nullable=False)
+    timestamp = Column(DateTime, default=datetime.datetime.now(tz=datetime.timezone.utc))

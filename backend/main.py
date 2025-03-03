@@ -3,7 +3,7 @@ import sys
 import time
 import uvicorn
 import argparse
-from fastapi_server import set_queue, app
+from fastapi_server import app
 import config
 from logger import logger
 from typing import Optional
@@ -13,13 +13,12 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--no-aggregator", dest='noagg', action='store_true', help="If set, will not run the aggregator process")
 parser.add_argument("--config", type=Optional[str], default=None, help="Path to the configuration file")
 
-def run_fastapi(shared_queue):
-    set_queue(shared_queue)
-    uvicorn.run(app, host="127.0.0.1", port=8989)
+def run_fastapi():
+    uvicorn.run('fastapi_server:app', host="127.0.0.1", port=8989, workers=2)
 
-def run_aggregator(shared_queue):
+def run_aggregator():
     import run_aggregator
-    run_aggregator.main(shared_queue)
+    run_aggregator.main()
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -32,11 +31,8 @@ if __name__ == "__main__":
 
     multiprocessing.freeze_support()
 
-    manager = multiprocessing.Manager()
-    shared_queue = manager.Queue()
-
-    fastapi_process = multiprocessing.Process(target=run_fastapi, args=(shared_queue,))
-    aggregator_process = multiprocessing.Process(target=run_aggregator, args=(shared_queue,))
+    fastapi_process = multiprocessing.Process(target=run_fastapi)
+    aggregator_process = multiprocessing.Process(target=run_aggregator)
 
     logger.info("Processes created. Starting webserver and aggregator processes...")
     fastapi_process.start()

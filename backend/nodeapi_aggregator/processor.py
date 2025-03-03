@@ -1,11 +1,10 @@
 import threading
 from classes import *
 import database as db
-import nanoid
 import asyncio
 from logger import logger
 
-async def processes_stream_output(output_queue, database_session, shared_queue):
+async def processes_stream_output(output_queue, database_session):
   logger.debug("Starting stream output")
   logger.debug(f"Output queue: {output_queue}")
   while True:
@@ -33,19 +32,23 @@ async def processes_stream_output(output_queue, database_session, shared_queue):
       if not container_data:
         logger.warning(f"No container data for {connection_url}")
         continue
+      hosts = []
       host = Node(**host_data, environments=[])
       for container in container_data:
         container = Environment(**container)
         host.environments.append(container)
-      shared_queue.put(host.json())
+      hosts.append(host)
+      hosts_json = [host.model_dump() for host in hosts]
+      
+      db.insert_node_info_json(database_session, hosts_json)
 
-def async_proccess_runner(output_queue, database_session, shared_queue):
+def async_proccess_runner(output_queue, database_session):
   loop = asyncio.new_event_loop()
   asyncio.set_event_loop(loop)
-  loop.run_until_complete(processes_stream_output(output_queue, database_session, shared_queue))
+  loop.run_until_complete(processes_stream_output(output_queue, database_session))
   loop.close()
 
-def init_processor(output_queue, database_session, shared_queue):
+def init_processor(output_queue, database_session):
   logger.debug("Initializing processor thread for stream output")
-  stream_thread = threading.Thread(target=async_proccess_runner, args=(output_queue, database_session, shared_queue), daemon=True)
+  stream_thread = threading.Thread(target=async_proccess_runner, args=(output_queue, database_session), daemon=True)
   stream_thread.start()
