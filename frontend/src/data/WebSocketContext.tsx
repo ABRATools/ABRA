@@ -41,7 +41,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children, 
                 try {
                     // const receivedData = JSON.parse(event.data);
                     const receivedData = JSON.parse(event.data);
-                    console.log("Received WebSocket data:", receivedData);
+                    // console.log("Received WebSocket data:", receivedData);
                     
                     let normalizedData: WebSocketData = { nodes: [] };
                     
@@ -59,7 +59,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children, 
                     normalizedData.nodes = [receivedData];
                     }
                     
-                    console.log("Normalized data:", normalizedData);
+                    // console.log("Normalized data:", normalizedData);
                     setData(normalizedData);
                 } catch (err) {
                     setError(new Error('Failed to parse web socket data'));

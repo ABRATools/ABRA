@@ -42,10 +42,22 @@ const formatUptime = (timestamp: number): string => {
   return `${minutes}m`;
 };
 
+type createContainerData = {
+  name: string;
+  image: string;
+  ip?: string;
+};
+
 export default function EnvironmentDetail() {
   const { systemId, nodeId, envId } = useParams();
   const { data, isConnected: wsConnected, error } = useWebSocket();
   const [isConsoleConnected, setIsConsoleConnected] = useState(false);
+  const [openStopContainerDialog, setOpenStopContainerDialog] = useState(false);
+  const [createContainerData, setCreateContainerData] = useState<createContainerData>({
+    name: '',
+    image: '',
+    ip: ''
+  });
   const { toast } = useToast();
   
   // find the node
@@ -125,6 +137,7 @@ export default function EnvironmentDetail() {
             description: data.message,
             variant: "default",
           });
+          setOpenStopContainerDialog(false);
       } else {
         const data = await response.json();
         console.error("Error response:", data.message);
@@ -133,6 +146,7 @@ export default function EnvironmentDetail() {
           description: data.message || "Failed to stop environment",
           variant: "destructive",
         });
+        setOpenStopContainerDialog(false);
       }
     } catch (error) {
       console.error('Error stopping container:', error);
@@ -141,6 +155,7 @@ export default function EnvironmentDetail() {
         description: "Failed to stop environment",
         variant: "destructive",
       });
+      setOpenStopContainerDialog(false);
     }
   };
 
@@ -233,9 +248,12 @@ export default function EnvironmentDetail() {
                 <Play className="mr-2 h-4 w-4" />
                 Start
               </Button>
-              <Dialog>
+              <Dialog open={openStopContainerDialog} onOpenChange={setOpenStopContainerDialog}>
                 <DialogTrigger asChild>
-                  <Button variant="outline" size="sm" disabled={environment.state !== 'running'}>
+                  <Button variant="outline" size="sm"
+                  disabled={environment.state !== 'running'}
+                  onClick={() => setOpenStopContainerDialog(true)}
+                  >
                     <Square className="mr-2 h-4 w-4" />
                     Stop
                   </Button>
