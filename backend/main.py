@@ -3,7 +3,7 @@ import sys
 import time
 import uvicorn
 import argparse
-from fastapi_server import set_queue, app
+from fastapi_server import app
 import config
 from logger import logger
 from typing import Optional

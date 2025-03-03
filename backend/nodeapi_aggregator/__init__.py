@@ -93,7 +93,7 @@ class PollerService:
   A service that spawns a process per connection string from the database
   and manages polling via asynchronous looping.
   """
-  def __init__(self, db_session, update_database=False, shared_queue=None):
+  def __init__(self, db_session, update_database=False):
     """
     Initialize the service with a database session.
     """
