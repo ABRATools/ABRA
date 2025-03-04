@@ -1,16 +1,19 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  // Use ts-jest to handle TypeScript files
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/__mocks__/fileMock.js'
+  },
+  setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
   transform: {
-    '^.+\\.tsx?$': 'ts-jest', // Use ts-jest for TypeScript files
+    '^.+\\.(ts|tsx)$': ['ts-jest', {
+      tsconfig: 'tsconfig.json',
+    }],
+    '^.+\\.(js|jsx)$': 'babel-jest'
   },
-  preset: 'ts-jest', // Use ts-jest preset for TypeScript support
-  testEnvironment: 'jest-environment-jsdom', // Test environment (use jsdom for browser-like testing)
-  // setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'], // Setup testing-library jest-dom extension
-  globals: {
-    'ts-jest': {
-      tsconfig: {
-        jsx: 'react', // Ensure JSX is handled correctly in TypeScript
-      },
-    },
-  },
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|tsx)$',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node']
 };
