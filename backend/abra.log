@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2025-03-03 00:24:11,649 | INFO | Using local sqlite database
 2025-03-03 00:24:11,723 | DEBUG | loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
 2025-03-03 00:24:11,723 | DEBUG | loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
@@ -7876,3 +7877,157 @@ sqlalchemy.exc.IllegalStateChangeError: Method 'close()' can't be called here; m
 2025-03-03 06:49:45,408 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1049
 2025-03-03 06:49:49,414 | DEBUG | Starting new HTTP connection (1): 192.168.14.15:8888
 2025-03-03 06:49:49,667 | DEBUG | http://192.168.14.15:8888 "GET /node-info HTTP/11" 200 1050
+=======
+2025-03-04 15:13:25,612 | INFO | Using local sqlite database
+2025-03-04 15:13:25,775 | INFO | Starting central process...
+2025-03-04 15:13:25,776 | INFO | No configuration file provided. Using default configuration.
+2025-03-04 15:13:25,777 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-04 15:13:25,780 | INFO | Starting aggregator process...
+2025-03-04 15:13:25,807 | INFO | Starting main loop
+2025-03-04 15:13:26,518 | INFO | Using local sqlite database
+2025-03-04 15:13:26,518 | INFO | Using local sqlite database
+2025-03-04 15:13:36,641 | INFO | User admin is attempting to log in
+2025-03-04 15:13:36,929 | WARNING | User admin has failed to log in
+2025-03-04 15:13:43,096 | INFO | User admin is attempting to log in
+2025-03-04 15:13:43,361 | INFO | User admin has successfully logged in
+2025-03-04 15:13:43,366 | INFO | User admin has successfully logged in
+2025-03-04 15:14:06,877 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-04 15:14:06,877 | INFO | Shutdown handler triggered by signal.
+2025-03-04 15:14:06,878 | INFO | Terminating process 1266105
+2025-03-04 15:14:06,881 | INFO | Shutdown handler triggered by signal.
+2025-03-04 15:14:06,881 | INFO | Main task cancelled gracefully.
+2025-03-04 15:14:09,682 | INFO | Using local sqlite database
+2025-03-04 15:14:09,851 | INFO | Starting central process...
+2025-03-04 15:14:09,851 | INFO | No configuration file provided. Using default configuration.
+2025-03-04 15:14:09,853 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-04 15:14:09,856 | INFO | Starting aggregator process...
+2025-03-04 15:14:09,881 | INFO | Starting main loop
+2025-03-04 15:14:10,601 | INFO | Using local sqlite database
+2025-03-04 15:14:10,610 | INFO | Using local sqlite database
+2025-03-04 15:21:22,180 | INFO | No token found
+2025-03-04 15:21:43,209 | INFO | Fetching containers
+2025-03-04 15:21:43,209 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-04 20:10:40,394 | INFO | No token found
+2025-03-04 20:11:06,182 | INFO | User admin is attempting to log in
+2025-03-04 20:11:06,448 | INFO | User admin has successfully logged in
+2025-03-04 20:11:06,449 | INFO | User admin has successfully logged in
+2025-03-04 20:11:42,959 | INFO | No token found
+2025-03-04 20:12:49,141 | INFO | User admin is attempting to log in
+2025-03-04 20:12:49,407 | INFO | User admin has successfully logged in
+2025-03-04 20:12:49,410 | INFO | User admin has successfully logged in
+2025-03-04 20:12:52,761 | INFO | No token found
+2025-03-04 20:13:31,148 | INFO | No token found
+2025-03-04 21:10:59,743 | INFO | No token found
+2025-03-04 21:11:01,038 | INFO | User admin is attempting to log in
+2025-03-04 21:11:01,304 | WARNING | User admin has failed to log in
+2025-03-04 21:11:03,007 | INFO | User admin is attempting to log in
+2025-03-04 21:11:03,278 | WARNING | User admin has failed to log in
+2025-03-04 21:11:15,167 | INFO | User admin is attempting to log in
+2025-03-04 21:11:15,433 | WARNING | User admin has failed to log in
+2025-03-04 21:11:19,517 | INFO | User admin is attempting to log in
+2025-03-04 21:11:19,782 | INFO | User admin has successfully logged in
+2025-03-04 21:11:19,783 | INFO | User admin has successfully logged in
+2025-03-04 21:11:30,369 | INFO | User admin is attempting to log in
+2025-03-04 21:11:30,636 | INFO | User admin has successfully logged in
+2025-03-04 21:11:30,638 | INFO | User admin has successfully logged in
+2025-03-04 21:11:37,117 | INFO | User admin is attempting to log in
+2025-03-04 21:11:37,386 | INFO | User admin has successfully logged in
+2025-03-04 21:11:37,388 | INFO | User admin has successfully logged in
+2025-03-04 21:18:48,602 | INFO | User admin is attempting to log in
+2025-03-04 21:18:48,868 | INFO | User admin has successfully logged in
+2025-03-04 21:18:48,870 | INFO | User admin has successfully logged in
+2025-03-04 21:54:02,301 | INFO | No token found
+2025-03-04 21:54:03,449 | INFO | User admin is attempting to log in
+2025-03-04 21:54:03,714 | INFO | User admin has successfully logged in
+2025-03-04 21:54:03,715 | INFO | User admin has successfully logged in
+2025-03-04 21:56:37,150 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-04 21:56:37,150 | INFO | Shutdown handler triggered by signal.
+2025-03-04 21:56:37,150 | INFO | Terminating process 1266583
+2025-03-04 21:56:37,154 | INFO | Shutdown handler triggered by signal.
+2025-03-04 21:56:37,154 | INFO | Main task cancelled gracefully.
+2025-03-04 21:56:40,911 | INFO | Using local sqlite database
+2025-03-04 21:57:02,463 | INFO | Using local sqlite database
+2025-03-04 21:57:02,674 | INFO | Starting central process...
+2025-03-04 21:57:02,674 | INFO | No configuration file provided. Using default configuration.
+2025-03-04 21:57:02,675 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-04 21:57:02,678 | INFO | Starting aggregator process...
+2025-03-04 21:57:02,705 | INFO | Starting main loop
+2025-03-04 21:57:03,417 | INFO | Using local sqlite database
+2025-03-04 21:57:03,422 | INFO | Using local sqlite database
+2025-03-04 21:57:07,226 | INFO | User admin is listing all groups
+2025-03-04 21:57:07,247 | INFO | User admin is listing all permissions
+2025-03-04 21:57:21,273 | INFO | User admin is creating permission: read
+2025-03-04 21:57:21,300 | INFO | User admin is listing all permissions
+2025-03-04 21:57:34,527 | INFO | User admin is assigning permission ID 1 to group ID 1
+2025-03-04 21:57:34,557 | INFO | User admin is listing all groups
+2025-03-04 22:07:00,798 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-04 22:07:00,799 | INFO | Shutdown handler triggered by signal.
+2025-03-04 22:07:00,799 | INFO | Terminating process 1490081
+2025-03-04 22:07:00,802 | INFO | Shutdown handler triggered by signal.
+2025-03-04 22:07:00,803 | INFO | Main task cancelled gracefully.
+2025-03-04 22:07:04,309 | INFO | Using local sqlite database
+2025-03-04 22:07:04,511 | INFO | Starting central process...
+2025-03-04 22:07:04,511 | INFO | No configuration file provided. Using default configuration.
+2025-03-04 22:07:04,512 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-04 22:07:04,515 | INFO | Starting aggregator process...
+2025-03-04 22:07:04,544 | INFO | Starting main loop
+2025-03-04 22:07:05,272 | INFO | Using local sqlite database
+2025-03-04 22:07:05,281 | INFO | Using local sqlite database
+2025-03-04 22:07:09,080 | INFO | User admin is listing all groups
+2025-03-04 22:07:09,082 | INFO | User admin is listing all permissions
+2025-03-04 22:07:19,705 | INFO | User admin is assigning user ID 1 to group ID 1
+2025-03-04 22:07:22,419 | INFO | User admin is assigning user ID 2 to group ID 1
+2025-03-04 22:07:22,447 | INFO | User admin is listing all groups
+2025-03-04 22:07:35,144 | INFO | User admin is listing all groups
+2025-03-04 22:07:35,147 | INFO | User admin is listing all permissions
+2025-03-04 22:07:49,226 | INFO | User admin is listing all groups
+2025-03-04 22:07:49,233 | INFO | User admin is listing all permissions
+2025-03-04 22:08:16,433 | INFO | User admin is listing all groups
+2025-03-04 22:08:16,437 | INFO | User admin is listing all permissions
+2025-03-04 22:08:38,285 | INFO | User admin is creating permission: fake
+2025-03-04 22:08:38,311 | INFO | User admin is listing all permissions
+2025-03-04 22:08:41,812 | INFO | User admin is listing all groups
+2025-03-04 22:08:41,814 | INFO | User admin is listing all permissions
+2025-03-04 22:08:51,763 | INFO | User admin is assigning permission ID 2 to group ID 1
+2025-03-04 22:08:51,799 | INFO | User admin is listing all groups
+2025-03-04 22:16:34,575 | INFO | No token found
+2025-03-04 22:19:21,126 | INFO | No token found
+2025-03-04 22:22:06,929 | INFO | User admin is listing all groups
+2025-03-04 22:22:06,930 | INFO | User admin is listing all permissions
+2025-03-04 22:22:18,343 | INFO | User admin is removing user ID 2 from group ID 1
+2025-03-04 22:22:18,370 | INFO | User admin is listing all groups
+2025-03-04 22:22:18,374 | INFO | User admin is listing all permissions
+2025-03-04 22:22:22,424 | INFO | User admin is assigning user ID 2 to group ID 1
+2025-03-04 22:22:22,451 | INFO | User admin is listing all groups
+2025-03-04 22:22:22,454 | INFO | User admin is listing all permissions
+2025-03-04 22:22:29,639 | INFO | User admin is creating group: fake
+2025-03-04 22:22:29,669 | INFO | User admin is listing all groups
+2025-03-04 22:22:29,670 | INFO | User admin is listing all permissions
+2025-03-04 22:22:47,735 | INFO | User admin is assigning permission ID 2 to group ID 2
+2025-03-04 22:22:47,760 | INFO | User admin is listing all groups
+2025-03-04 22:22:47,762 | INFO | User admin is listing all permissions
+2025-03-04 22:22:58,939 | INFO | User admin is listing all groups
+2025-03-04 22:22:58,939 | INFO | User admin is listing all permissions
+2025-03-04 22:23:07,871 | INFO | User admin is listing all groups
+2025-03-04 22:23:07,873 | INFO | User admin is listing all permissions
+2025-03-04 22:23:13,121 | INFO | User admin is removing user ID 2 from group ID 1
+2025-03-04 22:23:13,146 | INFO | User admin is listing all groups
+2025-03-04 22:23:13,149 | INFO | User admin is listing all permissions
+2025-03-04 22:24:05,194 | INFO | No token found
+2025-03-04 22:24:05,194 | WARNING | Unauthorized request to create user... redirecting to login
+2025-03-04 22:24:07,299 | INFO | No token found
+2025-03-04 22:24:07,300 | WARNING | Unauthorized request to create user... redirecting to login
+2025-03-04 22:24:08,833 | INFO | No token found
+2025-03-04 22:24:08,833 | WARNING | Unauthorized request to create user... redirecting to login
+2025-03-04 22:24:14,583 | INFO | No token found
+2025-03-04 22:24:16,548 | INFO | User admin is attempting to log in
+2025-03-04 22:24:16,813 | INFO | User admin has successfully logged in
+2025-03-04 22:24:16,814 | INFO | User admin has successfully logged in
+2025-03-04 22:24:34,132 | INFO | User creation request for new user fake
+2025-03-04 22:24:34,414 | INFO | Successfully created new user: fake
+2025-03-04 22:24:36,945 | INFO | User admin is listing all groups
+2025-03-04 22:24:36,948 | INFO | User admin is listing all permissions
+2025-03-04 22:24:42,162 | INFO | User admin is assigning user ID 3 to group ID 2
+2025-03-04 22:24:42,188 | INFO | User admin is listing all groups
+2025-03-04 22:24:42,192 | INFO | User admin is listing all permissions
+>>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569

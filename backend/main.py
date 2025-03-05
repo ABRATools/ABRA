@@ -14,7 +14,11 @@ parser.add_argument("--no-aggregator", dest='noagg', action='store_true', help="
 parser.add_argument("--config", type=Optional[str], default=None, help="Path to the configuration file")
 
 def run_fastapi():
+<<<<<<< HEAD
     uvicorn.run('fastapi_server:app', host="127.0.0.1", port=8989, workers=2)
+=======
+    uvicorn.run('fastapi_server:app', host="127.0.0.1", port=8976, workers=2)
+>>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
 
 def run_aggregator():
     import run_aggregator
