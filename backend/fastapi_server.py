@@ -20,6 +20,7 @@ from containers import *
 from web_utils import get_session, ws_manager
 from logger import logger
 from web_auth import auth_router
+from role_based_access.rba_endpoints import router as rba_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -53,6 +54,8 @@ app.include_router(api.router)
 app.include_router(auth_router)
 # container routes
 app.include_router(containers.router)
+# rba routers
+app.include_router(rba_router)
 
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_value())
 

@@ -13,6 +13,13 @@ user_groups = Table(
     Column('group_id', Integer, ForeignKey('groups.id'), primary_key=True)
 )
 
+group_permissions = Table(
+    'group_permissions',
+    Base.metadata,
+    Column('group_id', Integer, ForeignKey('groups.id'), primary_key=True),
+    Column('permission_id', Integer, ForeignKey('permissions.id'), primary_key=True)
+)
+
 user_notifications = Table(
     'user_notifications',
     Base.metadata,
@@ -44,8 +51,16 @@ class Group(Base):
     name = Column(String(50), nullable=False)
     # sqlite does not support mutable lists lol
     # permissions = Column(MutableList.as_mutable(String), nullable=True)
-    permissions = Column(String(255), nullable=True)
+    # permissions = Column(String(255), nullable=True)
     users = relationship("User", secondary=user_groups, back_populates="groups")
+    permissions = relationship("Permission", secondary=group_permissions, back_populates="groups")
+
+class Permission(Base):
+    __tablename__ = 'permissions'
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(50), nullable=False)
+    description = Column(String(150), nullable=True)
+    groups = relationship("Group", secondary=group_permissions, back_populates="permissions")
 
 class ConnectionStrings(Base):
     __tablename__ = 'connection_strings'
