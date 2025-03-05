@@ -1,18 +1,10 @@
-<<<<<<< HEAD
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-=======
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
 import { Checkbox } from "@/components/ui/checkbox"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Box } from "lucide-react";
-<<<<<<< HEAD
-import { useState } from "react";
-=======
 import { useToast } from "@/hooks/use-toast";
 import React, { useState, useEffect } from "react";
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
 
 type newContainerState = {
   name: string;
@@ -20,16 +12,6 @@ type newContainerState = {
   ip?: string;
 };
 
-<<<<<<< HEAD
-export default function CreateNewContainer() {
-  const [openContainerCreationDialog, setOpenContainerCreationDialog] = useState(false);
-  const [useStaticIP, setUseStaticIP] = useState(false);
-  const [dropDownImages] = useState([
-    { value: 'light', label: 'Light' },
-    { value: 'dark', label: 'Dark' },
-    { value: 'system', label: 'System' }
-  ]);
-=======
 type Props = {
   ipAddress: string;
 }
@@ -67,25 +49,29 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
   const [images, setImages] = useState<Image[]>();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
   const [newContainerState, setNewContainerState] = useState<newContainerState>({
     name: '',
     image: '',
   });
+  const [ipError, setIpError] = useState('');
+  const ipRegex = /^(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}$/;
+  function validateIPAddress(ip: string): boolean {
+    return ipRegex.test(ip);
+  }
 
-<<<<<<< HEAD
-  const handleSelectValueChange = (value: string) => {
-    setNewContainerState(prevState => ({
-      ...prevState,
-      image: value,
-    }));
-  };
-  
-  const handleContainerCreation = async () => {
-    console.log(newContainerState);
-    setOpenContainerCreationDialog(false);
-=======
+  function handleIPAddressChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const ip = e.target.value;
+    if (ip && !validateIPAddress(ip)) {
+      setIpError('Invalid IP address');
+    } else {
+      setIpError('');
+    }
+    setNewContainerState({
+      ...newContainerState,
+      ip: ip,
+    });
+  }
+
   useEffect(() => {
     const fetchNames = async () => {
       if (!ipAddress) return; // catch this first!
@@ -157,23 +143,18 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
     setIsLoading(true);
 
     try {
-      // init submit data
-      const formData = new URLSearchParams();
-      formData.append('image', newContainerState.image);
-      formData.append('name', newContainerState.name);
-
-      // add static ip if we have that locked in
-      if (useStaticIP && newContainerState.ip) {
-        formData.append('ip', newContainerState.ip);
-      }
-
-      // call api
+      // call api , send json
       const response = await fetch(`http://${ipAddress}:8888/containers/create`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: formData
+        body: JSON.stringify({
+          image: newContainerState.image,
+          name: newContainerState.name,
+          ip: newContainerState.ip
+        })
       });
 
       const data: CreateContainerResponse = await response.json();
@@ -210,7 +191,6 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
     } finally {
       setIsLoading(false);
     }
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
   };
 
   return (
@@ -226,10 +206,7 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
           <DialogHeader>
             <DialogTitle>Create a new environment</DialogTitle>
           </DialogHeader>
-<<<<<<< HEAD
-=======
           
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
           <div className="space-y-4 py-4">
             <div className="space-y-4">
               <Input
@@ -251,41 +228,22 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
                   onChange={(e) =>
                     setNewContainerState((prevState) => ({
                       ...prevState,
-<<<<<<< HEAD
-                      image: e.target.value,}))
-                  }
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2">
-                  <option value="" disabled>
-                    Select a container image
-                  </option>
-                  {dropDownImages.map((item) => (
-                    <option key={item.value} value={item.value}>
-                        {item.label}
-=======
                       image: e.target.value,
                     }))
                   }
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 bg-foreground text-black"
                   disabled={isLoading}
                 >
                   <option value="" disabled>
                     {isLoading ? "Loading images..." : "Select a container image"}
                   </option>
                   {dropDownImages.map((item) => (
-                    <option key={item} value={item}>
+                    <option key={item} value={item} className="bg-foreground text-black">
                       {item}
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
                     </option>
                   ))}
                 </select>
 
-<<<<<<< HEAD
-                <div className="mt-4">
-                    <p>
-                    Selected image: <strong>{newContainerState.image}</strong>
-                    </p>
-                </div>
-=======
                 {newContainerState.image && (
                   <div className="mt-4">
                     <p>
@@ -293,7 +251,6 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
                     </p>
                   </div>
                 )}
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
               </div>
               
               <div className="flex items-center space-x-2">
@@ -307,45 +264,30 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
                 </label>
               </div>
               {useStaticIP && (
-                <Input
-<<<<<<< HEAD
-                  placeholder="IP Address"
-                  value={newContainerState.ip}
-=======
-                  placeholder="IP Address (e.g. 192.168.1.100)"
-                  value={newContainerState.ip || ''}
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
-                  className="mb-2 border-b border-border focus:border-primary bg-foreground text-black"
-                  onChange={(e) => setNewContainerState({
-                    ...newContainerState,
-                    ip: e.target.value,
-                  })}
-                />
+                <>
+                  <Input
+                    placeholder="IP Address (default subnet 10.88.0.0/16)"
+                    value={newContainerState.ip || ''}
+                    className="mb-2 border-b border-border focus:border-primary bg-foreground text-black"
+                    onChange={(e) => handleIPAddressChange(e)}
+                  />
+                  <p className="text-sm text-red-500">{ipError}</p>
+                </>
               )}
             </div>
             <Button
               onClick={handleContainerCreation}
               variant="default"
               className="w-full"
-<<<<<<< HEAD
-              disabled={!newContainerState.name || !newContainerState.image}
-            >
-              Create Environment
-=======
               disabled={isLoading || !newContainerState.name || !newContainerState.image}
             >
               {isLoading ? "Creating..." : "Create Environment"}
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
             </Button>
           </div>
         </DialogContent>
       </Dialog>
     </>
   );
-<<<<<<< HEAD
-}
-=======
 }
 
 export default CreateNewContainer;
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569

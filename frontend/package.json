@@ -12,10 +12,7 @@
   },
   "dependencies": {
     "@melloware/react-logviewer": "^6.1.2",
-<<<<<<< HEAD
-=======
     "@radix-ui/react-accordion": "^1.2.3",
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
     "@radix-ui/react-checkbox": "^1.1.4",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-dropdown-menu": "^2.1.2",

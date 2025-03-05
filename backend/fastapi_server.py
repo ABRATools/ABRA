@@ -5,14 +5,12 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 from starlette.middleware.sessions import SessionMiddleware
-from fastapi import FastAPI, Request, Depends, APIRouter, WebSocket, WebSocketDisconnect, BackgroundTasks
+from fastapi import FastAPI, Request, Depends, APIRouter, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from routing import frontend, api, containers
+from routing import frontend, api, containers, rbac
 from starlette.responses import HTMLResponse, JSONResponse
-from fastapi.concurrency import run_in_threadpool
 import asyncio
-import datetime
 
 import database as db
 from classes import *
@@ -20,10 +18,6 @@ from containers import *
 from web_utils import get_session, ws_manager
 from logger import logger
 from web_auth import auth_router
-<<<<<<< HEAD
-=======
-from role_based_access.rba_endpoints import router as rba_router
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -57,11 +51,8 @@ app.include_router(api.router)
 app.include_router(auth_router)
 # container routes
 app.include_router(containers.router)
-<<<<<<< HEAD
-=======
-# rba routers
-app.include_router(rba_router)
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
+# rbac routes
+app.include_router(rbac.router)
 
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_value())
 
@@ -130,12 +121,6 @@ async def get():
     </html>
     """
     return HTMLResponse(content=html_content)
-
-@data_router.get("/test")
-async def test():
-  if ws_manager:
-    await ws_manager.broadcast("Test message")
-  return JSONResponse(content={"message": "Test message sent"})
 
 app.include_router(data_router)
 

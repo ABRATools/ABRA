@@ -187,11 +187,7 @@ export default function NodeDetail() {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold tracking-tight">Environments</h2>
-<<<<<<< HEAD
-          <CreateNewContainer />
-=======
           <CreateNewContainer ipAddress={node.ip_address}/>
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {nodeEnvironments.map((env) => (

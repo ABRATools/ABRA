@@ -46,6 +46,22 @@ def stop_container(env_id, target_ip):
     logger.error(f"An error occurred: {e}")
     return None
 
+def delete_container(env_id, target_ip):
+  logger.info(f"Deleting container with env_id: {env_id}")
+  try:
+    response = requests.post(
+      f"http://{target_ip}:8888/containers/remove/{env_id}",
+      timeout=10
+    )
+    response.raise_for_status()
+    return response.text
+  except requests.exceptions.Timeout:
+    logger.error("Request timed out after 10 seconds")
+    return None
+  except requests.exceptions.RequestException as e:
+    logger.error(f"An error occurred: {e}")
+    return None
+
 @router.post("/start")
 async def get_current_user_details(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
@@ -95,3 +111,28 @@ async def get_current_user_details(request: Request, session = Depends(get_sessi
     return JSONResponse(status_code=200, content={"message": "Container stopped"})
   logger.warning("Unauthorized request to stop container")
   return JSONResponse(status_code=401, content={"error": "Unauthorized"})  
+
+@router.post("/delete")
+async def get_current_user_details(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  if token:
+    data = await request.json()
+    env_id = data.get("env_id", None)
+    target_ip = data.get("target_ip", None)
+    if env_id is None:
+      logger.error("No env_id provided")
+      return JSONResponse(status_code=400, content={"error": "No env_id provided"})
+    if target_ip is None:
+      logger.error("No target_ip provided")
+      return JSONResponse(status_code=400, content={"error": "No target_ip provided"})
+    logger.info("Deleting container: ")
+    logger.info(f"Deleting container with env_id: {env_id}")
+    try:
+      output = delete_container(env_id, target_ip)
+      if output is None:
+        return JSONResponse(status_code=500, content={"error": "An error occurred"})
+    except Exception as e:
+      logger.error(f"An error occurred: {e}")
+      return JSONResponse(status_code=500, content={"error": "An error occurred"})
+    return JSONResponse(status_code=200, content={"message": "Container deleted"})
+  logger.warning("Unauthorized request to delete container")
+  return JSONResponse(status_code=401, content={"error": "Unauthorized"})

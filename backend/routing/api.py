@@ -138,13 +138,13 @@ async def post_change_email(request: Request, session = Depends(get_session), to
 @router.post('/get_groups')
 async def get_groups(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
-    db_groups = db.get_all_groups(session)
-    for group in db_groups:
-      print(group.name)
-      print(group.permissions)
-      for users in group.users:
-        print(users.username)
-    groups = [Group(name=group.name, permissions=group.permissions, users=[user.username for user in group.users]) for group in db.get_all_groups(session)]
+    # db_groups = db.get_all_groups(session)
+    # for group in db_groups:
+      # print(group.name)
+      # print(group.permissions)
+      # for users in group.users:
+      #   print(users.username)
+    groups = [Group(name=group.name, users=[user.username for user in group.users]) for group in db.get_all_groups(session)]
     groups_json = [group.model_dump() for group in groups]
     print(groups_json)
     return JSONResponse(content={'groups': groups_json}, status_code=200)
@@ -222,7 +222,6 @@ async def get_node_locations(request: Request, session = Depends(get_session)) -
   node_locations = db.get_connection_strings(session)
   node_locations_json = [ConnectionStrings(name=location.name, connection_string=location.connection_string, type=location.type, ip=location.ip).model_dump_json() for location in node_locations]
   return JSONResponse(content={'node_locations': node_locations_json}, status_code=200)
-
 
 # container file logic
 @router.get('/get_containers')

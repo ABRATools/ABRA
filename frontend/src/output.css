@@ -692,14 +692,11 @@ body{
   margin-right: -0.25rem;
 }
 
-<<<<<<< HEAD
-=======
 .mx-auto{
   margin-left: auto;
   margin-right: auto;
 }
 
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
 .my-1{
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
@@ -737,13 +734,10 @@ body{
   margin-top: 1rem;
 }
 
-<<<<<<< HEAD
-=======
 .mt-6{
   margin-top: 1.5rem;
 }
 
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
 .block{
   display: block;
 }
@@ -824,13 +818,10 @@ body{
   height: var(--radix-select-trigger-height);
 }
 
-<<<<<<< HEAD
-=======
 .h-auto{
   height: auto;
 }
 
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
 .h-full{
   height: 100%;
 }
@@ -2147,14 +2138,11 @@ body{
   -webkit-line-clamp: 1;
 }
 
-<<<<<<< HEAD
-=======
 .\[\&\[data-state\=open\]\>svg\]\:rotate-180[data-state=open]>svg{
   --tw-rotate: 180deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
->>>>>>> 25de404317bf60ba80b123aaae68ae430a85e569
 .\[\&_tr\:last-child\]\:border-0 tr:last-child{
   border-width: 0px;
 }
