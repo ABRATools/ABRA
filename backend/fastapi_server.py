@@ -5,14 +5,12 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 from starlette.middleware.sessions import SessionMiddleware
-from fastapi import FastAPI, Request, Depends, APIRouter, WebSocket, WebSocketDisconnect, BackgroundTasks
+from fastapi import FastAPI, Request, Depends, APIRouter, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from routing import frontend, api, containers
+from routing import frontend, api, containers, rbac
 from starlette.responses import HTMLResponse, JSONResponse
-from fastapi.concurrency import run_in_threadpool
 import asyncio
-import datetime
 
 import database as db
 from classes import *
@@ -124,12 +122,6 @@ async def get():
     </html>
     """
     return HTMLResponse(content=html_content)
-
-@data_router.get("/test")
-async def test():
-  if ws_manager:
-    await ws_manager.broadcast("Test message")
-  return JSONResponse(content={"message": "Test message sent"})
 
 app.include_router(data_router)
 

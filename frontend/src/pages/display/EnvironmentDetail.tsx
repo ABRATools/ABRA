@@ -11,7 +11,7 @@ import {
   RefreshCw,
   Play,
   Square,
-  RefreshCcw,
+  Trash,
   Layers,
   Monitor,
   Clock
@@ -53,6 +53,7 @@ export default function EnvironmentDetail() {
   const { data, isConnected: wsConnected, error } = useWebSocket();
   const [isConsoleConnected, setIsConsoleConnected] = useState(false);
   const [openStopContainerDialog, setOpenStopContainerDialog] = useState(false);
+  const [openDeleteContainerDialog, setOpenDeleteContainerDialog] = useState(false);
   const [createContainerData, setCreateContainerData] = useState<createContainerData>({
     name: '',
     image: '',
@@ -156,6 +157,46 @@ export default function EnvironmentDetail() {
         variant: "destructive",
       });
       setOpenStopContainerDialog(false);
+    }
+  };
+
+  const handleDelete = async (envId: string) => {
+    try {
+      const response = await fetch('/api/containers/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ env_id: envId, target_ip: node?.ip_address || '' })
+      });
+      
+      if (response.ok) {
+          const data = await response.json();
+          console.log("Success response:", data.message);
+          toast({
+            title: "Environment Deleted",
+            description: data.message,
+            variant: "default",
+          });
+          setOpenDeleteContainerDialog(false);
+      } else {
+        const data = await response.json();
+        console.error("Error response:", data.message);
+        toast({
+          title: "Error",
+          description: data.message || "Failed to delete environment",
+          variant: "destructive",
+        });
+        setOpenDeleteContainerDialog(false);
+      }
+    } catch (error) {
+      console.error('Error deleting container:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete environment",
+        variant: "destructive",
+      });
+      setOpenDeleteContainerDialog(false);
     }
   };
 
@@ -276,14 +317,34 @@ export default function EnvironmentDetail() {
                   </div>
                 </DialogContent>
               </Dialog>
-              {/* <Button 
-                variant="outline" 
-                size="sm"
-                disabled={environment.state !== 'running'}
-              >
-                <RefreshCcw className="mr-2 h-4 w-4" />
-                Restart
-              </Button> */}
+              <Dialog open={openDeleteContainerDialog} onOpenChange={setOpenDeleteContainerDialog}>
+                <DialogTrigger asChild>
+                  <Button variant="destructive" size="sm"
+                  onClick={() => setOpenDeleteContainerDialog(true)}
+                  >
+                    <Trash className="mr-2 h-4 w-4" />
+                    Delete
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Deleting environment</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <p className="text-sm text-muted-foreground">Are you sure you want to delete this environment?</p>
+                      <p className="text-sm text-muted-foreground">This action cannot be undone.</p>
+                    </div>
+                    <Button 
+                      onClick={() => handleDelete(envId)}
+                      variant="destructive"
+                      className="w-full"
+                    >
+                      Delete Environment
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </CardContent>
