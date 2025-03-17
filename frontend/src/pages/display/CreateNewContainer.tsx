@@ -79,16 +79,22 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
       setIsLoading(true);
 
       try {
-        const response = await fetch(
-          `http://${ipAddress}:8888/images/list`
+        const response = await fetch(`/api/containers/list_images`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ target_ip: ipAddress })
+          }
         );
 
         if (!response.ok) {
           throw new Error('Failed to fetch images');
         }
-
-        const data : Image[] = await response.json()
-        setImages(data);
+        const json = await response.json()
+        const images: Image[] = JSON.parse(json.images);
+        setImages(images);
       } catch (err: any) {
         console.error('Error fetching images:', err);
         toast({
@@ -144,13 +150,14 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
 
     try {
       // call api , send json
-      const response = await fetch(`http://${ipAddress}:8888/containers/create`, {
+      const response = await fetch(`/api/containers/create`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          target_ip: ipAddress,
           image: newContainerState.image,
           name: newContainerState.name,
           ip: newContainerState.ip

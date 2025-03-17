@@ -8485,3 +8485,497 @@ sqlalchemy.exc.IllegalStateChangeError: Method 'close()' can't be called here; m
 2025-03-05 14:09:34,975 | INFO | Starting container: 
 2025-03-05 14:09:34,975 | INFO | Starting container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
 2025-03-05 14:09:34,975 | INFO | Stopping container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
+2025-03-05 15:34:25,421 | INFO | User admin is attempting to log in
+2025-03-05 15:34:25,688 | WARNING | User admin has failed to log in
+2025-03-05 15:34:29,227 | INFO | User admin is attempting to log in
+2025-03-05 15:34:29,493 | INFO | User admin has successfully logged in
+2025-03-05 15:34:29,496 | INFO | User admin has successfully logged in
+2025-03-05 15:35:35,059 | INFO | Deleting container: 
+2025-03-05 15:35:35,059 | INFO | Deleting container with env_id: de6090e58f2ae620998c65c89887dc8b2d0697a609c94b788eea0802b4c013e8
+2025-03-05 15:35:35,059 | INFO | Deleting container with env_id: de6090e58f2ae620998c65c89887dc8b2d0697a609c94b788eea0802b4c013e8
+2025-03-05 15:36:41,110 | INFO | Fetching containers
+2025-03-05 15:36:41,111 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 16:49:41,268 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 16:49:48,274 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 20:59:47,618 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 20:59:51,836 | INFO | Using local sqlite database
+2025-03-09 20:59:52,129 | INFO | Starting central process...
+2025-03-09 20:59:52,129 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 20:59:52,131 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 20:59:52,134 | INFO | Starting aggregator process...
+2025-03-09 20:59:52,169 | INFO | Starting main loop
+2025-03-09 20:59:52,881 | INFO | Using local sqlite database
+2025-03-09 20:59:52,901 | INFO | Using local sqlite database
+2025-03-09 21:00:13,540 | INFO | No token found
+2025-03-09 21:00:18,469 | INFO | User admin is attempting to log in
+2025-03-09 21:00:18,736 | INFO | User admin has successfully logged in
+2025-03-09 21:00:18,744 | INFO | User admin has successfully logged in
+2025-03-09 21:50:42,563 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 21:50:42,564 | INFO | Shutdown handler triggered by signal.
+2025-03-09 21:50:42,564 | INFO | Terminating process 1939644
+2025-03-09 21:50:42,569 | INFO | Shutdown handler triggered by signal.
+2025-03-09 21:50:42,570 | INFO | Main task cancelled gracefully.
+2025-03-09 21:50:48,057 | INFO | Using local sqlite database
+2025-03-09 21:50:48,228 | INFO | Starting central process...
+2025-03-09 21:50:48,228 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 21:50:48,230 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 21:50:48,233 | INFO | Starting aggregator process...
+2025-03-09 21:50:48,263 | INFO | Starting main loop
+2025-03-09 21:50:48,978 | INFO | Using local sqlite database
+2025-03-09 21:50:48,979 | INFO | Using local sqlite database
+2025-03-09 21:50:57,080 | INFO | No token found
+2025-03-09 21:51:00,932 | INFO | User admin is attempting to log in
+2025-03-09 21:51:01,215 | INFO | User admin has successfully logged in
+2025-03-09 21:51:01,221 | INFO | User admin has successfully logged in
+2025-03-09 21:52:23,469 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 21:52:23,469 | INFO | Shutdown handler triggered by signal.
+2025-03-09 21:52:23,470 | INFO | Terminating process 1973460
+2025-03-09 21:52:23,474 | INFO | Shutdown handler triggered by signal.
+2025-03-09 21:52:23,474 | INFO | Main task cancelled gracefully.
+2025-03-09 21:52:26,396 | INFO | Using local sqlite database
+2025-03-09 21:52:26,570 | INFO | Starting central process...
+2025-03-09 21:52:26,570 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 21:52:26,572 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 21:52:26,574 | INFO | Starting aggregator process...
+2025-03-09 21:52:26,604 | INFO | Starting main loop
+2025-03-09 21:52:27,317 | INFO | Using local sqlite database
+2025-03-09 21:52:27,328 | INFO | Using local sqlite database
+2025-03-09 21:52:46,797 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 21:52:48,947 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 21:53:01,161 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 21:54:45,056 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 21:55:20,612 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 21:55:50,907 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 21:56:04,505 | ERROR | No ip provided
+2025-03-09 21:57:28,493 | INFO | Shutdown handler triggered by signal.
+2025-03-09 21:57:28,493 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 21:57:28,493 | INFO | Terminating process 1974992
+2025-03-09 21:57:28,500 | INFO | Shutdown handler triggered by signal.
+2025-03-09 21:57:28,501 | INFO | Main task cancelled gracefully.
+2025-03-09 21:57:46,357 | INFO | Using local sqlite database
+2025-03-09 21:57:46,525 | INFO | Starting central process...
+2025-03-09 21:57:46,525 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 21:57:46,527 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 21:57:46,530 | INFO | Starting aggregator process...
+2025-03-09 21:57:46,561 | INFO | Starting main loop
+2025-03-09 21:57:47,267 | INFO | Using local sqlite database
+2025-03-09 21:57:47,272 | INFO | Using local sqlite database
+2025-03-09 21:57:48,640 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 21:57:54,061 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 21:58:09,339 | INFO | Creating container: 
+2025-03-09 21:58:09,343 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/create
+2025-03-09 22:05:29,111 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 22:05:29,111 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:05:29,111 | INFO | Terminating process 1979907
+2025-03-09 22:05:29,115 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:05:29,116 | INFO | Main task cancelled gracefully.
+2025-03-09 22:05:32,285 | INFO | Using local sqlite database
+2025-03-09 22:05:32,460 | INFO | Starting central process...
+2025-03-09 22:05:32,460 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 22:05:32,462 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 22:05:32,465 | INFO | Starting aggregator process...
+2025-03-09 22:05:32,493 | INFO | Starting main loop
+2025-03-09 22:05:33,220 | INFO | Using local sqlite database
+2025-03-09 22:05:33,226 | INFO | Using local sqlite database
+2025-03-09 22:05:34,161 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:05:39,202 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:05:59,643 | INFO | Creating container: 
+2025-03-09 22:05:59,647 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/create
+2025-03-09 22:07:05,408 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 22:07:05,408 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:07:05,409 | INFO | Terminating process 1985380
+2025-03-09 22:07:05,413 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:07:05,413 | INFO | Main task cancelled gracefully.
+2025-03-09 22:07:08,427 | INFO | Using local sqlite database
+2025-03-09 22:07:08,594 | INFO | Starting central process...
+2025-03-09 22:07:08,594 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 22:07:08,595 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 22:07:08,599 | INFO | Starting aggregator process...
+2025-03-09 22:07:08,628 | INFO | Starting main loop
+2025-03-09 22:07:09,340 | INFO | Using local sqlite database
+2025-03-09 22:07:09,389 | INFO | Using local sqlite database
+2025-03-09 22:07:10,497 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:07:22,564 | INFO | Creating container: 
+2025-03-09 22:08:08,290 | ERROR | Invalid ip address
+2025-03-09 22:09:03,814 | ERROR | Invalid ip address
+2025-03-09 22:11:54,868 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 22:11:54,868 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:11:54,868 | INFO | Terminating process 1986736
+2025-03-09 22:11:54,874 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:11:54,874 | INFO | Main task cancelled gracefully.
+2025-03-09 22:11:57,997 | INFO | Using local sqlite database
+2025-03-09 22:11:58,166 | INFO | Starting central process...
+2025-03-09 22:11:58,167 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 22:11:58,168 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 22:11:58,171 | INFO | Starting aggregator process...
+2025-03-09 22:11:58,201 | INFO | Starting main loop
+2025-03-09 22:11:58,929 | INFO | Using local sqlite database
+2025-03-09 22:11:58,946 | INFO | Using local sqlite database
+2025-03-09 22:11:59,960 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:12:04,576 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:12:16,789 | INFO | Creating container: 
+2025-03-09 22:12:40,103 | ERROR | Invalid ip address
+2025-03-09 22:12:53,434 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:12:53,434 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 22:12:53,435 | INFO | Terminating process 1990578
+2025-03-09 22:12:53,441 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:12:53,441 | INFO | Main task cancelled gracefully.
+2025-03-09 22:12:59,741 | INFO | Using local sqlite database
+2025-03-09 22:12:59,930 | INFO | Starting central process...
+2025-03-09 22:12:59,930 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 22:12:59,932 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 22:12:59,936 | INFO | Starting aggregator process...
+2025-03-09 22:12:59,974 | INFO | Starting main loop
+2025-03-09 22:13:00,685 | INFO | Using local sqlite database
+2025-03-09 22:13:00,734 | INFO | Using local sqlite database
+2025-03-09 22:13:03,526 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:13:15,375 | INFO | Creating container: 
+2025-03-09 22:13:16,622 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/create
+2025-03-09 22:15:28,744 | INFO | Creating container: 
+2025-03-09 22:15:28,749 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
+2025-03-09 22:20:10,148 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 22:20:10,148 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:20:10,148 | INFO | Terminating process 1992297
+2025-03-09 22:20:10,152 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:20:10,152 | INFO | Main task cancelled gracefully.
+2025-03-09 22:20:13,055 | INFO | Using local sqlite database
+2025-03-09 22:20:13,248 | INFO | Starting central process...
+2025-03-09 22:20:13,248 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 22:20:13,250 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 22:20:13,253 | INFO | Starting aggregator process...
+2025-03-09 22:20:13,281 | INFO | Starting main loop
+2025-03-09 22:20:14,000 | INFO | Using local sqlite database
+2025-03-09 22:20:14,033 | INFO | Using local sqlite database
+2025-03-09 22:20:15,216 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:20:17,825 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:20:30,610 | INFO | Creating container: 
+2025-03-09 22:20:30,882 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/create
+2025-03-09 22:21:05,046 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:21:05,046 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 22:21:05,047 | INFO | Terminating process 1999504
+2025-03-09 22:21:05,050 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:21:05,050 | INFO | Main task cancelled gracefully.
+2025-03-09 22:21:07,568 | INFO | Using local sqlite database
+2025-03-09 22:21:07,735 | INFO | Starting central process...
+2025-03-09 22:21:07,735 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 22:21:07,737 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 22:21:07,739 | INFO | Starting aggregator process...
+2025-03-09 22:21:07,765 | INFO | Starting main loop
+2025-03-09 22:21:08,476 | INFO | Using local sqlite database
+2025-03-09 22:21:08,495 | INFO | Using local sqlite database
+2025-03-09 22:21:10,097 | INFO | No token found
+2025-03-09 22:21:10,098 | WARNING | Unauthorized request to list node images
+2025-03-09 22:21:14,151 | INFO | No token found
+2025-03-09 22:21:18,127 | INFO | User admin is attempting to log in
+2025-03-09 22:21:18,409 | INFO | User admin has successfully logged in
+2025-03-09 22:21:18,414 | INFO | User admin has successfully logged in
+2025-03-09 22:21:21,604 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:21:32,232 | INFO | Creating container: 
+2025-03-09 22:21:32,237 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
+2025-03-09 22:26:51,963 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 22:26:51,963 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:26:51,964 | INFO | Terminating process 2000804
+2025-03-09 22:26:51,967 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:26:51,967 | INFO | Main task cancelled gracefully.
+2025-03-09 22:26:55,219 | INFO | Using local sqlite database
+2025-03-09 22:26:55,388 | INFO | Starting central process...
+2025-03-09 22:26:55,388 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 22:26:55,389 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 22:26:55,392 | INFO | Starting aggregator process...
+2025-03-09 22:26:55,419 | INFO | Starting main loop
+2025-03-09 22:26:56,130 | INFO | Using local sqlite database
+2025-03-09 22:26:56,149 | INFO | Using local sqlite database
+2025-03-09 22:26:57,112 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:27:01,417 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:27:08,639 | INFO | Creating container: 
+2025-03-09 22:27:08,645 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
+2025-03-09 22:27:08,645 | ERROR | API response: {"message":"Container with name already exists"}
+2025-03-09 22:27:08,645 | ERROR | An error occurred: {"message":"Container with name already exists"}
+2025-03-09 22:29:30,573 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 22:29:30,573 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:29:30,573 | INFO | Terminating process 2006598
+2025-03-09 22:29:30,577 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:29:30,577 | INFO | Main task cancelled gracefully.
+2025-03-09 22:29:35,920 | INFO | Using local sqlite database
+2025-03-09 22:29:36,086 | INFO | Starting central process...
+2025-03-09 22:29:36,086 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 22:29:36,088 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 22:29:36,090 | INFO | Starting aggregator process...
+2025-03-09 22:29:36,118 | INFO | Starting main loop
+2025-03-09 22:29:36,826 | INFO | Using local sqlite database
+2025-03-09 22:29:36,852 | INFO | Using local sqlite database
+2025-03-09 22:29:40,685 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:29:50,717 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:29:59,785 | INFO | Creating container: 
+2025-03-09 22:29:59,790 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
+2025-03-09 22:29:59,790 | ERROR | API response: {"message":"Container with name already exists"}
+2025-03-09 22:29:59,790 | ERROR | An error occurred: {"message":"Container with name already exists"}
+2025-03-09 22:40:27,035 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 22:40:27,035 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:40:27,035 | INFO | Terminating process 2009409
+2025-03-09 22:40:27,039 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:40:27,039 | INFO | Main task cancelled gracefully.
+2025-03-09 22:40:30,656 | INFO | Using local sqlite database
+2025-03-09 22:40:30,817 | INFO | Starting central process...
+2025-03-09 22:40:30,818 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 22:40:30,819 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 22:40:30,821 | INFO | Starting aggregator process...
+2025-03-09 22:40:30,845 | INFO | Starting main loop
+2025-03-09 22:40:31,551 | INFO | Using local sqlite database
+2025-03-09 22:40:31,568 | INFO | Using local sqlite database
+2025-03-09 22:40:32,158 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:40:51,903 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:41:00,765 | INFO | Creating container: 
+2025-03-09 22:41:00,769 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
+2025-03-09 22:41:00,770 | ERROR | API response: {"message":"Container with name already exists"}
+2025-03-09 22:41:00,770 | ERROR | An error occurred: {"message":"Container with name already exists"}
+2025-03-09 22:42:00,827 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 22:42:00,827 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:42:00,827 | INFO | Terminating process 2019804
+2025-03-09 22:42:00,830 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:42:00,830 | INFO | Main task cancelled gracefully.
+2025-03-09 22:42:03,835 | INFO | Using local sqlite database
+2025-03-09 22:42:04,001 | INFO | Starting central process...
+2025-03-09 22:42:04,001 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 22:42:04,003 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 22:42:04,005 | INFO | Starting aggregator process...
+2025-03-09 22:42:04,032 | INFO | Starting main loop
+2025-03-09 22:42:04,732 | INFO | Using local sqlite database
+2025-03-09 22:42:04,752 | INFO | Using local sqlite database
+2025-03-09 22:42:05,878 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:42:08,258 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:42:15,578 | INFO | Creating container: 
+2025-03-09 22:42:15,583 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
+2025-03-09 22:42:15,583 | ERROR | API response: {"message":"Container with name already exists"}
+2025-03-09 22:42:15,583 | ERROR | An error occurred: {"message":"Container with name already exists"}
+2025-03-09 22:43:00,534 | INFO | Creating container: 
+2025-03-09 22:43:00,535 | ERROR | An error occurred: Object of type IPv4Address is not JSON serializable
+2025-03-09 22:52:41,142 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 22:52:41,142 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:52:41,142 | INFO | Terminating process 2021603
+2025-03-09 22:52:41,146 | INFO | Shutdown handler triggered by signal.
+2025-03-09 22:52:41,146 | INFO | Main task cancelled gracefully.
+2025-03-09 22:52:45,217 | INFO | Using local sqlite database
+2025-03-09 22:52:45,385 | INFO | Starting central process...
+2025-03-09 22:52:45,386 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 22:52:45,387 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 22:52:45,390 | INFO | Starting aggregator process...
+2025-03-09 22:52:45,424 | INFO | Starting main loop
+2025-03-09 22:52:46,124 | INFO | Using local sqlite database
+2025-03-09 22:52:46,135 | INFO | Using local sqlite database
+2025-03-09 22:52:50,127 | INFO | No token found
+2025-03-09 22:52:55,719 | INFO | User admin is attempting to log in
+2025-03-09 22:52:56,000 | INFO | User admin has successfully logged in
+2025-03-09 22:52:56,005 | INFO | User admin has successfully logged in
+2025-03-09 22:53:23,844 | INFO | Fetching containers
+2025-03-09 22:53:23,846 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-09 22:53:45,039 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 22:54:03,256 | INFO | Creating container: 
+2025-03-09 22:54:03,531 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/create
+2025-03-09 22:54:03,531 | ERROR | API response: {"message":"crun: executable file `/sbin/init` not found in $PATH: No such file or directory: OCI runtime attempted to invoke a command that was not found"}
+2025-03-09 22:54:03,532 | ERROR | An error occurred: {"message":"crun: executable file `/sbin/init` not found in $PATH: No such file or directory: OCI runtime attempted to invoke a command that was not found"}
+2025-03-09 22:54:08,765 | INFO | Creating container: 
+2025-03-09 22:54:08,772 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
+2025-03-09 22:54:08,772 | ERROR | API response: {"message":"Container with name already exists"}
+2025-03-09 22:54:08,772 | ERROR | An error occurred: {"message":"Container with name already exists"}
+2025-03-09 22:54:21,432 | INFO | Creating container: 
+2025-03-09 22:54:31,443 | ERROR | Request timed out after 10 seconds
+2025-03-09 22:54:31,444 | ERROR | An error occurred: Request timed out after 10 seconds
+2025-03-09 23:01:38,053 | INFO | Shutdown handler triggered by signal.
+2025-03-09 23:01:38,053 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-09 23:01:38,054 | INFO | Terminating process 2031771
+2025-03-09 23:01:38,059 | INFO | Shutdown handler triggered by signal.
+2025-03-09 23:01:38,059 | INFO | Main task cancelled gracefully.
+2025-03-09 23:01:41,730 | INFO | Using local sqlite database
+2025-03-09 23:01:41,907 | INFO | Starting central process...
+2025-03-09 23:01:41,907 | INFO | No configuration file provided. Using default configuration.
+2025-03-09 23:01:41,908 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-09 23:01:41,911 | INFO | Starting aggregator process...
+2025-03-09 23:01:41,936 | INFO | Starting main loop
+2025-03-09 23:01:42,664 | INFO | Using local sqlite database
+2025-03-09 23:01:42,667 | INFO | Using local sqlite database
+2025-03-09 23:01:43,195 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 23:01:52,974 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 23:02:13,110 | INFO | Creating container: 
+2025-03-09 23:02:23,122 | ERROR | Request timed out after 10 seconds
+2025-03-09 23:02:23,122 | ERROR | An error occurred: {'message': 'Request timed out after 10 seconds'}
+2025-03-09 23:03:18,708 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 23:03:21,186 | INFO | Starting container: 
+2025-03-09 23:03:21,186 | INFO | Starting container with env_id: 16e00098c14902dc9cfac4b1b44a9e10e0547fc838704801b5f83a4a9feb84d2
+2025-03-09 23:03:21,186 | INFO | Stopping container with env_id: 16e00098c14902dc9cfac4b1b44a9e10e0547fc838704801b5f83a4a9feb84d2
+2025-03-09 23:03:31,197 | ERROR | Request timed out after 10 seconds
+2025-03-09 23:04:21,702 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 23:05:25,500 | INFO | Deleting container: 
+2025-03-09 23:05:25,500 | INFO | Deleting container with env_id: 8000d8bbc91274f2f055619c9790d22e4ee19d1521806854b9eca9d9a92b6f71
+2025-03-09 23:05:25,500 | INFO | Deleting container with env_id: 8000d8bbc91274f2f055619c9790d22e4ee19d1521806854b9eca9d9a92b6f71
+2025-03-09 23:05:32,141 | INFO | Deleting container: 
+2025-03-09 23:05:32,141 | INFO | Deleting container with env_id: 16e00098c14902dc9cfac4b1b44a9e10e0547fc838704801b5f83a4a9feb84d2
+2025-03-09 23:05:32,142 | INFO | Deleting container with env_id: 16e00098c14902dc9cfac4b1b44a9e10e0547fc838704801b5f83a4a9feb84d2
+2025-03-09 23:05:37,256 | INFO | Deleting container: 
+2025-03-09 23:05:37,256 | INFO | Deleting container with env_id: edf0581305b1bfce64348e11a4efbf4a9566380cc3c70bdabc87a1360aaf092e
+2025-03-09 23:05:37,256 | INFO | Deleting container with env_id: edf0581305b1bfce64348e11a4efbf4a9566380cc3c70bdabc87a1360aaf092e
+2025-03-09 23:05:43,654 | INFO | Deleting container: 
+2025-03-09 23:05:43,654 | INFO | Deleting container with env_id: c956cc0c39efabc4a2661ceec0225e6c56d4eadf3d43bbf79e8c8c96307bce6d
+2025-03-09 23:05:43,654 | INFO | Deleting container with env_id: c956cc0c39efabc4a2661ceec0225e6c56d4eadf3d43bbf79e8c8c96307bce6d
+2025-03-09 23:05:58,751 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 23:06:10,536 | INFO | Creating container: 
+2025-03-09 23:06:20,548 | ERROR | Request timed out after 10 seconds
+2025-03-09 23:06:20,548 | ERROR | An error occurred: {'message': 'Request timed out after 10 seconds'}
+2025-03-09 23:07:49,840 | INFO | Starting container: 
+2025-03-09 23:07:49,840 | INFO | Starting container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
+2025-03-09 23:07:49,840 | INFO | Stopping container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
+2025-03-09 23:07:50,065 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/start/8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
+2025-03-09 23:07:50,065 | ERROR | API response: Error starting Podman Containers: crun: executable file `ok` not found in $PATH: No such file or directory: OCI runtime attempted to invoke a command that was not found
+2025-03-09 23:09:19,655 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:09:23,660 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:09:29,669 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:09:33,675 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:09:48,269 | INFO | Starting container: 
+2025-03-09 23:09:48,269 | INFO | Starting container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
+2025-03-09 23:09:48,269 | INFO | Stopping container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
+2025-03-09 23:09:48,521 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/start/8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
+2025-03-09 23:09:48,521 | ERROR | API response: Error starting Podman Containers: crun: executable file `ok` not found in $PATH: No such file or directory: OCI runtime attempted to invoke a command that was not found
+2025-03-09 23:11:41,198 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 23:11:54,256 | INFO | Starting container: 
+2025-03-09 23:11:54,257 | INFO | Starting container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
+2025-03-09 23:11:54,257 | INFO | Stopping container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
+2025-03-09 23:11:54,464 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/start/8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
+2025-03-09 23:11:54,464 | ERROR | API response: Error starting Podman Containers: crun: executable file `ok` not found in $PATH: No such file or directory: OCI runtime attempted to invoke a command that was not found
+2025-03-09 23:14:26,389 | INFO | Deleting container: 
+2025-03-09 23:14:26,389 | INFO | Deleting container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
+2025-03-09 23:14:26,389 | INFO | Deleting container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
+2025-03-09 23:14:32,081 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 23:14:36,179 | INFO | Deleting container: 
+2025-03-09 23:14:36,179 | INFO | Deleting container with env_id: e149c412fe0c038c71e066fed8d4c66e093fc5d8740e856e306de0747bcd774f
+2025-03-09 23:14:36,179 | INFO | Deleting container with env_id: e149c412fe0c038c71e066fed8d4c66e093fc5d8740e856e306de0747bcd774f
+2025-03-09 23:14:37,494 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 23:14:47,059 | INFO | Deleting container: 
+2025-03-09 23:14:47,060 | INFO | Deleting container with env_id: bef01a6737e34af9de688670d875f0ca0f9ed501dc30bbf18d855bb9462d7ea5
+2025-03-09 23:14:47,060 | INFO | Deleting container with env_id: bef01a6737e34af9de688670d875f0ca0f9ed501dc30bbf18d855bb9462d7ea5
+2025-03-09 23:14:48,151 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 23:15:09,252 | INFO | Deleting container: 
+2025-03-09 23:15:09,252 | INFO | Deleting container with env_id: 249c497700d85cb2e0872c5b96fde51f45d88923cd95178fd298991403241cf3
+2025-03-09 23:15:09,252 | INFO | Deleting container with env_id: 249c497700d85cb2e0872c5b96fde51f45d88923cd95178fd298991403241cf3
+2025-03-09 23:15:10,361 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 23:16:49,038 | INFO | Creating container: 
+2025-03-09 23:16:59,044 | ERROR | Request timed out after 10 seconds
+2025-03-09 23:16:59,045 | ERROR | An error occurred: {'message': 'Request timed out after 10 seconds'}
+2025-03-09 23:19:35,864 | INFO | Starting container: 
+2025-03-09 23:19:35,864 | INFO | Starting container with env_id: 13c4ca461232ab3b781e6f404feca654741701d5e5b001dc3b75b95977ad0712
+2025-03-09 23:19:35,864 | INFO | Stopping container with env_id: 13c4ca461232ab3b781e6f404feca654741701d5e5b001dc3b75b95977ad0712
+2025-03-09 23:19:45,876 | ERROR | Request timed out after 10 seconds
+2025-03-09 23:20:35,552 | INFO | Starting container: 
+2025-03-09 23:20:35,552 | INFO | Starting container with env_id: 13c4ca461232ab3b781e6f404feca654741701d5e5b001dc3b75b95977ad0712
+2025-03-09 23:20:35,552 | INFO | Stopping container with env_id: 13c4ca461232ab3b781e6f404feca654741701d5e5b001dc3b75b95977ad0712
+2025-03-09 23:20:45,564 | ERROR | Request timed out after 10 seconds
+2025-03-09 23:29:46,412 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:29:50,418 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:29:56,427 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:30:00,434 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:30:06,441 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:30:10,447 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:30:16,456 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:30:20,462 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:30:26,470 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:30:30,477 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-09 23:44:30,851 | INFO | No token found
+2025-03-09 23:44:30,851 | WARNING | Unauthorized request to delete container
+2025-03-09 23:44:34,038 | INFO | No token found
+2025-03-09 23:44:44,279 | INFO | User admin is attempting to log in
+2025-03-09 23:44:44,547 | INFO | User admin has successfully logged in
+2025-03-09 23:44:44,551 | INFO | User admin has successfully logged in
+2025-03-09 23:44:55,300 | INFO | Deleting container: 
+2025-03-09 23:44:55,301 | INFO | Deleting container with env_id: 13c4ca461232ab3b781e6f404feca654741701d5e5b001dc3b75b95977ad0712
+2025-03-09 23:44:55,301 | INFO | Deleting container with env_id: 13c4ca461232ab3b781e6f404feca654741701d5e5b001dc3b75b95977ad0712
+2025-03-09 23:45:00,604 | INFO | Deleting container: 
+2025-03-09 23:45:00,604 | INFO | Deleting container with env_id: fd6f49656a96522d7c5668353c05e84dddee6d56fb871d6527eca5aef51fd361
+2025-03-09 23:45:00,604 | INFO | Deleting container with env_id: fd6f49656a96522d7c5668353c05e84dddee6d56fb871d6527eca5aef51fd361
+2025-03-09 23:45:11,669 | INFO | Listing container images on node: 192.168.14.15
+2025-03-09 23:45:29,283 | INFO | Creating container: 
+2025-03-09 23:45:39,293 | ERROR | Request timed out after 10 seconds
+2025-03-09 23:45:39,293 | ERROR | An error occurred: {'message': 'Request timed out after 10 seconds'}
+2025-03-10 00:11:34,607 | INFO | Deleting container: 
+2025-03-10 00:11:34,607 | INFO | Deleting container with env_id: df3ff75e2593a9db532fd469f3d0ff310537418cefd96542b2afc2244ab006c0
+2025-03-10 00:11:34,607 | INFO | Deleting container with env_id: df3ff75e2593a9db532fd469f3d0ff310537418cefd96542b2afc2244ab006c0
+2025-03-10 00:11:35,750 | INFO | Listing container images on node: 192.168.14.15
+2025-03-10 00:11:39,496 | INFO | Deleting container: 
+2025-03-10 00:11:39,496 | INFO | Deleting container with env_id: 3b0074fbf68d26a5d6c1f18292af9ef40ead09e52aef52287090d46ebadebbcc
+2025-03-10 00:11:39,496 | INFO | Deleting container with env_id: 3b0074fbf68d26a5d6c1f18292af9ef40ead09e52aef52287090d46ebadebbcc
+2025-03-10 00:11:40,103 | INFO | Listing container images on node: 192.168.14.15
+2025-03-10 00:11:43,810 | INFO | Deleting container: 
+2025-03-10 00:11:43,810 | INFO | Deleting container with env_id: 11953e9e9d879588d185dd1f216d314738ac8b2fbe2aa76611bdd274364621d5
+2025-03-10 00:11:43,810 | INFO | Deleting container with env_id: 11953e9e9d879588d185dd1f216d314738ac8b2fbe2aa76611bdd274364621d5
+2025-03-10 00:11:45,289 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 21:00:31,746 | INFO | No token found
+2025-03-16 21:00:31,794 | WARNING | Unauthorized request to list node images
+2025-03-16 21:01:00,202 | INFO | No token found
+2025-03-16 21:01:00,202 | WARNING | Unauthorized request to list node images
+2025-03-16 21:01:10,106 | INFO | No token found
+2025-03-16 21:01:19,399 | INFO | User admin is attempting to log in
+2025-03-16 21:01:19,952 | INFO | User admin has successfully logged in
+2025-03-16 21:01:20,140 | INFO | User admin has successfully logged in
+2025-03-16 21:01:26,727 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 21:01:41,535 | INFO | Creating container: 
+2025-03-16 21:02:09,897 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 21:04:54,894 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-16 21:05:33,641 | INFO | Using local sqlite database
+2025-03-16 21:05:33,973 | INFO | Starting central process...
+2025-03-16 21:05:33,973 | INFO | No configuration file provided. Using default configuration.
+2025-03-16 21:05:33,974 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-16 21:05:33,978 | INFO | Starting aggregator process...
+2025-03-16 21:05:34,014 | INFO | Starting main loop
+2025-03-16 21:05:34,714 | INFO | Using local sqlite database
+2025-03-16 21:05:34,719 | INFO | Using local sqlite database
+2025-03-16 21:05:37,027 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 21:10:39,885 | INFO | Stopping container: 
+2025-03-16 21:10:39,885 | INFO | Stopping container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
+2025-03-16 21:10:39,885 | INFO | Stopping container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
+2025-03-16 21:10:54,186 | INFO | Starting container: 
+2025-03-16 21:10:54,186 | INFO | Starting container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
+2025-03-16 21:10:54,186 | INFO | Stopping container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
+2025-03-16 21:13:41,343 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-16 21:18:00,235 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 21:18:25,010 | INFO | Stopping container: 
+2025-03-16 21:18:25,011 | INFO | Stopping container with env_id: 631e1402bb0edd9cbbb80251b5c484c9273479935d614c748aff50ebab3f1dcf
+2025-03-16 21:18:25,011 | INFO | Stopping container with env_id: 631e1402bb0edd9cbbb80251b5c484c9273479935d614c748aff50ebab3f1dcf
+2025-03-16 21:18:26,958 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 21:18:41,479 | INFO | Stopping container: 
+2025-03-16 21:18:41,479 | INFO | Stopping container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
+2025-03-16 21:18:41,479 | INFO | Stopping container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
+2025-03-16 21:18:42,752 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 21:18:52,338 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 21:18:57,049 | INFO | Stopping container: 
+2025-03-16 21:18:57,049 | INFO | Stopping container with env_id: 284af6ceae0268bb678eaefc29e62d92d170b4d4b82a4bdcc1e671cd91dcad5d
+2025-03-16 21:18:57,049 | INFO | Stopping container with env_id: 284af6ceae0268bb678eaefc29e62d92d170b4d4b82a4bdcc1e671cd91dcad5d
+2025-03-16 21:19:04,115 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 21:19:08,610 | INFO | Stopping container: 
+2025-03-16 21:19:08,611 | INFO | Stopping container with env_id: c40387acf84edc4b2de3d3f3d5a3d9f386d92c74c3171a30c1836500c7a1f079
+2025-03-16 21:19:08,611 | INFO | Stopping container with env_id: c40387acf84edc4b2de3d3f3d5a3d9f386d92c74c3171a30c1836500c7a1f079
+2025-03-16 21:19:16,301 | INFO | Deleting container: 
+2025-03-16 21:19:16,301 | INFO | Deleting container with env_id: c40387acf84edc4b2de3d3f3d5a3d9f386d92c74c3171a30c1836500c7a1f079
+2025-03-16 21:19:16,301 | INFO | Deleting container with env_id: c40387acf84edc4b2de3d3f3d5a3d9f386d92c74c3171a30c1836500c7a1f079
+2025-03-16 21:19:26,255 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 21:19:31,308 | INFO | Deleting container: 
+2025-03-16 21:19:31,308 | INFO | Deleting container with env_id: 284af6ceae0268bb678eaefc29e62d92d170b4d4b82a4bdcc1e671cd91dcad5d
+2025-03-16 21:19:31,308 | INFO | Deleting container with env_id: 284af6ceae0268bb678eaefc29e62d92d170b4d4b82a4bdcc1e671cd91dcad5d
+2025-03-16 21:19:40,745 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 21:20:58,872 | INFO | Deleting container: 
+2025-03-16 21:20:58,872 | INFO | Deleting container with env_id: 3db623f1f146e6862d935fee2901cc6781687c4599aafd7efb003f6d314001f7
+2025-03-16 21:20:58,872 | INFO | Deleting container with env_id: 3db623f1f146e6862d935fee2901cc6781687c4599aafd7efb003f6d314001f7
+2025-03-16 21:21:02,789 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 21:21:07,967 | INFO | Deleting container: 
+2025-03-16 21:21:07,967 | INFO | Deleting container with env_id: f32e19799a68c421185921c9a75bd6b422fd322bde780fd0840f5b0d416ce95a
+2025-03-16 21:21:07,967 | INFO | Deleting container with env_id: f32e19799a68c421185921c9a75bd6b422fd322bde780fd0840f5b0d416ce95a
+2025-03-16 21:21:12,213 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 23:16:13,825 | INFO | No token found
+2025-03-16 23:16:13,825 | WARNING | Unauthorized request to list node images
+2025-03-16 23:16:21,626 | INFO | No token found
+2025-03-16 23:16:26,411 | INFO | User admin is attempting to log in
+2025-03-16 23:16:26,679 | INFO | User admin has successfully logged in
+2025-03-16 23:16:26,682 | INFO | User admin has successfully logged in
+2025-03-16 23:16:30,780 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 23:17:02,792 | INFO | Fetching containers
+2025-03-16 23:17:02,794 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-16 23:17:11,574 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 23:20:24,868 | INFO | Listing container images on node: 192.168.14.15
+2025-03-16 23:35:15,088 | INFO | Listing container images on node: 192.168.14.15

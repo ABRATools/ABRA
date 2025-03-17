@@ -14,6 +14,8 @@ import { useWebSocket } from "@/data/WebSocketContext";
 import { useMemo } from "react";
 import { Node, Environment } from "@/types/machine";
 
+import AddNewNode from "@/pages/display/AddNewNode";
+
 const formatMemory = (bytes: number): string => {
   if (bytes < 1024 * 1024 * 1024) {
     return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
@@ -162,6 +164,7 @@ export default function SystemDetail() {
 
       <div className="space-y-4">
         <h2 className="text-xl font-semibold tracking-tight">System Nodes</h2>
+        <AddNewNode/>
         <div className="grid gap-4 md:grid-cols-2">
           {systemNodes.map((node) => (
             <Card key={node.node_id}>
