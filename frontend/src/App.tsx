@@ -4,6 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DashboardLayout } from "./layouts/DashboardLayout.tsx";
 import { WebSocketProvider } from "./data/WebSocketContext.tsx";
+import { AuthProvider } from "./auth/AuthContext.tsx";
+import { ProtectedRoute } from "./auth/ProtectedRoute.tsx";
 
 import Login from "./pages/Login.tsx";
 import { ApiErrorHandler } from "./lib/api-error-handler.ts";
@@ -41,8 +43,8 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Navigate to="/login" replace />} />
 
-      {/* Protected routes */}
-      {/* <Route element={<ProtectedRoute />}> */}
+      {/* Protected routes - now using our RBAC-aware ProtectedRoute component */}
+      <Route element={<ProtectedRoute />}>
         <Route element={<DashboardLayout />}>
           {/* Redirects */}
           <Route path="/system" element={<Navigate to="/display/systems" replace />} />
@@ -51,29 +53,47 @@ const AppRoutes = () => {
           <Route path="/config/nodes" element={<Navigate to="/config/systems" replace />} />
           <Route path="/config/environments" element={<Navigate to="/config/systems" replace />} />
           
-          {/* WebSocket Debug - Add this new route */}
-          <Route path="/debug/websocket" element={<WebSocketDebug />} />
-
           {/* Display routes */}
           <Route path="/display/systems" element={<SystemsDisplay />} />
           <Route path="/display/systems/:systemId" element={<SystemDetail />} />
           <Route path="/display/systems/:systemId/nodes/:nodeId" element={<NodeDetail />} />
           <Route path="/display/systems/:systemId/nodes/:nodeId/environments/:envId" element={<EnvironmentDetail />} />
           
-          {/* Config routes */}
-          <Route path="/config/systems" element={<SystemsConfig />} />
-          <Route path="/config/systems/:systemId" element={<SystemConfigDetail />} />
-          <Route path="/config/systems/:systemId/nodes/:nodeId" element={<NodeConfigDetail />} />
-          <Route path="/config/systems/:systemId/nodes/:nodeId/environments/:envId" element={<EnvironmentConfigDetail />} />
-          <Route path="/config/profiles" element={<ConfigurationProfiles />} />
-          <Route path="/config/containers" element={<ContainerUpload />} />
+          {/* Config routes - require config permissions */}
+          <Route element={<ProtectedRoute requiredPermission="config:systems" />}>
+            <Route path="/config/systems" element={<SystemsConfig />} />
+            <Route path="/config/systems/:systemId" element={<SystemConfigDetail />} />
+            <Route path="/config/systems/:systemId/nodes/:nodeId" element={<NodeConfigDetail />} />
+            <Route path="/config/systems/:systemId/nodes/:nodeId/environments/:envId" element={<EnvironmentConfigDetail />} />
+          </Route>
+          
+          <Route element={<ProtectedRoute requiredPermission="config:profiles" />}>
+            <Route path="/config/profiles" element={<ConfigurationProfiles />} />
+          </Route>
+          
+          <Route element={<ProtectedRoute requiredPermission="config:containers" />}>
+            <Route path="/config/containers" element={<ContainerUpload />} />
+          </Route>
 
-          {/* Management routes */}
-          <Route path="/users" element={<UserManagement />} />
-          <Route path="/access" element={<GroupManagement />} />
-          <Route path="/audit" element={<AuditAbra />} />
+          {/* Management routes - require admin permissions */}
+          <Route element={<ProtectedRoute requiredPermission="admin:users" />}>
+            <Route path="/users" element={<UserManagement />} />
+          </Route>
+          
+          <Route element={<ProtectedRoute requiredPermission="admin:access" />}>
+            <Route path="/access" element={<GroupManagement />} />
+          </Route>
+          
+          <Route element={<ProtectedRoute requiredPermission="admin:audit" />}>
+            <Route path="/audit" element={<AuditAbra />} />
+          </Route>
+          
+          {/* Debug routes - require admin permissions */}
+          <Route element={<ProtectedRoute requiredPermission="admin:debug" />}>
+            <Route path="/debug/websocket" element={<WebSocketDebug />} />
+          </Route>
         </Route>
-      {/* </Route> */}
+      </Route>
     </Routes>
     </WebSocketProvider>
   );
@@ -82,11 +102,11 @@ const AppRoutes = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      {/* <AuthProvider> */}
-      <ApiErrorHandler />
-      <AppRoutes />
-      {/* </AuthProvider> */}
-      <Toaster />
+      <AuthProvider>
+        <ApiErrorHandler />
+        <AppRoutes />
+        <Toaster />
+      </AuthProvider>
     </BrowserRouter>
   </QueryClientProvider>
 );

@@ -1,12 +1,17 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import { DashboardHeader } from "@/components/DashboardHeader";
-import { DashboardSidebar } from "@/components/DashboardSidebar";
+import { RBACNavigationSidebar } from "@/components/DashboardSidebar";
+import { useAuth } from "@/auth/AuthContext";
 
 export function DashboardLayout() {
+  const { checkingPermissions } = useAuth();
+  
   return (
     <div className="min-h-screen flex">
-      <DashboardSidebar />
+      {/* Use our RBAC-enabled sidebar instead of the old one */}
+      <RBACNavigationSidebar />
+      
       <div className="flex-1 flex flex-col">
         <DashboardHeader />
         <main className="flex-1 p-6">

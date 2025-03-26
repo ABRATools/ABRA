@@ -4,6 +4,7 @@ from config import settings
 from contextlib import asynccontextmanager
 
 import role_based_access.rba_endpoints
+import role_based_access.rbap_endpoints  # Import our new route endpoints
 import uvicorn
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi import FastAPI, Request, Depends, APIRouter, WebSocket, WebSocketDisconnect
@@ -24,6 +25,19 @@ from web_auth import auth_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
   print("Starting FastAPI")
+  # initialize RBAC permissions and groups when the server starts just in case
+  session = next(db.get_session())
+  try:
+    # avoid circular imports
+    from role_based_access.rbap_endpoints import initialize_default_permissions, setup_default_groups
+    initialize_default_permissions(session)
+    setup_default_groups(session)
+    logger.info("RBAC Permissions initialized on server startup")
+  except Exception as e:
+    logger.error(f"Error initializing RBAC permissions: {str(e)}")
+  finally:
+    session.close()
+  
   yield
   print("Cleaning up")
 
@@ -55,6 +69,8 @@ app.include_router(auth_router)
 app.include_router(containers.router)
 # rbac routes
 app.include_router(role_based_access.rba_endpoints.router)
+# more rbac routes ha. ha. ha. 
+app.include_router(role_based_access.rbap_endpoints.router)
 
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_value())
 
