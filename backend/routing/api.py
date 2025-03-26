@@ -144,7 +144,14 @@ async def get_groups(request: Request, session = Depends(get_session), token: Au
       # print(group.permissions)
       # for users in group.users:
       #   print(users.username)
-    groups = [Group(name=group.name, users=[user.username for user in group.users]) for group in db.get_all_groups(session)]
+    groups = [
+        Group(
+            name=group.name, 
+            users=[user.username for user in group.users],
+            permissions=[permission.name for permission in group.permissions]
+        ) 
+        for group in db.get_all_groups(session)
+    ]
     groups_json = [group.model_dump() for group in groups]
     print(groups_json)
     return JSONResponse(content={'groups': groups_json}, status_code=200)

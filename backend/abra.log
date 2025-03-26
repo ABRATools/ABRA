@@ -8485,3 +8485,161 @@ sqlalchemy.exc.IllegalStateChangeError: Method 'close()' can't be called here; m
 2025-03-05 14:09:34,975 | INFO | Starting container: 
 2025-03-05 14:09:34,975 | INFO | Starting container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
 2025-03-05 14:09:34,975 | INFO | Stopping container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
+2025-03-05 16:31:50,277 | INFO | Using local sqlite database
+2025-03-05 16:31:50,442 | INFO | Starting central process...
+2025-03-05 16:31:50,442 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 16:31:50,443 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 16:31:50,445 | INFO | Starting aggregator process...
+2025-03-05 16:31:50,475 | INFO | Starting main loop
+2025-03-05 16:31:51,167 | INFO | Using local sqlite database
+2025-03-05 16:31:51,168 | INFO | Using local sqlite database
+2025-03-05 16:33:18,306 | INFO | User admin is attempting to log in
+2025-03-05 16:33:18,590 | INFO | User admin has successfully logged in
+2025-03-05 16:33:18,595 | INFO | User admin has successfully logged in
+2025-03-05 16:33:27,491 | INFO | Deleting container: 
+2025-03-05 16:33:27,491 | INFO | Deleting container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
+2025-03-05 16:33:27,491 | INFO | Deleting container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
+2025-03-05 16:37:12,419 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 16:37:12,419 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:37:12,420 | INFO | Terminating process 2240900
+2025-03-05 16:37:12,423 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:37:12,423 | INFO | Main task cancelled gracefully.
+2025-03-05 16:37:15,476 | INFO | Using local sqlite database
+2025-03-05 16:37:15,638 | INFO | Starting central process...
+2025-03-05 16:37:15,638 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 16:37:15,639 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 16:37:15,642 | INFO | Starting aggregator process...
+2025-03-05 16:37:15,668 | INFO | Starting main loop
+2025-03-05 16:37:16,375 | INFO | Using local sqlite database
+2025-03-05 16:37:16,376 | INFO | Using local sqlite database
+2025-03-05 16:38:57,561 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 16:38:57,561 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:38:57,561 | INFO | Terminating process 2247109
+2025-03-05 16:38:57,564 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:38:57,565 | INFO | Main task cancelled gracefully.
+2025-03-05 16:39:00,678 | INFO | Using local sqlite database
+2025-03-05 16:39:00,852 | INFO | Starting central process...
+2025-03-05 16:39:00,852 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 16:39:00,853 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 16:39:00,858 | INFO | Starting aggregator process...
+2025-03-05 16:39:00,885 | INFO | Starting main loop
+2025-03-05 16:39:01,604 | INFO | Using local sqlite database
+2025-03-05 16:39:01,621 | INFO | Using local sqlite database
+2025-03-05 16:39:07,250 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:39:07,250 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 16:39:07,250 | INFO | Terminating process 2248772
+2025-03-05 16:39:07,254 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:39:07,254 | INFO | Main task cancelled gracefully.
+2025-03-05 16:39:09,742 | INFO | Using local sqlite database
+2025-03-05 16:39:09,907 | INFO | Starting central process...
+2025-03-05 16:39:09,907 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 16:39:09,909 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 16:39:09,911 | INFO | Starting aggregator process...
+2025-03-05 16:39:09,936 | INFO | Starting main loop
+2025-03-05 16:39:10,652 | INFO | Using local sqlite database
+2025-03-05 16:39:10,664 | INFO | Using local sqlite database
+2025-03-05 16:41:37,610 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 16:41:37,611 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:41:37,611 | INFO | Terminating process 2249008
+2025-03-05 16:41:37,617 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:41:37,617 | INFO | Main task cancelled gracefully.
+2025-03-05 16:41:41,755 | INFO | Using local sqlite database
+2025-03-05 16:41:42,006 | INFO | Starting central process...
+2025-03-05 16:41:42,006 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 16:41:42,007 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 16:41:42,012 | INFO | Starting aggregator process...
+2025-03-05 16:41:42,048 | INFO | Starting main loop
+2025-03-05 16:41:42,739 | INFO | Using local sqlite database
+2025-03-05 16:41:42,769 | INFO | Using local sqlite database
+2025-03-05 16:41:47,981 | INFO | User admin is listing all groups
+2025-03-05 16:41:47,988 | INFO | User admin is listing all permissions
+2025-03-05 16:42:15,583 | INFO | User admin is assigning user ID 2 to group ID 1
+2025-03-05 16:42:15,620 | INFO | User admin is listing all groups
+2025-03-05 16:42:15,622 | INFO | User admin is listing all permissions
+2025-03-05 16:42:32,224 | INFO | No token found
+2025-03-05 16:42:32,939 | INFO | User admin is listing all groups
+2025-03-05 16:42:32,943 | INFO | User admin is listing all permissions
+2025-03-05 16:42:39,888 | INFO | User admin is removing user ID 2 from group ID 1
+2025-03-05 16:42:39,914 | INFO | User admin is listing all groups
+2025-03-05 16:42:39,918 | INFO | User admin is listing all permissions
+2025-03-05 16:42:50,874 | INFO | No token found
+2025-03-05 16:44:33,001 | INFO | No token found
+2025-03-05 16:44:56,148 | INFO | No token found
+2025-03-05 16:45:31,365 | INFO | User admin is listing all groups
+2025-03-05 16:45:31,367 | INFO | User admin is listing all permissions
+2025-03-05 16:45:37,079 | INFO | User admin is creating permission: lol
+2025-03-05 16:45:37,107 | INFO | User admin is listing all groups
+2025-03-05 16:45:37,110 | INFO | User admin is listing all permissions
+2025-03-05 16:45:44,382 | INFO | User admin is assigning permission ID 1 to group ID 1
+2025-03-05 16:45:44,405 | INFO | User admin is listing all groups
+2025-03-05 16:45:44,407 | INFO | User admin is listing all permissions
+2025-03-05 16:46:37,240 | INFO | No token found
+2025-03-05 16:47:27,002 | INFO | User abra is attempting to log in
+2025-03-05 16:47:27,004 | ERROR | User abra does not exist
+2025-03-05 16:47:33,287 | INFO | User admn is attempting to log in
+2025-03-05 16:47:33,290 | ERROR | User admn does not exist
+2025-03-05 16:47:34,538 | INFO | User admin is attempting to log in
+2025-03-05 16:47:34,805 | WARNING | User admin has failed to log in
+2025-03-05 16:49:39,527 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 16:49:46,533 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 16:49:53,540 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 16:50:19,836 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 17:10:16,929 | INFO | No token found
+2025-03-05 17:10:16,929 | WARNING | Unauthorized request to delete container
+2025-03-05 17:10:20,106 | INFO | No token found
+2025-03-05 17:10:25,490 | INFO | User admin is attempting to log in
+2025-03-05 17:10:25,760 | INFO | User admin has successfully logged in
+2025-03-05 17:10:25,762 | INFO | User admin has successfully logged in
+2025-03-05 17:10:30,631 | INFO | Deleting container: 
+2025-03-05 17:10:30,631 | INFO | Deleting container with env_id: 8bc1f77a43f84bff07efb98f7e723c89c7490092dd42e73068aac1d0292c2758
+2025-03-05 17:10:30,631 | INFO | Deleting container with env_id: 8bc1f77a43f84bff07efb98f7e723c89c7490092dd42e73068aac1d0292c2758
+2025-03-05 17:11:16,408 | INFO | No token found
+2025-03-05 17:11:28,773 | INFO | User admin is listing all groups
+2025-03-05 17:11:28,776 | INFO | User admin is listing all permissions
+2025-03-05 17:11:31,429 | INFO | No token found
+2025-03-05 17:11:50,776 | INFO | Fetching containers
+2025-03-05 17:11:50,776 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 17:11:52,666 | INFO | User admin is listing all groups
+2025-03-05 17:11:52,669 | INFO | User admin is listing all permissions
+2025-03-05 17:11:54,205 | INFO | No token found
+2025-03-05 17:44:13,815 | INFO | User admin is attempting to log in
+2025-03-05 17:44:14,081 | INFO | User admin has successfully logged in
+2025-03-05 17:44:14,083 | INFO | User admin has successfully logged in
+2025-03-05 17:44:54,594 | INFO | No token found
+2025-03-05 17:44:55,717 | INFO | User admin is listing all groups
+2025-03-05 17:44:55,719 | INFO | User admin is listing all permissions
+2025-03-05 17:44:57,002 | INFO | User admin is listing all groups
+2025-03-05 17:44:57,002 | INFO | User admin is listing all permissions
+2025-03-05 17:45:06,078 | INFO | Fetching containers
+2025-03-05 17:45:06,079 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 17:45:07,813 | INFO | Fetching containers
+2025-03-05 17:45:07,814 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 17:47:22,328 | INFO | No token found
+2025-03-05 17:52:27,409 | INFO | User admin is attempting to log in
+2025-03-05 17:52:27,675 | INFO | User admin has successfully logged in
+2025-03-05 17:52:27,677 | INFO | User admin has successfully logged in
+2025-03-05 17:55:26,308 | INFO | Fetching containers
+2025-03-05 17:55:26,308 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 17:55:36,263 | INFO | Fetching containers
+2025-03-05 17:55:36,263 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 17:55:42,924 | INFO | Fetching containers
+2025-03-05 17:55:42,924 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 17:56:10,006 | INFO | User admin is listing all groups
+2025-03-05 17:56:10,008 | INFO | User admin is listing all permissions
+2025-03-05 17:56:14,886 | INFO | User admin is creating group: fake
+2025-03-05 17:56:14,915 | INFO | User admin is listing all groups
+2025-03-05 17:56:14,919 | INFO | User admin is listing all permissions
+2025-03-05 17:56:20,544 | INFO | User admin is creating permission: adsfsa
+2025-03-05 17:56:20,568 | INFO | User admin is listing all groups
+2025-03-05 17:56:20,569 | INFO | User admin is listing all permissions
+2025-03-05 17:56:29,254 | INFO | User admin is assigning permission ID 2 to group ID 2
+2025-03-05 17:56:29,281 | INFO | User admin is listing all groups
+2025-03-05 17:56:29,283 | INFO | User admin is listing all permissions
+2025-03-05 17:56:34,039 | INFO | User admin is assigning user ID 2 to group ID 2
+2025-03-05 17:56:34,064 | INFO | User admin is listing all groups
+2025-03-05 17:56:34,067 | INFO | User admin is listing all permissions
+2025-03-05 17:56:49,946 | INFO | No token found
+2025-03-05 17:57:28,607 | INFO | User admin is attempting to log in
+2025-03-05 17:57:28,873 | INFO | User admin has successfully logged in
+2025-03-05 17:57:28,875 | INFO | User admin has successfully logged in
+2025-03-25 17:22:44,110 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...

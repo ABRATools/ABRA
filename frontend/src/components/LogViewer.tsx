@@ -34,7 +34,7 @@ export const LogFileView: React.FC<LogFileViewProps> = ({ endpoint, streaming = 
                         stream={!!streaming}
                         follow={true}
                         onScroll={onScroll}
-                        height={600}
+                        height={1000}
                         containerStyle={LazyLogStyle}
                     />
                 )}

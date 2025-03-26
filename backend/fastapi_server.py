@@ -3,12 +3,14 @@
 from config import settings
 from contextlib import asynccontextmanager
 
+import role_based_access.rba_endpoints
 import uvicorn
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi import FastAPI, Request, Depends, APIRouter, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from routing import frontend, api, containers, rbac
+from routing import frontend, api, containers
+import role_based_access
 from starlette.responses import HTMLResponse, JSONResponse
 import asyncio
 
@@ -52,7 +54,7 @@ app.include_router(auth_router)
 # container routes
 app.include_router(containers.router)
 # rbac routes
-app.include_router(rbac.router)
+app.include_router(role_based_access.rba_endpoints.router)
 
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_value())
 
