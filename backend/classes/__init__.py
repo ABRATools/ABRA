@@ -25,8 +25,8 @@ class FilteredUser(BaseModel):
 
 class Group(BaseModel):
   name: str
-  # permissions: Optional[List[str]]
-  permissions: Optional[str]
+  permissions: Optional[List[str]] = []
+  # permissions: Optional[str]
   users: List[str]
 
 class ConnectionStrings(BaseModel):

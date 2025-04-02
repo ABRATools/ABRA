@@ -1,19 +1,18 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-// import { useAuth } from "@/auth/AuthContext";
+import { useAuth } from "@/auth/AuthContext";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { toast } = useToast();
-
-  // const { setToken } = useAuth();
+  const { setToken } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,19 +25,22 @@ export default function Login() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
+        credentials: 'include'
       });
 
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
+        console.log("Login successful:", data);
+        
+        // set the token in our authentication context
+        setToken(data.token);
+        
         toast({
           title: "Login successful",
           description: "Welcome to the dashboard",
         });
 
-        setLoading(false);
-
-        window.location.href = "/display/systems";
+        navigate("/display/systems");
       } else {
         throw new Error('Login failed');
       }
@@ -48,6 +50,7 @@ export default function Login() {
         description: "An error occurred during login",
         variant: "destructive",
       });
+    } finally {
       setLoading(false);
     }
   };

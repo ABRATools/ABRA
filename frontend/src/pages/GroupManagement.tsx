@@ -39,6 +39,14 @@ import {
   DialogTitle, 
   DialogFooter,
 } from "@/components/ui/dialog";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { 
+  Shield, 
+  AlertTriangle, 
+  RefreshCw,
+  Info
+} from "lucide-react";
+import RoutePermissionsManager from "@/components/PermissionManager";
 
 interface Group {
   id: number;
@@ -68,130 +76,6 @@ interface User {
 interface GroupUser {
   user_id: number;
   username: string;
-}
-
-function RBACManagement() {
-  const { toast } = useToast();
-  
-  const [groups, setGroups] = useState<Group[]>([]);
-  const [permissions, setPermissions] = useState<Permission[]>([]);
-  const [users, setUsers] = useState<User[]>([]);
-  
-  const [loading, setLoading] = useState(false);
-  
-  const fetchGroups = async () => {
-    try {
-      const response = await fetch('/rbac/groups?include_permissions=true');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success && data.groups) {
-          setGroups(data.groups);
-        }
-      } else {
-        throw new Error('Failed to fetch groups');
-      }
-    } catch (error) {
-      console.error("Error fetching groups:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load groups",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const fetchPermissions = async () => {
-    try {
-      const response = await fetch('/rbac/permissions');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success && data.permissions) {
-          setPermissions(data.permissions);
-        }
-      } else {
-        throw new Error('Failed to fetch permissions');
-      }
-    } catch (error) {
-      console.error("Error fetching permissions:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load permissions",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch('/api/get_users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        setUsers(data.users || []);
-      } else {
-        throw new Error('Failed to fetch users');
-      }
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load users",
-        variant: "destructive",
-      });
-    }
-  };
-  
-  useEffect(() => {
-    fetchGroups();
-    fetchPermissions();
-    fetchUsers();
-  }, []);
-  
-  const handleRefreshData = () => {
-    fetchGroups();
-    fetchPermissions();
-    fetchUsers();
-  };
-  
-  return (
-    <div className="container mx-auto py-6">
-      <h1 className="text-2xl font-bold mb-6">Access Management</h1>
-      
-      <Tabs defaultValue="groups" className="w-full">
-        <TabsList className="mb-4">
-          <TabsTrigger value="groups">Groups</TabsTrigger>
-          <TabsTrigger value="permissions">Permissions</TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="groups">
-          <GroupsTab 
-            groups={groups} 
-            permissions={permissions}
-            users={users}
-            loading={loading}
-            setLoading={setLoading}
-            toast={toast}
-            onRefresh={handleRefreshData}
-          />
-        </TabsContent>
-        
-        <TabsContent value="permissions">
-          <PermissionsTab 
-            permissions={permissions}
-            loading={loading}
-            setLoading={setLoading}
-            toast={toast}
-            onRefresh={handleRefreshData}
-          />
-        </TabsContent>
-      </Tabs>
-    </div>
-  );
 }
 
 // groups tab subcomponent
@@ -540,7 +424,7 @@ function GroupsTab({
           description: data.message || "Permission removed from group",
         });
         
-        // Refresh data
+        // refresh data
         onRefresh();
       } else {
         throw new Error(data.message || 'Failed to remove permission from group');
@@ -555,6 +439,31 @@ function GroupsTab({
     } finally {
       setLoading(false);
     }
+  };
+  
+  // helper function to group permissions by category for better display
+  const groupPermissionsByCategory = (permissions: Permission[]) => {
+    const categories: {[key: string]: Permission[]} = {};
+    
+    permissions.forEach(permission => {
+      let category = "Other";
+      
+      if (permission.name.startsWith("view:")) {
+        category = "View";
+      } else if (permission.name.startsWith("config:")) {
+        category = "Configuration";
+      } else if (permission.name.startsWith("admin:")) {
+        category = "Administration";
+      }
+      
+      if (!categories[category]) {
+        categories[category] = [];
+      }
+      
+      categories[category].push(permission);
+    });
+    
+    return categories;
   };
   
   return (
@@ -652,19 +561,26 @@ function GroupsTab({
                     <TableCell>
                       {group.permissions && group.permissions.length > 0 ? (
                         <div className="flex flex-wrap gap-1">
-                          {group.permissions.map(permission => (
-                            <div key={permission.id} className="flex items-center">
-                              <span className="bg-slate-100 text-slate-800 rounded px-2 py-1 text-xs">
-                                {permission.name}
-                              </span>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-5 w-5 ml-1"
-                                onClick={() => removePermissionFromGroup(group.id, permission.id)}
-                              >
-                                ×
-                              </Button>
+                          {Object.entries(groupPermissionsByCategory(group.permissions)).map(([category, categoryPermissions]) => (
+                            <div key={category} className="w-full mb-2">
+                              <h5 className="text-xs font-medium text-muted-foreground mb-1">{category}</h5>
+                              <div className="flex flex-wrap gap-1">
+                                {categoryPermissions.map(permission => (
+                                  <div key={permission.id} className="flex items-center mb-1">
+                                    <span className="bg-slate-100 text-slate-800 rounded px-2 py-1 text-xs">
+                                      {permission.name}
+                                    </span>
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-5 w-5 ml-1"
+                                      onClick={() => removePermissionFromGroup(group.id, permission.id)}
+                                    >
+                                      ×
+                                    </Button>
+                                  </div>
+                                ))}
+                              </div>
                             </div>
                           ))}
                         </div>
@@ -891,7 +807,6 @@ function GroupsTab({
   );
 }
 
-// permissions tab subcomponent
 function PermissionsTab({ 
   permissions,
   loading, 
@@ -983,6 +898,31 @@ function PermissionsTab({
     }
   };
   
+  // group permissions by category for better display
+  const groupPermissionsByCategory = () => {
+    const categories: {[key: string]: Permission[]} = {};
+    
+    permissions.forEach(permission => {
+      let category = "Other";
+      
+      if (permission.name.startsWith("view:")) {
+        category = "View";
+      } else if (permission.name.startsWith("config:")) {
+        category = "Configuration";
+      } else if (permission.name.startsWith("admin:")) {
+        category = "Administration";
+      }
+      
+      if (!categories[category]) {
+        categories[category] = [];
+      }
+      
+      categories[category].push(permission);
+    });
+    
+    return categories;
+  };
+  
   return (
     <>
       <div className="grid gap-6 md:grid-cols-2">
@@ -1021,6 +961,55 @@ function PermissionsTab({
             </form>
           </CardContent>
         </Card>
+        
+        <Card>
+          <CardHeader>
+            <CardTitle>Permission Guidelines</CardTitle>
+            <CardDescription>
+              Best practices for permission names
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4 text-sm">
+              <div>
+                <h4 className="font-medium mb-1">Route Permissions</h4>
+                <p className="text-muted-foreground mb-2">
+                  Route permissions control access to specific pages and are automatically managed.
+                </p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><code>view:*</code> - Read-only access to pages</li>
+                  <li><code>config:*</code> - Configuration and management capabilities</li>
+                  <li><code>admin:*</code> - Administrative functions</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="font-medium mb-1">Custom Permissions</h4>
+                <p className="text-muted-foreground mb-2">
+                  For custom function-based permissions, use a resource:action pattern:
+                </p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><code>users:create</code> - Permission to create users</li>
+                  <li><code>containers:delete</code> - Permission to delete containers</li>
+                  <li><code>systems:configure</code> - Permission to configure systems</li>
+                </ul>
+              </div>
+            </div>
+            
+            {/* Alert box with info about permission hierarchy */}
+            <div className="mt-4 bg-blue-50 border border-blue-200 rounded-md p-3">
+              <div className="flex items-start">
+                <Info className="h-4 w-4 text-blue-500 mt-0.5 mr-2" />
+                <div>
+                  <h5 className="text-sm font-medium text-blue-700">Permission Hierarchy</h5>
+                  <p className="text-xs text-blue-600 mt-1">
+                    Users with <code className="bg-blue-100 px-1 rounded">admin:all</code> permission automatically have access to all resources and actions.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
       
       {/* Permissions List */}
@@ -1032,42 +1021,210 @@ function PermissionsTab({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {permissions.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={3} className="text-center">No permissions found</TableCell>
-                </TableRow>
-              ) : (
-                permissions.map(permission => (
-                  <TableRow key={permission.id}>
-                    <TableCell className="font-medium">{permission.name}</TableCell>
-                    <TableCell>{permission.description || "—"}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => deletePermission(permission.id)}
-                        disabled={loading}
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+          {Object.entries(groupPermissionsByCategory()).length === 0 ? (
+            <div className="text-center py-6 text-muted-foreground">
+              No permissions found
+            </div>
+          ) : (
+            Object.entries(groupPermissionsByCategory()).map(([category, categoryPermissions]) => (
+              <div key={category} className="mb-6">
+                <h3 className="text-lg font-medium mb-2">{category}</h3>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Description</TableHead>
+                      <TableHead>Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {categoryPermissions.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={3} className="text-center">No permissions found</TableCell>
+                      </TableRow>
+                    ) : (
+                      categoryPermissions.map(permission => (
+                        <TableRow key={permission.id}>
+                          <TableCell className="font-medium">{permission.name}</TableCell>
+                          <TableCell>{permission.description || "—"}</TableCell>
+                          <TableCell>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => deletePermission(permission.id)}
+                              disabled={loading}
+                            >
+                              Delete
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
+            ))
+          )}
         </CardContent>
       </Card>
     </>
+  );
+}
+
+
+function RBACManagement() {
+  const { toast } = useToast();
+  
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [permissions, setPermissions] = useState<Permission[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  
+  const [loading, setLoading] = useState(false);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+  
+  const fetchGroups = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/rbac/groups?include_permissions=true');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success && data.groups) {
+          setGroups(data.groups);
+          setFetchError(null);
+        } else {
+          throw new Error(data.message || 'Failed to fetch groups');
+        }
+      } else {
+        throw new Error('Failed to fetch groups');
+      }
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+      setFetchError("Failed to load groups. Please check your connection and try again.");
+      toast({
+        title: "Error",
+        description: "Failed to load groups",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchPermissions = async () => {
+    try {
+      const response = await fetch('/rbac/permissions');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success && data.permissions) {
+          setPermissions(data.permissions);
+        } else {
+          throw new Error(data.message || 'Failed to fetch permissions');
+        }
+      } else {
+        throw new Error('Failed to fetch permissions');
+      }
+    } catch (error) {
+      console.error("Error fetching permissions:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load permissions",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch('/api/get_users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(data.users || []);
+      } else {
+        throw new Error('Failed to fetch users');
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load users",
+        variant: "destructive",
+      });
+    }
+  };
+  
+  useEffect(() => {
+    fetchGroups();
+    fetchPermissions();
+    fetchUsers();
+  }, []);
+  
+  const handleRefreshData = () => {
+    fetchGroups();
+    fetchPermissions();
+    fetchUsers();
+  };
+  
+  return (
+    <div className="container mx-auto py-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Access Management</h1>
+        <Button 
+          variant="outline" 
+          onClick={handleRefreshData} 
+          className="gap-2"
+          disabled={loading}
+        >
+          <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+          Refresh
+        </Button>
+      </div>
+      
+      {fetchError && (
+        <Alert variant="destructive" className="mb-6">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{fetchError}</AlertDescription>
+        </Alert>
+      )}
+      
+      {/* Add the Route Permissions Manager at the top */}
+      <RoutePermissionsManager />
+      
+      <Tabs defaultValue="groups" className="w-full">
+        <TabsList className="mb-4">
+          <TabsTrigger value="groups">Groups</TabsTrigger>
+          <TabsTrigger value="permissions">Permissions</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="groups">
+          <GroupsTab 
+            groups={groups} 
+            permissions={permissions}
+            users={users}
+            loading={loading}
+            setLoading={setLoading}
+            toast={toast}
+            onRefresh={handleRefreshData}
+          />
+        </TabsContent>
+        
+        <TabsContent value="permissions">
+          <PermissionsTab 
+            permissions={permissions}
+            loading={loading}
+            setLoading={setLoading}
+            toast={toast}
+            onRefresh={handleRefreshData}
+          />
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }
 
