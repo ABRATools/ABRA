@@ -55,6 +55,14 @@ try:
 except Exception as e:
   logger.error(f"Failed to initialize LDAP connection: {str(e)}")
 
+ldap_conn = None
+
+try:
+  ldap_conn = LDAPConnection()
+  logger.info("LDAP connection initialized")
+except Exception as e:
+  logger.error(f"Failed to initialize LDAP connection: {str(e)}")
+
 def create_access_token(data: dict, expires_delta: Optional[datetime.timedelta] = None):
   to_encode = data.copy()
   if expires_delta:
