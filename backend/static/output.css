@@ -846,6 +846,10 @@ body{
   height: 100vh;
 }
 
+.max-h-40{
+  max-height: 10rem;
+}
+
 .max-h-60{
   max-height: 15rem;
 }
@@ -980,6 +984,10 @@ body{
 
 .cursor-default{
   cursor: default;
+}
+
+.cursor-pointer{
+  cursor: pointer;
 }
 
 .select-none{
@@ -1565,6 +1573,11 @@ body{
 
 .text-foreground\/50{
   color: hsl(var(--foreground) / 0.5);
+}
+
+.text-gray-500{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
 }
 
 .text-green-500{

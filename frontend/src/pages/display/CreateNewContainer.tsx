@@ -10,6 +10,7 @@ type newContainerState = {
   name: string;
   image: string;
   ip?: string;
+  ebpfModules: string[];
 };
 
 type Props = {
@@ -52,8 +53,11 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
   const [newContainerState, setNewContainerState] = useState<newContainerState>({
     name: '',
     image: '',
+    ebpfModules: [],
   });
   const [ipError, setIpError] = useState('');
+  const [ebpfModuleNames, setEbpfModuleNames] = useState<string[]>([]);
+  const [loadingEbpfModules, setLoadingEbpfModules] = useState(false);
   const ipRegex = /^(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}$/;
   function validateIPAddress(ip: string): boolean {
     return ipRegex.test(ip);
@@ -71,6 +75,20 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
       ip: ip,
     });
   }
+
+  const handleEbpfModuleSelection = (moduleName: string, isChecked: boolean) => {
+    if (isChecked) {
+      setNewContainerState({
+        ...newContainerState,
+        ebpfModules: [...newContainerState.ebpfModules, moduleName]
+      });
+    } else {
+      setNewContainerState({
+        ...newContainerState,
+        ebpfModules: newContainerState.ebpfModules.filter(module => module !== moduleName)
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchNames = async () => {
@@ -106,6 +124,29 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
     }
   }, [ipAddress]); 
 
+  useEffect(() => {
+    const fetchEbpfModules = async () => {
+      if (!openContainerCreationDialog) return;
+
+      setLoadingEbpfModules(true);
+      try {
+        const names = await getEBPFModules();
+        setEbpfModuleNames(names);
+      } catch (err: any) {
+        console.error('Error fetching eBPF modules:', err);
+        toast({
+          title: "Error",
+          description: err.message || 'Failed to fetch eBPF modules',
+          variant: "destructive",
+        });
+      } finally {
+        setLoadingEbpfModules(false);
+      }
+    };
+
+    fetchEbpfModules();
+  }, [openContainerCreationDialog])
+
   const getImageNames = (): string[] => {
     if (!images) return [];
 
@@ -130,6 +171,26 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
   // get the names for the dropdownmenu
   const dropDownImages = getImageNames();
   
+  const getEBPFModules = async () => {
+    const response = await fetch(
+      '/ebpf/get_ebpf_module_names'
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to get ebpf module names')
+    }
+
+    const data = await response.json();
+    if (data && Array.isArray(data.module_names)) {
+      return data.module_names;
+    } else if (Array.isArray(data)) {
+      // Fallback for direct array response
+      return data;
+    }
+    
+    return [];
+  }
+
   const handleContainerCreation = async () => {
     if (!newContainerState.name || !newContainerState.image) {
       toast({
@@ -153,7 +214,8 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
         body: JSON.stringify({
           image: newContainerState.image,
           name: newContainerState.name,
-          ip: newContainerState.ip
+          ip: newContainerState.ip,
+          ebpfModules: newContainerState.ebpfModules
         })
       });
 
@@ -172,7 +234,8 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
       setNewContainerState({
         name: '',
         image: '',
-        ip: ''
+        ip: '',
+        ebpfModules: []
       });
 
       setUseStaticIP(false);
@@ -248,6 +311,46 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
                   <div className="mt-4">
                     <p>
                       Selected image: <strong>{newContainerState.image}</strong>
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  eBPF Modules
+                </label>
+                {loadingEbpfModules ? (
+                  <p className="text-sm text-gray-500">Loading eBPF modules...</p>
+                ) : (
+                  <div className="border border-gray-300 rounded-md p-3 max-h-40 overflow-y-auto bg-foreground">
+                    {ebpfModuleNames.length > 0 ? (
+                      ebpfModuleNames.map((moduleName) => (
+                        <div key={moduleName} className="flex items-center space-x-2 mb-2">
+                          <Checkbox
+                            id={`ebpf-${moduleName}`}
+                            checked={newContainerState.ebpfModules.includes(moduleName)}
+                            onCheckedChange={(checked) => 
+                              handleEbpfModuleSelection(moduleName, !!checked)
+                            }
+                          />
+                          <label 
+                            htmlFor={`ebpf-${moduleName}`} 
+                            className="text-sm text-black cursor-pointer"
+                          >
+                            {moduleName}
+                          </label>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-sm text-gray-500">No eBPF modules available</p>
+                    )}
+                  </div>
+                )}
+                {newContainerState.ebpfModules.length > 0 && (
+                  <div className="mt-2">
+                    <p className="text-sm">
+                      Selected modules: <strong>{newContainerState.ebpfModules.join(', ')}</strong>
                     </p>
                   </div>
                 )}

@@ -8742,3 +8742,58 @@ sqlalchemy.exc.IllegalStateChangeError: Method 'close()' can't be called here; m
 2025-03-25 19:22:11,280 | INFO | User admin is assigning user ID 3 to group ID 5
 2025-03-25 19:22:11,301 | INFO | User admin is listing all groups
 2025-03-25 19:22:11,302 | INFO | User admin is listing all permissions
+2025-04-02 18:00:44,090 | INFO | No token found
+2025-04-02 18:00:46,261 | INFO | User admin is attempting to log in
+2025-04-02 18:00:46,537 | INFO | User admin has successfully logged in
+2025-04-02 18:00:46,539 | INFO | User admin has successfully logged in
+2025-04-02 18:00:53,187 | INFO | User admin is listing all permissions
+2025-04-02 18:00:53,191 | INFO | User admin is listing all groups
+2025-04-02 18:00:53,192 | INFO | User admin is listing all permissions
+2025-04-02 18:01:37,426 | INFO | Fetching containers
+2025-04-02 18:01:37,428 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-04-02 18:25:32,933 | INFO | User admin is listing all permissions
+2025-04-02 18:25:32,937 | INFO | User admin is listing all groups
+2025-04-02 18:25:32,940 | INFO | User admin is listing all permissions
+2025-04-02 18:25:40,327 | INFO | No token found
+2025-04-02 18:42:53,734 | INFO | No token found
+2025-04-02 18:42:55,288 | INFO | User admin is attempting to log in
+2025-04-02 18:42:55,557 | INFO | User admin has successfully logged in
+2025-04-02 18:42:55,558 | INFO | User admin has successfully logged in
+2025-04-02 18:45:54,898 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 18:45:54,899 | INFO | Shutdown handler triggered by signal.
+2025-04-02 18:45:54,899 | INFO | Terminating process 34482
+2025-04-02 18:45:54,904 | INFO | Shutdown handler triggered by signal.
+2025-04-02 18:45:54,904 | INFO | Main task cancelled gracefully.
+2025-04-02 18:46:00,119 | INFO | Using local sqlite database
+2025-04-02 18:46:00,366 | INFO | Starting central process...
+2025-04-02 18:46:00,366 | INFO | No configuration file provided. Using default configuration.
+2025-04-02 18:46:00,368 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 18:46:00,370 | INFO | Starting aggregator process...
+2025-04-02 18:46:00,398 | INFO | Starting main loop
+2025-04-02 18:46:01,098 | INFO | Using local sqlite database
+2025-04-02 18:46:01,118 | INFO | Using local sqlite database
+2025-04-02 18:46:01,369 | INFO | Default permissions initialized successfully
+2025-04-02 18:46:01,379 | INFO | Default groups setup successfully
+2025-04-02 18:46:01,379 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 18:46:01,441 | INFO | Default permissions initialized successfully
+2025-04-02 18:46:01,451 | INFO | Default groups setup successfully
+2025-04-02 18:46:01,451 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 18:50:40,289 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 18:50:40,289 | INFO | Shutdown handler triggered by signal.
+2025-04-02 18:50:40,289 | INFO | Terminating process 1996611
+2025-04-02 18:50:40,292 | INFO | Shutdown handler triggered by signal.
+2025-04-02 18:50:40,293 | INFO | Main task cancelled gracefully.
+2025-04-02 18:50:42,544 | INFO | Using local sqlite database
+2025-04-02 18:50:42,783 | INFO | Starting central process...
+2025-04-02 18:50:42,784 | INFO | No configuration file provided. Using default configuration.
+2025-04-02 18:50:42,786 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 18:50:42,788 | INFO | Starting aggregator process...
+2025-04-02 18:50:42,813 | INFO | Starting main loop
+2025-04-02 18:50:43,541 | INFO | Using local sqlite database
+2025-04-02 18:50:43,542 | INFO | Using local sqlite database
+2025-04-02 18:50:43,810 | INFO | Default permissions initialized successfully
+2025-04-02 18:50:43,817 | INFO | Default permissions initialized successfully
+2025-04-02 18:50:43,820 | INFO | Default groups setup successfully
+2025-04-02 18:50:43,820 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 18:50:43,826 | INFO | Default groups setup successfully
+2025-04-02 18:50:43,826 | INFO | RBAC Permissions initialized on server startup
