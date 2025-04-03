@@ -8,12 +8,12 @@ class Settings(BaseSettings):
     SECRET_KEY: SecretStr = "supersecretkey"
     REDIS_HOST: Optional[str] = None
     REDIS_PORT: Optional[int] = 6379
+    LDAP_ENABLED: Optional[bool] = False
     LDAP_SERVER: Optional[str] = None
     LDAP_PORT: Optional[int] = 389
-    LDAP_BIND_USER: Optional[str] = None
+    LDAP_BIND_DN: Optional[str] = None
     LDAP_BIND_PASSWORD: Optional[SecretStr] = None
-    LDAP_SEARCH_BASE: Optional[str] = None
-    LDAP_SEARCH_FILTER: Optional[str] = None
+    LDAP_USER_DN: Optional[str] = None
     LDAP_USER_ATTRIBUTE: Optional[str] = None
     LDAP_GROUP_DN: Optional[str] = None
     DB_CONNECTION_STRING: Optional[SecretStr] = None
@@ -21,21 +21,24 @@ class Settings(BaseSettings):
     NODE_UPDATE_INTERVAL: int = 5
     ACCESS_TOKEN_EXPIRE_SECONDS: int = 1800
 
-settings = None
+# the problem with this is that loading the settings once through the main file is not sufficient because every import has its own settings
+# so we need to load the settings in every file that needs them
+# quite the problem
 
-def load_config_file(filepath):
-    global settings
-    if os.path.exists(filepath):
-        with open(filepath, 'r') as f:
+# this currently just loads the settings from the config file if it exists
+# and uses the defaults if it doesn't 
+
+if os.path.exists('config.json'):
+    with open('config.json', 'r') as f:
+        try:
             config_data = json.load(f)
             if int(config_data.get('NODE_UPDATE_INTERVAL')) < 5:
                 raise ValueError("NODE_UPDATE_INTERVAL must be at least 5 seconds")
-            settings = Settings(**config_data)
-    else:
-        raise FileNotFoundError("Config file not found")
-
-def load_default_config():
-    global settings
+        except json.JSONDecodeError:
+            raise ValueError("Invalid JSON in config file")
+        # print(config_data)
+        settings = Settings(**config_data)
+else:
     settings = Settings()
 
-settings = Settings()
+# print(settings)

@@ -22,6 +22,7 @@ from fastapi.responses import JSONResponse
 
 from web_utils import get_session
 from logger import logger
+from .ldap_helper import LDAPConnection
 
 SECRET_KEY = settings.SECRET_KEY.get_secret_value()
 ALGORITHM = "HS256"
@@ -33,6 +34,14 @@ class AuthToken(BaseModel):
   username: Optional[str] = None
   user_type: Optional[str] = None
   groups: Optional[List[str]] = None
+
+ldap_conn = None
+
+try:
+  ldap_conn = LDAPConnection()
+  logger.info("LDAP connection initialized")
+except Exception as e:
+  logger.error(f"Failed to initialize LDAP connection: {str(e)}")
 
 def create_access_token(data: dict, expires_delta: Optional[datetime.timedelta] = None):
   to_encode = data.copy()
@@ -90,8 +99,28 @@ async def process_login(request: Request, session = Depends(get_session)) -> JSO
   data = await request.json()
   username = data['username'].lower().strip()
   password = data['password'].strip()
-  logger.info(f"User {username} is attempting to log in")
 
+  # print(settings.LDAP_ENABLED)
+
+  # try ldap auth first if enabled
+  if settings.LDAP_ENABLED:
+    logger.info(f"User {username} is attempting to log in via LDAP")
+    if not ldap_conn:
+      logger.critical("LDAP connection not initialized")
+      sys.exit(1)
+    if ldap_conn.user_authenticate(username, password):
+      user_data = ldap_conn.query_user(username)
+      if user_data is None:
+        logger.error(f"User {username} not found in LDAP")
+        return JSONResponse(content={'message': 'Invalid credentials'}, status_code=401)
+      access_token_expires = datetime.timedelta(seconds=settings.ACCESS_TOKEN_EXPIRE_SECONDS)
+      access_token = create_access_token(data=user_data, expires_delta=access_token_expires)
+      logger.info(f"User {username} has successfully logged in via LDAP")
+      response = JSONResponse(content={"token": access_token}, status_code=200)
+      response.set_cookie(key="abra-auth", value=f"Bearer {access_token}", httponly=True, max_age=settings.ACCESS_TOKEN_EXPIRE_SECONDS)
+      return response
+
+  logger.info(f"User {username} is attempting to log in via database authentication")
   user_pw_hash = db.get_hash_for_user(session, username)
 
   if user_pw_hash is None:
