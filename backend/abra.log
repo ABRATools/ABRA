@@ -1098,3 +1098,964 @@
 2025-03-16 23:17:11,574 | INFO | Listing container images on node: 192.168.14.15
 2025-03-16 23:20:24,868 | INFO | Listing container images on node: 192.168.14.15
 2025-03-16 23:35:15,088 | INFO | Listing container images on node: 192.168.14.15
+=======
+2025-03-05 16:31:50,277 | INFO | Using local sqlite database
+2025-03-05 16:31:50,442 | INFO | Starting central process...
+2025-03-05 16:31:50,442 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 16:31:50,443 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 16:31:50,445 | INFO | Starting aggregator process...
+2025-03-05 16:31:50,475 | INFO | Starting main loop
+2025-03-05 16:31:51,167 | INFO | Using local sqlite database
+2025-03-05 16:31:51,168 | INFO | Using local sqlite database
+2025-03-05 16:33:18,306 | INFO | User admin is attempting to log in
+2025-03-05 16:33:18,590 | INFO | User admin has successfully logged in
+2025-03-05 16:33:18,595 | INFO | User admin has successfully logged in
+2025-03-05 16:33:27,491 | INFO | Deleting container: 
+2025-03-05 16:33:27,491 | INFO | Deleting container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
+2025-03-05 16:33:27,491 | INFO | Deleting container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
+2025-03-05 16:37:12,419 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 16:37:12,419 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:37:12,420 | INFO | Terminating process 2240900
+2025-03-05 16:37:12,423 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:37:12,423 | INFO | Main task cancelled gracefully.
+2025-03-05 16:37:15,476 | INFO | Using local sqlite database
+2025-03-05 16:37:15,638 | INFO | Starting central process...
+2025-03-05 16:37:15,638 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 16:37:15,639 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 16:37:15,642 | INFO | Starting aggregator process...
+2025-03-05 16:37:15,668 | INFO | Starting main loop
+2025-03-05 16:37:16,375 | INFO | Using local sqlite database
+2025-03-05 16:37:16,376 | INFO | Using local sqlite database
+2025-03-05 16:38:57,561 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 16:38:57,561 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:38:57,561 | INFO | Terminating process 2247109
+2025-03-05 16:38:57,564 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:38:57,565 | INFO | Main task cancelled gracefully.
+2025-03-05 16:39:00,678 | INFO | Using local sqlite database
+2025-03-05 16:39:00,852 | INFO | Starting central process...
+2025-03-05 16:39:00,852 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 16:39:00,853 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 16:39:00,858 | INFO | Starting aggregator process...
+2025-03-05 16:39:00,885 | INFO | Starting main loop
+2025-03-05 16:39:01,604 | INFO | Using local sqlite database
+2025-03-05 16:39:01,621 | INFO | Using local sqlite database
+2025-03-05 16:39:07,250 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:39:07,250 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 16:39:07,250 | INFO | Terminating process 2248772
+2025-03-05 16:39:07,254 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:39:07,254 | INFO | Main task cancelled gracefully.
+2025-03-05 16:39:09,742 | INFO | Using local sqlite database
+2025-03-05 16:39:09,907 | INFO | Starting central process...
+2025-03-05 16:39:09,907 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 16:39:09,909 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 16:39:09,911 | INFO | Starting aggregator process...
+2025-03-05 16:39:09,936 | INFO | Starting main loop
+2025-03-05 16:39:10,652 | INFO | Using local sqlite database
+2025-03-05 16:39:10,664 | INFO | Using local sqlite database
+2025-03-05 16:41:37,610 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 16:41:37,611 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:41:37,611 | INFO | Terminating process 2249008
+2025-03-05 16:41:37,617 | INFO | Shutdown handler triggered by signal.
+2025-03-05 16:41:37,617 | INFO | Main task cancelled gracefully.
+2025-03-05 16:41:41,755 | INFO | Using local sqlite database
+2025-03-05 16:41:42,006 | INFO | Starting central process...
+2025-03-05 16:41:42,006 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 16:41:42,007 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 16:41:42,012 | INFO | Starting aggregator process...
+2025-03-05 16:41:42,048 | INFO | Starting main loop
+2025-03-05 16:41:42,739 | INFO | Using local sqlite database
+2025-03-05 16:41:42,769 | INFO | Using local sqlite database
+2025-03-05 16:41:47,981 | INFO | User admin is listing all groups
+2025-03-05 16:41:47,988 | INFO | User admin is listing all permissions
+2025-03-05 16:42:15,583 | INFO | User admin is assigning user ID 2 to group ID 1
+2025-03-05 16:42:15,620 | INFO | User admin is listing all groups
+2025-03-05 16:42:15,622 | INFO | User admin is listing all permissions
+2025-03-05 16:42:32,224 | INFO | No token found
+2025-03-05 16:42:32,939 | INFO | User admin is listing all groups
+2025-03-05 16:42:32,943 | INFO | User admin is listing all permissions
+2025-03-05 16:42:39,888 | INFO | User admin is removing user ID 2 from group ID 1
+2025-03-05 16:42:39,914 | INFO | User admin is listing all groups
+2025-03-05 16:42:39,918 | INFO | User admin is listing all permissions
+2025-03-05 16:42:50,874 | INFO | No token found
+2025-03-05 16:44:33,001 | INFO | No token found
+2025-03-05 16:44:56,148 | INFO | No token found
+2025-03-05 16:45:31,365 | INFO | User admin is listing all groups
+2025-03-05 16:45:31,367 | INFO | User admin is listing all permissions
+2025-03-05 16:45:37,079 | INFO | User admin is creating permission: lol
+2025-03-05 16:45:37,107 | INFO | User admin is listing all groups
+2025-03-05 16:45:37,110 | INFO | User admin is listing all permissions
+2025-03-05 16:45:44,382 | INFO | User admin is assigning permission ID 1 to group ID 1
+2025-03-05 16:45:44,405 | INFO | User admin is listing all groups
+2025-03-05 16:45:44,407 | INFO | User admin is listing all permissions
+2025-03-05 16:46:37,240 | INFO | No token found
+2025-03-05 16:47:27,002 | INFO | User abra is attempting to log in
+2025-03-05 16:47:27,004 | ERROR | User abra does not exist
+2025-03-05 16:47:33,287 | INFO | User admn is attempting to log in
+2025-03-05 16:47:33,290 | ERROR | User admn does not exist
+2025-03-05 16:47:34,538 | INFO | User admin is attempting to log in
+2025-03-05 16:47:34,805 | WARNING | User admin has failed to log in
+2025-03-05 16:49:39,527 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 16:49:46,533 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 16:49:53,540 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 16:50:19,836 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 17:10:16,929 | INFO | No token found
+2025-03-05 17:10:16,929 | WARNING | Unauthorized request to delete container
+2025-03-05 17:10:20,106 | INFO | No token found
+2025-03-05 17:10:25,490 | INFO | User admin is attempting to log in
+2025-03-05 17:10:25,760 | INFO | User admin has successfully logged in
+2025-03-05 17:10:25,762 | INFO | User admin has successfully logged in
+2025-03-05 17:10:30,631 | INFO | Deleting container: 
+2025-03-05 17:10:30,631 | INFO | Deleting container with env_id: 8bc1f77a43f84bff07efb98f7e723c89c7490092dd42e73068aac1d0292c2758
+2025-03-05 17:10:30,631 | INFO | Deleting container with env_id: 8bc1f77a43f84bff07efb98f7e723c89c7490092dd42e73068aac1d0292c2758
+2025-03-05 17:11:16,408 | INFO | No token found
+2025-03-05 17:11:28,773 | INFO | User admin is listing all groups
+2025-03-05 17:11:28,776 | INFO | User admin is listing all permissions
+2025-03-05 17:11:31,429 | INFO | No token found
+2025-03-05 17:11:50,776 | INFO | Fetching containers
+2025-03-05 17:11:50,776 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 17:11:52,666 | INFO | User admin is listing all groups
+2025-03-05 17:11:52,669 | INFO | User admin is listing all permissions
+2025-03-05 17:11:54,205 | INFO | No token found
+2025-03-05 17:44:13,815 | INFO | User admin is attempting to log in
+2025-03-05 17:44:14,081 | INFO | User admin has successfully logged in
+2025-03-05 17:44:14,083 | INFO | User admin has successfully logged in
+2025-03-05 17:44:54,594 | INFO | No token found
+2025-03-05 17:44:55,717 | INFO | User admin is listing all groups
+2025-03-05 17:44:55,719 | INFO | User admin is listing all permissions
+2025-03-05 17:44:57,002 | INFO | User admin is listing all groups
+2025-03-05 17:44:57,002 | INFO | User admin is listing all permissions
+2025-03-05 17:45:06,078 | INFO | Fetching containers
+2025-03-05 17:45:06,079 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 17:45:07,813 | INFO | Fetching containers
+2025-03-05 17:45:07,814 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 17:47:22,328 | INFO | No token found
+2025-03-05 17:52:27,409 | INFO | User admin is attempting to log in
+2025-03-05 17:52:27,675 | INFO | User admin has successfully logged in
+2025-03-05 17:52:27,677 | INFO | User admin has successfully logged in
+2025-03-05 17:55:26,308 | INFO | Fetching containers
+2025-03-05 17:55:26,308 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 17:55:36,263 | INFO | Fetching containers
+2025-03-05 17:55:36,263 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 17:55:42,924 | INFO | Fetching containers
+2025-03-05 17:55:42,924 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 17:56:10,006 | INFO | User admin is listing all groups
+2025-03-05 17:56:10,008 | INFO | User admin is listing all permissions
+2025-03-05 17:56:14,886 | INFO | User admin is creating group: fake
+2025-03-05 17:56:14,915 | INFO | User admin is listing all groups
+2025-03-05 17:56:14,919 | INFO | User admin is listing all permissions
+2025-03-05 17:56:20,544 | INFO | User admin is creating permission: adsfsa
+2025-03-05 17:56:20,568 | INFO | User admin is listing all groups
+2025-03-05 17:56:20,569 | INFO | User admin is listing all permissions
+2025-03-05 17:56:29,254 | INFO | User admin is assigning permission ID 2 to group ID 2
+2025-03-05 17:56:29,281 | INFO | User admin is listing all groups
+2025-03-05 17:56:29,283 | INFO | User admin is listing all permissions
+2025-03-05 17:56:34,039 | INFO | User admin is assigning user ID 2 to group ID 2
+2025-03-05 17:56:34,064 | INFO | User admin is listing all groups
+2025-03-05 17:56:34,067 | INFO | User admin is listing all permissions
+2025-03-05 17:56:49,946 | INFO | No token found
+2025-03-05 17:57:28,607 | INFO | User admin is attempting to log in
+2025-03-05 17:57:28,873 | INFO | User admin has successfully logged in
+2025-03-05 17:57:28,875 | INFO | User admin has successfully logged in
+2025-03-25 17:22:44,110 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-25 18:40:02,397 | INFO | Using local sqlite database
+2025-03-25 18:40:55,312 | INFO | Using local sqlite database
+2025-03-25 18:41:32,326 | INFO | Using local sqlite database
+2025-03-25 18:42:00,973 | INFO | Using local sqlite database
+2025-03-25 18:42:01,196 | INFO | Starting central process...
+2025-03-25 18:42:01,196 | INFO | No configuration file provided. Using default configuration.
+2025-03-25 18:42:01,197 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-25 18:42:01,199 | INFO | Starting aggregator process...
+2025-03-25 18:42:01,228 | INFO | Starting main loop
+2025-03-25 18:42:01,910 | INFO | Using local sqlite database
+2025-03-25 18:42:01,916 | INFO | Using local sqlite database
+2025-03-25 18:42:02,226 | INFO | Creating permission view:systems for route /display/systems
+2025-03-25 18:42:02,226 | INFO | Creating permission view:system_detail for route /display/systems/:systemId
+2025-03-25 18:42:02,226 | INFO | Creating permission view:node_detail for route /display/systems/:systemId/nodes/:nodeId
+2025-03-25 18:42:02,226 | INFO | Creating permission view:environment_detail for route /display/systems/:systemId/nodes/:nodeId/environments/:envId
+2025-03-25 18:42:02,226 | INFO | Creating permission config:systems for route /config/systems
+2025-03-25 18:42:02,226 | INFO | Creating permission view:systems for route /display/systems
+2025-03-25 18:42:02,226 | INFO | Creating permission config:system_detail for route /config/systems/:systemId
+2025-03-25 18:42:02,226 | INFO | Creating permission config:node_detail for route /config/systems/:systemId/nodes/:nodeId
+2025-03-25 18:42:02,226 | INFO | Creating permission view:system_detail for route /display/systems/:systemId
+2025-03-25 18:42:02,226 | INFO | Creating permission config:environment_detail for route /config/systems/:systemId/nodes/:nodeId/environments/:envId
+2025-03-25 18:42:02,226 | INFO | Creating permission view:node_detail for route /display/systems/:systemId/nodes/:nodeId
+2025-03-25 18:42:02,226 | INFO | Creating permission config:profiles for route /config/profiles
+2025-03-25 18:42:02,226 | INFO | Creating permission config:containers for route /config/containers
+2025-03-25 18:42:02,226 | INFO | Creating permission view:environment_detail for route /display/systems/:systemId/nodes/:nodeId/environments/:envId
+2025-03-25 18:42:02,227 | INFO | Creating permission config:systems for route /config/systems
+2025-03-25 18:42:02,227 | INFO | Creating permission admin:users for route /users
+2025-03-25 18:42:02,227 | INFO | Creating permission admin:access for route /access
+2025-03-25 18:42:02,227 | INFO | Creating permission config:system_detail for route /config/systems/:systemId
+2025-03-25 18:42:02,227 | INFO | Creating permission config:node_detail for route /config/systems/:systemId/nodes/:nodeId
+2025-03-25 18:42:02,227 | INFO | Creating permission admin:audit for route /audit
+2025-03-25 18:42:02,227 | INFO | Creating permission admin:debug for route /debug/websocket
+2025-03-25 18:42:02,227 | INFO | Creating permission config:environment_detail for route /config/systems/:systemId/nodes/:nodeId/environments/:envId
+2025-03-25 18:42:02,227 | INFO | Creating admin:all permission
+2025-03-25 18:42:02,227 | INFO | Creating permission config:profiles for route /config/profiles
+2025-03-25 18:42:02,227 | INFO | Creating permission config:containers for route /config/containers
+2025-03-25 18:42:02,227 | INFO | Creating permission admin:users for route /users
+2025-03-25 18:42:02,227 | INFO | Creating permission admin:access for route /access
+2025-03-25 18:42:02,227 | INFO | Creating permission admin:audit for route /audit
+2025-03-25 18:42:02,227 | INFO | Creating permission admin:debug for route /debug/websocket
+2025-03-25 18:42:02,227 | INFO | Creating admin:all permission
+2025-03-25 18:42:02,245 | INFO | Default permissions initialized successfully
+2025-03-25 18:42:02,259 | INFO | Default permissions initialized successfully
+2025-03-25 18:42:02,267 | INFO | Creating group: viewer
+2025-03-25 18:42:02,269 | INFO | Creating group: configurator
+2025-03-25 18:42:02,281 | INFO | Default groups setup successfully
+2025-03-25 18:42:02,281 | INFO | RBAC Permissions initialized on server startup
+2025-03-25 18:42:02,288 | ERROR | Error setting up default groups: DELETE statement on table 'group_permissions' expected to delete 1 row(s); Only 0 were matched.
+2025-03-25 18:42:02,289 | ERROR | Error initializing RBAC permissions: DELETE statement on table 'group_permissions' expected to delete 1 row(s); Only 0 were matched.
+2025-03-25 18:42:11,736 | INFO | User abra is attempting to log in
+2025-03-25 18:42:11,739 | ERROR | User abra does not exist
+2025-03-25 18:42:17,611 | INFO | User admin is attempting to log in
+2025-03-25 18:42:17,879 | WARNING | User admin has failed to log in
+2025-03-25 18:42:21,036 | INFO | User admin is attempting to log in
+2025-03-25 18:42:21,302 | INFO | User admin has successfully logged in
+2025-03-25 18:42:21,312 | INFO | User admin has successfully logged in
+2025-03-25 18:59:49,792 | INFO | Starting container: 
+2025-03-25 18:59:49,792 | INFO | Starting container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
+2025-03-25 18:59:49,793 | INFO | Stopping container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
+2025-03-25 19:00:26,013 | INFO | No token found
+2025-03-25 19:00:52,093 | INFO | User creation request for new user test
+2025-03-25 19:00:52,093 | ERROR | Password must be at least 8 characters long
+2025-03-25 19:00:55,490 | INFO | User creation request for new user test
+2025-03-25 19:00:55,770 | INFO | Successfully created new user: test
+2025-03-25 19:08:25,962 | INFO | User admin is listing all permissions
+2025-03-25 19:08:25,968 | INFO | User admin is listing all groups
+2025-03-25 19:08:25,969 | INFO | User admin is listing all permissions
+2025-03-25 19:14:42,455 | INFO | User test is attempting to log in
+2025-03-25 19:14:42,724 | INFO | User test has successfully logged in
+2025-03-25 19:14:42,725 | INFO | User test has successfully logged in
+2025-03-25 19:14:53,268 | INFO | No token found
+2025-03-25 19:15:05,324 | INFO | No token found
+2025-03-25 19:15:10,717 | INFO | No token found
+2025-03-25 19:16:35,479 | INFO | No token found
+2025-03-25 19:16:40,720 | INFO | User admin is attempting to log in
+2025-03-25 19:16:40,988 | INFO | User admin has successfully logged in
+2025-03-25 19:16:40,989 | INFO | User admin has successfully logged in
+2025-03-25 19:16:44,507 | INFO | User admin is listing all permissions
+2025-03-25 19:16:44,513 | INFO | User admin is listing all permissions
+2025-03-25 19:16:44,514 | INFO | User admin is listing all groups
+2025-03-25 19:16:55,906 | INFO | User admin is assigning user ID 3 to group ID 3
+2025-03-25 19:16:55,931 | INFO | User admin is listing all permissions
+2025-03-25 19:16:55,931 | INFO | User admin is listing all groups
+2025-03-25 19:21:27,563 | INFO | User admin is listing all permissions
+2025-03-25 19:21:27,566 | INFO | User admin is listing all groups
+2025-03-25 19:21:27,569 | INFO | User admin is listing all permissions
+2025-03-25 19:21:28,318 | INFO | No token found
+2025-03-25 19:21:35,835 | INFO | User admin is listing all permissions
+2025-03-25 19:21:35,850 | INFO | User admin is listing all groups
+2025-03-25 19:21:35,851 | INFO | User admin is listing all permissions
+2025-03-25 19:21:49,526 | INFO | User admin is creating group: test
+2025-03-25 19:21:49,550 | INFO | User admin is listing all permissions
+2025-03-25 19:21:49,550 | INFO | User admin is listing all groups
+2025-03-25 19:22:04,710 | INFO | User admin is assigning permission ID 22 to group ID 5
+2025-03-25 19:22:04,734 | INFO | User admin is listing all groups
+2025-03-25 19:22:04,735 | INFO | User admin is listing all permissions
+2025-03-25 19:22:11,280 | INFO | User admin is assigning user ID 3 to group ID 5
+2025-03-25 19:22:11,301 | INFO | User admin is listing all groups
+2025-03-25 19:22:11,302 | INFO | User admin is listing all permissions
+2025-04-02 22:20:06,715 | INFO | Using local sqlite database
+2025-04-02 22:20:20,145 | INFO | Using local sqlite database
+2025-04-02 22:25:34,650 | INFO | Using local sqlite database
+2025-04-02 22:25:34,916 | INFO | Starting central process...
+2025-04-02 22:25:34,916 | INFO | Loading JSON configuration file abra_config.json
+2025-04-02 22:25:34,918 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 22:25:34,920 | INFO | Starting aggregator process...
+2025-04-02 22:25:34,946 | INFO | Starting main loop
+2025-04-02 22:25:37,973 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 22:25:37,973 | INFO | Shutdown handler triggered by signal.
+2025-04-02 22:25:37,974 | INFO | Terminating process 2126224
+2025-04-02 22:25:37,977 | INFO | Shutdown handler triggered by signal.
+2025-04-02 22:25:37,977 | INFO | Main task cancelled gracefully.
+2025-04-02 22:25:37,977 | INFO | Shutdown handler triggered by signal.
+2025-04-02 22:30:09,024 | INFO | Using local sqlite database
+2025-04-02 22:30:09,283 | INFO | Starting central process...
+2025-04-02 22:30:09,283 | INFO | Loading JSON configuration file abra_config.json
+2025-04-02 22:30:09,284 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 22:30:09,287 | INFO | Starting aggregator process...
+2025-04-02 22:30:09,313 | INFO | Starting main loop
+2025-04-02 22:30:20,535 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 22:30:20,536 | INFO | Shutdown handler triggered by signal.
+2025-04-02 22:30:20,536 | INFO | Terminating process 2129599
+2025-04-02 22:30:20,539 | INFO | Shutdown handler triggered by signal.
+2025-04-02 22:30:20,540 | INFO | Main task cancelled gracefully.
+2025-04-02 22:30:20,540 | INFO | Shutdown handler triggered by signal.
+2025-04-02 22:30:31,768 | INFO | Using local sqlite database
+2025-04-02 22:30:32,040 | INFO | Starting central process...
+2025-04-02 22:30:32,040 | INFO | Loading JSON configuration file abra_config.json
+2025-04-02 22:30:32,041 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 22:30:32,044 | INFO | Starting aggregator process...
+2025-04-02 22:30:32,070 | INFO | Starting main loop
+2025-04-02 22:30:32,756 | INFO | Using local sqlite database
+2025-04-02 22:30:32,763 | INFO | Using local sqlite database
+2025-04-02 22:30:33,052 | INFO | Creating permission view:systems for route /display/systems
+2025-04-02 22:30:33,052 | INFO | Creating permission view:system_detail for route /display/systems/:systemId
+2025-04-02 22:30:33,053 | INFO | Creating permission view:node_detail for route /display/systems/:systemId/nodes/:nodeId
+2025-04-02 22:30:33,053 | INFO | Creating permission view:environment_detail for route /display/systems/:systemId/nodes/:nodeId/environments/:envId
+2025-04-02 22:30:33,053 | INFO | Creating permission config:systems for route /config/systems
+2025-04-02 22:30:33,053 | INFO | Creating permission config:system_detail for route /config/systems/:systemId
+2025-04-02 22:30:33,053 | INFO | Creating permission config:node_detail for route /config/systems/:systemId/nodes/:nodeId
+2025-04-02 22:30:33,053 | INFO | Creating permission config:environment_detail for route /config/systems/:systemId/nodes/:nodeId/environments/:envId
+2025-04-02 22:30:33,053 | INFO | Creating permission config:profiles for route /config/profiles
+2025-04-02 22:30:33,053 | INFO | Creating permission config:containers for route /config/containers
+2025-04-02 22:30:33,053 | INFO | Creating permission admin:users for route /users
+2025-04-02 22:30:33,053 | INFO | Creating permission admin:access for route /access
+2025-04-02 22:30:33,053 | INFO | Creating permission admin:audit for route /audit
+2025-04-02 22:30:33,053 | INFO | Creating permission admin:debug for route /debug/websocket
+2025-04-02 22:30:33,053 | INFO | Creating admin:all permission
+2025-04-02 22:30:33,067 | INFO | Default permissions initialized successfully
+2025-04-02 22:30:33,070 | INFO | Default permissions initialized successfully
+2025-04-02 22:30:33,073 | INFO | Creating group: viewer
+2025-04-02 22:30:33,076 | INFO | Creating group: configurator
+2025-04-02 22:30:33,086 | INFO | Default groups setup successfully
+2025-04-02 22:30:33,086 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 22:30:33,096 | ERROR | Error setting up default groups: (raised as a result of Query-invoked autoflush; consider using a session.no_autoflush block if this flush is occurring prematurely)
+(sqlite3.IntegrityError) UNIQUE constraint failed: group_permissions.group_id, group_permissions.permission_id
+[SQL: INSERT INTO group_permissions (group_id, permission_id) VALUES (?, ?)]
+[parameters: (1, 15)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-04-02 22:30:33,096 | ERROR | Error initializing RBAC permissions: (raised as a result of Query-invoked autoflush; consider using a session.no_autoflush block if this flush is occurring prematurely)
+(sqlite3.IntegrityError) UNIQUE constraint failed: group_permissions.group_id, group_permissions.permission_id
+[SQL: INSERT INTO group_permissions (group_id, permission_id) VALUES (?, ?)]
+[parameters: (1, 15)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-04-02 22:30:51,288 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 22:30:51,289 | INFO | Shutdown handler triggered by signal.
+2025-04-02 22:30:51,289 | INFO | Terminating process 2130236
+2025-04-02 22:30:51,292 | INFO | Shutdown handler triggered by signal.
+2025-04-02 22:30:51,292 | INFO | Main task cancelled gracefully.
+2025-04-02 22:31:21,813 | INFO | Using local sqlite database
+2025-04-02 22:31:22,076 | INFO | Starting central process...
+2025-04-02 22:31:22,076 | INFO | Loading JSON configuration file abra_config.json
+2025-04-02 22:31:22,077 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 22:31:22,080 | INFO | Starting aggregator process...
+2025-04-02 22:31:22,106 | INFO | Starting main loop
+2025-04-02 22:31:22,799 | INFO | Using local sqlite database
+2025-04-02 22:31:22,801 | INFO | Using local sqlite database
+2025-04-02 22:31:23,101 | INFO | Default permissions initialized successfully
+2025-04-02 22:31:23,101 | INFO | Default permissions initialized successfully
+2025-04-02 22:31:23,109 | INFO | Default groups setup successfully
+2025-04-02 22:31:23,109 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 22:31:23,110 | INFO | Default groups setup successfully
+2025-04-02 22:31:23,110 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 22:31:52,700 | INFO | User abra-sysadmin-1 is attempting to log in
+2025-04-02 22:31:52,703 | ERROR | User abra-sysadmin-1 does not exist
+2025-04-02 23:03:19,117 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 23:03:19,117 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:03:19,118 | INFO | Terminating process 2131468
+2025-04-02 23:03:19,122 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:03:19,122 | INFO | Main task cancelled gracefully.
+2025-04-02 23:03:32,714 | INFO | Using local sqlite database
+2025-04-02 23:03:32,991 | INFO | Starting central process...
+2025-04-02 23:03:32,991 | INFO | Loading JSON configuration file abra_config.json
+2025-04-02 23:03:32,992 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 23:03:32,996 | INFO | Starting aggregator process...
+2025-04-02 23:03:33,022 | INFO | Starting main loop
+2025-04-02 23:03:33,714 | INFO | Using local sqlite database
+2025-04-02 23:03:33,721 | INFO | Using local sqlite database
+2025-04-02 23:03:34,021 | INFO | Default permissions initialized successfully
+2025-04-02 23:03:34,023 | INFO | Default permissions initialized successfully
+2025-04-02 23:03:34,029 | INFO | Default groups setup successfully
+2025-04-02 23:03:34,029 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 23:03:34,032 | INFO | Default groups setup successfully
+2025-04-02 23:03:34,032 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 23:03:59,219 | INFO | User abra-sysadmin-1 is attempting to log in via database authentication
+2025-04-02 23:03:59,222 | ERROR | User abra-sysadmin-1 does not exist
+2025-04-02 23:05:21,052 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 23:05:21,053 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:05:21,053 | INFO | Terminating process 2154017
+2025-04-02 23:05:21,057 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:05:21,057 | INFO | Main task cancelled gracefully.
+2025-04-02 23:05:25,148 | INFO | Using local sqlite database
+2025-04-02 23:05:25,423 | INFO | Starting central process...
+2025-04-02 23:05:25,423 | INFO | Loading JSON configuration file abra_config.json
+2025-04-02 23:05:25,425 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 23:05:25,427 | INFO | Starting aggregator process...
+2025-04-02 23:05:25,455 | INFO | Starting main loop
+2025-04-02 23:05:26,148 | INFO | Using local sqlite database
+2025-04-02 23:05:26,180 | INFO | Using local sqlite database
+2025-04-02 23:05:26,450 | INFO | Default permissions initialized successfully
+2025-04-02 23:05:26,459 | INFO | Default groups setup successfully
+2025-04-02 23:05:26,459 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 23:05:26,492 | INFO | Default permissions initialized successfully
+2025-04-02 23:05:26,500 | INFO | Default groups setup successfully
+2025-04-02 23:05:26,500 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 23:06:15,737 | INFO | User abra-sysadmin-1 is attempting to log in via database authentication
+2025-04-02 23:06:15,740 | ERROR | User abra-sysadmin-1 does not exist
+2025-04-02 23:06:47,301 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 23:06:47,301 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:06:47,302 | INFO | Terminating process 2155696
+2025-04-02 23:06:47,305 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:06:47,305 | INFO | Main task cancelled gracefully.
+2025-04-02 23:06:54,927 | INFO | Using local sqlite database
+2025-04-02 23:06:55,191 | INFO | Starting central process...
+2025-04-02 23:06:55,191 | INFO | Loading JSON configuration file abra_config.json
+2025-04-02 23:07:05,926 | INFO | Using local sqlite database
+2025-04-02 23:07:06,198 | INFO | Starting central process...
+2025-04-02 23:07:06,198 | INFO | Loading JSON configuration file abra_config.json
+2025-04-02 23:07:06,199 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 23:07:06,203 | INFO | Starting aggregator process...
+2025-04-02 23:07:06,229 | INFO | Starting main loop
+2025-04-02 23:07:06,937 | INFO | Using local sqlite database
+2025-04-02 23:07:06,938 | INFO | Using local sqlite database
+2025-04-02 23:07:07,239 | INFO | Default permissions initialized successfully
+2025-04-02 23:07:07,248 | INFO | Default permissions initialized successfully
+2025-04-02 23:07:07,248 | INFO | Default groups setup successfully
+2025-04-02 23:07:07,248 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 23:07:07,256 | INFO | Default groups setup successfully
+2025-04-02 23:07:07,256 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 23:07:51,922 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 23:07:51,923 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:07:51,923 | INFO | Terminating process 2157289
+2025-04-02 23:07:51,927 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:07:51,927 | INFO | Main task cancelled gracefully.
+2025-04-02 23:07:55,736 | INFO | Using local sqlite database
+2025-04-02 23:07:56,003 | INFO | Starting central process...
+2025-04-02 23:07:56,003 | INFO | Loading JSON configuration file abra_config.json
+2025-04-02 23:07:56,004 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 23:07:56,007 | INFO | Starting aggregator process...
+2025-04-02 23:07:56,037 | INFO | Starting main loop
+2025-04-02 23:07:56,748 | INFO | Using local sqlite database
+2025-04-02 23:07:56,803 | INFO | Using local sqlite database
+2025-04-02 23:07:57,051 | INFO | Default permissions initialized successfully
+2025-04-02 23:07:57,060 | INFO | Default groups setup successfully
+2025-04-02 23:07:57,060 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 23:07:57,109 | INFO | Default permissions initialized successfully
+2025-04-02 23:07:57,117 | INFO | Default groups setup successfully
+2025-04-02 23:07:57,117 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 23:08:22,010 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 23:08:22,010 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:08:22,011 | INFO | Terminating process 2158198
+2025-04-02 23:08:22,015 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:08:22,015 | INFO | Main task cancelled gracefully.
+2025-04-02 23:16:40,157 | INFO | Starting central process...
+2025-04-02 23:16:40,158 | INFO | Loading JSON configuration file abra_config.json
+2025-04-02 23:16:40,159 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 23:16:40,160 | INFO | Starting aggregator process...
+2025-04-02 23:16:40,331 | INFO | Using local sqlite database
+2025-04-02 23:16:40,431 | INFO | Starting main loop
+2025-04-02 23:16:45,883 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 23:16:45,884 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:16:45,884 | INFO | Terminating process 2163781
+2025-04-02 23:16:45,886 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:16:45,886 | INFO | Main task cancelled gracefully.
+2025-04-02 23:19:03,761 | INFO | Starting central process...
+2025-04-02 23:19:03,761 | INFO | Loading JSON configuration file abra_config.json
+2025-04-02 23:19:03,762 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 23:19:03,765 | INFO | Starting aggregator process...
+2025-04-02 23:19:03,936 | INFO | Using local sqlite database
+2025-04-02 23:19:04,033 | INFO | Starting main loop
+2025-04-02 23:19:04,315 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 23:19:04,315 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:19:04,316 | INFO | Terminating process 2165461
+2025-04-02 23:19:04,318 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:19:04,318 | INFO | Main task cancelled gracefully.
+2025-04-02 23:22:42,296 | INFO | Starting central process...
+2025-04-02 23:22:42,296 | INFO | Loading JSON configuration file abra_config.json
+2025-04-02 23:22:42,297 | INFO | Configuration loaded. Starting FastAPI server and aggregator process...
+2025-04-02 23:22:42,297 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 23:22:42,299 | INFO | Starting aggregator process...
+2025-04-02 23:22:42,471 | INFO | Using local sqlite database
+2025-04-02 23:22:42,570 | INFO | Starting main loop
+2025-04-02 23:22:44,767 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 23:22:44,767 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:22:44,767 | INFO | Terminating process 2167884
+2025-04-02 23:22:44,770 | INFO | Shutdown handler triggered by signal.
+2025-04-02 23:22:44,770 | INFO | Main task cancelled gracefully.
+2025-04-03 00:13:39,182 | INFO | Starting central process...
+2025-04-03 00:13:39,182 | INFO | Loading JSON configuration file abra_config.json
+2025-04-03 00:13:39,184 | INFO | Configuration loaded. Starting FastAPI server and aggregator process...
+2025-04-03 00:13:39,184 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:13:39,185 | INFO | Starting aggregator process...
+2025-04-03 00:13:39,353 | INFO | Using local sqlite database
+2025-04-03 00:13:39,450 | INFO | Starting main loop
+2025-04-03 00:13:41,141 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:13:41,141 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:13:41,142 | INFO | Terminating process 2198029
+2025-04-03 00:13:41,144 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:13:41,145 | INFO | Main task cancelled gracefully.
+2025-04-03 00:17:06,323 | INFO | Starting central process...
+2025-04-03 00:17:06,323 | INFO | Loading JSON configuration file abra_config.json
+2025-04-03 00:17:06,324 | INFO | Configuration loaded. Starting FastAPI server and aggregator process...
+2025-04-03 00:17:06,324 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:17:06,326 | INFO | Starting aggregator process...
+2025-04-03 00:17:06,495 | INFO | Using local sqlite database
+2025-04-03 00:17:06,591 | INFO | Starting main loop
+2025-04-03 00:17:08,590 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:17:08,590 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:17:08,591 | INFO | Terminating process 2200227
+2025-04-03 00:17:08,593 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:17:08,594 | INFO | Main task cancelled gracefully.
+2025-04-03 00:23:06,229 | INFO | Starting central process...
+2025-04-03 00:23:06,229 | INFO | Loading JSON configuration file abra_config.json
+2025-04-03 00:23:38,962 | INFO | Starting central process...
+2025-04-03 00:23:38,962 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:23:38,964 | INFO | Starting aggregator process...
+2025-04-03 00:23:39,149 | INFO | Using local sqlite database
+2025-04-03 00:23:39,247 | INFO | Starting main loop
+2025-04-03 00:23:39,679 | INFO | Using local sqlite database
+2025-04-03 00:23:39,708 | INFO | Using local sqlite database
+2025-04-03 00:23:39,954 | INFO | Default permissions initialized successfully
+2025-04-03 00:23:39,962 | INFO | Default groups setup successfully
+2025-04-03 00:23:39,963 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:23:39,984 | INFO | Default permissions initialized successfully
+2025-04-03 00:23:39,993 | INFO | Default groups setup successfully
+2025-04-03 00:23:39,993 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:23:42,298 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:23:42,299 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:23:42,299 | INFO | Terminating process 2204313
+2025-04-03 00:23:42,301 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:23:42,301 | INFO | Main task cancelled gracefully.
+2025-04-03 00:24:03,500 | INFO | Starting central process...
+2025-04-03 00:24:03,500 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:24:03,502 | INFO | Starting aggregator process...
+2025-04-03 00:24:03,671 | INFO | Using local sqlite database
+2025-04-03 00:24:03,768 | INFO | Starting main loop
+2025-04-03 00:24:04,228 | INFO | Using local sqlite database
+2025-04-03 00:24:04,257 | INFO | Using local sqlite database
+2025-04-03 00:24:04,504 | INFO | Default permissions initialized successfully
+2025-04-03 00:24:04,513 | INFO | Default groups setup successfully
+2025-04-03 00:24:04,513 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:24:04,535 | INFO | Default permissions initialized successfully
+2025-04-03 00:24:04,544 | INFO | Default groups setup successfully
+2025-04-03 00:24:04,544 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:24:33,582 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:24:33,582 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:24:33,582 | INFO | Terminating process 2204805
+2025-04-03 00:24:33,585 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:24:33,585 | INFO | Main task cancelled gracefully.
+2025-04-03 00:24:35,433 | INFO | Starting central process...
+2025-04-03 00:24:35,434 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:24:35,435 | INFO | Starting aggregator process...
+2025-04-03 00:24:35,603 | INFO | Using local sqlite database
+2025-04-03 00:24:35,697 | INFO | Starting main loop
+2025-04-03 00:24:36,162 | INFO | Using local sqlite database
+2025-04-03 00:24:36,179 | INFO | Using local sqlite database
+2025-04-03 00:24:36,437 | INFO | Default permissions initialized successfully
+2025-04-03 00:24:36,447 | INFO | Default groups setup successfully
+2025-04-03 00:24:36,447 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:24:36,451 | INFO | Default permissions initialized successfully
+2025-04-03 00:24:36,460 | INFO | Default groups setup successfully
+2025-04-03 00:24:36,461 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:25:00,046 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-03 00:25:00,047 | CRITICAL | LDAP connection not initialized
+2025-04-03 00:31:59,811 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:31:59,811 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:31:59,811 | INFO | Terminating process 2205358
+2025-04-03 00:31:59,814 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:31:59,815 | INFO | Main task cancelled gracefully.
+2025-04-03 00:32:10,948 | INFO | Starting central process...
+2025-04-03 00:32:10,948 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:32:10,950 | INFO | Starting aggregator process...
+2025-04-03 00:32:11,128 | INFO | Using local sqlite database
+2025-04-03 00:32:11,231 | INFO | Starting main loop
+2025-04-03 00:32:11,673 | INFO | Using local sqlite database
+2025-04-03 00:32:11,741 | INFO | Using local sqlite database
+2025-04-03 00:32:11,788 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:32:11,788 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:32:11,887 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:32:11,888 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:32:11,948 | INFO | Default permissions initialized successfully
+2025-04-03 00:32:11,958 | INFO | Default groups setup successfully
+2025-04-03 00:32:11,958 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:32:12,057 | INFO | Default permissions initialized successfully
+2025-04-03 00:32:12,066 | INFO | Default groups setup successfully
+2025-04-03 00:32:12,066 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:32:26,201 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-03 00:33:32,743 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:33:32,743 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:33:32,744 | INFO | Terminating process 2210974
+2025-04-03 00:33:32,747 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:33:32,747 | INFO | Main task cancelled gracefully.
+2025-04-03 00:33:56,400 | INFO | Starting central process...
+2025-04-03 00:33:56,401 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:33:56,402 | INFO | Starting aggregator process...
+2025-04-03 00:33:56,577 | INFO | Using local sqlite database
+2025-04-03 00:33:56,679 | INFO | Starting main loop
+2025-04-03 00:33:57,135 | INFO | Using local sqlite database
+2025-04-03 00:33:57,135 | INFO | Using local sqlite database
+2025-04-03 00:33:57,253 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:33:57,253 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:33:57,253 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:33:57,253 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:33:57,417 | INFO | Default permissions initialized successfully
+2025-04-03 00:33:57,424 | INFO | Default permissions initialized successfully
+2025-04-03 00:33:57,427 | INFO | Default groups setup successfully
+2025-04-03 00:33:57,427 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:33:57,434 | INFO | Default groups setup successfully
+2025-04-03 00:33:57,434 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:34:01,290 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:34:01,290 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:34:01,291 | INFO | Terminating process 2212548
+2025-04-03 00:34:01,294 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:34:01,294 | INFO | Main task cancelled gracefully.
+2025-04-03 00:40:42,122 | INFO | Starting central process...
+2025-04-03 00:40:42,122 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:40:42,124 | INFO | Starting aggregator process...
+2025-04-03 00:40:42,299 | INFO | Using local sqlite database
+2025-04-03 00:40:42,394 | INFO | Starting main loop
+2025-04-03 00:40:42,840 | INFO | Using local sqlite database
+2025-04-03 00:40:42,879 | INFO | Using local sqlite database
+2025-04-03 00:40:42,960 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:40:42,960 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:40:43,013 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:40:43,013 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:40:43,123 | INFO | Default permissions initialized successfully
+2025-04-03 00:40:43,132 | INFO | Default groups setup successfully
+2025-04-03 00:40:43,132 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:40:43,179 | INFO | Default permissions initialized successfully
+2025-04-03 00:40:43,188 | INFO | Default groups setup successfully
+2025-04-03 00:40:43,188 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:40:51,578 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-03 00:44:03,360 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:44:03,361 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:44:03,361 | INFO | Terminating process 2216834
+2025-04-03 00:44:03,364 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:44:03,364 | INFO | Main task cancelled gracefully.
+2025-04-03 00:44:05,647 | INFO | Starting central process...
+2025-04-03 00:44:05,647 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:44:05,649 | INFO | Starting aggregator process...
+2025-04-03 00:44:05,824 | INFO | Using local sqlite database
+2025-04-03 00:44:05,922 | INFO | Starting main loop
+2025-04-03 00:44:06,372 | INFO | Using local sqlite database
+2025-04-03 00:44:06,402 | INFO | Using local sqlite database
+2025-04-03 00:44:06,485 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:44:06,485 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:44:06,521 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:44:06,521 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:44:06,644 | INFO | Default permissions initialized successfully
+2025-04-03 00:44:06,653 | INFO | Default groups setup successfully
+2025-04-03 00:44:06,653 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:44:06,689 | INFO | Default permissions initialized successfully
+2025-04-03 00:44:06,698 | INFO | Default groups setup successfully
+2025-04-03 00:44:06,698 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:44:40,479 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-03 00:44:40,479 | CRITICAL | LDAP connection not initialized
+2025-04-03 00:46:39,500 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:46:39,500 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:46:39,500 | INFO | Terminating process 2219432
+2025-04-03 00:46:39,503 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:46:39,504 | INFO | Main task cancelled gracefully.
+2025-04-03 00:46:43,195 | INFO | Starting central process...
+2025-04-03 00:46:43,195 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:46:43,196 | INFO | Starting aggregator process...
+2025-04-03 00:46:43,372 | INFO | Using local sqlite database
+2025-04-03 00:46:43,470 | INFO | Starting main loop
+2025-04-03 00:46:43,929 | INFO | Using local sqlite database
+2025-04-03 00:46:43,937 | INFO | Using local sqlite database
+2025-04-03 00:46:44,935 | INFO | Using local sqlite database
+2025-04-03 00:46:44,937 | INFO | Using local sqlite database
+2025-04-03 00:46:45,958 | INFO | Using local sqlite database
+2025-04-03 00:46:45,977 | INFO | Using local sqlite database
+2025-04-03 00:46:46,970 | INFO | Using local sqlite database
+2025-04-03 00:46:46,974 | INFO | Using local sqlite database
+2025-04-03 00:46:47,234 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:46:47,234 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:46:47,234 | INFO | Terminating process 2221650
+2025-04-03 00:46:47,238 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:46:47,238 | INFO | Main task cancelled gracefully.
+2025-04-03 00:46:53,136 | INFO | Starting central process...
+2025-04-03 00:46:53,136 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:46:53,137 | INFO | Starting aggregator process...
+2025-04-03 00:46:53,302 | INFO | Using local sqlite database
+2025-04-03 00:46:53,397 | INFO | Starting main loop
+2025-04-03 00:46:53,854 | INFO | Using local sqlite database
+2025-04-03 00:46:53,861 | INFO | Using local sqlite database
+2025-04-03 00:46:53,966 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:46:53,967 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:46:53,975 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:46:53,975 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:46:54,127 | INFO | Default permissions initialized successfully
+2025-04-03 00:46:54,136 | INFO | Default groups setup successfully
+2025-04-03 00:46:54,136 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:46:54,137 | INFO | Default permissions initialized successfully
+2025-04-03 00:46:54,147 | INFO | Default groups setup successfully
+2025-04-03 00:46:54,147 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:47:01,351 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-03 00:47:01,351 | CRITICAL | LDAP connection not initialized
+2025-04-03 00:47:24,191 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:47:24,191 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:47:24,192 | INFO | Terminating process 2221934
+2025-04-03 00:47:24,195 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:47:24,195 | INFO | Main task cancelled gracefully.
+2025-04-03 00:47:48,740 | INFO | Starting central process...
+2025-04-03 00:47:48,740 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:47:48,741 | INFO | Starting aggregator process...
+2025-04-03 00:47:48,914 | INFO | Using local sqlite database
+2025-04-03 00:47:49,014 | INFO | Starting main loop
+2025-04-03 00:47:49,467 | INFO | Using local sqlite database
+2025-04-03 00:47:49,472 | INFO | Using local sqlite database
+2025-04-03 00:47:49,585 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:47:49,585 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:47:49,586 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:47:49,586 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:47:49,750 | INFO | Default permissions initialized successfully
+2025-04-03 00:47:49,750 | INFO | Default permissions initialized successfully
+2025-04-03 00:47:49,759 | INFO | Default groups setup successfully
+2025-04-03 00:47:49,759 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:47:49,759 | INFO | Default groups setup successfully
+2025-04-03 00:47:49,759 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:47:57,622 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-03 00:47:57,622 | CRITICAL | LDAP connection not initialized
+2025-04-03 00:48:12,817 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:48:12,817 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:48:12,817 | INFO | Terminating process 2222870
+2025-04-03 00:48:12,820 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:48:12,821 | INFO | Main task cancelled gracefully.
+2025-04-03 00:48:15,268 | INFO | Starting central process...
+2025-04-03 00:48:15,268 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:48:15,269 | INFO | Starting aggregator process...
+2025-04-03 00:48:15,444 | INFO | Using local sqlite database
+2025-04-03 00:48:15,545 | INFO | Starting main loop
+2025-04-03 00:48:16,012 | INFO | Using local sqlite database
+2025-04-03 00:48:16,025 | INFO | Using local sqlite database
+2025-04-03 00:48:16,136 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:48:16,136 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:48:16,141 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:48:16,141 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:48:16,301 | INFO | Default permissions initialized successfully
+2025-04-03 00:48:16,307 | INFO | Default permissions initialized successfully
+2025-04-03 00:48:16,311 | INFO | Default groups setup successfully
+2025-04-03 00:48:16,311 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:48:16,316 | INFO | Default groups setup successfully
+2025-04-03 00:48:16,316 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:48:40,167 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:48:40,168 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:48:40,168 | INFO | Terminating process 2223670
+2025-04-03 00:48:40,171 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:48:40,171 | INFO | Main task cancelled gracefully.
+2025-04-03 00:48:48,345 | INFO | Starting central process...
+2025-04-03 00:48:48,345 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:48:48,347 | INFO | Starting aggregator process...
+2025-04-03 00:48:48,523 | INFO | Using local sqlite database
+2025-04-03 00:48:48,622 | INFO | Starting main loop
+2025-04-03 00:48:49,090 | INFO | Using local sqlite database
+2025-04-03 00:48:49,109 | INFO | Using local sqlite database
+2025-04-03 00:48:49,210 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:48:49,210 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:48:49,223 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:48:49,223 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:48:49,373 | INFO | Default permissions initialized successfully
+2025-04-03 00:48:49,383 | INFO | Default groups setup successfully
+2025-04-03 00:48:49,383 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:48:49,396 | INFO | Default permissions initialized successfully
+2025-04-03 00:48:49,405 | INFO | Default groups setup successfully
+2025-04-03 00:48:49,405 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:49:10,104 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:49:10,104 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:49:10,104 | INFO | Terminating process 2224290
+2025-04-03 00:49:10,108 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:49:10,108 | INFO | Main task cancelled gracefully.
+2025-04-03 00:49:12,149 | INFO | Starting central process...
+2025-04-03 00:49:12,149 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:49:12,151 | INFO | Starting aggregator process...
+2025-04-03 00:49:12,319 | INFO | Using local sqlite database
+2025-04-03 00:49:12,415 | INFO | Starting main loop
+2025-04-03 00:49:12,867 | INFO | Using local sqlite database
+2025-04-03 00:49:12,878 | INFO | Using local sqlite database
+2025-04-03 00:49:12,979 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:49:12,979 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:49:12,995 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:49:12,995 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:49:13,140 | INFO | Default permissions initialized successfully
+2025-04-03 00:49:13,149 | INFO | Default groups setup successfully
+2025-04-03 00:49:13,149 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:49:13,158 | INFO | Default permissions initialized successfully
+2025-04-03 00:49:13,167 | INFO | Default groups setup successfully
+2025-04-03 00:49:13,167 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:49:34,439 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:49:34,439 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:49:34,439 | INFO | Terminating process 2224798
+2025-04-03 00:49:34,442 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:49:34,442 | INFO | Main task cancelled gracefully.
+2025-04-03 00:49:46,818 | INFO | Starting central process...
+2025-04-03 00:49:46,819 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:49:46,820 | INFO | Starting aggregator process...
+2025-04-03 00:49:46,989 | INFO | Using local sqlite database
+2025-04-03 00:49:47,086 | INFO | Starting main loop
+2025-04-03 00:49:47,547 | INFO | Using local sqlite database
+2025-04-03 00:49:47,580 | INFO | Using local sqlite database
+2025-04-03 00:49:47,662 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:49:47,662 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:49:47,703 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:49:47,703 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:49:47,825 | INFO | Default permissions initialized successfully
+2025-04-03 00:49:47,834 | INFO | Default groups setup successfully
+2025-04-03 00:49:47,835 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:49:47,871 | INFO | Default permissions initialized successfully
+2025-04-03 00:49:47,880 | INFO | Default groups setup successfully
+2025-04-03 00:49:47,881 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:52:23,777 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:52:23,778 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:52:23,778 | INFO | Terminating process 2225562
+2025-04-03 00:52:23,781 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:52:23,781 | INFO | Main task cancelled gracefully.
+2025-04-03 00:53:33,569 | INFO | Starting central process...
+2025-04-03 00:53:33,569 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:53:33,570 | INFO | Starting aggregator process...
+2025-04-03 00:53:33,736 | INFO | Using local sqlite database
+2025-04-03 00:53:33,832 | INFO | Starting main loop
+2025-04-03 00:53:34,294 | INFO | Using local sqlite database
+2025-04-03 00:53:34,319 | INFO | Using local sqlite database
+2025-04-03 00:53:34,408 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:53:34,408 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:53:34,435 | ERROR | LDAP connection error: Source port must be an integer
+2025-04-03 00:53:34,435 | ERROR | Failed to initialize LDAP connection: Source port must be an integer
+2025-04-03 00:53:34,569 | INFO | Default permissions initialized successfully
+2025-04-03 00:53:34,577 | INFO | Default groups setup successfully
+2025-04-03 00:53:34,577 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:53:34,596 | INFO | Default permissions initialized successfully
+2025-04-03 00:53:34,605 | INFO | Default groups setup successfully
+2025-04-03 00:53:34,605 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:53:44,528 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:53:44,529 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:53:44,529 | INFO | Terminating process 2228399
+2025-04-03 00:53:44,532 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:53:44,532 | INFO | Main task cancelled gracefully.
+2025-04-03 00:54:46,390 | INFO | Starting central process...
+2025-04-03 00:54:46,390 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:54:46,392 | INFO | Starting aggregator process...
+2025-04-03 00:54:46,574 | INFO | Using local sqlite database
+2025-04-03 00:54:46,672 | INFO | Starting main loop
+2025-04-03 00:54:47,123 | INFO | Using local sqlite database
+2025-04-03 00:54:47,131 | INFO | Using local sqlite database
+2025-04-03 00:54:47,239 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:54:47,239 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:54:47,253 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:54:47,253 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:54:47,404 | INFO | Default permissions initialized successfully
+2025-04-03 00:54:47,413 | INFO | Default groups setup successfully
+2025-04-03 00:54:47,413 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:54:47,425 | INFO | Default permissions initialized successfully
+2025-04-03 00:54:47,437 | INFO | Default groups setup successfully
+2025-04-03 00:54:47,437 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:55:00,539 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:55:00,540 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:55:00,540 | INFO | Terminating process 2229537
+2025-04-03 00:55:00,543 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:55:00,543 | INFO | Main task cancelled gracefully.
+2025-04-03 00:55:02,476 | INFO | Starting central process...
+2025-04-03 00:55:02,476 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:55:02,477 | INFO | Starting aggregator process...
+2025-04-03 00:55:02,646 | INFO | Using local sqlite database
+2025-04-03 00:55:02,744 | INFO | Starting main loop
+2025-04-03 00:55:03,206 | INFO | Using local sqlite database
+2025-04-03 00:55:03,218 | INFO | Using local sqlite database
+2025-04-03 00:55:03,322 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:55:03,322 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:55:03,336 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:55:03,336 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:55:03,485 | INFO | Default permissions initialized successfully
+2025-04-03 00:55:03,494 | INFO | Default groups setup successfully
+2025-04-03 00:55:03,494 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:55:03,502 | INFO | Default permissions initialized successfully
+2025-04-03 00:55:03,511 | INFO | Default groups setup successfully
+2025-04-03 00:55:03,511 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:55:19,109 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:55:19,110 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:55:19,110 | INFO | Terminating process 2229917
+2025-04-03 00:55:19,113 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:55:19,114 | INFO | Main task cancelled gracefully.
+2025-04-03 00:55:20,728 | INFO | Starting central process...
+2025-04-03 00:55:20,729 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:55:20,730 | INFO | Starting aggregator process...
+2025-04-03 00:55:20,900 | INFO | Using local sqlite database
+2025-04-03 00:55:20,998 | INFO | Starting main loop
+2025-04-03 00:55:21,456 | INFO | Using local sqlite database
+2025-04-03 00:55:21,459 | INFO | Using local sqlite database
+2025-04-03 00:55:21,573 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:55:21,573 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:55:21,574 | ERROR | LDAP connection error: invalid server address
+2025-04-03 00:55:21,574 | ERROR | Failed to initialize LDAP connection: invalid server address
+2025-04-03 00:55:21,736 | INFO | Default permissions initialized successfully
+2025-04-03 00:55:21,737 | INFO | Default permissions initialized successfully
+2025-04-03 00:55:21,745 | INFO | Default groups setup successfully
+2025-04-03 00:55:21,745 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:55:21,747 | INFO | Default groups setup successfully
+2025-04-03 00:55:21,747 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:57:05,327 | INFO | Starting central process...
+2025-04-03 00:57:05,328 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:57:05,329 | INFO | Starting aggregator process...
+2025-04-03 00:57:05,497 | INFO | Using local sqlite database
+2025-04-03 00:57:05,594 | INFO | Starting main loop
+2025-04-03 00:57:07,261 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:57:07,262 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:57:07,262 | INFO | Terminating process 2231947
+2025-04-03 00:57:07,265 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:57:07,265 | INFO | Main task cancelled gracefully.
+2025-04-03 00:57:07,265 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:57:23,287 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:57:23,287 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:57:23,287 | INFO | Terminating process 2230318
+2025-04-03 00:57:23,290 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:57:23,291 | INFO | Main task cancelled gracefully.
+2025-04-03 00:57:28,054 | INFO | Starting central process...
+2025-04-03 00:57:28,054 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:57:28,056 | INFO | Starting aggregator process...
+2025-04-03 00:57:28,227 | INFO | Using local sqlite database
+2025-04-03 00:57:28,325 | INFO | Starting main loop
+2025-04-03 00:57:28,785 | INFO | Using local sqlite database
+2025-04-03 00:57:28,785 | INFO | Using local sqlite database
+2025-04-03 00:57:28,902 | ERROR | Unexpected error: 'SecretStr' object is not iterable
+2025-04-03 00:57:28,902 | ERROR | Failed to initialize LDAP connection: 'SecretStr' object is not iterable
+2025-04-03 00:57:28,903 | ERROR | Unexpected error: 'SecretStr' object is not iterable
+2025-04-03 00:57:28,903 | ERROR | Failed to initialize LDAP connection: 'SecretStr' object is not iterable
+2025-04-03 00:57:29,065 | INFO | Default permissions initialized successfully
+2025-04-03 00:57:29,067 | INFO | Default permissions initialized successfully
+2025-04-03 00:57:29,073 | INFO | Default groups setup successfully
+2025-04-03 00:57:29,073 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:57:29,076 | INFO | Default groups setup successfully
+2025-04-03 00:57:29,076 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:57:55,717 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 00:57:55,717 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:57:55,718 | INFO | Terminating process 2232499
+2025-04-03 00:57:55,721 | INFO | Shutdown handler triggered by signal.
+2025-04-03 00:57:55,721 | INFO | Main task cancelled gracefully.
+2025-04-03 00:58:01,961 | INFO | Starting central process...
+2025-04-03 00:58:01,961 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 00:58:01,963 | INFO | Starting aggregator process...
+2025-04-03 00:58:02,140 | INFO | Using local sqlite database
+2025-04-03 00:58:02,238 | INFO | Starting main loop
+2025-04-03 00:58:02,697 | INFO | Using local sqlite database
+2025-04-03 00:58:02,706 | INFO | Using local sqlite database
+2025-04-03 00:58:03,214 | INFO | LDAP connection initialized
+2025-04-03 00:58:03,216 | INFO | LDAP connection initialized
+2025-04-03 00:58:03,381 | INFO | Default permissions initialized successfully
+2025-04-03 00:58:03,383 | INFO | Default permissions initialized successfully
+2025-04-03 00:58:03,389 | INFO | Default groups setup successfully
+2025-04-03 00:58:03,390 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:58:03,392 | INFO | Default groups setup successfully
+2025-04-03 00:58:03,392 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 00:58:12,010 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-03 00:58:12,131 | INFO | User abra-sysadmin-1 authenticated successfully via LDAP
+2025-04-03 01:14:39,989 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 01:14:39,989 | INFO | Shutdown handler triggered by signal.
+2025-04-03 01:14:39,990 | INFO | Terminating process 2233249
+2025-04-03 01:14:39,993 | INFO | Shutdown handler triggered by signal.
+2025-04-03 01:14:39,993 | INFO | Main task cancelled gracefully.
+2025-04-03 01:14:44,958 | INFO | Starting central process...
+2025-04-03 01:14:44,958 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-03 01:14:44,959 | INFO | Starting aggregator process...
+2025-04-03 01:14:45,153 | INFO | Using local sqlite database
+2025-04-03 01:14:45,265 | INFO | Starting main loop
+2025-04-03 01:14:45,696 | INFO | Using local sqlite database
+2025-04-03 01:14:45,706 | INFO | Using local sqlite database
+2025-04-03 01:14:46,217 | INFO | LDAP connection initialized
+2025-04-03 01:14:46,218 | INFO | LDAP connection initialized
+2025-04-03 01:14:46,383 | INFO | Default permissions initialized successfully
+2025-04-03 01:14:46,385 | INFO | Default permissions initialized successfully
+2025-04-03 01:14:46,392 | INFO | Default groups setup successfully
+2025-04-03 01:14:46,392 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 01:14:46,393 | INFO | Default groups setup successfully
+2025-04-03 01:14:46,393 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 01:14:50,667 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-03 01:14:50,794 | INFO | User abra-sysadmin-1 authenticated successfully via LDAP
+2025-04-03 01:14:50,842 | INFO | User abra-sysadmin-1 has successfully logged in via LDAP
+2025-04-03 01:15:38,993 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-03 01:15:38,993 | INFO | Shutdown handler triggered by signal.
+2025-04-03 01:15:38,993 | INFO | Terminating process 2246410
+2025-04-03 01:15:38,996 | INFO | Shutdown handler triggered by signal.
+2025-04-03 01:15:38,996 | INFO | Main task cancelled gracefully.
+>>>>>>> e805ac1 (ldap auth and global config file support,, need to integrate with rbac)

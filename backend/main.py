@@ -3,7 +3,7 @@ import sys
 import time
 import uvicorn
 import argparse
-from fastapi_server import app
+# from fastapi_server import app
 import config
 from logger import logger
 from typing import Optional
@@ -11,10 +11,9 @@ from typing import Optional
 parser = argparse.ArgumentParser()
 # parser.add_argument("--config", type=str, default="config.yaml", help="Path to the configuration file")
 parser.add_argument("--no-aggregator", dest='noagg', action='store_true', help="If set, will not run the aggregator process")
-parser.add_argument("--config", type=Optional[str], default=None, help="Path to the configuration file")
 
 def run_fastapi():
-    uvicorn.run('fastapi_server:app', host="127.0.0.1", port=8976, workers=2)
+    uvicorn.run('fastapi_server:app', host="127.0.0.1", port=8989, workers=2)
 
 def run_aggregator():
     import run_aggregator
@@ -23,11 +22,6 @@ def run_aggregator():
 if __name__ == "__main__":
     args = parser.parse_args()
     logger.info("Starting central process...")
-    if not args.config is None:
-        config.load_config_file(args.config)
-    else:
-        logger.info("No configuration file provided. Using default configuration.")
-        config.load_default_config()
 
     multiprocessing.freeze_support()
 
