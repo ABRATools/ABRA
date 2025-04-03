@@ -150,6 +150,463 @@
 2025-03-04 22:24:42,162 | INFO | User admin is assigning user ID 3 to group ID 2
 2025-03-04 22:24:42,188 | INFO | User admin is listing all groups
 2025-03-04 22:24:42,192 | INFO | User admin is listing all permissions
+<<<<<<< HEAD
+=======
+2025-03-05 01:43:04,135 | INFO | Using local sqlite database
+2025-03-05 01:43:04,537 | INFO | Starting central process...
+2025-03-05 01:43:04,537 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 01:43:04,540 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 01:43:04,543 | INFO | Starting aggregator process...
+2025-03-05 01:43:04,574 | INFO | Starting main loop
+2025-03-05 01:43:05,272 | INFO | Using local sqlite database
+2025-03-05 01:43:05,316 | INFO | Using local sqlite database
+2025-03-05 01:43:38,265 | INFO | Shutdown handler triggered by signal.
+2025-03-05 01:43:38,265 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 01:43:38,266 | INFO | Terminating process 1629400
+2025-03-05 01:43:38,269 | INFO | Shutdown handler triggered by signal.
+2025-03-05 01:43:38,269 | INFO | Main task cancelled gracefully.
+2025-03-05 01:43:41,352 | INFO | Using local sqlite database
+2025-03-05 01:43:41,537 | INFO | Starting central process...
+2025-03-05 01:43:41,537 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 01:43:41,539 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 01:43:41,542 | INFO | Starting aggregator process...
+2025-03-05 01:43:41,570 | INFO | Starting main loop
+2025-03-05 01:43:42,281 | INFO | Using local sqlite database
+2025-03-05 01:43:42,294 | INFO | Using local sqlite database
+2025-03-05 11:44:46,843 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:44:50,849 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:44:56,859 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:45:00,866 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:55:52,463 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:55:56,469 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:56:02,478 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:56:06,533 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:56:12,542 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:56:16,549 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:56:22,558 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:56:26,563 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:56:32,572 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:56:36,578 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:56:42,587 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:56:46,594 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:56:52,603 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:56:56,610 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:57:02,616 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:57:06,623 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:57:52,714 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:57:56,721 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:58:02,729 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:58:06,734 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:58:12,743 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:58:16,751 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:58:22,759 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:58:26,766 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:58:32,776 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:58:36,783 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:58:42,793 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:58:46,798 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:58:52,807 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:58:56,814 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:59:02,822 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:59:06,828 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:59:12,838 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:59:16,843 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:59:22,851 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:59:26,856 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:59:32,866 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:59:36,873 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:59:42,881 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:59:48,890 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:59:52,897 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 11:59:58,905 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:00:02,911 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:00:08,919 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:00:12,924 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:00:18,933 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:00:22,938 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:00:28,946 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:00:32,954 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:00:38,964 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:00:42,970 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:00:48,978 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:00:52,986 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:00:58,995 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:01:03,002 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:01:09,011 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:01:13,016 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:01:19,026 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:01:23,033 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:01:29,042 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:01:33,048 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:01:39,057 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:01:43,064 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:01:49,072 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:01:53,079 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:01:59,088 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:02:03,095 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:02:09,104 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:02:13,110 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:02:19,119 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:02:23,125 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:02:29,133 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:02:33,140 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:02:39,150 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:02:43,156 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:02:49,165 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:02:53,173 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:02:59,182 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:03:03,189 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:03:09,197 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:03:13,204 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:03:19,214 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:03:23,221 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:03:29,230 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:03:33,236 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:03:39,246 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:03:43,253 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:03:49,263 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:03:53,270 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:03:59,278 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:04:03,285 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:04:09,294 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:04:13,300 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:04:19,310 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:04:23,318 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:04:29,327 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:04:33,334 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:04:39,343 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:04:43,351 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:04:49,362 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:04:53,368 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:04:59,376 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:05:03,383 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:05:09,395 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:05:13,402 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:05:19,411 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:05:23,416 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:05:29,426 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:05:33,433 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:05:39,445 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:05:43,452 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:05:49,462 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:05:53,469 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:05:59,479 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:06:03,485 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:06:09,493 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:06:13,500 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:06:19,510 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:06:23,517 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:06:29,527 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:06:33,534 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:06:39,543 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:06:43,550 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:06:49,559 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:06:53,566 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:06:59,575 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:07:03,579 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:07:09,588 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:07:13,596 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:07:19,605 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:07:23,611 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:07:29,621 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:07:33,627 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:07:39,637 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:07:43,644 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:07:49,653 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:07:53,660 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:07:59,670 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:08:03,677 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:08:09,687 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:08:13,693 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:08:19,702 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:08:23,710 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:08:29,719 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:08:33,726 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:08:39,736 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:08:43,741 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:08:49,750 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:08:53,758 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:08:59,767 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:09:03,774 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:09:09,783 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:09:13,790 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:09:19,800 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:09:23,807 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:09:29,816 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:09:33,823 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:09:39,831 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:09:43,838 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:09:49,848 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:09:53,855 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:09:59,864 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:10:03,871 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:10:09,880 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:10:13,887 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:10:19,897 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:10:23,903 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:10:29,912 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:10:33,919 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:10:39,930 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:10:43,937 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:10:49,945 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:10:53,950 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:10:59,959 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:11:03,967 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:11:09,976 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:11:13,983 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:11:19,992 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:11:23,999 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:11:30,006 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:11:34,013 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:11:40,023 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:11:44,030 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:11:50,040 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:11:54,047 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:12:00,055 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:12:04,063 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:12:10,072 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:12:14,079 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:12:20,088 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:12:24,095 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:12:30,103 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:12:34,110 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:12:40,120 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:12:44,127 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:12:50,137 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:12:54,143 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:13:00,152 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:13:04,159 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:13:10,169 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:13:14,175 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:13:20,185 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:13:24,193 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:13:30,203 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:13:34,210 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:13:40,218 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:13:44,225 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:13:50,234 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:13:54,241 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:14:00,250 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:14:04,256 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:14:10,263 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:14:14,270 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:14:20,280 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:14:24,287 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:14:30,296 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:14:34,303 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:14:40,313 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:14:44,320 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:14:50,330 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:14:54,335 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:15:00,344 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:15:04,351 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:15:10,359 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:15:14,366 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:15:20,375 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:15:24,382 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:15:30,392 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:15:34,396 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:15:40,404 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:15:44,411 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:15:50,420 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:15:54,426 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:16:00,436 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:16:04,443 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:16:10,453 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:16:14,458 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:16:20,467 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:16:24,473 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:16:30,479 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:16:34,486 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:16:40,495 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:16:44,501 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:16:50,510 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:16:54,517 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:17:00,525 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:17:04,532 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:17:10,540 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:17:14,547 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:17:20,556 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:17:24,563 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:17:30,573 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:17:34,579 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:17:40,587 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:17:44,594 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:17:50,603 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:17:54,609 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:18:00,616 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:18:04,623 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:18:10,631 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:18:14,637 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:18:20,645 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:18:24,651 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:18:30,660 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:18:34,666 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:18:40,675 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:18:44,682 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:18:50,690 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:18:54,696 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:19:00,705 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:19:04,712 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:19:10,720 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:19:14,727 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:19:20,736 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:19:24,743 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:19:30,753 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:19:34,760 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:19:40,769 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:19:44,775 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:19:50,784 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:19:54,790 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:20:00,799 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:20:04,806 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:20:10,815 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:20:14,821 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:20:20,831 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:20:24,837 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:20:30,847 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:20:34,854 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:20:40,863 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:20:44,870 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:20:50,879 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:20:54,885 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:21:00,892 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:21:04,899 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:21:10,908 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:21:14,916 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:21:20,926 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:21:24,933 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:21:30,943 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:21:34,949 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:21:40,958 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:21:44,965 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:21:50,974 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:21:54,981 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:22:00,991 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:22:04,996 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:22:11,005 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:22:15,013 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:22:21,021 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:22:25,027 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:22:31,036 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:22:35,043 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 12:36:05,584 | INFO | No token found
+2025-03-05 12:36:09,793 | INFO | User admin is attempting to log in
+2025-03-05 12:36:10,060 | INFO | User admin has successfully logged in
+2025-03-05 12:36:10,063 | INFO | User admin has successfully logged in
+2025-03-05 13:13:41,805 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 13:13:45,812 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 13:14:19,104 | INFO | No token found
+2025-03-05 13:14:25,613 | INFO | User admin is attempting to log in
+2025-03-05 13:14:25,880 | INFO | User admin has successfully logged in
+2025-03-05 13:14:25,882 | INFO | User admin has successfully logged in
+2025-03-05 13:18:17,688 | INFO | Shutdown handler triggered by signal.
+2025-03-05 13:18:17,687 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 13:18:17,688 | INFO | Terminating process 1629995
+2025-03-05 13:18:17,693 | INFO | Shutdown handler triggered by signal.
+2025-03-05 13:18:17,693 | INFO | Main task cancelled gracefully.
+2025-03-05 13:18:25,453 | INFO | Using local sqlite database
+2025-03-05 13:18:25,670 | INFO | Starting central process...
+2025-03-05 13:18:25,670 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 13:18:25,673 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 13:18:25,675 | INFO | Starting aggregator process...
+2025-03-05 13:18:25,701 | INFO | Starting main loop
+2025-03-05 13:18:26,412 | INFO | Using local sqlite database
+2025-03-05 13:18:26,412 | INFO | Using local sqlite database
+2025-03-05 13:18:41,880 | INFO | Stopping container: 
+2025-03-05 13:18:41,881 | INFO | Stopping container with env_id: 71d2a66f13f7feeb547803a8e04793b9e79951cbf8a4e6021091d346355aefca
+2025-03-05 13:18:41,881 | INFO | Stopping container with env_id: 71d2a66f13f7feeb547803a8e04793b9e79951cbf8a4e6021091d346355aefca
+2025-03-05 13:22:06,109 | INFO | Fetching containers
+2025-03-05 13:22:06,109 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-03-05 13:26:33,364 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 13:26:33,365 | INFO | Shutdown handler triggered by signal.
+2025-03-05 13:26:33,365 | INFO | Terminating process 2078114
+2025-03-05 13:26:33,368 | INFO | Shutdown handler triggered by signal.
+2025-03-05 13:26:33,368 | INFO | Main task cancelled gracefully.
+2025-03-05 13:26:41,611 | INFO | Using local sqlite database
+2025-03-05 13:26:41,779 | INFO | Starting central process...
+2025-03-05 13:26:41,779 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 13:26:41,781 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 13:26:41,784 | INFO | Starting aggregator process...
+2025-03-05 13:26:41,813 | INFO | Starting main loop
+2025-03-05 13:26:42,531 | INFO | Using local sqlite database
+2025-03-05 13:26:42,532 | INFO | Using local sqlite database
+2025-03-05 13:44:29,660 | INFO | No token found
+2025-03-05 13:44:33,356 | INFO | User admin is attempting to log in
+2025-03-05 13:44:33,623 | INFO | User admin has successfully logged in
+2025-03-05 13:44:33,626 | INFO | User admin has successfully logged in
+2025-03-05 13:45:32,948 | INFO | Shutdown handler triggered by signal.
+2025-03-05 13:45:32,948 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 13:45:32,948 | INFO | Terminating process 2084745
+2025-03-05 13:45:32,952 | INFO | Shutdown handler triggered by signal.
+2025-03-05 13:45:32,952 | INFO | Main task cancelled gracefully.
+2025-03-05 13:45:35,731 | INFO | Using local sqlite database
+2025-03-05 13:45:35,899 | INFO | Starting central process...
+2025-03-05 13:45:35,899 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 13:45:35,900 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 13:45:35,903 | INFO | Starting aggregator process...
+2025-03-05 13:45:35,928 | INFO | Starting main loop
+2025-03-05 13:45:36,641 | INFO | Using local sqlite database
+2025-03-05 13:45:36,645 | INFO | Using local sqlite database
+2025-03-05 13:46:07,193 | INFO | Deleting container: 
+2025-03-05 13:46:07,193 | INFO | Deleting container with env_id: e087294e7c5258ea01fca5e0581a8f12f22987b0c6f446ff174960498434d240
+2025-03-05 13:46:07,193 | INFO | Deleting container with env_id: e087294e7c5258ea01fca5e0581a8f12f22987b0c6f446ff174960498434d240
+2025-03-05 13:46:07,196 | ERROR | An error occurred: 404 Client Error: Not Found for url: http://192.168.14.15:8888/containers/delete/e087294e7c5258ea01fca5e0581a8f12f22987b0c6f446ff174960498434d240
+2025-03-05 13:46:32,828 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 13:47:05,180 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-03-05 13:47:05,180 | INFO | Shutdown handler triggered by signal.
+2025-03-05 13:47:05,180 | INFO | Terminating process 2100273
+2025-03-05 13:47:05,184 | INFO | Shutdown handler triggered by signal.
+2025-03-05 13:47:05,184 | INFO | Main task cancelled gracefully.
+2025-03-05 13:47:08,460 | INFO | Using local sqlite database
+2025-03-05 13:47:08,624 | INFO | Starting central process...
+2025-03-05 13:47:08,625 | INFO | No configuration file provided. Using default configuration.
+2025-03-05 13:47:08,626 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-03-05 13:47:08,628 | INFO | Starting aggregator process...
+2025-03-05 13:47:08,656 | INFO | Starting main loop
+2025-03-05 13:47:09,412 | INFO | Using local sqlite database
+2025-03-05 13:47:09,421 | INFO | Using local sqlite database
+2025-03-05 13:47:19,158 | INFO | Deleting container: 
+2025-03-05 13:47:19,159 | INFO | Deleting container with env_id: e087294e7c5258ea01fca5e0581a8f12f22987b0c6f446ff174960498434d240
+2025-03-05 13:47:19,159 | INFO | Deleting container with env_id: e087294e7c5258ea01fca5e0581a8f12f22987b0c6f446ff174960498434d240
+2025-03-05 13:47:19,236 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/remove/e087294e7c5258ea01fca5e0581a8f12f22987b0c6f446ff174960498434d240
+2025-03-05 13:54:25,341 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 13:54:31,351 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 13:54:49,380 | INFO | Deleting container: 
+2025-03-05 13:54:49,380 | INFO | Deleting container with env_id: 1ab6b5c29c638b27a22d9c79ab842d95dfed4cce71ac201cb5ee9527d70c2270
+2025-03-05 13:54:49,380 | INFO | Deleting container with env_id: 1ab6b5c29c638b27a22d9c79ab842d95dfed4cce71ac201cb5ee9527d70c2270
+2025-03-05 13:54:59,485 | INFO | Deleting container: 
+2025-03-05 13:54:59,485 | INFO | Deleting container with env_id: 4ef6aa7cd84624fffc2fe70fe14b38254f14d8c0c42a32f9a8a94b5f311c722d
+2025-03-05 13:54:59,485 | INFO | Deleting container with env_id: 4ef6aa7cd84624fffc2fe70fe14b38254f14d8c0c42a32f9a8a94b5f311c722d
+2025-03-05 13:55:07,469 | INFO | Stopping container: 
+2025-03-05 13:55:07,469 | INFO | Stopping container with env_id: e054b62b1f063d04ab58d730a61e1ca92edc73f186a78c881c401dc93ef43f38
+2025-03-05 13:55:07,469 | INFO | Stopping container with env_id: e054b62b1f063d04ab58d730a61e1ca92edc73f186a78c881c401dc93ef43f38
+2025-03-05 13:55:15,065 | INFO | Deleting container: 
+2025-03-05 13:55:15,065 | INFO | Deleting container with env_id: e054b62b1f063d04ab58d730a61e1ca92edc73f186a78c881c401dc93ef43f38
+2025-03-05 13:55:15,065 | INFO | Deleting container with env_id: e054b62b1f063d04ab58d730a61e1ca92edc73f186a78c881c401dc93ef43f38
+2025-03-05 13:56:19,297 | INFO | Deleting container: 
+2025-03-05 13:56:19,298 | INFO | Deleting container with env_id: 51fc07a4350deb811dd197c2c09c7c6e7d836a64a0e9ad047c883c74222d425a
+2025-03-05 13:56:19,298 | INFO | Deleting container with env_id: 51fc07a4350deb811dd197c2c09c7c6e7d836a64a0e9ad047c883c74222d425a
+2025-03-05 13:56:31,106 | INFO | Deleting container: 
+2025-03-05 13:56:31,107 | INFO | Deleting container with env_id: 71d2a66f13f7feeb547803a8e04793b9e79951cbf8a4e6021091d346355aefca
+2025-03-05 13:56:31,107 | INFO | Deleting container with env_id: 71d2a66f13f7feeb547803a8e04793b9e79951cbf8a4e6021091d346355aefca
+2025-03-05 14:03:56,508 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 14:04:02,516 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 14:08:07,013 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 14:08:13,022 | ERROR | Error: None for http://192.168.14.15:8888/node-info
+2025-03-05 14:08:34,954 | INFO | Stopping container: 
+2025-03-05 14:08:34,954 | INFO | Stopping container with env_id: 3db623f1f146e6862d935fee2901cc6781687c4599aafd7efb003f6d314001f7
+2025-03-05 14:08:34,954 | INFO | Stopping container with env_id: 3db623f1f146e6862d935fee2901cc6781687c4599aafd7efb003f6d314001f7
+2025-03-05 14:08:49,479 | INFO | Starting container: 
+2025-03-05 14:08:49,479 | INFO | Starting container with env_id: 3db623f1f146e6862d935fee2901cc6781687c4599aafd7efb003f6d314001f7
+2025-03-05 14:08:49,479 | INFO | Stopping container with env_id: 3db623f1f146e6862d935fee2901cc6781687c4599aafd7efb003f6d314001f7
+2025-03-05 14:09:26,847 | INFO | Stopping container: 
+2025-03-05 14:09:26,847 | INFO | Stopping container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
+2025-03-05 14:09:26,847 | INFO | Stopping container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
+2025-03-05 14:09:34,975 | INFO | Starting container: 
+2025-03-05 14:09:34,975 | INFO | Starting container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
+2025-03-05 14:09:34,975 | INFO | Stopping container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
+>>>>>>> 598ffa3 (almost added feature for ebpf module selections on container creation)
 2025-03-05 16:31:50,277 | INFO | Using local sqlite database
 2025-03-05 16:31:50,442 | INFO | Starting central process...
 2025-03-05 16:31:50,442 | INFO | No configuration file provided. Using default configuration.
@@ -407,6 +864,7 @@
 2025-03-25 19:22:11,280 | INFO | User admin is assigning user ID 3 to group ID 5
 2025-03-25 19:22:11,301 | INFO | User admin is listing all groups
 2025-03-25 19:22:11,302 | INFO | User admin is listing all permissions
+<<<<<<< HEAD
 2025-04-02 22:20:06,715 | INFO | Using local sqlite database
 2025-04-02 22:20:20,145 | INFO | Using local sqlite database
 2025-04-02 22:25:34,650 | INFO | Using local sqlite database
@@ -1523,3 +1981,61 @@
 2025-04-04 12:37:15,971 | INFO | Shutdown handler triggered by signal.
 2025-04-04 12:37:15,971 | INFO | Main task cancelled gracefully.
 >>>>>>> 5db0b6e (integrate ldap with rbac permissions)
+=======
+2025-04-02 18:00:44,090 | INFO | No token found
+2025-04-02 18:00:46,261 | INFO | User admin is attempting to log in
+2025-04-02 18:00:46,537 | INFO | User admin has successfully logged in
+2025-04-02 18:00:46,539 | INFO | User admin has successfully logged in
+2025-04-02 18:00:53,187 | INFO | User admin is listing all permissions
+2025-04-02 18:00:53,191 | INFO | User admin is listing all groups
+2025-04-02 18:00:53,192 | INFO | User admin is listing all permissions
+2025-04-02 18:01:37,426 | INFO | Fetching containers
+2025-04-02 18:01:37,428 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
+2025-04-02 18:25:32,933 | INFO | User admin is listing all permissions
+2025-04-02 18:25:32,937 | INFO | User admin is listing all groups
+2025-04-02 18:25:32,940 | INFO | User admin is listing all permissions
+2025-04-02 18:25:40,327 | INFO | No token found
+2025-04-02 18:42:53,734 | INFO | No token found
+2025-04-02 18:42:55,288 | INFO | User admin is attempting to log in
+2025-04-02 18:42:55,557 | INFO | User admin has successfully logged in
+2025-04-02 18:42:55,558 | INFO | User admin has successfully logged in
+2025-04-02 18:45:54,898 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 18:45:54,899 | INFO | Shutdown handler triggered by signal.
+2025-04-02 18:45:54,899 | INFO | Terminating process 34482
+2025-04-02 18:45:54,904 | INFO | Shutdown handler triggered by signal.
+2025-04-02 18:45:54,904 | INFO | Main task cancelled gracefully.
+2025-04-02 18:46:00,119 | INFO | Using local sqlite database
+2025-04-02 18:46:00,366 | INFO | Starting central process...
+2025-04-02 18:46:00,366 | INFO | No configuration file provided. Using default configuration.
+2025-04-02 18:46:00,368 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 18:46:00,370 | INFO | Starting aggregator process...
+2025-04-02 18:46:00,398 | INFO | Starting main loop
+2025-04-02 18:46:01,098 | INFO | Using local sqlite database
+2025-04-02 18:46:01,118 | INFO | Using local sqlite database
+2025-04-02 18:46:01,369 | INFO | Default permissions initialized successfully
+2025-04-02 18:46:01,379 | INFO | Default groups setup successfully
+2025-04-02 18:46:01,379 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 18:46:01,441 | INFO | Default permissions initialized successfully
+2025-04-02 18:46:01,451 | INFO | Default groups setup successfully
+2025-04-02 18:46:01,451 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 18:50:40,289 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-02 18:50:40,289 | INFO | Shutdown handler triggered by signal.
+2025-04-02 18:50:40,289 | INFO | Terminating process 1996611
+2025-04-02 18:50:40,292 | INFO | Shutdown handler triggered by signal.
+2025-04-02 18:50:40,293 | INFO | Main task cancelled gracefully.
+2025-04-02 18:50:42,544 | INFO | Using local sqlite database
+2025-04-02 18:50:42,783 | INFO | Starting central process...
+2025-04-02 18:50:42,784 | INFO | No configuration file provided. Using default configuration.
+2025-04-02 18:50:42,786 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-02 18:50:42,788 | INFO | Starting aggregator process...
+2025-04-02 18:50:42,813 | INFO | Starting main loop
+2025-04-02 18:50:43,541 | INFO | Using local sqlite database
+2025-04-02 18:50:43,542 | INFO | Using local sqlite database
+2025-04-02 18:50:43,810 | INFO | Default permissions initialized successfully
+2025-04-02 18:50:43,817 | INFO | Default permissions initialized successfully
+2025-04-02 18:50:43,820 | INFO | Default groups setup successfully
+2025-04-02 18:50:43,820 | INFO | RBAC Permissions initialized on server startup
+2025-04-02 18:50:43,826 | INFO | Default groups setup successfully
+2025-04-02 18:50:43,826 | INFO | RBAC Permissions initialized on server startup
+>>>>>>> 40307b0 (almost added feature for ebpf module selections on container creation)
+>>>>>>> 598ffa3 (almost added feature for ebpf module selections on container creation)
