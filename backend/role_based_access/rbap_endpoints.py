@@ -4,7 +4,7 @@ from typing import Dict, Any
 
 from web_utils import get_session
 from logger import logger
-from web_auth.auth import authenticate_cookie, AuthToken
+from web_auth.auth import authenticate_cookie, AuthToken, ldap_conn
 from role_based_access.rba_permissions import (
     check_route_permission, 
     get_accessible_routes,
@@ -74,7 +74,7 @@ async def get_user_accessible_routes(
             status_code=401
         )
     
-    result = get_accessible_routes(session, token.username)
+    result = get_accessible_routes(session, token.username, token.auth_source, ldap_conn)
     if result["success"]:
         return JSONResponse(content=result, status_code=200)
     else:

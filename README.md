@@ -56,6 +56,7 @@ How to build:
     ```text
     username: abra-sysadmin-1
     password: helloworld29
+    membership: abra_ldap_admins, abra_ldap_sysadmins
     ```
 
 2. abra-sysadmin-2
@@ -63,6 +64,7 @@ How to build:
     ```text
     username: abra-sysadmin-2
     password: whatthe29
+    membership: abra_ldap_sysadmins
     ```
 
 3. abra-guest-1
@@ -70,6 +72,7 @@ How to build:
     ```text
     username: abra-guest-1
     password: bunnyrabbit29
+    membership: abra_ldap_guests
     ```
 
 4. bind_user
@@ -78,3 +81,5 @@ How to build:
     username: bind_user
     password: graphicalacceleration29
     ```
+
+ABRA maps those in the ```abra_ldap_admins```, ```abra_ldap_sysadmins```, and ```abra_ldap_guests``` automatically.

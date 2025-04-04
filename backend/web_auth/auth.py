@@ -12,6 +12,7 @@ import bcrypt
 import datetime
 from pydantic import BaseModel
 from typing import Optional, List
+from enum import Enum
 
 from fastapi import APIRouter
 
@@ -30,10 +31,21 @@ ALGORITHM = "HS256"
 # Password hashing context
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+class UserAuthSource(str, Enum):
+  DATABASE = 'database'
+  LDAP = 'ldap'
+  # Add other sources as needed
+
+class UserType(str, Enum):
+  USER = 'user'
+  ADMIN = 'admin'
+  # Add other user types as needed
+
 class AuthToken(BaseModel):
   username: Optional[str] = None
   user_type: Optional[str] = None
   groups: Optional[List[str]] = None
+  auth_source: Optional[UserAuthSource] = None
 
 ldap_conn = None
 
@@ -55,13 +67,13 @@ def create_access_token(data: dict, expires_delta: Optional[datetime.timedelta] 
   return encoded_jwt
 
 async def get_cookie_or_token(request: Request):
-    auth_header = request.headers.get("Authorization")
-    if auth_header:
-        return auth_header
-    access_token = request.cookies.get("abra-auth")
-    if access_token:
-        return access_token
-    return None
+  auth_header = request.headers.get("Authorization")
+  if auth_header:
+    return auth_header
+  access_token = request.cookies.get("abra-auth")
+  if access_token:
+    return access_token
+  return None
 
 async def authenticate_cookie(auth_header: str = Depends(get_cookie_or_token)):
   try:
@@ -72,7 +84,8 @@ async def authenticate_cookie(auth_header: str = Depends(get_cookie_or_token)):
         token_data = AuthToken(
           username=payload.get("username"),
           user_type=payload.get("user_type"),
-          groups=payload.get("groups")
+          groups=payload.get("groups"),
+          auth_source=payload.get("auth_source")
         )
         return token_data
       except JWTError as e:
@@ -89,7 +102,8 @@ async def validate_token(request: Request, token: AuthToken = Depends(authentica
     token_json = {
       "username": token.username,
       "user_type": token.user_type,
-      "groups": token.groups
+      "groups": token.groups,
+      "auth_source": token.auth_source
     }
     return JSONResponse(content={"token": token_json}, status_code=200)
   return JSONResponse(content={"token": None}, status_code=401)
