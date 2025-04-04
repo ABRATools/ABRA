@@ -61,7 +61,8 @@ class LDAPConnection():
             self.connection.search(settings.LDAP_GROUP_DN, f'(&(objectClass=groupOfNames)(member={self.connection.entries[0].entry_dn}))', attributes=['cn'])
             groups = [entry.cn.value for entry in self.connection.entries]
             user_info['groups'] = groups
-            user_info['user_type'] = 'admin' if 'admin' in groups else 'user'
+            user_info['user_type'] = 'admin' if 'abra_ldap_admins' in groups else 'user'
+            user_info['auth_source'] = 'ldap'
             return user_info
         else:
             return None

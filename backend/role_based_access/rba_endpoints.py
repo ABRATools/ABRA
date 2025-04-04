@@ -136,6 +136,11 @@ async def add_user_to_group(
     token: AuthToken = Depends(admin_required),
     session = Depends(get_session)
 ):
+    if not token:
+        return JSONResponse(content={"success": False, "message": "Authentication required"}, status_code=401)
+    if token is JSONResponse:
+        return token
+    
     logger.info(f"User {token.username} is assigning user ID {assignment.user_id} to group ID {assignment.group_id}")
     result = assign_user_to_group(session, assignment.user_id, assignment.group_id)
     
@@ -150,6 +155,10 @@ async def remove_user_from_group_endpoint(
     token: AuthToken = Depends(admin_required),
     session = Depends(get_session)
 ):
+    if not token:
+        return JSONResponse(content={"success": False, "message": "Authentication required"}, status_code=401)
+    if token is JSONResponse:
+        return token
     logger.info(f"User {token.username} is removing user ID {assignment.user_id} from group ID {assignment.group_id}")
     result = remove_user_from_group(session, assignment.user_id, assignment.group_id)
     
@@ -166,6 +175,10 @@ async def create_permission_endpoint(
     token: AuthToken = Depends(admin_required),
     session = Depends(get_session)
 ):
+    if not token:
+        return JSONResponse(content={"success": False, "message": "Authentication required"}, status_code=401)
+    if token is JSONResponse:
+        return token
     logger.info(f"User {token.username} is creating permission: {permission_data.name}")
     result = create_permission(session, permission_data.name, permission_data.description)
     
@@ -180,6 +193,10 @@ async def delete_permission_endpoint(
     token: AuthToken = Depends(admin_required),
     session = Depends(get_session)
 ):
+    if not token:
+        return JSONResponse(content={"success": False, "message": "Authentication required"}, status_code=401)
+    if token is JSONResponse:
+        return token
     logger.info(f"User {token.username} is deleting permission ID: {permission_id}")
     result = delete_permission(session, permission_id)
     
@@ -196,6 +213,8 @@ async def list_permissions(
 ):
     if not token:
         return JSONResponse(content={"success": False, "message": "Authentication required"}, status_code=401)
+    if token is JSONResponse:
+        return token
     
     logger.info(f"User {token.username} is listing all permissions")
     result = get_permissions(session, include_groups)
@@ -213,6 +232,11 @@ async def assign_permission_to_group_endpoint(
     token: AuthToken = Depends(admin_required),
     session = Depends(get_session)
 ):
+    print(assignment)
+    if not token:
+        return JSONResponse(content={"success": False, "message": "Authentication required"}, status_code=401)
+    if token is JSONResponse:
+        return token
     logger.info(f"User {token.username} is assigning permission ID {assignment.permission_id} to group ID {assignment.group_id}")
     result = assign_permission_to_group(session, assignment.permission_id, assignment.group_id)
     
@@ -227,6 +251,10 @@ async def remove_permission_from_group_endpoint(
     token: AuthToken = Depends(admin_required),
     session = Depends(get_session)
 ):
+    if not token:
+        return JSONResponse(content={"success": False, "message": "Authentication required"}, status_code=401)
+    if token is JSONResponse:
+        return token
     logger.info(f"User {token.username} is removing permission ID {assignment.permission_id} from group ID {assignment.group_id}")
     result = remove_permission_from_group(session, assignment.permission_id, assignment.group_id)
     
@@ -245,6 +273,8 @@ async def check_user_permission(
 ):
     if not token:
         return JSONResponse(content={"success": False, "message": "Authentication required"}, status_code=401)
+    if token is JSONResponse:
+        return token
     
     # use the authenticated user's ID if none provided
     user_id = permission_check.user_id
@@ -279,6 +309,8 @@ async def get_user_permission_list(
 ):
     if not token:
         return JSONResponse(content={"success": False, "message": "Authentication required"}, status_code=401)
+    if token is JSONResponse:
+        return token
     
     # allow users to see their own permissions or admins to see anyone's
     is_admin = token.user_type == "admin" or "admin" in (token.groups or [])
@@ -306,6 +338,8 @@ async def get_my_permissions(
     """Get all permissions for the current user"""
     if not token:
         return JSONResponse(content={"success": False, "message": "Authentication required"}, status_code=401)
+    if token is JSONResponse:
+        return token
 
     user_id = token.username  # this should be the user ID 
     
@@ -325,6 +359,8 @@ async def check_my_permission(
 ):
     if not token:
         return JSONResponse(content={"success": False, "message": "Authentication required"}, status_code=401)
+    if token is JSONResponse:
+        return token
     
     
     user_id = token.username  # fix this later

@@ -3,7 +3,7 @@ sys.path.insert(0, os.path.abspath('..'))
 from logger import logger
 
 from sqlalchemy import and_, func
-from .models import User, Group, Node, Environment, ConnectionStrings, NodeInfo
+from .models import User, Group, Node, Environment, ConnectionStrings, NodeInfo, Permission
 from typing import List
 import datetime
 import json
@@ -15,8 +15,7 @@ def get_hash_for_user(db, username):
         return None
 
 def create_group(db, name):
-    # default permissions for a group (admin)
-    group = Group(name=name, permissions="create, read, update, delete")
+    group = Group(name=name)
     db.add(group)
     logger.debug(f"Creating group {name}")
     db.commit()
@@ -35,8 +34,8 @@ def add_user_to_group(db, username, group):
     user = db.query(User).filter(User.username == username).first()
     group = db.query(Group).filter(Group.name == group).first()
     user.groups.append(group)
-    logger.debug(f"Adding user {username} to group {group.name}")
     db.commit()
+    logger.debug(f"Added user {username} to group {group.name}")
 
 def create_user(db, username, hashed_password, email, groups):
     if db.query(User).filter(User.username == username).first() is not None:
@@ -137,6 +136,7 @@ def get_user_info(db, username):
         "username": user.username,
         "user_type": user_type,
         "groups": groups,
+        "auth_source": 'database'
     }
 
 def get_groups_by_names(db, group_names):
@@ -146,6 +146,28 @@ def get_groups_by_names(db, group_names):
         if group is not None:
             groups.append(group)
     return groups
+
+def get_or_add_group(db, group_name):
+    group = db.query(Group).filter(Group.name == group_name).first()
+    if group is None:
+        if group_name == 'admin' or group_name == 'abra_ldap_admins':
+            # get admin permission
+            admin_perm = db.query(Permission).filter(Permission.name == 'admin:all').first()
+            if admin_perm is None:
+                # create admin permission if it doesn't exist
+                admin_perm = Permission(name='admin:all')
+                db.add(admin_perm)
+                db.commit()
+            group = Group(name=group_name)
+            # add admin permission to group
+            group.permissions.append(admin_perm)
+        else:
+            group = Group(name=group_name)
+        # add group to database if it doesn't exist
+        db.add(group)
+        db.commit()
+        logger.debug(f"Creating group {group_name}")
+    return group
 
 def update_user_email(db, username, email):
     user = db.query(User).filter(User.username == username).first()

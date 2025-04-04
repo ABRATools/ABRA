@@ -4,6 +4,7 @@ Anthony Silva
 Link permissions to specific routes
 """
 
+import database as db
 from typing import Dict, List, Optional, Set, Any
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
@@ -124,7 +125,7 @@ def check_route_permission(session: Session, username: str, route: str) -> Dict[
                 "has_permission": True,
                 "message": f"No specific permission required for route: {route}"
             }
-        
+
         # get the user
         user = session.query(User).filter(User.username == username).first()
         if not user:
@@ -164,24 +165,53 @@ def check_route_permission(session: Session, username: str, route: str) -> Dict[
             "message": f"Database error: {str(e)}"
         }
     
-def get_accessible_routes(session: Session, username: str) -> Dict[str, Any]:
+def get_accessible_routes(session: Session, username: str, auth_source, ldap_conn) -> Dict[str, Any]:
     """
     Get all routes that a user has permission to access
     """
+
     try:
-        user = session.query(User).filter(User.username == username).first()
-        if not user:
-            return {
-                "success": False,
-                "message": f"User not found: {username}"
-            }
-        
+        user_data = None
         # get all permissions for this user
         user_permissions = set()
         admin_access = False
+
+        if auth_source == "ldap":
+            if ldap_conn is None:
+                raise ValueError("LDAP connection not initialized")
+            user_data = ldap_conn.query_user(username)
+            print(user_data)
+            if user_data is None:
+                logger.error(f"User data not found in LDAP: {username}")
+                return {
+                    "success": False,
+                    "message": f"User not found in LDAP: {username}"
+                }
+        elif auth_source == "database":
+            user_data = db.get_user_info(session, username)
+            if user_data is None:
+                logger.error(f"User data not found in database: {username}")
+                return {
+                    "success": False,
+                    "message": f"User data not found in database: {username}"
+                }
+        else:
+            return {
+                "success": False,
+                "message": f"Unsupported authentication source: {auth_source}"
+            }
         
-        for group in user.groups:
-            for permission in group.permissions:
+        for group in user_data.get('groups'):
+            print(group)
+            group_db_obj = db.get_or_add_group(session, group)
+            if group_db_obj is None:
+                logger.error(f"Group not found in database: {group}")
+                return {
+                    "success": False,
+                    "message": f"Group not found in database: {group}"
+                }
+            # add group permissions to user permissions
+            for permission in group_db_obj.permissions:
                 user_permissions.add(permission.name)
                 if permission.name == "admin:all":
                     admin_access = True

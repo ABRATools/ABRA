@@ -150,955 +150,6 @@
 2025-03-04 22:24:42,162 | INFO | User admin is assigning user ID 3 to group ID 2
 2025-03-04 22:24:42,188 | INFO | User admin is listing all groups
 2025-03-04 22:24:42,192 | INFO | User admin is listing all permissions
-2025-03-05 01:43:04,135 | INFO | Using local sqlite database
-2025-03-05 01:43:04,537 | INFO | Starting central process...
-2025-03-05 01:43:04,537 | INFO | No configuration file provided. Using default configuration.
-2025-03-05 01:43:04,540 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-05 01:43:04,543 | INFO | Starting aggregator process...
-2025-03-05 01:43:04,574 | INFO | Starting main loop
-2025-03-05 01:43:05,272 | INFO | Using local sqlite database
-2025-03-05 01:43:05,316 | INFO | Using local sqlite database
-2025-03-05 01:43:38,265 | INFO | Shutdown handler triggered by signal.
-2025-03-05 01:43:38,265 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-05 01:43:38,266 | INFO | Terminating process 1629400
-2025-03-05 01:43:38,269 | INFO | Shutdown handler triggered by signal.
-2025-03-05 01:43:38,269 | INFO | Main task cancelled gracefully.
-2025-03-05 01:43:41,352 | INFO | Using local sqlite database
-2025-03-05 01:43:41,537 | INFO | Starting central process...
-2025-03-05 01:43:41,537 | INFO | No configuration file provided. Using default configuration.
-2025-03-05 01:43:41,539 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-05 01:43:41,542 | INFO | Starting aggregator process...
-2025-03-05 01:43:41,570 | INFO | Starting main loop
-2025-03-05 01:43:42,281 | INFO | Using local sqlite database
-2025-03-05 01:43:42,294 | INFO | Using local sqlite database
-2025-03-05 11:44:46,843 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:44:50,849 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:44:56,859 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:45:00,866 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:55:52,463 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:55:56,469 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:56:02,478 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:56:06,533 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:56:12,542 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:56:16,549 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:56:22,558 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:56:26,563 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:56:32,572 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:56:36,578 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:56:42,587 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:56:46,594 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:56:52,603 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:56:56,610 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:57:02,616 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:57:06,623 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:57:52,714 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:57:56,721 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:58:02,729 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:58:06,734 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:58:12,743 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:58:16,751 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:58:22,759 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:58:26,766 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:58:32,776 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:58:36,783 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:58:42,793 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:58:46,798 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:58:52,807 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:58:56,814 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:59:02,822 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:59:06,828 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:59:12,838 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:59:16,843 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:59:22,851 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:59:26,856 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:59:32,866 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:59:36,873 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:59:42,881 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:59:48,890 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:59:52,897 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 11:59:58,905 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:00:02,911 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:00:08,919 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:00:12,924 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:00:18,933 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:00:22,938 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:00:28,946 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:00:32,954 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:00:38,964 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:00:42,970 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:00:48,978 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:00:52,986 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:00:58,995 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:01:03,002 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:01:09,011 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:01:13,016 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:01:19,026 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:01:23,033 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:01:29,042 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:01:33,048 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:01:39,057 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:01:43,064 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:01:49,072 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:01:53,079 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:01:59,088 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:02:03,095 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:02:09,104 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:02:13,110 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:02:19,119 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:02:23,125 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:02:29,133 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:02:33,140 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:02:39,150 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:02:43,156 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:02:49,165 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:02:53,173 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:02:59,182 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:03:03,189 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:03:09,197 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:03:13,204 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:03:19,214 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:03:23,221 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:03:29,230 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:03:33,236 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:03:39,246 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:03:43,253 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:03:49,263 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:03:53,270 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:03:59,278 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:04:03,285 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:04:09,294 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:04:13,300 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:04:19,310 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:04:23,318 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:04:29,327 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:04:33,334 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:04:39,343 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:04:43,351 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:04:49,362 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:04:53,368 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:04:59,376 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:05:03,383 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:05:09,395 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:05:13,402 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:05:19,411 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:05:23,416 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:05:29,426 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:05:33,433 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:05:39,445 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:05:43,452 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:05:49,462 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:05:53,469 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:05:59,479 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:06:03,485 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:06:09,493 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:06:13,500 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:06:19,510 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:06:23,517 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:06:29,527 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:06:33,534 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:06:39,543 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:06:43,550 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:06:49,559 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:06:53,566 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:06:59,575 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:07:03,579 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:07:09,588 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:07:13,596 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:07:19,605 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:07:23,611 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:07:29,621 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:07:33,627 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:07:39,637 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:07:43,644 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:07:49,653 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:07:53,660 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:07:59,670 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:08:03,677 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:08:09,687 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:08:13,693 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:08:19,702 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:08:23,710 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:08:29,719 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:08:33,726 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:08:39,736 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:08:43,741 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:08:49,750 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:08:53,758 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:08:59,767 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:09:03,774 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:09:09,783 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:09:13,790 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:09:19,800 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:09:23,807 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:09:29,816 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:09:33,823 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:09:39,831 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:09:43,838 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:09:49,848 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:09:53,855 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:09:59,864 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:10:03,871 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:10:09,880 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:10:13,887 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:10:19,897 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:10:23,903 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:10:29,912 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:10:33,919 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:10:39,930 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:10:43,937 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:10:49,945 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:10:53,950 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:10:59,959 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:11:03,967 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:11:09,976 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:11:13,983 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:11:19,992 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:11:23,999 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:11:30,006 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:11:34,013 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:11:40,023 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:11:44,030 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:11:50,040 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:11:54,047 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:12:00,055 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:12:04,063 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:12:10,072 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:12:14,079 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:12:20,088 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:12:24,095 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:12:30,103 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:12:34,110 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:12:40,120 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:12:44,127 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:12:50,137 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:12:54,143 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:13:00,152 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:13:04,159 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:13:10,169 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:13:14,175 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:13:20,185 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:13:24,193 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:13:30,203 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:13:34,210 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:13:40,218 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:13:44,225 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:13:50,234 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:13:54,241 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:14:00,250 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:14:04,256 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:14:10,263 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:14:14,270 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:14:20,280 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:14:24,287 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:14:30,296 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:14:34,303 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:14:40,313 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:14:44,320 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:14:50,330 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:14:54,335 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:15:00,344 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:15:04,351 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:15:10,359 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:15:14,366 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:15:20,375 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:15:24,382 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:15:30,392 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:15:34,396 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:15:40,404 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:15:44,411 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:15:50,420 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:15:54,426 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:16:00,436 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:16:04,443 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:16:10,453 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:16:14,458 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:16:20,467 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:16:24,473 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:16:30,479 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:16:34,486 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:16:40,495 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:16:44,501 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:16:50,510 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:16:54,517 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:17:00,525 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:17:04,532 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:17:10,540 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:17:14,547 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:17:20,556 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:17:24,563 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:17:30,573 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:17:34,579 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:17:40,587 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:17:44,594 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:17:50,603 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:17:54,609 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:18:00,616 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:18:04,623 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:18:10,631 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:18:14,637 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:18:20,645 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:18:24,651 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:18:30,660 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:18:34,666 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:18:40,675 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:18:44,682 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:18:50,690 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:18:54,696 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:19:00,705 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:19:04,712 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:19:10,720 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:19:14,727 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:19:20,736 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:19:24,743 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:19:30,753 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:19:34,760 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:19:40,769 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:19:44,775 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:19:50,784 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:19:54,790 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:20:00,799 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:20:04,806 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:20:10,815 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:20:14,821 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:20:20,831 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:20:24,837 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:20:30,847 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:20:34,854 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:20:40,863 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:20:44,870 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:20:50,879 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:20:54,885 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:21:00,892 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:21:04,899 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:21:10,908 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:21:14,916 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:21:20,926 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:21:24,933 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:21:30,943 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:21:34,949 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:21:40,958 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:21:44,965 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:21:50,974 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:21:54,981 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:22:00,991 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:22:04,996 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:22:11,005 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:22:15,013 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:22:21,021 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:22:25,027 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:22:31,036 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:22:35,043 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 12:36:05,584 | INFO | No token found
-2025-03-05 12:36:09,793 | INFO | User admin is attempting to log in
-2025-03-05 12:36:10,060 | INFO | User admin has successfully logged in
-2025-03-05 12:36:10,063 | INFO | User admin has successfully logged in
-2025-03-05 13:13:41,805 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 13:13:45,812 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 13:14:19,104 | INFO | No token found
-2025-03-05 13:14:25,613 | INFO | User admin is attempting to log in
-2025-03-05 13:14:25,880 | INFO | User admin has successfully logged in
-2025-03-05 13:14:25,882 | INFO | User admin has successfully logged in
-2025-03-05 13:18:17,688 | INFO | Shutdown handler triggered by signal.
-2025-03-05 13:18:17,687 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-05 13:18:17,688 | INFO | Terminating process 1629995
-2025-03-05 13:18:17,693 | INFO | Shutdown handler triggered by signal.
-2025-03-05 13:18:17,693 | INFO | Main task cancelled gracefully.
-2025-03-05 13:18:25,453 | INFO | Using local sqlite database
-2025-03-05 13:18:25,670 | INFO | Starting central process...
-2025-03-05 13:18:25,670 | INFO | No configuration file provided. Using default configuration.
-2025-03-05 13:18:25,673 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-05 13:18:25,675 | INFO | Starting aggregator process...
-2025-03-05 13:18:25,701 | INFO | Starting main loop
-2025-03-05 13:18:26,412 | INFO | Using local sqlite database
-2025-03-05 13:18:26,412 | INFO | Using local sqlite database
-2025-03-05 13:18:41,880 | INFO | Stopping container: 
-2025-03-05 13:18:41,881 | INFO | Stopping container with env_id: 71d2a66f13f7feeb547803a8e04793b9e79951cbf8a4e6021091d346355aefca
-2025-03-05 13:18:41,881 | INFO | Stopping container with env_id: 71d2a66f13f7feeb547803a8e04793b9e79951cbf8a4e6021091d346355aefca
-2025-03-05 13:22:06,109 | INFO | Fetching containers
-2025-03-05 13:22:06,109 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
-2025-03-05 13:26:33,364 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-05 13:26:33,365 | INFO | Shutdown handler triggered by signal.
-2025-03-05 13:26:33,365 | INFO | Terminating process 2078114
-2025-03-05 13:26:33,368 | INFO | Shutdown handler triggered by signal.
-2025-03-05 13:26:33,368 | INFO | Main task cancelled gracefully.
-2025-03-05 13:26:41,611 | INFO | Using local sqlite database
-2025-03-05 13:26:41,779 | INFO | Starting central process...
-2025-03-05 13:26:41,779 | INFO | No configuration file provided. Using default configuration.
-2025-03-05 13:26:41,781 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-05 13:26:41,784 | INFO | Starting aggregator process...
-2025-03-05 13:26:41,813 | INFO | Starting main loop
-2025-03-05 13:26:42,531 | INFO | Using local sqlite database
-2025-03-05 13:26:42,532 | INFO | Using local sqlite database
-2025-03-05 13:44:29,660 | INFO | No token found
-2025-03-05 13:44:33,356 | INFO | User admin is attempting to log in
-2025-03-05 13:44:33,623 | INFO | User admin has successfully logged in
-2025-03-05 13:44:33,626 | INFO | User admin has successfully logged in
-2025-03-05 13:45:32,948 | INFO | Shutdown handler triggered by signal.
-2025-03-05 13:45:32,948 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-05 13:45:32,948 | INFO | Terminating process 2084745
-2025-03-05 13:45:32,952 | INFO | Shutdown handler triggered by signal.
-2025-03-05 13:45:32,952 | INFO | Main task cancelled gracefully.
-2025-03-05 13:45:35,731 | INFO | Using local sqlite database
-2025-03-05 13:45:35,899 | INFO | Starting central process...
-2025-03-05 13:45:35,899 | INFO | No configuration file provided. Using default configuration.
-2025-03-05 13:45:35,900 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-05 13:45:35,903 | INFO | Starting aggregator process...
-2025-03-05 13:45:35,928 | INFO | Starting main loop
-2025-03-05 13:45:36,641 | INFO | Using local sqlite database
-2025-03-05 13:45:36,645 | INFO | Using local sqlite database
-2025-03-05 13:46:07,193 | INFO | Deleting container: 
-2025-03-05 13:46:07,193 | INFO | Deleting container with env_id: e087294e7c5258ea01fca5e0581a8f12f22987b0c6f446ff174960498434d240
-2025-03-05 13:46:07,193 | INFO | Deleting container with env_id: e087294e7c5258ea01fca5e0581a8f12f22987b0c6f446ff174960498434d240
-2025-03-05 13:46:07,196 | ERROR | An error occurred: 404 Client Error: Not Found for url: http://192.168.14.15:8888/containers/delete/e087294e7c5258ea01fca5e0581a8f12f22987b0c6f446ff174960498434d240
-2025-03-05 13:46:32,828 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 13:47:05,180 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-05 13:47:05,180 | INFO | Shutdown handler triggered by signal.
-2025-03-05 13:47:05,180 | INFO | Terminating process 2100273
-2025-03-05 13:47:05,184 | INFO | Shutdown handler triggered by signal.
-2025-03-05 13:47:05,184 | INFO | Main task cancelled gracefully.
-2025-03-05 13:47:08,460 | INFO | Using local sqlite database
-2025-03-05 13:47:08,624 | INFO | Starting central process...
-2025-03-05 13:47:08,625 | INFO | No configuration file provided. Using default configuration.
-2025-03-05 13:47:08,626 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-05 13:47:08,628 | INFO | Starting aggregator process...
-2025-03-05 13:47:08,656 | INFO | Starting main loop
-2025-03-05 13:47:09,412 | INFO | Using local sqlite database
-2025-03-05 13:47:09,421 | INFO | Using local sqlite database
-2025-03-05 13:47:19,158 | INFO | Deleting container: 
-2025-03-05 13:47:19,159 | INFO | Deleting container with env_id: e087294e7c5258ea01fca5e0581a8f12f22987b0c6f446ff174960498434d240
-2025-03-05 13:47:19,159 | INFO | Deleting container with env_id: e087294e7c5258ea01fca5e0581a8f12f22987b0c6f446ff174960498434d240
-2025-03-05 13:47:19,236 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/remove/e087294e7c5258ea01fca5e0581a8f12f22987b0c6f446ff174960498434d240
-2025-03-05 13:54:25,341 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 13:54:31,351 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 13:54:49,380 | INFO | Deleting container: 
-2025-03-05 13:54:49,380 | INFO | Deleting container with env_id: 1ab6b5c29c638b27a22d9c79ab842d95dfed4cce71ac201cb5ee9527d70c2270
-2025-03-05 13:54:49,380 | INFO | Deleting container with env_id: 1ab6b5c29c638b27a22d9c79ab842d95dfed4cce71ac201cb5ee9527d70c2270
-2025-03-05 13:54:59,485 | INFO | Deleting container: 
-2025-03-05 13:54:59,485 | INFO | Deleting container with env_id: 4ef6aa7cd84624fffc2fe70fe14b38254f14d8c0c42a32f9a8a94b5f311c722d
-2025-03-05 13:54:59,485 | INFO | Deleting container with env_id: 4ef6aa7cd84624fffc2fe70fe14b38254f14d8c0c42a32f9a8a94b5f311c722d
-2025-03-05 13:55:07,469 | INFO | Stopping container: 
-2025-03-05 13:55:07,469 | INFO | Stopping container with env_id: e054b62b1f063d04ab58d730a61e1ca92edc73f186a78c881c401dc93ef43f38
-2025-03-05 13:55:07,469 | INFO | Stopping container with env_id: e054b62b1f063d04ab58d730a61e1ca92edc73f186a78c881c401dc93ef43f38
-2025-03-05 13:55:15,065 | INFO | Deleting container: 
-2025-03-05 13:55:15,065 | INFO | Deleting container with env_id: e054b62b1f063d04ab58d730a61e1ca92edc73f186a78c881c401dc93ef43f38
-2025-03-05 13:55:15,065 | INFO | Deleting container with env_id: e054b62b1f063d04ab58d730a61e1ca92edc73f186a78c881c401dc93ef43f38
-2025-03-05 13:56:19,297 | INFO | Deleting container: 
-2025-03-05 13:56:19,298 | INFO | Deleting container with env_id: 51fc07a4350deb811dd197c2c09c7c6e7d836a64a0e9ad047c883c74222d425a
-2025-03-05 13:56:19,298 | INFO | Deleting container with env_id: 51fc07a4350deb811dd197c2c09c7c6e7d836a64a0e9ad047c883c74222d425a
-2025-03-05 13:56:31,106 | INFO | Deleting container: 
-2025-03-05 13:56:31,107 | INFO | Deleting container with env_id: 71d2a66f13f7feeb547803a8e04793b9e79951cbf8a4e6021091d346355aefca
-2025-03-05 13:56:31,107 | INFO | Deleting container with env_id: 71d2a66f13f7feeb547803a8e04793b9e79951cbf8a4e6021091d346355aefca
-2025-03-05 14:03:56,508 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 14:04:02,516 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 14:08:07,013 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 14:08:13,022 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 14:08:34,954 | INFO | Stopping container: 
-2025-03-05 14:08:34,954 | INFO | Stopping container with env_id: 3db623f1f146e6862d935fee2901cc6781687c4599aafd7efb003f6d314001f7
-2025-03-05 14:08:34,954 | INFO | Stopping container with env_id: 3db623f1f146e6862d935fee2901cc6781687c4599aafd7efb003f6d314001f7
-2025-03-05 14:08:49,479 | INFO | Starting container: 
-2025-03-05 14:08:49,479 | INFO | Starting container with env_id: 3db623f1f146e6862d935fee2901cc6781687c4599aafd7efb003f6d314001f7
-2025-03-05 14:08:49,479 | INFO | Stopping container with env_id: 3db623f1f146e6862d935fee2901cc6781687c4599aafd7efb003f6d314001f7
-2025-03-05 14:09:26,847 | INFO | Stopping container: 
-2025-03-05 14:09:26,847 | INFO | Stopping container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
-2025-03-05 14:09:26,847 | INFO | Stopping container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
-2025-03-05 14:09:34,975 | INFO | Starting container: 
-2025-03-05 14:09:34,975 | INFO | Starting container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
-2025-03-05 14:09:34,975 | INFO | Stopping container with env_id: 54e096d040bf73bc3a09a3ea255f4d497d62ddf1553d5f1c33d65bf19f798f0c
-2025-03-05 15:34:25,421 | INFO | User admin is attempting to log in
-2025-03-05 15:34:25,688 | WARNING | User admin has failed to log in
-2025-03-05 15:34:29,227 | INFO | User admin is attempting to log in
-2025-03-05 15:34:29,493 | INFO | User admin has successfully logged in
-2025-03-05 15:34:29,496 | INFO | User admin has successfully logged in
-2025-03-05 15:35:35,059 | INFO | Deleting container: 
-2025-03-05 15:35:35,059 | INFO | Deleting container with env_id: de6090e58f2ae620998c65c89887dc8b2d0697a609c94b788eea0802b4c013e8
-2025-03-05 15:35:35,059 | INFO | Deleting container with env_id: de6090e58f2ae620998c65c89887dc8b2d0697a609c94b788eea0802b4c013e8
-2025-03-05 15:36:41,110 | INFO | Fetching containers
-2025-03-05 15:36:41,111 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
-2025-03-05 16:49:41,268 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-05 16:49:48,274 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 20:59:47,618 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 20:59:51,836 | INFO | Using local sqlite database
-2025-03-09 20:59:52,129 | INFO | Starting central process...
-2025-03-09 20:59:52,129 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 20:59:52,131 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 20:59:52,134 | INFO | Starting aggregator process...
-2025-03-09 20:59:52,169 | INFO | Starting main loop
-2025-03-09 20:59:52,881 | INFO | Using local sqlite database
-2025-03-09 20:59:52,901 | INFO | Using local sqlite database
-2025-03-09 21:00:13,540 | INFO | No token found
-2025-03-09 21:00:18,469 | INFO | User admin is attempting to log in
-2025-03-09 21:00:18,736 | INFO | User admin has successfully logged in
-2025-03-09 21:00:18,744 | INFO | User admin has successfully logged in
-2025-03-09 21:50:42,563 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 21:50:42,564 | INFO | Shutdown handler triggered by signal.
-2025-03-09 21:50:42,564 | INFO | Terminating process 1939644
-2025-03-09 21:50:42,569 | INFO | Shutdown handler triggered by signal.
-2025-03-09 21:50:42,570 | INFO | Main task cancelled gracefully.
-2025-03-09 21:50:48,057 | INFO | Using local sqlite database
-2025-03-09 21:50:48,228 | INFO | Starting central process...
-2025-03-09 21:50:48,228 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 21:50:48,230 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 21:50:48,233 | INFO | Starting aggregator process...
-2025-03-09 21:50:48,263 | INFO | Starting main loop
-2025-03-09 21:50:48,978 | INFO | Using local sqlite database
-2025-03-09 21:50:48,979 | INFO | Using local sqlite database
-2025-03-09 21:50:57,080 | INFO | No token found
-2025-03-09 21:51:00,932 | INFO | User admin is attempting to log in
-2025-03-09 21:51:01,215 | INFO | User admin has successfully logged in
-2025-03-09 21:51:01,221 | INFO | User admin has successfully logged in
-2025-03-09 21:52:23,469 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 21:52:23,469 | INFO | Shutdown handler triggered by signal.
-2025-03-09 21:52:23,470 | INFO | Terminating process 1973460
-2025-03-09 21:52:23,474 | INFO | Shutdown handler triggered by signal.
-2025-03-09 21:52:23,474 | INFO | Main task cancelled gracefully.
-2025-03-09 21:52:26,396 | INFO | Using local sqlite database
-2025-03-09 21:52:26,570 | INFO | Starting central process...
-2025-03-09 21:52:26,570 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 21:52:26,572 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 21:52:26,574 | INFO | Starting aggregator process...
-2025-03-09 21:52:26,604 | INFO | Starting main loop
-2025-03-09 21:52:27,317 | INFO | Using local sqlite database
-2025-03-09 21:52:27,328 | INFO | Using local sqlite database
-2025-03-09 21:52:46,797 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 21:52:48,947 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 21:53:01,161 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 21:54:45,056 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 21:55:20,612 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 21:55:50,907 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 21:56:04,505 | ERROR | No ip provided
-2025-03-09 21:57:28,493 | INFO | Shutdown handler triggered by signal.
-2025-03-09 21:57:28,493 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 21:57:28,493 | INFO | Terminating process 1974992
-2025-03-09 21:57:28,500 | INFO | Shutdown handler triggered by signal.
-2025-03-09 21:57:28,501 | INFO | Main task cancelled gracefully.
-2025-03-09 21:57:46,357 | INFO | Using local sqlite database
-2025-03-09 21:57:46,525 | INFO | Starting central process...
-2025-03-09 21:57:46,525 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 21:57:46,527 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 21:57:46,530 | INFO | Starting aggregator process...
-2025-03-09 21:57:46,561 | INFO | Starting main loop
-2025-03-09 21:57:47,267 | INFO | Using local sqlite database
-2025-03-09 21:57:47,272 | INFO | Using local sqlite database
-2025-03-09 21:57:48,640 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 21:57:54,061 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 21:58:09,339 | INFO | Creating container: 
-2025-03-09 21:58:09,343 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/create
-2025-03-09 22:05:29,111 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 22:05:29,111 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:05:29,111 | INFO | Terminating process 1979907
-2025-03-09 22:05:29,115 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:05:29,116 | INFO | Main task cancelled gracefully.
-2025-03-09 22:05:32,285 | INFO | Using local sqlite database
-2025-03-09 22:05:32,460 | INFO | Starting central process...
-2025-03-09 22:05:32,460 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 22:05:32,462 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 22:05:32,465 | INFO | Starting aggregator process...
-2025-03-09 22:05:32,493 | INFO | Starting main loop
-2025-03-09 22:05:33,220 | INFO | Using local sqlite database
-2025-03-09 22:05:33,226 | INFO | Using local sqlite database
-2025-03-09 22:05:34,161 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:05:39,202 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:05:59,643 | INFO | Creating container: 
-2025-03-09 22:05:59,647 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/create
-2025-03-09 22:07:05,408 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 22:07:05,408 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:07:05,409 | INFO | Terminating process 1985380
-2025-03-09 22:07:05,413 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:07:05,413 | INFO | Main task cancelled gracefully.
-2025-03-09 22:07:08,427 | INFO | Using local sqlite database
-2025-03-09 22:07:08,594 | INFO | Starting central process...
-2025-03-09 22:07:08,594 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 22:07:08,595 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 22:07:08,599 | INFO | Starting aggregator process...
-2025-03-09 22:07:08,628 | INFO | Starting main loop
-2025-03-09 22:07:09,340 | INFO | Using local sqlite database
-2025-03-09 22:07:09,389 | INFO | Using local sqlite database
-2025-03-09 22:07:10,497 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:07:22,564 | INFO | Creating container: 
-2025-03-09 22:08:08,290 | ERROR | Invalid ip address
-2025-03-09 22:09:03,814 | ERROR | Invalid ip address
-2025-03-09 22:11:54,868 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 22:11:54,868 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:11:54,868 | INFO | Terminating process 1986736
-2025-03-09 22:11:54,874 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:11:54,874 | INFO | Main task cancelled gracefully.
-2025-03-09 22:11:57,997 | INFO | Using local sqlite database
-2025-03-09 22:11:58,166 | INFO | Starting central process...
-2025-03-09 22:11:58,167 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 22:11:58,168 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 22:11:58,171 | INFO | Starting aggregator process...
-2025-03-09 22:11:58,201 | INFO | Starting main loop
-2025-03-09 22:11:58,929 | INFO | Using local sqlite database
-2025-03-09 22:11:58,946 | INFO | Using local sqlite database
-2025-03-09 22:11:59,960 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:12:04,576 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:12:16,789 | INFO | Creating container: 
-2025-03-09 22:12:40,103 | ERROR | Invalid ip address
-2025-03-09 22:12:53,434 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:12:53,434 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 22:12:53,435 | INFO | Terminating process 1990578
-2025-03-09 22:12:53,441 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:12:53,441 | INFO | Main task cancelled gracefully.
-2025-03-09 22:12:59,741 | INFO | Using local sqlite database
-2025-03-09 22:12:59,930 | INFO | Starting central process...
-2025-03-09 22:12:59,930 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 22:12:59,932 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 22:12:59,936 | INFO | Starting aggregator process...
-2025-03-09 22:12:59,974 | INFO | Starting main loop
-2025-03-09 22:13:00,685 | INFO | Using local sqlite database
-2025-03-09 22:13:00,734 | INFO | Using local sqlite database
-2025-03-09 22:13:03,526 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:13:15,375 | INFO | Creating container: 
-2025-03-09 22:13:16,622 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/create
-2025-03-09 22:15:28,744 | INFO | Creating container: 
-2025-03-09 22:15:28,749 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
-2025-03-09 22:20:10,148 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 22:20:10,148 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:20:10,148 | INFO | Terminating process 1992297
-2025-03-09 22:20:10,152 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:20:10,152 | INFO | Main task cancelled gracefully.
-2025-03-09 22:20:13,055 | INFO | Using local sqlite database
-2025-03-09 22:20:13,248 | INFO | Starting central process...
-2025-03-09 22:20:13,248 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 22:20:13,250 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 22:20:13,253 | INFO | Starting aggregator process...
-2025-03-09 22:20:13,281 | INFO | Starting main loop
-2025-03-09 22:20:14,000 | INFO | Using local sqlite database
-2025-03-09 22:20:14,033 | INFO | Using local sqlite database
-2025-03-09 22:20:15,216 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:20:17,825 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:20:30,610 | INFO | Creating container: 
-2025-03-09 22:20:30,882 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/create
-2025-03-09 22:21:05,046 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:21:05,046 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 22:21:05,047 | INFO | Terminating process 1999504
-2025-03-09 22:21:05,050 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:21:05,050 | INFO | Main task cancelled gracefully.
-2025-03-09 22:21:07,568 | INFO | Using local sqlite database
-2025-03-09 22:21:07,735 | INFO | Starting central process...
-2025-03-09 22:21:07,735 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 22:21:07,737 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 22:21:07,739 | INFO | Starting aggregator process...
-2025-03-09 22:21:07,765 | INFO | Starting main loop
-2025-03-09 22:21:08,476 | INFO | Using local sqlite database
-2025-03-09 22:21:08,495 | INFO | Using local sqlite database
-2025-03-09 22:21:10,097 | INFO | No token found
-2025-03-09 22:21:10,098 | WARNING | Unauthorized request to list node images
-2025-03-09 22:21:14,151 | INFO | No token found
-2025-03-09 22:21:18,127 | INFO | User admin is attempting to log in
-2025-03-09 22:21:18,409 | INFO | User admin has successfully logged in
-2025-03-09 22:21:18,414 | INFO | User admin has successfully logged in
-2025-03-09 22:21:21,604 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:21:32,232 | INFO | Creating container: 
-2025-03-09 22:21:32,237 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
-2025-03-09 22:26:51,963 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 22:26:51,963 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:26:51,964 | INFO | Terminating process 2000804
-2025-03-09 22:26:51,967 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:26:51,967 | INFO | Main task cancelled gracefully.
-2025-03-09 22:26:55,219 | INFO | Using local sqlite database
-2025-03-09 22:26:55,388 | INFO | Starting central process...
-2025-03-09 22:26:55,388 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 22:26:55,389 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 22:26:55,392 | INFO | Starting aggregator process...
-2025-03-09 22:26:55,419 | INFO | Starting main loop
-2025-03-09 22:26:56,130 | INFO | Using local sqlite database
-2025-03-09 22:26:56,149 | INFO | Using local sqlite database
-2025-03-09 22:26:57,112 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:27:01,417 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:27:08,639 | INFO | Creating container: 
-2025-03-09 22:27:08,645 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
-2025-03-09 22:27:08,645 | ERROR | API response: {"message":"Container with name already exists"}
-2025-03-09 22:27:08,645 | ERROR | An error occurred: {"message":"Container with name already exists"}
-2025-03-09 22:29:30,573 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 22:29:30,573 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:29:30,573 | INFO | Terminating process 2006598
-2025-03-09 22:29:30,577 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:29:30,577 | INFO | Main task cancelled gracefully.
-2025-03-09 22:29:35,920 | INFO | Using local sqlite database
-2025-03-09 22:29:36,086 | INFO | Starting central process...
-2025-03-09 22:29:36,086 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 22:29:36,088 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 22:29:36,090 | INFO | Starting aggregator process...
-2025-03-09 22:29:36,118 | INFO | Starting main loop
-2025-03-09 22:29:36,826 | INFO | Using local sqlite database
-2025-03-09 22:29:36,852 | INFO | Using local sqlite database
-2025-03-09 22:29:40,685 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:29:50,717 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:29:59,785 | INFO | Creating container: 
-2025-03-09 22:29:59,790 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
-2025-03-09 22:29:59,790 | ERROR | API response: {"message":"Container with name already exists"}
-2025-03-09 22:29:59,790 | ERROR | An error occurred: {"message":"Container with name already exists"}
-2025-03-09 22:40:27,035 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 22:40:27,035 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:40:27,035 | INFO | Terminating process 2009409
-2025-03-09 22:40:27,039 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:40:27,039 | INFO | Main task cancelled gracefully.
-2025-03-09 22:40:30,656 | INFO | Using local sqlite database
-2025-03-09 22:40:30,817 | INFO | Starting central process...
-2025-03-09 22:40:30,818 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 22:40:30,819 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 22:40:30,821 | INFO | Starting aggregator process...
-2025-03-09 22:40:30,845 | INFO | Starting main loop
-2025-03-09 22:40:31,551 | INFO | Using local sqlite database
-2025-03-09 22:40:31,568 | INFO | Using local sqlite database
-2025-03-09 22:40:32,158 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:40:51,903 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:41:00,765 | INFO | Creating container: 
-2025-03-09 22:41:00,769 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
-2025-03-09 22:41:00,770 | ERROR | API response: {"message":"Container with name already exists"}
-2025-03-09 22:41:00,770 | ERROR | An error occurred: {"message":"Container with name already exists"}
-2025-03-09 22:42:00,827 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 22:42:00,827 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:42:00,827 | INFO | Terminating process 2019804
-2025-03-09 22:42:00,830 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:42:00,830 | INFO | Main task cancelled gracefully.
-2025-03-09 22:42:03,835 | INFO | Using local sqlite database
-2025-03-09 22:42:04,001 | INFO | Starting central process...
-2025-03-09 22:42:04,001 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 22:42:04,003 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 22:42:04,005 | INFO | Starting aggregator process...
-2025-03-09 22:42:04,032 | INFO | Starting main loop
-2025-03-09 22:42:04,732 | INFO | Using local sqlite database
-2025-03-09 22:42:04,752 | INFO | Using local sqlite database
-2025-03-09 22:42:05,878 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:42:08,258 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:42:15,578 | INFO | Creating container: 
-2025-03-09 22:42:15,583 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
-2025-03-09 22:42:15,583 | ERROR | API response: {"message":"Container with name already exists"}
-2025-03-09 22:42:15,583 | ERROR | An error occurred: {"message":"Container with name already exists"}
-2025-03-09 22:43:00,534 | INFO | Creating container: 
-2025-03-09 22:43:00,535 | ERROR | An error occurred: Object of type IPv4Address is not JSON serializable
-2025-03-09 22:52:41,142 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 22:52:41,142 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:52:41,142 | INFO | Terminating process 2021603
-2025-03-09 22:52:41,146 | INFO | Shutdown handler triggered by signal.
-2025-03-09 22:52:41,146 | INFO | Main task cancelled gracefully.
-2025-03-09 22:52:45,217 | INFO | Using local sqlite database
-2025-03-09 22:52:45,385 | INFO | Starting central process...
-2025-03-09 22:52:45,386 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 22:52:45,387 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 22:52:45,390 | INFO | Starting aggregator process...
-2025-03-09 22:52:45,424 | INFO | Starting main loop
-2025-03-09 22:52:46,124 | INFO | Using local sqlite database
-2025-03-09 22:52:46,135 | INFO | Using local sqlite database
-2025-03-09 22:52:50,127 | INFO | No token found
-2025-03-09 22:52:55,719 | INFO | User admin is attempting to log in
-2025-03-09 22:52:56,000 | INFO | User admin has successfully logged in
-2025-03-09 22:52:56,005 | INFO | User admin has successfully logged in
-2025-03-09 22:53:23,844 | INFO | Fetching containers
-2025-03-09 22:53:23,846 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
-2025-03-09 22:53:45,039 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 22:54:03,256 | INFO | Creating container: 
-2025-03-09 22:54:03,531 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/create
-2025-03-09 22:54:03,531 | ERROR | API response: {"message":"crun: executable file `/sbin/init` not found in $PATH: No such file or directory: OCI runtime attempted to invoke a command that was not found"}
-2025-03-09 22:54:03,532 | ERROR | An error occurred: {"message":"crun: executable file `/sbin/init` not found in $PATH: No such file or directory: OCI runtime attempted to invoke a command that was not found"}
-2025-03-09 22:54:08,765 | INFO | Creating container: 
-2025-03-09 22:54:08,772 | ERROR | An error occurred: 400 Client Error: Bad Request for url: http://192.168.14.15:8888/containers/create
-2025-03-09 22:54:08,772 | ERROR | API response: {"message":"Container with name already exists"}
-2025-03-09 22:54:08,772 | ERROR | An error occurred: {"message":"Container with name already exists"}
-2025-03-09 22:54:21,432 | INFO | Creating container: 
-2025-03-09 22:54:31,443 | ERROR | Request timed out after 10 seconds
-2025-03-09 22:54:31,444 | ERROR | An error occurred: Request timed out after 10 seconds
-2025-03-09 23:01:38,053 | INFO | Shutdown handler triggered by signal.
-2025-03-09 23:01:38,053 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-09 23:01:38,054 | INFO | Terminating process 2031771
-2025-03-09 23:01:38,059 | INFO | Shutdown handler triggered by signal.
-2025-03-09 23:01:38,059 | INFO | Main task cancelled gracefully.
-2025-03-09 23:01:41,730 | INFO | Using local sqlite database
-2025-03-09 23:01:41,907 | INFO | Starting central process...
-2025-03-09 23:01:41,907 | INFO | No configuration file provided. Using default configuration.
-2025-03-09 23:01:41,908 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-09 23:01:41,911 | INFO | Starting aggregator process...
-2025-03-09 23:01:41,936 | INFO | Starting main loop
-2025-03-09 23:01:42,664 | INFO | Using local sqlite database
-2025-03-09 23:01:42,667 | INFO | Using local sqlite database
-2025-03-09 23:01:43,195 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 23:01:52,974 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 23:02:13,110 | INFO | Creating container: 
-2025-03-09 23:02:23,122 | ERROR | Request timed out after 10 seconds
-2025-03-09 23:02:23,122 | ERROR | An error occurred: {'message': 'Request timed out after 10 seconds'}
-2025-03-09 23:03:18,708 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 23:03:21,186 | INFO | Starting container: 
-2025-03-09 23:03:21,186 | INFO | Starting container with env_id: 16e00098c14902dc9cfac4b1b44a9e10e0547fc838704801b5f83a4a9feb84d2
-2025-03-09 23:03:21,186 | INFO | Stopping container with env_id: 16e00098c14902dc9cfac4b1b44a9e10e0547fc838704801b5f83a4a9feb84d2
-2025-03-09 23:03:31,197 | ERROR | Request timed out after 10 seconds
-2025-03-09 23:04:21,702 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 23:05:25,500 | INFO | Deleting container: 
-2025-03-09 23:05:25,500 | INFO | Deleting container with env_id: 8000d8bbc91274f2f055619c9790d22e4ee19d1521806854b9eca9d9a92b6f71
-2025-03-09 23:05:25,500 | INFO | Deleting container with env_id: 8000d8bbc91274f2f055619c9790d22e4ee19d1521806854b9eca9d9a92b6f71
-2025-03-09 23:05:32,141 | INFO | Deleting container: 
-2025-03-09 23:05:32,141 | INFO | Deleting container with env_id: 16e00098c14902dc9cfac4b1b44a9e10e0547fc838704801b5f83a4a9feb84d2
-2025-03-09 23:05:32,142 | INFO | Deleting container with env_id: 16e00098c14902dc9cfac4b1b44a9e10e0547fc838704801b5f83a4a9feb84d2
-2025-03-09 23:05:37,256 | INFO | Deleting container: 
-2025-03-09 23:05:37,256 | INFO | Deleting container with env_id: edf0581305b1bfce64348e11a4efbf4a9566380cc3c70bdabc87a1360aaf092e
-2025-03-09 23:05:37,256 | INFO | Deleting container with env_id: edf0581305b1bfce64348e11a4efbf4a9566380cc3c70bdabc87a1360aaf092e
-2025-03-09 23:05:43,654 | INFO | Deleting container: 
-2025-03-09 23:05:43,654 | INFO | Deleting container with env_id: c956cc0c39efabc4a2661ceec0225e6c56d4eadf3d43bbf79e8c8c96307bce6d
-2025-03-09 23:05:43,654 | INFO | Deleting container with env_id: c956cc0c39efabc4a2661ceec0225e6c56d4eadf3d43bbf79e8c8c96307bce6d
-2025-03-09 23:05:58,751 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 23:06:10,536 | INFO | Creating container: 
-2025-03-09 23:06:20,548 | ERROR | Request timed out after 10 seconds
-2025-03-09 23:06:20,548 | ERROR | An error occurred: {'message': 'Request timed out after 10 seconds'}
-2025-03-09 23:07:49,840 | INFO | Starting container: 
-2025-03-09 23:07:49,840 | INFO | Starting container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
-2025-03-09 23:07:49,840 | INFO | Stopping container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
-2025-03-09 23:07:50,065 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/start/8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
-2025-03-09 23:07:50,065 | ERROR | API response: Error starting Podman Containers: crun: executable file `ok` not found in $PATH: No such file or directory: OCI runtime attempted to invoke a command that was not found
-2025-03-09 23:09:19,655 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:09:23,660 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:09:29,669 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:09:33,675 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:09:48,269 | INFO | Starting container: 
-2025-03-09 23:09:48,269 | INFO | Starting container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
-2025-03-09 23:09:48,269 | INFO | Stopping container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
-2025-03-09 23:09:48,521 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/start/8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
-2025-03-09 23:09:48,521 | ERROR | API response: Error starting Podman Containers: crun: executable file `ok` not found in $PATH: No such file or directory: OCI runtime attempted to invoke a command that was not found
-2025-03-09 23:11:41,198 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 23:11:54,256 | INFO | Starting container: 
-2025-03-09 23:11:54,257 | INFO | Starting container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
-2025-03-09 23:11:54,257 | INFO | Stopping container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
-2025-03-09 23:11:54,464 | ERROR | An error occurred: 500 Server Error: Internal Server Error for url: http://192.168.14.15:8888/containers/start/8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
-2025-03-09 23:11:54,464 | ERROR | API response: Error starting Podman Containers: crun: executable file `ok` not found in $PATH: No such file or directory: OCI runtime attempted to invoke a command that was not found
-2025-03-09 23:14:26,389 | INFO | Deleting container: 
-2025-03-09 23:14:26,389 | INFO | Deleting container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
-2025-03-09 23:14:26,389 | INFO | Deleting container with env_id: 8c128b4d8d6f3bcab624149f43092ccc121eb1622de6e4665739072465282e47
-2025-03-09 23:14:32,081 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 23:14:36,179 | INFO | Deleting container: 
-2025-03-09 23:14:36,179 | INFO | Deleting container with env_id: e149c412fe0c038c71e066fed8d4c66e093fc5d8740e856e306de0747bcd774f
-2025-03-09 23:14:36,179 | INFO | Deleting container with env_id: e149c412fe0c038c71e066fed8d4c66e093fc5d8740e856e306de0747bcd774f
-2025-03-09 23:14:37,494 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 23:14:47,059 | INFO | Deleting container: 
-2025-03-09 23:14:47,060 | INFO | Deleting container with env_id: bef01a6737e34af9de688670d875f0ca0f9ed501dc30bbf18d855bb9462d7ea5
-2025-03-09 23:14:47,060 | INFO | Deleting container with env_id: bef01a6737e34af9de688670d875f0ca0f9ed501dc30bbf18d855bb9462d7ea5
-2025-03-09 23:14:48,151 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 23:15:09,252 | INFO | Deleting container: 
-2025-03-09 23:15:09,252 | INFO | Deleting container with env_id: 249c497700d85cb2e0872c5b96fde51f45d88923cd95178fd298991403241cf3
-2025-03-09 23:15:09,252 | INFO | Deleting container with env_id: 249c497700d85cb2e0872c5b96fde51f45d88923cd95178fd298991403241cf3
-2025-03-09 23:15:10,361 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 23:16:49,038 | INFO | Creating container: 
-2025-03-09 23:16:59,044 | ERROR | Request timed out after 10 seconds
-2025-03-09 23:16:59,045 | ERROR | An error occurred: {'message': 'Request timed out after 10 seconds'}
-2025-03-09 23:19:35,864 | INFO | Starting container: 
-2025-03-09 23:19:35,864 | INFO | Starting container with env_id: 13c4ca461232ab3b781e6f404feca654741701d5e5b001dc3b75b95977ad0712
-2025-03-09 23:19:35,864 | INFO | Stopping container with env_id: 13c4ca461232ab3b781e6f404feca654741701d5e5b001dc3b75b95977ad0712
-2025-03-09 23:19:45,876 | ERROR | Request timed out after 10 seconds
-2025-03-09 23:20:35,552 | INFO | Starting container: 
-2025-03-09 23:20:35,552 | INFO | Starting container with env_id: 13c4ca461232ab3b781e6f404feca654741701d5e5b001dc3b75b95977ad0712
-2025-03-09 23:20:35,552 | INFO | Stopping container with env_id: 13c4ca461232ab3b781e6f404feca654741701d5e5b001dc3b75b95977ad0712
-2025-03-09 23:20:45,564 | ERROR | Request timed out after 10 seconds
-2025-03-09 23:29:46,412 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:29:50,418 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:29:56,427 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:30:00,434 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:30:06,441 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:30:10,447 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:30:16,456 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:30:20,462 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:30:26,470 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:30:30,477 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-09 23:44:30,851 | INFO | No token found
-2025-03-09 23:44:30,851 | WARNING | Unauthorized request to delete container
-2025-03-09 23:44:34,038 | INFO | No token found
-2025-03-09 23:44:44,279 | INFO | User admin is attempting to log in
-2025-03-09 23:44:44,547 | INFO | User admin has successfully logged in
-2025-03-09 23:44:44,551 | INFO | User admin has successfully logged in
-2025-03-09 23:44:55,300 | INFO | Deleting container: 
-2025-03-09 23:44:55,301 | INFO | Deleting container with env_id: 13c4ca461232ab3b781e6f404feca654741701d5e5b001dc3b75b95977ad0712
-2025-03-09 23:44:55,301 | INFO | Deleting container with env_id: 13c4ca461232ab3b781e6f404feca654741701d5e5b001dc3b75b95977ad0712
-2025-03-09 23:45:00,604 | INFO | Deleting container: 
-2025-03-09 23:45:00,604 | INFO | Deleting container with env_id: fd6f49656a96522d7c5668353c05e84dddee6d56fb871d6527eca5aef51fd361
-2025-03-09 23:45:00,604 | INFO | Deleting container with env_id: fd6f49656a96522d7c5668353c05e84dddee6d56fb871d6527eca5aef51fd361
-2025-03-09 23:45:11,669 | INFO | Listing container images on node: 192.168.14.15
-2025-03-09 23:45:29,283 | INFO | Creating container: 
-2025-03-09 23:45:39,293 | ERROR | Request timed out after 10 seconds
-2025-03-09 23:45:39,293 | ERROR | An error occurred: {'message': 'Request timed out after 10 seconds'}
-2025-03-10 00:11:34,607 | INFO | Deleting container: 
-2025-03-10 00:11:34,607 | INFO | Deleting container with env_id: df3ff75e2593a9db532fd469f3d0ff310537418cefd96542b2afc2244ab006c0
-2025-03-10 00:11:34,607 | INFO | Deleting container with env_id: df3ff75e2593a9db532fd469f3d0ff310537418cefd96542b2afc2244ab006c0
-2025-03-10 00:11:35,750 | INFO | Listing container images on node: 192.168.14.15
-2025-03-10 00:11:39,496 | INFO | Deleting container: 
-2025-03-10 00:11:39,496 | INFO | Deleting container with env_id: 3b0074fbf68d26a5d6c1f18292af9ef40ead09e52aef52287090d46ebadebbcc
-2025-03-10 00:11:39,496 | INFO | Deleting container with env_id: 3b0074fbf68d26a5d6c1f18292af9ef40ead09e52aef52287090d46ebadebbcc
-2025-03-10 00:11:40,103 | INFO | Listing container images on node: 192.168.14.15
-2025-03-10 00:11:43,810 | INFO | Deleting container: 
-2025-03-10 00:11:43,810 | INFO | Deleting container with env_id: 11953e9e9d879588d185dd1f216d314738ac8b2fbe2aa76611bdd274364621d5
-2025-03-10 00:11:43,810 | INFO | Deleting container with env_id: 11953e9e9d879588d185dd1f216d314738ac8b2fbe2aa76611bdd274364621d5
-2025-03-10 00:11:45,289 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 21:00:31,746 | INFO | No token found
-2025-03-16 21:00:31,794 | WARNING | Unauthorized request to list node images
-2025-03-16 21:01:00,202 | INFO | No token found
-2025-03-16 21:01:00,202 | WARNING | Unauthorized request to list node images
-2025-03-16 21:01:10,106 | INFO | No token found
-2025-03-16 21:01:19,399 | INFO | User admin is attempting to log in
-2025-03-16 21:01:19,952 | INFO | User admin has successfully logged in
-2025-03-16 21:01:20,140 | INFO | User admin has successfully logged in
-2025-03-16 21:01:26,727 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 21:01:41,535 | INFO | Creating container: 
-2025-03-16 21:02:09,897 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 21:04:54,894 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
-2025-03-16 21:05:33,641 | INFO | Using local sqlite database
-2025-03-16 21:05:33,973 | INFO | Starting central process...
-2025-03-16 21:05:33,973 | INFO | No configuration file provided. Using default configuration.
-2025-03-16 21:05:33,974 | INFO | Processes created. Starting webserver and aggregator processes...
-2025-03-16 21:05:33,978 | INFO | Starting aggregator process...
-2025-03-16 21:05:34,014 | INFO | Starting main loop
-2025-03-16 21:05:34,714 | INFO | Using local sqlite database
-2025-03-16 21:05:34,719 | INFO | Using local sqlite database
-2025-03-16 21:05:37,027 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 21:10:39,885 | INFO | Stopping container: 
-2025-03-16 21:10:39,885 | INFO | Stopping container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
-2025-03-16 21:10:39,885 | INFO | Stopping container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
-2025-03-16 21:10:54,186 | INFO | Starting container: 
-2025-03-16 21:10:54,186 | INFO | Starting container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
-2025-03-16 21:10:54,186 | INFO | Stopping container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
-2025-03-16 21:13:41,343 | ERROR | Error: None for http://192.168.14.15:8888/node-info
-2025-03-16 21:18:00,235 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 21:18:25,010 | INFO | Stopping container: 
-2025-03-16 21:18:25,011 | INFO | Stopping container with env_id: 631e1402bb0edd9cbbb80251b5c484c9273479935d614c748aff50ebab3f1dcf
-2025-03-16 21:18:25,011 | INFO | Stopping container with env_id: 631e1402bb0edd9cbbb80251b5c484c9273479935d614c748aff50ebab3f1dcf
-2025-03-16 21:18:26,958 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 21:18:41,479 | INFO | Stopping container: 
-2025-03-16 21:18:41,479 | INFO | Stopping container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
-2025-03-16 21:18:41,479 | INFO | Stopping container with env_id: ff15547e8c2e47f633deef2a7020603b647095177e2f65b6f17f4f92dd98af6c
-2025-03-16 21:18:42,752 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 21:18:52,338 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 21:18:57,049 | INFO | Stopping container: 
-2025-03-16 21:18:57,049 | INFO | Stopping container with env_id: 284af6ceae0268bb678eaefc29e62d92d170b4d4b82a4bdcc1e671cd91dcad5d
-2025-03-16 21:18:57,049 | INFO | Stopping container with env_id: 284af6ceae0268bb678eaefc29e62d92d170b4d4b82a4bdcc1e671cd91dcad5d
-2025-03-16 21:19:04,115 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 21:19:08,610 | INFO | Stopping container: 
-2025-03-16 21:19:08,611 | INFO | Stopping container with env_id: c40387acf84edc4b2de3d3f3d5a3d9f386d92c74c3171a30c1836500c7a1f079
-2025-03-16 21:19:08,611 | INFO | Stopping container with env_id: c40387acf84edc4b2de3d3f3d5a3d9f386d92c74c3171a30c1836500c7a1f079
-2025-03-16 21:19:16,301 | INFO | Deleting container: 
-2025-03-16 21:19:16,301 | INFO | Deleting container with env_id: c40387acf84edc4b2de3d3f3d5a3d9f386d92c74c3171a30c1836500c7a1f079
-2025-03-16 21:19:16,301 | INFO | Deleting container with env_id: c40387acf84edc4b2de3d3f3d5a3d9f386d92c74c3171a30c1836500c7a1f079
-2025-03-16 21:19:26,255 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 21:19:31,308 | INFO | Deleting container: 
-2025-03-16 21:19:31,308 | INFO | Deleting container with env_id: 284af6ceae0268bb678eaefc29e62d92d170b4d4b82a4bdcc1e671cd91dcad5d
-2025-03-16 21:19:31,308 | INFO | Deleting container with env_id: 284af6ceae0268bb678eaefc29e62d92d170b4d4b82a4bdcc1e671cd91dcad5d
-2025-03-16 21:19:40,745 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 21:20:58,872 | INFO | Deleting container: 
-2025-03-16 21:20:58,872 | INFO | Deleting container with env_id: 3db623f1f146e6862d935fee2901cc6781687c4599aafd7efb003f6d314001f7
-2025-03-16 21:20:58,872 | INFO | Deleting container with env_id: 3db623f1f146e6862d935fee2901cc6781687c4599aafd7efb003f6d314001f7
-2025-03-16 21:21:02,789 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 21:21:07,967 | INFO | Deleting container: 
-2025-03-16 21:21:07,967 | INFO | Deleting container with env_id: f32e19799a68c421185921c9a75bd6b422fd322bde780fd0840f5b0d416ce95a
-2025-03-16 21:21:07,967 | INFO | Deleting container with env_id: f32e19799a68c421185921c9a75bd6b422fd322bde780fd0840f5b0d416ce95a
-2025-03-16 21:21:12,213 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 23:16:13,825 | INFO | No token found
-2025-03-16 23:16:13,825 | WARNING | Unauthorized request to list node images
-2025-03-16 23:16:21,626 | INFO | No token found
-2025-03-16 23:16:26,411 | INFO | User admin is attempting to log in
-2025-03-16 23:16:26,679 | INFO | User admin has successfully logged in
-2025-03-16 23:16:26,682 | INFO | User admin has successfully logged in
-2025-03-16 23:16:30,780 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 23:17:02,792 | INFO | Fetching containers
-2025-03-16 23:17:02,794 | INFO | Successfully retrieved containers: [{'name': 'hi', 'content': 'helloasdfasdfa\n\n\nasdfasdf'}, {'name': 'hihi', 'content': 'hello'}]
-2025-03-16 23:17:11,574 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 23:20:24,868 | INFO | Listing container images on node: 192.168.14.15
-2025-03-16 23:35:15,088 | INFO | Listing container images on node: 192.168.14.15
-=======
 2025-03-05 16:31:50,277 | INFO | Using local sqlite database
 2025-03-05 16:31:50,442 | INFO | Starting central process...
 2025-03-05 16:31:50,442 | INFO | No configuration file provided. Using default configuration.
@@ -2058,4 +1109,417 @@
 2025-04-03 01:15:38,993 | INFO | Terminating process 2246410
 2025-04-03 01:15:38,996 | INFO | Shutdown handler triggered by signal.
 2025-04-03 01:15:38,996 | INFO | Main task cancelled gracefully.
->>>>>>> e805ac1 (ldap auth and global config file support,, need to integrate with rbac)
+=======
+2025-04-04 09:52:10,307 | INFO | Starting central process...
+2025-04-04 09:52:10,307 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 09:52:10,309 | INFO | Starting aggregator process...
+2025-04-04 09:52:10,485 | INFO | Using local sqlite database
+2025-04-04 09:52:10,584 | INFO | Starting main loop
+2025-04-04 09:52:11,045 | INFO | Using local sqlite database
+2025-04-04 09:52:11,047 | INFO | Using local sqlite database
+2025-04-04 09:52:11,547 | INFO | LDAP connection initialized
+2025-04-04 09:52:11,548 | INFO | LDAP connection initialized
+2025-04-04 09:52:11,716 | INFO | Default permissions initialized successfully
+2025-04-04 09:52:11,716 | INFO | Default permissions initialized successfully
+2025-04-04 09:52:11,724 | INFO | Default groups setup successfully
+2025-04-04 09:52:11,724 | INFO | Default groups setup successfully
+2025-04-04 09:52:11,724 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 09:52:11,724 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 09:52:18,249 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-04 09:52:18,418 | INFO | User abra-sysadmin-1 authenticated successfully via LDAP
+2025-04-04 09:52:18,467 | INFO | User abra-sysadmin-1 has successfully logged in via LDAP
+2025-04-04 09:56:50,616 | INFO | No token found
+2025-04-04 10:21:32,231 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 10:21:32,232 | INFO | Shutdown handler triggered by signal.
+2025-04-04 10:21:32,232 | INFO | Terminating process 3372266
+2025-04-04 10:21:32,235 | INFO | Shutdown handler triggered by signal.
+2025-04-04 10:21:32,235 | INFO | Main task cancelled gracefully.
+2025-04-04 10:21:53,591 | INFO | Starting central process...
+2025-04-04 10:21:53,591 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 10:21:53,593 | INFO | Starting aggregator process...
+2025-04-04 10:21:53,765 | INFO | Using local sqlite database
+2025-04-04 10:21:53,862 | INFO | Starting main loop
+2025-04-04 10:21:54,321 | INFO | Using local sqlite database
+2025-04-04 10:21:54,323 | INFO | Using local sqlite database
+2025-04-04 10:21:55,344 | INFO | Using local sqlite database
+2025-04-04 10:21:55,387 | INFO | Using local sqlite database
+2025-04-04 10:21:56,355 | INFO | Using local sqlite database
+2025-04-04 10:21:56,364 | INFO | Using local sqlite database
+2025-04-04 10:21:57,361 | INFO | Using local sqlite database
+2025-04-04 10:21:57,364 | INFO | Using local sqlite database
+2025-04-04 10:21:58,379 | INFO | Using local sqlite database
+2025-04-04 10:21:58,401 | INFO | Using local sqlite database
+2025-04-04 10:21:59,039 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 10:21:59,040 | INFO | Shutdown handler triggered by signal.
+2025-04-04 10:21:59,040 | INFO | Terminating process 3393197
+2025-04-04 10:21:59,043 | INFO | Shutdown handler triggered by signal.
+2025-04-04 10:21:59,043 | INFO | Main task cancelled gracefully.
+2025-04-04 10:21:59,397 | INFO | Using local sqlite database
+2025-04-04 10:21:59,424 | INFO | Using local sqlite database
+2025-04-04 10:22:30,549 | INFO | Starting central process...
+2025-04-04 10:22:30,549 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 10:22:30,551 | INFO | Starting aggregator process...
+2025-04-04 10:22:30,720 | INFO | Using local sqlite database
+2025-04-04 10:22:30,816 | INFO | Starting main loop
+2025-04-04 10:22:31,303 | INFO | Using local sqlite database
+2025-04-04 10:22:31,319 | INFO | Using local sqlite database
+2025-04-04 10:22:31,821 | INFO | LDAP connection initialized
+2025-04-04 10:22:31,821 | INFO | LDAP connection initialized
+2025-04-04 10:22:31,992 | INFO | Default permissions initialized successfully
+2025-04-04 10:22:31,992 | INFO | Default permissions initialized successfully
+2025-04-04 10:22:32,001 | INFO | Default groups setup successfully
+2025-04-04 10:22:32,001 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 10:22:32,001 | INFO | Default groups setup successfully
+2025-04-04 10:22:32,001 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 10:22:40,499 | INFO | No token found
+2025-04-04 10:22:43,586 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-04 10:22:43,714 | INFO | User abra-sysadmin-1 authenticated successfully via LDAP
+2025-04-04 10:22:43,763 | INFO | User abra-sysadmin-1 has successfully logged in via LDAP
+2025-04-04 10:58:29,731 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 10:58:29,732 | INFO | Shutdown handler triggered by signal.
+2025-04-04 10:58:29,732 | INFO | Terminating process 3393832
+2025-04-04 10:58:29,736 | INFO | Shutdown handler triggered by signal.
+2025-04-04 10:58:29,736 | INFO | Main task cancelled gracefully.
+2025-04-04 10:58:56,847 | INFO | Starting central process...
+2025-04-04 10:58:56,847 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 10:58:56,848 | INFO | Starting aggregator process...
+2025-04-04 10:58:57,019 | INFO | Using local sqlite database
+2025-04-04 10:58:57,121 | INFO | Starting main loop
+2025-04-04 10:58:57,577 | INFO | Using local sqlite database
+2025-04-04 10:58:57,591 | INFO | Using local sqlite database
+2025-04-04 10:58:58,093 | INFO | LDAP connection initialized
+2025-04-04 10:58:58,093 | INFO | LDAP connection initialized
+2025-04-04 10:58:58,260 | INFO | Default permissions initialized successfully
+2025-04-04 10:58:58,261 | INFO | Default permissions initialized successfully
+2025-04-04 10:58:58,269 | INFO | Default groups setup successfully
+2025-04-04 10:58:58,269 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 10:58:58,270 | INFO | Default groups setup successfully
+2025-04-04 10:58:58,270 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:01:02,046 | INFO | No token found
+2025-04-04 11:01:03,449 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-04 11:01:03,572 | INFO | User abra-sysadmin-1 authenticated successfully via LDAP
+2025-04-04 11:01:03,619 | INFO | User abra-sysadmin-1 has successfully logged in via LDAP
+2025-04-04 11:01:37,238 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 11:01:37,238 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:01:37,238 | INFO | Terminating process 3418892
+2025-04-04 11:01:37,242 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:01:37,243 | INFO | Main task cancelled gracefully.
+2025-04-04 11:01:39,307 | INFO | Starting central process...
+2025-04-04 11:01:39,307 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 11:01:39,310 | INFO | Starting aggregator process...
+2025-04-04 11:01:39,492 | INFO | Using local sqlite database
+2025-04-04 11:01:39,590 | INFO | Starting main loop
+2025-04-04 11:01:40,043 | INFO | Using local sqlite database
+2025-04-04 11:01:40,059 | INFO | Using local sqlite database
+2025-04-04 11:01:40,616 | INFO | LDAP connection initialized
+2025-04-04 11:01:40,618 | INFO | LDAP connection initialized
+2025-04-04 11:01:40,782 | INFO | Default permissions initialized successfully
+2025-04-04 11:01:40,791 | INFO | Default groups setup successfully
+2025-04-04 11:01:40,791 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:01:40,809 | INFO | Default permissions initialized successfully
+2025-04-04 11:01:40,819 | INFO | Default groups setup successfully
+2025-04-04 11:01:40,819 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:02:24,986 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 11:02:24,987 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:02:24,987 | INFO | Terminating process 3421100
+2025-04-04 11:02:24,990 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:02:24,991 | INFO | Main task cancelled gracefully.
+2025-04-04 11:02:28,751 | INFO | Starting central process...
+2025-04-04 11:02:28,751 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 11:02:28,752 | INFO | Starting aggregator process...
+2025-04-04 11:02:28,947 | INFO | Using local sqlite database
+2025-04-04 11:02:29,059 | INFO | Starting main loop
+2025-04-04 11:02:29,508 | INFO | Using local sqlite database
+2025-04-04 11:02:29,535 | INFO | Using local sqlite database
+2025-04-04 11:02:30,015 | INFO | LDAP connection initialized
+2025-04-04 11:02:30,015 | INFO | LDAP connection initialized
+2025-04-04 11:02:30,179 | INFO | Default permissions initialized successfully
+2025-04-04 11:02:30,187 | INFO | Default permissions initialized successfully
+2025-04-04 11:02:30,188 | INFO | Default groups setup successfully
+2025-04-04 11:02:30,188 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:02:30,197 | INFO | Default groups setup successfully
+2025-04-04 11:02:30,198 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:02:40,754 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 11:02:40,755 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:02:40,755 | INFO | Terminating process 3421940
+2025-04-04 11:02:40,757 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:02:40,758 | INFO | Main task cancelled gracefully.
+2025-04-04 11:03:05,813 | INFO | Starting central process...
+2025-04-04 11:03:05,813 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 11:03:05,815 | INFO | Starting aggregator process...
+2025-04-04 11:03:05,993 | INFO | Using local sqlite database
+2025-04-04 11:03:06,093 | INFO | Starting main loop
+2025-04-04 11:03:06,542 | INFO | Using local sqlite database
+2025-04-04 11:03:06,547 | INFO | Using local sqlite database
+2025-04-04 11:03:07,065 | INFO | LDAP connection initialized
+2025-04-04 11:03:07,065 | INFO | LDAP connection initialized
+2025-04-04 11:03:07,230 | INFO | Default permissions initialized successfully
+2025-04-04 11:03:07,232 | INFO | Default permissions initialized successfully
+2025-04-04 11:03:07,239 | INFO | Default groups setup successfully
+2025-04-04 11:03:07,239 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:03:07,240 | INFO | Default groups setup successfully
+2025-04-04 11:03:07,241 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:03:47,891 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 11:03:47,891 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:03:47,892 | INFO | Terminating process 3422661
+2025-04-04 11:03:47,894 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:03:47,895 | INFO | Main task cancelled gracefully.
+2025-04-04 11:03:50,483 | INFO | Starting central process...
+2025-04-04 11:03:50,484 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 11:03:50,485 | INFO | Starting aggregator process...
+2025-04-04 11:03:50,657 | INFO | Using local sqlite database
+2025-04-04 11:03:50,757 | INFO | Starting main loop
+2025-04-04 11:03:51,220 | INFO | Using local sqlite database
+2025-04-04 11:03:51,248 | INFO | Using local sqlite database
+2025-04-04 11:03:51,740 | INFO | LDAP connection initialized
+2025-04-04 11:03:51,741 | INFO | LDAP connection initialized
+2025-04-04 11:03:51,915 | INFO | Default permissions initialized successfully
+2025-04-04 11:03:51,917 | INFO | Default permissions initialized successfully
+2025-04-04 11:03:51,924 | INFO | Default groups setup successfully
+2025-04-04 11:03:51,924 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:03:51,927 | INFO | Default groups setup successfully
+2025-04-04 11:03:51,927 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:07:18,266 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 11:07:18,266 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:07:18,266 | INFO | Terminating process 3423443
+2025-04-04 11:07:18,270 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:07:18,270 | INFO | Main task cancelled gracefully.
+2025-04-04 11:07:22,597 | INFO | Starting central process...
+2025-04-04 11:07:22,598 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 11:07:22,599 | INFO | Starting aggregator process...
+2025-04-04 11:07:22,773 | INFO | Using local sqlite database
+2025-04-04 11:07:22,870 | INFO | Starting main loop
+2025-04-04 11:07:23,331 | INFO | Using local sqlite database
+2025-04-04 11:07:23,333 | INFO | Using local sqlite database
+2025-04-04 11:07:23,847 | INFO | LDAP connection initialized
+2025-04-04 11:07:23,847 | INFO | LDAP connection initialized
+2025-04-04 11:07:24,012 | INFO | Default permissions initialized successfully
+2025-04-04 11:07:24,013 | INFO | Default permissions initialized successfully
+2025-04-04 11:07:24,021 | INFO | Default groups setup successfully
+2025-04-04 11:07:24,021 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:07:24,021 | INFO | Default groups setup successfully
+2025-04-04 11:07:24,021 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:18:09,641 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:18:09,641 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 11:18:09,641 | INFO | Terminating process 3426085
+2025-04-04 11:18:09,644 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:18:09,644 | INFO | Main task cancelled gracefully.
+2025-04-04 11:18:20,036 | INFO | Starting central process...
+2025-04-04 11:18:20,036 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 11:18:20,039 | INFO | Starting aggregator process...
+2025-04-04 11:18:20,216 | INFO | Using local sqlite database
+2025-04-04 11:18:20,315 | INFO | Starting main loop
+2025-04-04 11:18:20,796 | INFO | Using local sqlite database
+2025-04-04 11:18:20,815 | INFO | Using local sqlite database
+2025-04-04 11:18:21,331 | INFO | LDAP connection initialized
+2025-04-04 11:18:21,332 | INFO | LDAP connection initialized
+2025-04-04 11:18:21,503 | INFO | Default permissions initialized successfully
+2025-04-04 11:18:21,511 | INFO | Default permissions initialized successfully
+2025-04-04 11:18:21,512 | INFO | Default groups setup successfully
+2025-04-04 11:18:21,512 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:18:21,520 | INFO | Default groups setup successfully
+2025-04-04 11:18:21,520 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:18:27,443 | INFO | Group abra_ldap_admins added to database
+2025-04-04 11:18:27,443 | INFO | Adding user abra-sysadmin-1 to group abra_ldap_admins
+2025-04-04 11:19:49,028 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 11:19:49,028 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:19:49,028 | INFO | Terminating process 3434013
+2025-04-04 11:19:49,031 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:19:49,031 | INFO | Main task cancelled gracefully.
+2025-04-04 11:19:51,345 | INFO | Starting central process...
+2025-04-04 11:19:51,345 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 11:19:51,346 | INFO | Starting aggregator process...
+2025-04-04 11:19:51,524 | INFO | Using local sqlite database
+2025-04-04 11:19:51,624 | INFO | Starting main loop
+2025-04-04 11:19:52,084 | INFO | Using local sqlite database
+2025-04-04 11:19:52,086 | INFO | Using local sqlite database
+2025-04-04 11:19:52,679 | INFO | LDAP connection initialized
+2025-04-04 11:19:52,680 | INFO | LDAP connection initialized
+2025-04-04 11:19:52,854 | INFO | Default permissions initialized successfully
+2025-04-04 11:19:52,863 | INFO | Default groups setup successfully
+2025-04-04 11:19:52,863 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:19:52,869 | INFO | Default permissions initialized successfully
+2025-04-04 11:19:52,878 | INFO | Default groups setup successfully
+2025-04-04 11:19:52,878 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:20:02,189 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:20:02,194 | INFO | User abra-sysadmin-1 is listing all groups
+2025-04-04 11:20:02,199 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:39:35,600 | INFO | User sysadmin1 is attempting to log in via LDAP
+2025-04-04 11:39:35,604 | WARNING | User sysadmin1 not found in LDAP
+2025-04-04 11:39:35,604 | INFO | User sysadmin1 is attempting to log in via database authentication
+2025-04-04 11:39:35,873 | WARNING | User sysadmin1 has failed to log in
+2025-04-04 11:39:51,746 | INFO | User admin is attempting to log in via LDAP
+2025-04-04 11:39:51,829 | WARNING | User admin authentication failed
+2025-04-04 11:39:51,829 | INFO | User admin is attempting to log in via database authentication
+2025-04-04 11:39:52,102 | INFO | User admin has successfully logged in
+2025-04-04 11:39:52,105 | INFO | User admin has successfully logged in
+2025-04-04 11:40:00,980 | INFO | Listing container images on node: 192.168.14.15
+2025-04-04 11:40:08,772 | INFO | Stopping container: 
+2025-04-04 11:40:08,773 | INFO | Stopping container with env_id: a7e8b2ddc12194ecf8cb34bbe3470ea19ad1c5b5aa7bcaf965cda1531f79f564
+2025-04-04 11:40:08,773 | INFO | Stopping container with env_id: a7e8b2ddc12194ecf8cb34bbe3470ea19ad1c5b5aa7bcaf965cda1531f79f564
+2025-04-04 11:40:16,028 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-04 11:40:16,154 | INFO | User abra-sysadmin-1 authenticated successfully via LDAP
+2025-04-04 11:40:16,201 | INFO | User abra-sysadmin-1 has successfully logged in via LDAP
+2025-04-04 11:40:21,145 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:40:21,152 | INFO | User abra-sysadmin-1 is listing all groups
+2025-04-04 11:40:21,153 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:41:04,031 | INFO | User sysadmin1 is attempting to log in via LDAP
+2025-04-04 11:41:04,034 | WARNING | User sysadmin1 not found in LDAP
+2025-04-04 11:41:04,034 | INFO | User sysadmin1 is attempting to log in via database authentication
+2025-04-04 11:41:04,302 | WARNING | User sysadmin1 has failed to log in
+2025-04-04 11:41:21,557 | INFO | User admin is attempting to log in via LDAP
+2025-04-04 11:41:21,642 | WARNING | User admin authentication failed
+2025-04-04 11:41:21,643 | INFO | User admin is attempting to log in via database authentication
+2025-04-04 11:41:21,910 | INFO | User admin has successfully logged in
+2025-04-04 11:41:21,912 | INFO | User admin has successfully logged in
+2025-04-04 11:43:45,525 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 11:43:45,525 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:43:45,526 | INFO | Terminating process 3435297
+2025-04-04 11:43:45,529 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:43:45,529 | INFO | Main task cancelled gracefully.
+2025-04-04 11:43:50,479 | INFO | Starting central process...
+2025-04-04 11:43:50,479 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 11:43:50,481 | INFO | Starting aggregator process...
+2025-04-04 11:43:50,655 | INFO | Using local sqlite database
+2025-04-04 11:43:50,755 | INFO | Starting main loop
+2025-04-04 11:43:51,221 | INFO | Using local sqlite database
+2025-04-04 11:43:51,224 | INFO | Using local sqlite database
+2025-04-04 11:43:51,740 | INFO | LDAP connection initialized
+2025-04-04 11:43:51,741 | INFO | LDAP connection initialized
+2025-04-04 11:43:51,906 | INFO | Default permissions initialized successfully
+2025-04-04 11:43:51,908 | INFO | Default permissions initialized successfully
+2025-04-04 11:43:51,915 | INFO | Default groups setup successfully
+2025-04-04 11:43:51,915 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:43:51,917 | INFO | Default groups setup successfully
+2025-04-04 11:43:51,917 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:43:57,613 | INFO | User admin is listing all permissions
+2025-04-04 11:43:57,620 | INFO | User admin is listing all permissions
+2025-04-04 11:43:57,621 | INFO | User admin is listing all groups
+2025-04-04 11:44:11,423 | INFO | User abra-sysadmin-2 is attempting to log in via LDAP
+2025-04-04 11:44:11,558 | INFO | User abra-sysadmin-2 authenticated successfully via LDAP
+2025-04-04 11:44:11,604 | INFO | User abra-sysadmin-2 has successfully logged in via LDAP
+2025-04-04 11:44:17,596 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-04 11:44:17,720 | INFO | User abra-sysadmin-1 authenticated successfully via LDAP
+2025-04-04 11:44:17,766 | INFO | User abra-sysadmin-1 has successfully logged in via LDAP
+2025-04-04 11:44:19,673 | INFO | No token found
+2025-04-04 11:44:20,523 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:44:20,534 | INFO | User abra-sysadmin-1 is listing all groups
+2025-04-04 11:44:20,544 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:52:55,014 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 11:52:55,014 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:52:55,014 | INFO | Terminating process 3451546
+2025-04-04 11:52:55,019 | INFO | Shutdown handler triggered by signal.
+2025-04-04 11:52:55,019 | INFO | Main task cancelled gracefully.
+2025-04-04 11:54:11,110 | INFO | Starting central process...
+2025-04-04 11:54:11,110 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 11:54:11,112 | INFO | Starting aggregator process...
+2025-04-04 11:54:11,282 | INFO | Using local sqlite database
+2025-04-04 11:54:11,381 | INFO | Starting main loop
+2025-04-04 11:54:11,846 | INFO | Using local sqlite database
+2025-04-04 11:54:11,871 | INFO | Using local sqlite database
+2025-04-04 11:54:12,405 | INFO | LDAP connection initialized
+2025-04-04 11:54:12,405 | INFO | LDAP connection initialized
+2025-04-04 11:54:12,571 | INFO | Default permissions initialized successfully
+2025-04-04 11:54:12,578 | INFO | Default permissions initialized successfully
+2025-04-04 11:54:12,580 | INFO | Default groups setup successfully
+2025-04-04 11:54:12,580 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:54:12,587 | INFO | Default groups setup successfully
+2025-04-04 11:54:12,587 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 11:54:19,348 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:54:19,350 | INFO | User abra-sysadmin-1 is listing all groups
+2025-04-04 11:54:19,361 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:54:22,095 | INFO | No token found
+2025-04-04 11:54:23,151 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:54:23,170 | INFO | User abra-sysadmin-1 is listing all groups
+2025-04-04 11:54:23,175 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:55:40,352 | INFO | No token found
+2025-04-04 11:55:47,653 | INFO | User abra-sysadmin-1 is attempting to log in via LDAP
+2025-04-04 11:55:47,779 | INFO | User abra-sysadmin-1 authenticated successfully via LDAP
+2025-04-04 11:55:47,825 | INFO | User abra-sysadmin-1 has successfully logged in via LDAP
+2025-04-04 11:55:51,025 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:55:51,029 | INFO | User abra-sysadmin-1 is listing all groups
+2025-04-04 11:55:51,031 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:55:55,294 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:55:55,308 | INFO | User abra-sysadmin-1 is listing all groups
+2025-04-04 11:55:55,310 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:56:12,126 | INFO | User abra-sysadmin-1 is assigning permission ID 15 to group ID 5
+2025-04-04 11:56:12,149 | INFO | User abra-sysadmin-1 is listing all groups
+2025-04-04 11:56:12,154 | INFO | User abra-sysadmin-1 is listing all permissions
+2025-04-04 11:56:25,805 | INFO | User abra-sysadmin-2 is attempting to log in via LDAP
+2025-04-04 11:56:25,945 | INFO | User abra-sysadmin-2 authenticated successfully via LDAP
+2025-04-04 11:56:25,992 | INFO | User abra-sysadmin-2 has successfully logged in via LDAP
+2025-04-04 11:56:27,615 | INFO | User abra-sysadmin-2 is listing all permissions
+2025-04-04 11:56:27,619 | INFO | User abra-sysadmin-2 is listing all groups
+2025-04-04 11:56:27,621 | INFO | User abra-sysadmin-2 is listing all permissions
+2025-04-04 11:56:33,282 | INFO | No token found
+2025-04-04 11:56:33,690 | INFO | User abra-sysadmin-2 is listing all permissions
+2025-04-04 11:56:33,700 | INFO | User abra-sysadmin-2 is listing all groups
+2025-04-04 11:56:33,701 | INFO | User abra-sysadmin-2 is listing all permissions
+2025-04-04 11:56:43,848 | INFO | User admin is attempting to log in via LDAP
+2025-04-04 11:56:43,944 | WARNING | User admin authentication failed
+2025-04-04 11:56:43,944 | INFO | User admin is attempting to log in via database authentication
+2025-04-04 11:56:44,213 | INFO | User admin has successfully logged in
+2025-04-04 11:56:44,215 | INFO | User admin has successfully logged in
+2025-04-04 11:56:46,404 | INFO | User admin is listing all permissions
+2025-04-04 11:56:46,407 | INFO | User admin is listing all groups
+2025-04-04 11:56:46,412 | INFO | User admin is listing all permissions
+2025-04-04 12:07:23,299 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 12:07:23,299 | INFO | Shutdown handler triggered by signal.
+2025-04-04 12:07:23,299 | INFO | Terminating process 3458212
+2025-04-04 12:07:23,302 | INFO | Shutdown handler triggered by signal.
+2025-04-04 12:07:23,302 | INFO | Main task cancelled gracefully.
+2025-04-04 12:07:31,614 | INFO | Starting central process...
+2025-04-04 12:07:31,615 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 12:07:31,616 | INFO | Starting aggregator process...
+2025-04-04 12:07:31,798 | INFO | Using local sqlite database
+2025-04-04 12:07:31,901 | INFO | Starting main loop
+2025-04-04 12:07:32,358 | INFO | Using local sqlite database
+2025-04-04 12:07:32,386 | INFO | Using local sqlite database
+2025-04-04 12:07:32,898 | INFO | LDAP connection initialized
+2025-04-04 12:07:32,899 | INFO | LDAP connection initialized
+2025-04-04 12:07:33,064 | INFO | Default permissions initialized successfully
+2025-04-04 12:07:33,066 | INFO | Default permissions initialized successfully
+2025-04-04 12:07:33,072 | INFO | Default groups setup successfully
+2025-04-04 12:07:33,072 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 12:07:33,074 | INFO | Default groups setup successfully
+2025-04-04 12:07:33,074 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 12:07:45,903 | INFO | User admin is attempting to log in via LDAP
+2025-04-04 12:07:45,993 | WARNING | User admin authentication failed
+2025-04-04 12:07:45,993 | INFO | User admin is attempting to log in via database authentication
+2025-04-04 12:07:46,279 | INFO | User admin has successfully logged in
+2025-04-04 12:07:46,282 | INFO | User admin has successfully logged in
+2025-04-04 12:07:48,069 | INFO | User admin is listing all permissions
+2025-04-04 12:07:48,071 | INFO | User admin is listing all groups
+2025-04-04 12:07:48,081 | INFO | User admin is listing all permissions
+2025-04-04 12:07:58,915 | INFO | User admin is listing all permissions
+2025-04-04 12:07:58,917 | INFO | User admin is listing all groups
+2025-04-04 12:07:58,922 | INFO | User admin is listing all permissions
+2025-04-04 12:10:29,938 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 12:10:29,938 | INFO | Shutdown handler triggered by signal.
+2025-04-04 12:10:29,939 | INFO | Terminating process 3467245
+2025-04-04 12:10:29,942 | INFO | Shutdown handler triggered by signal.
+2025-04-04 12:10:29,942 | INFO | Main task cancelled gracefully.
+2025-04-04 12:10:34,815 | INFO | Starting central process...
+2025-04-04 12:10:34,815 | INFO | Processes created. Starting webserver and aggregator processes...
+2025-04-04 12:10:34,816 | INFO | Starting aggregator process...
+2025-04-04 12:10:35,000 | INFO | Using local sqlite database
+2025-04-04 12:10:35,115 | INFO | Starting main loop
+2025-04-04 12:10:35,573 | INFO | Using local sqlite database
+2025-04-04 12:10:35,588 | INFO | Using local sqlite database
+2025-04-04 12:10:36,109 | INFO | LDAP connection initialized
+2025-04-04 12:10:36,109 | INFO | LDAP connection initialized
+2025-04-04 12:10:36,278 | INFO | Default permissions initialized successfully
+2025-04-04 12:10:36,281 | INFO | Default permissions initialized successfully
+2025-04-04 12:10:36,288 | INFO | Default groups setup successfully
+2025-04-04 12:10:36,288 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 12:10:36,290 | INFO | Default groups setup successfully
+2025-04-04 12:10:36,291 | INFO | RBAC Permissions initialized on server startup
+2025-04-04 12:10:42,100 | INFO | User admin is listing all permissions
+2025-04-04 12:10:42,102 | INFO | User admin is listing all groups
+2025-04-04 12:10:42,105 | INFO | User admin is listing all permissions
+2025-04-04 12:37:15,967 | INFO | Received exit signal for central process. Shutting down webserver and aggregator processes...
+2025-04-04 12:37:15,967 | INFO | Shutdown handler triggered by signal.
+2025-04-04 12:37:15,968 | INFO | Terminating process 3469614
+2025-04-04 12:37:15,971 | INFO | Shutdown handler triggered by signal.
+2025-04-04 12:37:15,971 | INFO | Main task cancelled gracefully.
+>>>>>>> 5db0b6e (integrate ldap with rbac permissions)
