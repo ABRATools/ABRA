@@ -9,3 +9,4 @@ backend/winvenv
 backend/static/
 
 backend/abra.log
+# backend/test.db
