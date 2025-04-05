@@ -31,29 +31,29 @@ const allMenuItems = [
       },
     ],
   },
-  {
-    title: "Configuration",
-    items: [
-      {
-        title: "System Config",
-        icon: Settings,
-        href: "/config/systems",
-        permission: "config:systems"
-      },
-      {
-        title: "Config Profiles",
-        icon: FileText,
-        href: "/config/profiles",
-        permission: "config:profiles"
-      },
-      {
-        title: "Container Image Config",
-        icon: Container,
-        href: "/config/containers",
-        permission: "config:containers"
-      }
-    ],
-  },
+  // {
+  //   title: "Configuration",
+  //   items: [
+  //     {
+  //       title: "System Config",
+  //       icon: Settings,
+  //       href: "/config/systems",
+  //       permission: "config:systems"
+  //     },
+  //     {
+  //       title: "Config Profiles",
+  //       icon: FileText,
+  //       href: "/config/profiles",
+  //       permission: "config:profiles"
+  //     },
+  //     {
+  //       title: "Container Image Config",
+  //       icon: Container,
+  //       href: "/config/containers",
+  //       permission: "config:containers"
+  //     }
+  //   ],
+  // },
   {
     title: "Management",
     items: [

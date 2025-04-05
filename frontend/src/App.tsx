@@ -60,7 +60,7 @@ const AppRoutes = () => {
           <Route path="/display/systems/:systemId/nodes/:nodeId/environments/:envId" element={<EnvironmentDetail />} />
           
           {/* Config routes - require config permissions */}
-          <Route element={<ProtectedRoute requiredPermission="config:systems" />}>
+          {/* <Route element={<ProtectedRoute requiredPermission="config:systems" />}>
             <Route path="/config/systems" element={<SystemsConfig />} />
             <Route path="/config/systems/:systemId" element={<SystemConfigDetail />} />
             <Route path="/config/systems/:systemId/nodes/:nodeId" element={<NodeConfigDetail />} />
@@ -73,7 +73,7 @@ const AppRoutes = () => {
           
           <Route element={<ProtectedRoute requiredPermission="config:containers" />}>
             <Route path="/config/containers" element={<ContainerUpload />} />
-          </Route>
+          </Route> */}
 
           {/* Management routes - require admin permissions */}
           <Route element={<ProtectedRoute requiredPermission="admin:users" />}>

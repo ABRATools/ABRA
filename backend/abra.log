@@ -8797,3 +8797,35 @@ sqlalchemy.exc.IllegalStateChangeError: Method 'close()' can't be called here; m
 2025-04-02 18:50:43,820 | INFO | RBAC Permissions initialized on server startup
 2025-04-02 18:50:43,826 | INFO | Default groups setup successfully
 2025-04-02 18:50:43,826 | INFO | RBAC Permissions initialized on server startup
+2025-04-03 10:36:43,412 | INFO | No token found
+2025-04-03 10:37:26,977 | INFO | User admin is attempting to log in
+2025-04-03 10:37:27,246 | INFO | User admin has successfully logged in
+2025-04-03 10:37:27,248 | INFO | User admin has successfully logged in
+2025-04-03 10:37:29,699 | INFO | User admin is listing all permissions
+2025-04-03 10:37:29,703 | INFO | User admin is listing all groups
+2025-04-03 10:37:29,706 | INFO | User admin is listing all permissions
+2025-04-03 10:51:42,081 | INFO | Stopping container: 
+2025-04-03 10:51:42,081 | INFO | Stopping container with env_id: 0811d0eb736a36b3288a7b339fc2dc3153a79d2350cc363bfa72ebf7ebfb1a22
+2025-04-03 10:51:42,081 | INFO | Stopping container with env_id: 0811d0eb736a36b3288a7b339fc2dc3153a79d2350cc363bfa72ebf7ebfb1a22
+2025-04-03 10:51:43,541 | INFO | Stopping container: 
+2025-04-03 10:51:43,541 | INFO | Stopping container with env_id: 0811d0eb736a36b3288a7b339fc2dc3153a79d2350cc363bfa72ebf7ebfb1a22
+2025-04-03 10:51:43,542 | INFO | Stopping container with env_id: 0811d0eb736a36b3288a7b339fc2dc3153a79d2350cc363bfa72ebf7ebfb1a22
+2025-04-03 10:51:49,383 | INFO | Starting container: 
+2025-04-03 10:51:49,383 | INFO | Starting container with env_id: 0811d0eb736a36b3288a7b339fc2dc3153a79d2350cc363bfa72ebf7ebfb1a22
+2025-04-03 10:51:49,383 | INFO | Stopping container with env_id: 0811d0eb736a36b3288a7b339fc2dc3153a79d2350cc363bfa72ebf7ebfb1a22
+2025-04-03 14:32:12,052 | INFO | No token found
+2025-04-03 14:32:12,052 | INFO | Fetching containers
+2025-04-03 14:32:12,052 | WARNING | Unauthorized access attempt to get_containers
+2025-04-03 14:33:24,787 | INFO | No token found
+2025-04-03 14:33:25,873 | INFO | User admin is attempting to log in
+2025-04-03 14:33:26,140 | INFO | User admin has successfully logged in
+2025-04-03 14:33:26,142 | INFO | User admin has successfully logged in
+2025-04-03 14:35:42,612 | INFO | User admin is listing all permissions
+2025-04-03 14:35:42,615 | INFO | User admin is listing all groups
+2025-04-03 14:35:42,620 | INFO | User admin is listing all permissions
+2025-04-03 14:39:17,398 | INFO | User admin is listing all permissions
+2025-04-03 14:39:17,406 | INFO | User admin is listing all groups
+2025-04-03 14:39:17,409 | INFO | User admin is listing all permissions
+2025-04-03 14:39:25,402 | INFO | User admin is listing all permissions
+2025-04-03 14:39:25,405 | INFO | User admin is listing all groups
+2025-04-03 14:39:25,411 | INFO | User admin is listing all permissions
