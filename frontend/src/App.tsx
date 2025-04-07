@@ -15,6 +15,7 @@ const SystemsDisplay = React.lazy(() => import("./pages/display/SystemsDisplay.t
 const SystemDetail = React.lazy(() => import("./pages/display/SystemDetail.tsx"));
 const NodeDetail = React.lazy(() => import("./pages/display/NodeDetail.tsx"));
 const EnvironmentDetail = React.lazy(() => import("./pages/display/EnvironmentDetail.tsx"));
+const NodesOverview = React.lazy(() => import("./pages/display/NodesOverview.tsx"));
 
 // config pages
 const SystemsConfig = React.lazy(() => import("./pages/config/SystemsConfig.tsx"));
@@ -52,6 +53,10 @@ const AppRoutes = () => {
           <Route path="/display/environments" element={<Navigate to="/display/systems" replace />} />
           <Route path="/config/nodes" element={<Navigate to="/config/systems" replace />} />
           <Route path="/config/environments" element={<Navigate to="/config/systems" replace />} />
+          
+          {/* Node Overview Routes */}
+          <Route path="/nodes" element={<NodesOverview />} />
+          <Route path="/nodes/:nodeId" element={<NodeDetail />} />
           
           {/* Display routes */}
           <Route path="/display/systems" element={<SystemsDisplay />} />

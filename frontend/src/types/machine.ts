@@ -10,7 +10,10 @@ export interface System {
   totalContainers: number,
   createdAt?: Date,
   updatedAt?: Date,
-  nodes: Node[]
+  nodes: Node[],
+  environments: Environment[],
+  isCustom?: boolean,
+  source?: 'database' | 'auto-generated' | 'local'
 }
 
 export interface Node {

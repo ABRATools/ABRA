@@ -39,27 +39,29 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children, 
 
             ws.onmessage = (event: MessageEvent) => {
                 try {
-                    // const receivedData = JSON.parse(event.data);
                     const receivedData = JSON.parse(event.data);
-                    // console.log("Received WebSocket data:", receivedData);
+                    console.log("Received WebSocket data:", receivedData);
                     
                     let normalizedData: WebSocketData = { nodes: [] };
                     
                     if (Array.isArray(receivedData)) {
-                    // if it's an array, assume it's an array of nodes
-                    normalizedData.nodes = receivedData;
+                        // if it's an array, assume it's an array of nodes
+                        normalizedData.nodes = receivedData;
                     } else if (receivedData.nodes && Array.isArray(receivedData.nodes)) {
-                    // if it has a nodes property that's an array
-                    normalizedData.nodes = receivedData.nodes;
+                        // if it has a nodes property that's an array
+                        console.log("Found nodes array in received data");
+                        normalizedData.nodes = receivedData.nodes;
                     } else if (receivedData.node_id) {
-                    // if it's a single node
-                    normalizedData.nodes = [receivedData];
-                    } else { // fallback
-                    console.warn("Unexpected data format, attempting to use as-is:", receivedData);
-                    normalizedData.nodes = [receivedData];
+                        // if it's a single node
+                        console.log("Found single node with ID:", receivedData.node_id);
+                        normalizedData.nodes = [receivedData];
+                    } else { 
+                        // fallback
+                        console.warn("Unexpected data format, attempting to use as-is:", receivedData);
+                        normalizedData.nodes = [receivedData];
                     }
                     
-                    // console.log("Normalized data:", normalizedData);
+                    console.log("Normalized data:", normalizedData);
                     setData(normalizedData);
                 } catch (err) {
                     setError(new Error('Failed to parse web socket data'));
