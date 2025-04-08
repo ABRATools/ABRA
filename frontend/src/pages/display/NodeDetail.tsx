@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useWebSocket } from "@/data/WebSocketContext";
@@ -15,13 +15,16 @@ import {
   StopCircle, 
   Trash,
   ExternalLink,
-  MonitorUp
+  MonitorUp,
+  Code
 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { containersService, ContainerCreateParams, ContainerActionParams } from "@/lib/containers-service";
 
 const formatMemory = (bytes: number): string => {
   if (bytes < 1024 * 1024 * 1024) {
@@ -55,9 +58,19 @@ export default function NodeDetail() {
   const { data, isConnected, error } = useWebSocket();
   const { toast } = useToast();
   const [newContainerDialogOpen, setNewContainerDialogOpen] = useState(false);
+  const [availableImages, setAvailableImages] = useState<string[]>([]);
+  const [ebpfModules, setEbpfModules] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState({
+    images: false,
+    ebpfModules: false,
+    containerAction: false
+  });
   const [newContainer, setNewContainer] = useState({
     name: "",
     image: "",
+    useStaticIp: false,
+    ip: "",
+    selectedModules: [] as string[]
   });
 
   // find the node that matches the nodeId
@@ -72,7 +85,72 @@ export default function NodeDetail() {
     return node.environments || [];
   }, [node]);
 
-  const handleCreateContainer = () => {
+  // Load eBPF modules when dialog opens
+  useEffect(() => {
+    if (newContainerDialogOpen) {
+      // Fetch available images for this node
+      if (node) {
+        setIsLoading(prev => ({ ...prev, images: true }));
+        containersService.listImages(node.ip_address)
+          .then(images => {
+            const imagesList = Array.isArray(images) ? images : [];
+            setAvailableImages(imagesList);
+          })
+          .catch(error => {
+            console.error("Error fetching images:", error);
+            toast({
+              title: "Error fetching container images",
+              description: error.message || "Could not load available images",
+              variant: "destructive"
+            });
+            // Fallback images
+            setAvailableImages([
+              "localhost/podman-debian:latest",
+              "localhost/working:latest",
+              "localhost/ubuntu:latest"
+            ]);
+          })
+          .finally(() => {
+            setIsLoading(prev => ({ ...prev, images: false }));
+          });
+      
+        // Fetch available eBPF modules
+        setIsLoading(prev => ({ ...prev, ebpfModules: true }));
+        containersService.getEbpfModuleNames()
+          .then(modules => {
+            // Ensure we have an array of modules
+            const modulesList = Array.isArray(modules) ? modules : [];
+            setEbpfModules(modulesList);
+          })
+          .catch(error => {
+            console.error("Error fetching eBPF modules:", error);
+            toast({
+              title: "Error fetching eBPF modules",
+              description: error.message || "Could not load eBPF modules",
+              variant: "destructive"
+            });
+            // Reset to empty array on error
+            setEbpfModules([]);
+          })
+          .finally(() => {
+            setIsLoading(prev => ({ ...prev, ebpfModules: false }));
+          });
+      }
+    } else {
+      // Reset container form when dialog closes
+      setNewContainer({
+        name: "",
+        image: "",
+        useStaticIp: false,
+        ip: "",
+        selectedModules: []
+      });
+    }
+  }, [newContainerDialogOpen, node, toast]);
+
+  const handleCreateContainer = async () => {
+    if (!node) return;
+    
     if (!newContainer.name || !newContainer.image) {
       toast({
         title: "Error",
@@ -82,21 +160,116 @@ export default function NodeDetail() {
       return;
     }
 
-    console.log("Creating container:", newContainer);
-    toast({
-      title: "Container creation requested",
-      description: `Creating new container: ${newContainer.name}`
-    });
-    
-    setNewContainerDialogOpen(false);
-    setNewContainer({ name: "", image: "" });
+    // Validate IP if static IP is selected
+    if (newContainer.useStaticIp && !newContainer.ip) {
+      toast({
+        title: "Error",
+        description: "IP address is required when using static IP",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const ipRegex = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+    if (newContainer.useStaticIp && !ipRegex.test(newContainer.ip)) {
+      toast({
+        title: "Error",
+        description: "Please enter a valid IP address",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(prev => ({ ...prev, containerAction: true }));
+      
+      const containerParams: ContainerCreateParams = {
+        target_ip: node.ip_address,
+        name: newContainer.name,
+        image: newContainer.image,
+        ip: newContainer.useStaticIp ? newContainer.ip : undefined,
+        ebpf_modules: newContainer.selectedModules.length > 0 ? newContainer.selectedModules : undefined
+      };
+
+      await containersService.createContainer(containerParams);
+      
+      toast({
+        title: "Container created",
+        description: `Container ${newContainer.name} has been created successfully`
+      });
+      
+      // Reset form and close dialog
+      setNewContainerDialogOpen(false);
+      setNewContainer({
+        name: "",
+        image: "",
+        useStaticIp: false,
+        ip: "",
+        selectedModules: []
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error creating container",
+        description: error.message || "Failed to create container",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(prev => ({ ...prev, containerAction: false }));
+    }
   };
 
-  const handleContainerAction = (envId: string, action: 'start' | 'stop' | 'delete') => {
-    console.log(`${action} container:`, envId);
-    toast({
-      title: "Action requested",
-      description: `${action.charAt(0).toUpperCase() + action.slice(1)}ing container ${envId}`
+  const handleContainerAction = async (envId: string, action: 'start' | 'stop' | 'delete') => {
+    if (!node) return;
+
+    try {
+      setIsLoading(prev => ({ ...prev, containerAction: true }));
+      
+      const params: ContainerActionParams = {
+        env_id: envId,
+        target_ip: node.ip_address
+      };
+
+      let result;
+      switch (action) {
+        case 'start':
+          result = await containersService.startContainer(params);
+          break;
+        case 'stop':
+          result = await containersService.stopContainer(params);
+          break;
+        case 'delete':
+          result = await containersService.deleteContainer(params);
+          break;
+      }
+
+      toast({
+        title: `Container ${action} successful`,
+        description: `Container has been ${action}${action === 'delete' ? 'd' : 'ed'} successfully`
+      });
+    } catch (error: any) {
+      toast({
+        title: `Error ${action}ing container`,
+        description: error.message || `Failed to ${action} container`,
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(prev => ({ ...prev, containerAction: false }));
+    }
+  };
+
+  const toggleEbpfModule = (module: string, checked: boolean) => {
+    setNewContainer(prev => {
+      if (checked) {
+        return {
+          ...prev,
+          selectedModules: [...prev.selectedModules, module]
+        };
+      } else {
+        return {
+          ...prev,
+          selectedModules: prev.selectedModules.filter(m => m !== module)
+        };
+      }
     });
   };
 
@@ -218,47 +391,133 @@ export default function NodeDetail() {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold tracking-tight">Containers</h2>
-          <Dialog open={newContainerDialogOpen} onOpenChange={setNewContainerDialogOpen}>
-            <DialogTrigger asChild>
-              <Button>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                New Container
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Create New Container</DialogTitle>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="name">Container Name</Label>
-                  <Input 
-                    id="name" 
-                    value={newContainer.name}
-                    onChange={(e) => setNewContainer(prev => ({ ...prev, name: e.target.value }))}
-                    placeholder="Enter container name"
-                  />
+          <Button onClick={() => setNewContainerDialogOpen(true)}>
+            <PlusCircle className="mr-2 h-4 w-4" />
+            New Container
+          </Button>
+                      
+          {newContainerDialogOpen && (
+            <Dialog open={newContainerDialogOpen} onOpenChange={setNewContainerDialogOpen}>
+              <DialogContent className="max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Create New Container</DialogTitle>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  {/* Container Name */}
+                  <div className="grid gap-2">
+                    <Label htmlFor="name">Container Name</Label>
+                    <Input 
+                      id="name" 
+                      value={newContainer.name}
+                      onChange={(e) => setNewContainer(prev => ({ ...prev, name: e.target.value }))}
+                      placeholder="Enter container name"
+                    />
+                  </div>
+                  
+                  {/* Container Image */}
+                  <div className="grid gap-2">
+                    <Label htmlFor="image">Container Image</Label>
+                    {isLoading.images ? (
+                      <div className="flex items-center h-10 px-3 border rounded-md text-sm text-muted-foreground">
+                        Loading images...
+                      </div>
+                    ) : (
+                      <Select 
+                        onValueChange={(value) => setNewContainer(prev => ({ ...prev, image: value }))}
+                        value={newContainer.image || ""}
+                      >
+                        <SelectTrigger id="image">
+                          <SelectValue placeholder="Select container image" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {availableImages.length === 0 ? (
+                            <SelectItem value="no-images" disabled>No images available</SelectItem>
+                          ) : (
+                            availableImages.map(image => (
+                              <SelectItem key={image} value={image}>{image}</SelectItem>
+                            ))
+                          )}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </div>
+                  
+                  {/* Static IP Option */}
+                  <div className="grid gap-2">
+                    <div className="flex items-center gap-2">
+                      <input 
+                        type="checkbox"
+                        id="useStaticIp" 
+                        checked={newContainer.useStaticIp} 
+                        onChange={(e) => setNewContainer(prev => ({ 
+                          ...prev, 
+                          useStaticIp: e.target.checked 
+                        }))}
+                        className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                      />
+                      <Label htmlFor="useStaticIp">Use Static IP</Label>
+                    </div>
+                    {newContainer.useStaticIp && (
+                      <Input 
+                        id="ip" 
+                        value={newContainer.ip}
+                        onChange={(e) => setNewContainer(prev => ({ ...prev, ip: e.target.value }))}
+                        placeholder="Enter IP address (e.g. 192.168.1.100)"
+                      />
+                    )}
+                  </div>
+                  
+                  {/* eBPF Modules */}
+                  <div className="grid gap-2">
+                    <Label>eBPF Modules</Label>
+                    <div className="grid gap-2 max-h-32 overflow-y-auto p-2 border rounded-md">
+                      {isLoading.ebpfModules ? (
+                        <div className="text-sm text-muted-foreground">Loading modules...</div>
+                      ) : ebpfModules.length > 0 ? (
+                        ebpfModules.map(module => (
+                          <div key={module} className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              id={`module-${module}`} 
+                              checked={newContainer.selectedModules.includes(module)}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setNewContainer(prev => ({
+                                    ...prev,
+                                    selectedModules: [...prev.selectedModules, module]
+                                  }));
+                                } else {
+                                  setNewContainer(prev => ({
+                                    ...prev,
+                                    selectedModules: prev.selectedModules.filter(m => m !== module)
+                                  }));
+                                }
+                              }}
+                              className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                            />
+                            <Label htmlFor={`module-${module}`} className="text-sm cursor-pointer flex items-center">
+                              <Code className="mr-2 h-3.5 w-3.5" />
+                              {module}
+                            </Label>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-sm text-muted-foreground">No eBPF modules available</div>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="image">Container Image</Label>
-                  <Select 
-                    onValueChange={(value) => setNewContainer(prev => ({ ...prev, image: value }))}
-                    value={newContainer.image}
-                  >
-                    <SelectTrigger id="image">
-                      <SelectValue placeholder="Select container image" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="localhost/podman-debian:latest">Debian</SelectItem>
-                      <SelectItem value="localhost/working:latest">Working</SelectItem>
-                      <SelectItem value="localhost/ubuntu:latest">Ubuntu</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <Button onClick={handleCreateContainer}>Create Container</Button>
-            </DialogContent>
-          </Dialog>
+                
+                {/* Create Button */}
+                <Button 
+                  onClick={handleCreateContainer} 
+                  disabled={isLoading.containerAction || !newContainer.name || !newContainer.image}
+                >
+                  {isLoading.containerAction ? "Creating..." : "Create Container"}
+                </Button>
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {nodeEnvironments.map((env) => (
@@ -303,6 +562,7 @@ export default function NodeDetail() {
                         variant="outline"
                         className="flex-1" 
                         onClick={() => handleContainerAction(env.env_id, 'stop')}
+                        disabled={isLoading.containerAction}
                       >
                         <StopCircle className="mr-2 h-4 w-4" />
                         Stop
@@ -312,6 +572,7 @@ export default function NodeDetail() {
                         variant="outline" 
                         className="flex-1"
                         onClick={() => handleContainerAction(env.env_id, 'start')}
+                        disabled={isLoading.containerAction}
                       >
                         <Play className="mr-2 h-4 w-4" />
                         Start
@@ -334,6 +595,7 @@ export default function NodeDetail() {
                       variant="destructive" 
                       size="icon"
                       onClick={() => handleContainerAction(env.env_id, 'delete')}
+                      disabled={isLoading.containerAction}
                     >
                       <Trash className="h-4 w-4" />
                     </Button>

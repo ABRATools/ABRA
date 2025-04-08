@@ -1,12 +1,20 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useWebSocket } from "@/data/WebSocketContext";
-import { Server, Activity, HardDrive, Box, Container } from "lucide-react";
+import { Server, Activity, HardDrive, Box, Container, PlusCircle, Trash } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 
 export default function NodesOverview() {
   const { data, isConnected, error } = useWebSocket();
+  const { toast } = useToast();
+  const [addNodeDialogOpen, setAddNodeDialogOpen] = useState(false);
+  const [newNodeName, setNewNodeName] = useState("");
+  const [newNodeIp, setNewNodeIp] = useState("");
   
   // Get all nodes from WebSocketContext
   const nodes = data?.nodes || [];
@@ -35,6 +43,26 @@ export default function NodesOverview() {
     );
   }, [nodes]);
 
+  const handleAddNode = () => {
+    // This would connect to an actual API in the final implementation
+    console.log("Adding node:", { name: newNodeName, ip: newNodeIp });
+    toast({
+      title: "Node addition requested",
+      description: `Adding new node: ${newNodeName}`
+    });
+    setAddNodeDialogOpen(false);
+    setNewNodeName("");
+    setNewNodeIp("");
+  };
+
+  const handleRemoveNode = (nodeId) => {
+    console.log("Removing node:", nodeId);
+    toast({
+      title: "Node removal requested",
+      description: `Removing node: ${nodeId}`
+    });
+  };
+
   if (!isConnected || error) {
     return (
       <div className="p-6">
@@ -62,11 +90,47 @@ export default function NodesOverview() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Nodes Overview</h1>
-        <p className="text-muted-foreground">
-          Monitor and manage your connected nodes
-        </p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Nodes Overview</h1>
+          <p className="text-muted-foreground">
+            Monitor and manage your connected nodes
+          </p>
+        </div>
+        <Dialog open={addNodeDialogOpen} onOpenChange={setAddNodeDialogOpen}>
+          <DialogTrigger asChild>
+            <Button>
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Add New Node
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add New Node</DialogTitle>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="nodeName">Node Name</Label>
+                <Input 
+                  id="nodeName" 
+                  value={newNodeName} 
+                  onChange={(e) => setNewNodeName(e.target.value)} 
+                  placeholder="Enter node name"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="nodeIp">IP Address</Label>
+                <Input 
+                  id="nodeIp" 
+                  value={newNodeIp} 
+                  onChange={(e) => setNewNodeIp(e.target.value)} 
+                  placeholder="Enter IP address"
+                />
+              </div>
+            </div>
+            <Button onClick={handleAddNode}>Add Node</Button>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -132,10 +196,20 @@ export default function NodesOverview() {
               <Card key={node.node_id}>
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-lg font-semibold">{node.node_id}</CardTitle>
-                  <div className={`w-3 h-3 rounded-full ${
-                    nodeStatus === 'error' ? 'bg-red-500' : 
-                    nodeStatus === 'warning' ? 'bg-yellow-500' : 'bg-green-500'
-                  }`}></div>
+                  <div className="flex items-center gap-2">
+                    <div className={`w-3 h-3 rounded-full ${
+                      nodeStatus === 'error' ? 'bg-red-500' : 
+                      nodeStatus === 'warning' ? 'bg-yellow-500' : 'bg-green-500'
+                    }`}></div>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-8 w-8 rounded-full opacity-70 hover:opacity-100"
+                      onClick={() => handleRemoveNode(node.node_id)}
+                    >
+                      <Trash className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -170,6 +244,14 @@ export default function NodesOverview() {
           {nodes.length === 0 && (
             <div className="col-span-full text-center py-8 text-muted-foreground">
               <p>No nodes connected</p>
+              <Button 
+                variant="outline" 
+                className="mt-4" 
+                onClick={() => setAddNodeDialogOpen(true)}
+              >
+                <PlusCircle className="mr-2 h-4 w-4" />
+                Add First Node
+              </Button>
             </div>
           )}
         </div>

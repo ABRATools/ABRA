@@ -314,26 +314,37 @@ async def get_systems(request: Request, session = Depends(get_session), token: A
       for system in db_systems:
         env_list = []
         for env in system.environments:
-          # Build base environment data
-          env_data = {
-            "env_id": str(env.id),
-            "name": env.name,
-            "ip": env.ip,
-            "os": env.os,
-            "status": env.status,
-          }
-          
-          # Find the parent node for this environment
-          node = session.query(db.models.Node).filter(db.models.Node.id == env.node_id).first()
-          if node:
-            env_data.update({
-              "node_id": str(node.id),
-              "node_name": node.name
-            })
-          
-          # Log each environment for debugging
-          logger.info(f"Adding environment to system {system.system_id} in listing: {env_data}")
-          env_list.append(env_data)
+          try:
+            # Build base environment data
+            env_data = {
+              "env_id": str(env.id),
+              "name": env.name,
+              "ip": env.ip,
+              "os": env.os,
+              "status": env.status,
+            }
+            
+            # Add container ID if available for matching with WebSocket data
+            if hasattr(env, 'container_id') and env.container_id:
+              env_data["container_id"] = env.container_id
+              
+            # Find the parent node for this environment
+            node = None
+            if env.node_id:
+              node = session.query(db.models.Node).filter(db.models.Node.id == env.node_id).first()
+              
+            if node:
+              env_data.update({
+                "node_id": str(node.id),
+                "node_name": node.name
+              })
+            
+            # Log each environment for debugging
+            logger.info(f"Adding environment to system {system.system_id} in listing: {env_data}")
+            env_list.append(env_data)
+          except Exception as e:
+            logger.error(f"Error processing environment {env.id} for system {system.system_id}: {str(e)}")
+            # Continue with other environments
         
         system_data = {
           "system_id": system.system_id,
@@ -447,18 +458,22 @@ async def create_system(request: Request, session = Depends(get_session), token:
           except (ValueError, AttributeError):
             pass
             
-          # 2. Try by name (frontend often sends names)
+          # 2. Try by container_id for long IDs (most reliable for WebSocket sources)
+          if not env and isinstance(env_id, str) and len(env_id) > 12:
+            env = session.query(db.models.Environment).filter(db.models.Environment.container_id == env_id).first()
+            
+          # 3. Try by name (frontend often sends names)
           if not env:
             env = session.query(db.models.Environment).filter(db.models.Environment.name == env_id).first()
           
-          # 3. Try by partial ID string in case it's a prefix/suffix
+          # 4. Try by partial ID string in case it's a prefix/suffix
           if not env:
             # Convert to string for LIKE comparison
             env = session.query(db.models.Environment).filter(
               db.models.Environment.id.cast(db.String).like(f"%{env_id}%")
             ).first()
             
-          # 4. Try by env_id if it's a string that looks like "env_123"
+          # 5. Try by env_id if it's a string that looks like "env_123"
           if not env and isinstance(env_id, str) and env_id.startswith("env_"):
             try:
               # Extract numeric part after "env_"
@@ -497,7 +512,8 @@ async def create_system(request: Request, session = Depends(get_session), token:
               disk=0,
               max_cpus=0,
               max_memory=0,
-              max_disk=0
+              max_disk=0,
+              container_id=env_id  # Store the original container ID
             )
             session.add(env)
             session.commit()
@@ -532,26 +548,37 @@ async def get_system(system_id: str, session = Depends(get_session), token: Auth
       # Get environments in this system with detailed information
       env_list = []
       for env in system.environments:
-        # Base environment data
-        env_data = {
-          "env_id": str(env.id),
-          "name": env.name,
-          "ip": env.ip,
-          "os": env.os,
-          "status": env.status,
-        }
-        
-        # Find the parent node
-        node = session.query(db.models.Node).filter(db.models.Node.id == env.node_id).first()
-        if node:
-          env_data.update({
-            "node_id": str(node.id),
-            "node_name": node.name
-          })
-        
-        # Log the environment we're adding
-        logger.info(f"Adding environment to system response: {env_data}")
-        env_list.append(env_data)
+        try:
+          # Base environment data
+          env_data = {
+            "env_id": str(env.id),
+            "name": env.name,
+            "ip": env.ip,
+            "os": env.os,
+            "status": env.status,
+          }
+          
+          # Add container ID if available for matching with WebSocket data
+          if hasattr(env, 'container_id') and env.container_id:
+            env_data["container_id"] = env.container_id
+            
+          # Find the parent node
+          node = None
+          if env.node_id:
+            node = session.query(db.models.Node).filter(db.models.Node.id == env.node_id).first()
+            
+          if node:
+            env_data.update({
+              "node_id": str(node.id),
+              "node_name": node.name
+            })
+          
+          # Log the environment we're adding
+          logger.info(f"Adding environment to system response: {env_data}")
+          env_list.append(env_data)
+        except Exception as e:
+          logger.error(f"Error processing environment {env.id} for system {system.system_id}: {str(e)}")
+          # Continue with other environments
       
       # Create the complete system response
       system_data = {

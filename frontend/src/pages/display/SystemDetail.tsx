@@ -292,30 +292,46 @@ export default function SystemDetail() {
           // Handle auto-generated systems
           if (systemId === 'all-nodes') {
             // Get all environments from all nodes, with sourceNode attached
-            const allEnvironments = data.nodes.flatMap(node => {
-              if (!node.environments) return [];
+            console.log("Building allEnvironments for all-nodes system");
+            const allEnvironments = [];
+            
+            data.nodes.forEach(node => {
+              console.log(`Processing node ${node.node_id} with ${node.environments?.length || 0} environments`);
+              if (!node.environments) return;
               
               // Add sourceNode reference to each environment
-              return node.environments.map(env => ({
-                ...env,
-                sourceNode: {
-                  node_id: node.node_id,
-                  name: node.node_id,
-                  ip_address: node.ip_address,
-                  os_name: node.os_name,
-                  os_version: node.os_version
-                }
-              }));
+              node.environments.forEach(env => {
+                console.log(`Adding environment from node ${node.node_id}:`, env.env_id, env.names);
+                allEnvironments.push({
+                  ...env,
+                  sourceNode: {
+                    node_id: node.node_id,
+                    name: node.node_id,
+                    ip_address: node.ip_address,
+                    os_name: node.os_name,
+                    os_version: node.os_version
+                  }
+                });
+              });
             });
             
             // Process environments to ensure all have proper values
-            const processedEnvironments = allEnvironments.map(env => {
+            const processedEnvironments = [];
+            
+            // Process all environments to ensure they have proper values
+            for (const env of allEnvironments) {
               console.log('Processing env from WebSocket:', JSON.stringify(env).substring(0, 200));
-              return {
+              
+              // Ensure we have valid names and ID
+              const envNames = env.names && env.names.length > 0 ? env.names : [`Container-${env.env_id}`];
+              
+              // Create a properly formatted environment with all required fields
+              const processedEnv = {
                 ...env,
+                env_id: env.env_id,
                 state: env.state || 'unknown',
                 image: env.image || 'N/A',
-                names: env.names && env.names.length > 0 ? env.names : [`Container-${env.env_id}`],
+                names: envNames,
                 // Make sure to access the correct properties - case sensitive!
                 cpu_percentage: typeof env.cpu_percentage === 'number' ? env.cpu_percentage : 0,
                 memory_percent: typeof env.memory_percent === 'number' ? env.memory_percent : 0,
@@ -329,7 +345,12 @@ export default function SystemDetail() {
                 exited_at: typeof env.exited_at === 'number' ? env.exited_at : 0,
                 uptime: typeof env.uptime === 'number' ? env.uptime : 0
               };
-            });
+              
+              processedEnvironments.push(processedEnv);
+              console.log('Added processed environment:', processedEnv.env_id, processedEnv.names);
+            }
+            
+            console.log(`Processed ${processedEnvironments.length} total environments`);
             
             const allNodesSystem = {
               id: 'all-nodes',
@@ -469,6 +490,9 @@ export default function SystemDetail() {
     if (!system) return [];
     if (!data?.nodes) return system.nodes || [];
     
+    console.log(`Getting nodes for system: ${system.id}, isCustom: ${system.isCustom}, source: ${system.source}`);
+    console.log('Available WebSocket data nodes:', data.nodes.map(n => n.node_id));
+    
     // For database/custom systems, update nodes and environments from live data
     if (system.source === 'database' && system.isCustom) {
       console.log('Updating custom system with WebSocket data');
@@ -576,11 +600,30 @@ export default function SystemDetail() {
       return matchingNodes;
     }
     
-    // For all-nodes or auto-generated systems, only update if there's a significant change
-    if (system.nodes && system.nodes.length > 0) {
+    // For non-custom systems (like all-nodes), always use the latest data directly from WebSocket
+    if (system.id === 'all-nodes' && data.nodes) {
+      console.log('Using latest WebSocket data for all-nodes system');
+      return data.nodes;
+    }
+    
+    // For OS-based systems, filter the latest nodes by OS
+    if (system.id && system.id.includes('-') && !system.isCustom && data.nodes) {
+      const [osName, osVersion] = system.id.split('-');
+      if (osName && osVersion) {
+        console.log(`Filtering nodes for OS ${osName} ${osVersion}`);
+        const filteredNodes = data.nodes.filter(
+          node => node.os_name === osName && node.os_version === osVersion
+        );
+        if (filteredNodes.length > 0) {
+          return filteredNodes;
+        }
+      }
+    }
+    
+    // For custom systems with no significant changes, keep current nodes to prevent re-renders
+    if (system.nodes && system.nodes.length > 0 && system.isCustom) {
       const nodeCountDiff = Math.abs(system.nodes.length - data.nodes.length);
       if (nodeCountDiff <= 1) {
-        // No significant change, keep current nodes to prevent re-renders
         return system.nodes;
       }
     }
@@ -602,28 +645,65 @@ export default function SystemDetail() {
         console.log('Environment raw data (sample):', JSON.stringify(env).substring(0, 300));
       }
       
+      // Get data from WebSocket if available
+      let enhancedEnv = { ...env };
+      
+      // For auto-generated systems like 'all-nodes', check WebSocket data for more details
+      if (systemId === 'all-nodes' && data?.nodes) {
+        // Look for this environment in the WebSocket data
+        for (const node of data.nodes) {
+          if (!node.environments) continue;
+          
+          // First try exact ID match
+          let matchingEnv = node.environments.find(wsEnv => wsEnv.env_id === env.env_id);
+          
+          // If no match, try matching by container name
+          if (!matchingEnv && env.names && env.names.length > 0) {
+            const envName = env.names[0];
+            matchingEnv = node.environments.find(wsEnv => 
+              wsEnv.names && wsEnv.names.length > 0 && wsEnv.names[0] === envName
+            );
+          }
+          
+          if (matchingEnv) {
+            console.log(`Found WebSocket data for env ${env.env_id} on node ${node.node_id}`);
+            enhancedEnv = {
+              ...matchingEnv, // Use WebSocket data as base
+              // Keep original env_id if WebSocket doesn't have one
+              env_id: matchingEnv.env_id || env.env_id,
+              // Preserve the sourceNode reference
+              sourceNode: env.sourceNode || { 
+                node_id: node.node_id, 
+                name: node.node_id 
+              }
+            };
+            break;
+          }
+        }
+      }
+      
       return {
-        ...env,
+        ...enhancedEnv,
         // Provide fallbacks for all possibly missing values
-        env_id: env.env_id || `unknown-${Math.random().toString(36).substring(7)}`,
-        state: env.state || 'unknown',
-        ip: env.ip || 'Not assigned',
-        image: env.image || 'N/A',
-        names: env.names && env.names.length > 0 ? env.names : [`Container-${env.env_id?.substring(0, 8) || 'unknown'}`],
-        started_at: typeof env.started_at === 'number' ? env.started_at : 0,
-        exited: Boolean(env.exited),
-        exit_code: typeof env.exit_code === 'number' ? env.exit_code : 0,
-        exited_at: typeof env.exited_at === 'number' ? env.exited_at : 0,
-        cpu_percentage: typeof env.cpu_percentage === 'number' ? env.cpu_percentage : 0,
-        memory_percent: typeof env.memory_percent === 'number' ? env.memory_percent : 0,
-        uptime: typeof env.uptime === 'number' ? env.uptime : 0,
-        networks: Array.isArray(env.networks) ? env.networks : [],
-        ports: Array.isArray(env.ports) ? env.ports : [],
+        env_id: enhancedEnv.env_id || `unknown-${Math.random().toString(36).substring(7)}`,
+        state: enhancedEnv.state || 'unknown',
+        ip: enhancedEnv.ip || 'Not assigned',
+        image: enhancedEnv.image || 'N/A',
+        names: enhancedEnv.names && enhancedEnv.names.length > 0 ? enhancedEnv.names : [`Container-${enhancedEnv.env_id?.substring(0, 8) || 'unknown'}`],
+        started_at: typeof enhancedEnv.started_at === 'number' ? enhancedEnv.started_at : 0,
+        exited: Boolean(enhancedEnv.exited),
+        exit_code: typeof enhancedEnv.exit_code === 'number' ? enhancedEnv.exit_code : 0,
+        exited_at: typeof enhancedEnv.exited_at === 'number' ? enhancedEnv.exited_at : 0,
+        cpu_percentage: typeof enhancedEnv.cpu_percentage === 'number' ? enhancedEnv.cpu_percentage : 0,
+        memory_percent: typeof enhancedEnv.memory_percent === 'number' ? enhancedEnv.memory_percent : 0,
+        uptime: typeof enhancedEnv.uptime === 'number' ? enhancedEnv.uptime : 0,
+        networks: Array.isArray(enhancedEnv.networks) ? enhancedEnv.networks : [],
+        ports: Array.isArray(enhancedEnv.ports) ? enhancedEnv.ports : [],
         // Ensure sourceNode exists
-        sourceNode: env.sourceNode || { node_id: 'unknown', name: 'Unknown Node' }
+        sourceNode: enhancedEnv.sourceNode || { node_id: 'unknown', name: 'Unknown Node' }
       };
     });
-  }, [system]);
+  }, [system, data, systemId]);
   
   const systemMetrics = useMemo(() => {
     // Default metrics if we can't calculate from nodes
@@ -823,6 +903,7 @@ export default function SystemDetail() {
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <p className="text-sm text-muted-foreground">Image: {env.image || 'N/A'}</p>
+                      <p className="text-sm text-muted-foreground">IP: {env.ip || 'Not assigned'}</p>
                       <p className="text-sm text-muted-foreground">Node: {parentNode?.node_id || env.sourceNode?.node_id || 'Unknown'}</p>
                       {env.state === 'running' && (
                         <>
@@ -882,7 +963,7 @@ export default function SystemDetail() {
                         size="icon"
                         asChild
                       >
-                        <Link to={`/display/systems/${systemId}/nodes/${parentNode?.node_id || env.sourceNode?.node_id}/environments/${env.env_id}`}>
+                        <Link to={`/display/systems/${systemId}/nodes/${parentNode?.node_id || env.sourceNode?.node_id || 'unknown'}/environments/${env.env_id}`}>
                           <MonitorUp className="h-4 w-4" />
                         </Link>
                       </Button>

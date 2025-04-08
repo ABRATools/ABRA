@@ -103,6 +103,8 @@ class Environment(Base):
     max_cpus = Column(Integer, nullable=False)
     max_memory = Column(Integer, nullable=False)
     max_disk = Column(Integer, nullable=False)
+    # Store original container ID for WebSocket matching
+    container_id = Column(String(100), nullable=True)
     # environment can only have one node
     node_id = Column(Integer, ForeignKey('nodes.id'))
     nodes = relationship("Node", back_populates="environments")

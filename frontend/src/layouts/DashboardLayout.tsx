@@ -1,23 +1,20 @@
 import { Suspense } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { DashboardHeader } from "@/components/DashboardHeader";
-import { RBACNavigationSidebar, NodeSidebar } from "@/components/DashboardSidebar";
+import { RBACNavigationSidebar } from "@/components/DashboardSidebar";
 import { useAuth } from "@/auth/AuthContext";
 
-export function DashboardLayout() {
+export function DashboardLayout({ hideSidebar }) {
   const { checkingPermissions } = useAuth();
   const location = useLocation();
   
-  // Check if current path is a node path
-  const isNodePath = location.pathname.startsWith('/nodes');
+  // Use hideSidebar function if provided (used to hide the node sidebar on node pages)
+  const shouldHideSidebar = hideSidebar ? hideSidebar(location) : false;
   
   return (
     <div className="min-h-screen flex">
       {/* Always show the main navigation sidebar */}
       <RBACNavigationSidebar />
-      
-      {/* Show the node sidebar only on node paths, positioned after the main sidebar */}
-      {isNodePath && <NodeSidebar />}
       
       <div className="flex-1 flex flex-col">
         <DashboardHeader />
