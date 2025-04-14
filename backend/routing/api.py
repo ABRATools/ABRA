@@ -3,8 +3,10 @@ import sys, os
 sys.path.insert(0, os.path.abspath('..'))
 
 import database as db
+from database.models import System
 from classes import *
 from containers import *
+from pydantic import BaseModel
 
 import bcrypt
 from fastapi import APIRouter, Request, Depends
@@ -296,6 +298,354 @@ async def get_node_data(request: Request, session = Depends(get_session), token:
     nodes = db.get_nodes(session)
     nodes_json = [Node(node_id=node.id, name=node.name, ip=node.ip, os=node.os, status=node.status, uptime=node.uptime, cpu_percent=node.cpu_percent, memory=node.memory, disk=node.disk, max_cpus=node.max_cpus, max_memory=node.max_memory, max_disk=node.max_disk, environments=[Environment(env_id=env.id, name=env.name, ip=env.ip, os=env.os, status=env.status, uptime=env.uptime, cpu_percent=env.cpu_percent, memory=env.memory, disk=env.disk, max_cpus=env.max_cpus, max_memory=env.max_memory, max_disk=env.max_disk, node_id=env.node_id) for env in node.environments]).model_dump_json() for node in nodes]
     return JSONResponse(content={'nodes': nodes_json}, status_code=200)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+# systems endpoints
+@router.post('/systems')
+async def get_systems(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  """get all systems"""
+  if token:
+    try:
+      # 1. Get all custom systems from the database
+      db_systems = db.get_all_systems(session)
+      systems_json = []
+      
+      # Process database systems
+      for system in db_systems:
+        env_list = []
+        for env in system.environments:
+          try:
+            # Build base environment data
+            env_data = {
+              "env_id": str(env.id),
+              "name": env.name,
+              "ip": env.ip,
+              "os": env.os,
+              "status": env.status,
+            }
+            
+            # Add container ID if available for matching with WebSocket data
+            if hasattr(env, 'container_id') and env.container_id:
+              env_data["container_id"] = env.container_id
+              
+            # Find the parent node for this environment
+            node = None
+            if env.node_id:
+              node = session.query(db.models.Node).filter(db.models.Node.id == env.node_id).first()
+              
+            if node:
+              env_data.update({
+                "node_id": str(node.id),
+                "node_name": node.name
+              })
+            
+            # Log each environment for debugging
+            logger.info(f"Adding environment to system {system.system_id} in listing: {env_data}")
+            env_list.append(env_data)
+          except Exception as e:
+            logger.error(f"Error processing environment {env.id} for system {system.system_id}: {str(e)}")
+            # Continue with other environments
+        
+        system_data = {
+          "system_id": system.system_id,
+          "name": system.name,
+          "description": system.description,
+          "is_custom": system.is_custom,
+          "created_at": system.created_at.isoformat(),
+          "updated_at": system.updated_at.isoformat(),
+          "environments": env_list,
+          "source": "database"  # Indicate this came from the database
+        }
+        
+        # Log the system data
+        logger.info(f"Adding system to listing: {system.system_id} with {len(env_list)} environments")
+        systems_json.append(system_data)
+      
+      # 2. Get nodes for auto-generated systems
+      nodes = db.get_nodes(session)
+      
+      # Create "all-nodes" system
+      all_nodes_env_list = []
+      os_systems = {}  # For auto-generated OS-based systems
+      
+      # Process nodes to create auto-generated systems
+      for node in nodes:
+        # Track which OS this node belongs to for OS-based systems
+        os_key = f"{node.os}-{node.status}"
+        if os_key not in os_systems:
+          os_systems[os_key] = {
+            "system_id": os_key,
+            "name": f"{node.os} {node.status}",
+            "description": f"Auto-generated system for {node.os} {node.status}",
+            "is_custom": False,
+            "environments": [],
+            "source": "auto-generated"
+          }
+        
+        # Process environments for this node
+        for env in node.environments:
+          env_data = {
+            "env_id": str(env.id),
+            "name": env.name,
+            "ip": env.ip,
+            "os": env.os,
+            "status": env.status,
+            "node_id": str(node.id),
+            "node_name": node.name
+          }
+          
+          # Add to all-nodes system
+          all_nodes_env_list.append(env_data)
+          
+          # Add to OS-specific system
+          os_systems[os_key]["environments"].append(env_data)
+      
+      # Add "all-nodes" system
+      systems_json.append({
+        "system_id": "all-nodes",
+        "name": "All Nodes",
+        "description": "All available nodes and environments",
+        "is_custom": False,
+        "environments": all_nodes_env_list,
+        "source": "auto-generated"
+      })
+      
+      # Add OS-based systems
+      for os_system in os_systems.values():
+        systems_json.append(os_system)
+      
+      return JSONResponse(content={'systems': systems_json}, status_code=200)
+    except Exception as e:
+      logger.error(f"Error getting systems: {str(e)}")
+      return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@router.post('/system')
+async def create_system(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  """create a new system"""
+  if token:
+    try:
+      data = await request.json()
+      # Manually extract fields from data
+      system_id = data["system_id"]
+      name = data["name"]
+      description = data.get("description", "")
+      is_custom = data.get("is_custom", True)
+      # Store environment IDs for later use
+      environment_ids = data.get("environment_ids", [])
+      
+      # Create the system
+      system = db.create_system(
+        session, 
+        system_id, 
+        name, 
+        description, 
+        is_custom
+      )
+      
+      # Add environments if provided
+      for env_id in environment_ids:
+        logger.info(f"Looking for environment: {env_id}")
+        try:
+          env = None
+          
+          # Try different lookup strategies for finding the environment
+          
+          # 1. Try exact ID match (most reliable)
+          try:
+            if env_id.isdigit():
+              env = session.query(db.models.Environment).filter(db.models.Environment.id == int(env_id)).first()
+          except (ValueError, AttributeError):
+            pass
+            
+          # 2. Try by container_id for long IDs (most reliable for WebSocket sources)
+          if not env and isinstance(env_id, str) and len(env_id) > 12:
+            env = session.query(db.models.Environment).filter(db.models.Environment.container_id == env_id).first()
+            
+          # 3. Try by name (frontend often sends names)
+          if not env:
+            env = session.query(db.models.Environment).filter(db.models.Environment.name == env_id).first()
+          
+          # 4. Try by partial ID string in case it's a prefix/suffix
+          if not env:
+            # Convert to string for LIKE comparison
+            env = session.query(db.models.Environment).filter(
+              db.models.Environment.id.cast(db.String).like(f"%{env_id}%")
+            ).first()
+            
+          # 5. Try by env_id if it's a string that looks like "env_123"
+          if not env and isinstance(env_id, str) and env_id.startswith("env_"):
+            try:
+              # Extract numeric part after "env_"
+              numeric_part = env_id.split("_")[1]
+              if numeric_part.isdigit():
+                env = session.query(db.models.Environment).filter(
+                  db.models.Environment.id == int(numeric_part)
+                ).first()
+            except (IndexError, ValueError):
+              pass
+          
+          # If environment wasn't found, create a placeholder environment for the ID
+          # This is needed because the actual environment data comes from websocket
+          if not env:
+            logger.info(f"Creating placeholder environment for {env_id}")
+            # Create a placeholder environment with minimal info
+            max_id = session.query(db.func.max(db.models.Environment.id)).scalar() or 0
+            max_id += 1
+            
+            # For websocket container integration, store the env_id in the name
+            # format: container_name or env_id itself if no name can be extracted
+            container_name = env_id
+            # If the env_id looks like a hash ID (typical of container IDs), use a generic name
+            if len(env_id) > 32 and any(c in env_id for c in "0123456789abcdef"):
+              container_name = f"Container-{max_id}"
+            
+            env = db.models.Environment(
+              id=max_id,
+              name=container_name,
+              ip="",
+              os="undefined",
+              status="pending",
+              uptime="0",
+              cpu_percent=0,
+              memory=0,
+              disk=0,
+              max_cpus=0,
+              max_memory=0,
+              max_disk=0,
+              container_id=env_id  # Store the original container ID
+            )
+            session.add(env)
+            session.commit()
+            logger.info(f"Created placeholder environment {env.id} for {env_id}")
+            
+          if env:
+            db.add_environment_to_system(session, system_id, env.id)
+            logger.info(f"Added environment {env_id} to system {system_id}")
+          else:
+            logger.warning(f"Environment {env_id} not found when creating system {system_id}")
+        except Exception as e:
+          logger.error(f"Error processing environment {env_id}: {str(e)}")
+      
+      return JSONResponse(content={
+        'message': 'System created successfully',
+        'system_id': system.system_id
+      }, status_code=200)
+    except Exception as e:
+      logger.error(f"Error creating system: {str(e)}")
+      return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@router.post('/system/{system_id}')
+async def get_system(system_id: str, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  """get a specific system"""
+  if token:
+    try:
+      system = db.get_system_by_id(session, system_id)
+      if not system:
+        return JSONResponse(content={'message': 'System not found'}, status_code=404)
+      
+      # Get environments in this system with detailed information
+      env_list = []
+      for env in system.environments:
+        try:
+          # Base environment data
+          env_data = {
+            "env_id": str(env.id),
+            "name": env.name,
+            "ip": env.ip,
+            "os": env.os,
+            "status": env.status,
+          }
+          
+          # Add container ID if available for matching with WebSocket data
+          if hasattr(env, 'container_id') and env.container_id:
+            env_data["container_id"] = env.container_id
+            
+          # Find the parent node
+          node = None
+          if env.node_id:
+            node = session.query(db.models.Node).filter(db.models.Node.id == env.node_id).first()
+            
+          if node:
+            env_data.update({
+              "node_id": str(node.id),
+              "node_name": node.name
+            })
+          
+          # Log the environment we're adding
+          logger.info(f"Adding environment to system response: {env_data}")
+          env_list.append(env_data)
+        except Exception as e:
+          logger.error(f"Error processing environment {env.id} for system {system.system_id}: {str(e)}")
+          # Continue with other environments
+      
+      # Create the complete system response
+      system_data = {
+        "system_id": system.system_id,
+        "name": system.name,
+        "description": system.description,
+        "is_custom": system.is_custom,
+        "created_at": system.created_at.isoformat(),
+        "updated_at": system.updated_at.isoformat(),
+        "environments": env_list,
+        "source": "database"
+      }
+      
+      # Log the system data being returned
+      logger.info(f"Returning system data: {system_data}")
+      
+      return JSONResponse(content={
+        'system': system_data
+      }, status_code=200)
+    except Exception as e:
+      logger.error(f"Error getting system {system_id}: {str(e)}")
+      return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@router.delete('/system/{system_id}')
+async def delete_system_endpoint(system_id: str, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  """delete a system"""
+  if token:
+    try:
+      result = db.delete_system(session, system_id)
+      if result:
+        return JSONResponse(content={'message': 'System deleted successfully'}, status_code=200)
+      else:
+        return JSONResponse(content={'message': 'System not found'}, status_code=404)
+    except Exception as e:
+      logger.error(f"Error deleting system {system_id}: {str(e)}")
+      return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@router.post('/system/{system_id}/add-environment/{env_id}')
+async def add_environment(system_id: str, env_id: str, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  """add an environment to a system"""
+  if token:
+    try:
+      result = db.add_environment_to_system(session, system_id, int(env_id))
+      if result:
+        return JSONResponse(content={'message': 'Environment added to system successfully'}, status_code=200)
+      else:
+        return JSONResponse(content={'message': 'System or environment not found'}, status_code=404)
+    except Exception as e:
+      logger.error(f"Error adding environment {env_id} to system {system_id}: {str(e)}")
+      return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
+  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+
+@router.post('/system/{system_id}/remove-environment/{env_id}')
+async def remove_environment(system_id: str, env_id: str, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  """remove an environment from a system"""
+  if token:
+    try:
+      result = db.remove_environment_from_system(session, system_id, int(env_id))
+      if result:
+        return JSONResponse(content={'message': 'Environment removed from system successfully'}, status_code=200)
+      else:
+        return JSONResponse(content={'message': 'System or environment not found'}, status_code=404)
+    except Exception as e:
+      logger.error(f"Error removing environment {env_id} from system {system_id}: {str(e)}")
+      return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 @router.post("/post_node")

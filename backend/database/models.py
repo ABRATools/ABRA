@@ -103,6 +103,8 @@ class Environment(Base):
     max_cpus = Column(Integer, nullable=False)
     max_memory = Column(Integer, nullable=False)
     max_disk = Column(Integer, nullable=False)
+    # Store original container ID for WebSocket matching
+    container_id = Column(String(100), nullable=True)
     # environment can only have one node
     node_id = Column(Integer, ForeignKey('nodes.id'))
     nodes = relationship("Node", back_populates="environments")
@@ -146,3 +148,23 @@ class NodeInfo(Base):
     id = Column(Integer, primary_key=True)
     data = Column(JSON, nullable=False)
     timestamp = Column(DateTime, default=datetime.datetime.now(tz=datetime.timezone.utc))
+
+class System(Base):
+    __tablename__ = 'systems'
+    
+    id = Column(Integer, primary_key=True, index=True)
+    system_id = Column(String(50), nullable=False, unique=True)
+    name = Column(String(50), nullable=False)
+    description = Column(String(200), nullable=True)
+    is_custom = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.datetime.now(tz=datetime.timezone.utc))
+    updated_at = Column(DateTime, default=datetime.datetime.now(tz=datetime.timezone.utc), onupdate=datetime.datetime.now(tz=datetime.timezone.utc))
+    environments = relationship("Environment", secondary="system_environments", backref="systems")
+    
+# Association table for system-environment relationships
+system_environments = Table(
+    'system_environments',
+    Base.metadata,
+    Column('system_id', Integer, ForeignKey('systems.id'), primary_key=True),
+    Column('environment_id', Integer, ForeignKey('environments.id'), primary_key=True)
+)

@@ -3,7 +3,7 @@ sys.path.insert(0, os.path.abspath('..'))
 from logger import logger
 
 from sqlalchemy import and_, func
-from .models import User, Group, Node, Environment, ConnectionStrings, NodeInfo, Permission
+from .models import User, Group, Node, Environment, ConnectionStrings, NodeInfo, Permission, System
 from typing import List
 import datetime
 import json
@@ -205,8 +205,22 @@ NODE STUFF
 """
 
 def create_environment(db, env):
-    exists = db.query(Environment).filter(Environment.name == env.name).first()
+    # First try to find by container ID if available
+    container_id = None
+    if hasattr(env, 'env_id') and env.env_id:
+        container_id = env.env_id
+        logger.debug(f"Looking for environment by container_id: {container_id}")
+        exists = db.query(Environment).filter(Environment.container_id == container_id).first()
+        
+        if exists is None:
+            # Also try by name as fallback
+            exists = db.query(Environment).filter(Environment.name == env.name).first()
+    else:
+        # Fall back to name-based lookup
+        exists = db.query(Environment).filter(Environment.name == env.name).first()
+    
     if exists is not None:
+        logger.debug(f"Updating environment {exists.id} (name: {exists.name}, container_id: {exists.container_id})")
         exists.ip = env.ip
         exists.os = env.os
         exists.status = env.status
@@ -217,8 +231,14 @@ def create_environment(db, env):
         exists.max_cpus = env.max_cpus
         exists.max_memory = env.max_memory
         exists.max_disk = env.max_disk
+        
+        # Update container_id if not already set
+        if container_id and not exists.container_id:
+            exists.container_id = container_id
+            
         db.commit()
-        return None
+        return exists
+        
     # get max id
     max_id = db.query(func.max(Environment.id)).scalar()
     if max_id is None:
@@ -226,10 +246,25 @@ def create_environment(db, env):
     # increment max id
     max_id += 1
 
-    new_env = Environment(id=max_id, name=env.name, ip=env.ip, os=env.os, status=env.status, uptime=env.uptime, cpu_percent=env.cpu_percent, memory=env.memory, disk=env.disk, max_cpus=env.max_cpus, max_memory=env.max_memory, max_disk=env.max_disk)
+    logger.debug(f"Creating new environment with ID {max_id}, name {env.name}, container_id {container_id}")
+    new_env = Environment(
+        id=max_id, 
+        name=env.name, 
+        ip=env.ip, 
+        os=env.os, 
+        status=env.status, 
+        uptime=env.uptime, 
+        cpu_percent=env.cpu_percent, 
+        memory=env.memory, 
+        disk=env.disk, 
+        max_cpus=env.max_cpus, 
+        max_memory=env.max_memory, 
+        max_disk=env.max_disk,
+        container_id=container_id  # Store the original container ID
+    )
     db.add(new_env)
     db.commit()
-    logger.debug(f"Creating environment {env.name}")
+    logger.debug(f"Created environment {env.name} with container_id {container_id}")
     return new_env
 
 def create_node(db, node):
@@ -322,3 +357,125 @@ def get_all_node_info_newer_than(db, time: datetime.datetime) -> List[str]:
     for entry in data:
         print(entry.data)
         data_list.append(json.dumps(entry.data))
+
+#######################
+# systems
+#######################
+
+def create_system(db, system_id, name, description=None, is_custom=True):
+    """create a new system or update if it already exists"""
+    # Check if system already exists
+    existing = db.query(System).filter(System.system_id == system_id).first()
+    if existing:
+        # Update existing system
+        existing.name = name
+        existing.description = description
+        existing.is_custom = is_custom
+        existing.updated_at = datetime.datetime.now(tz=datetime.timezone.utc)
+        db.commit()
+        logger.debug(f"Updated existing system {system_id}")
+        return existing
+    
+    # Get next ID
+    max_id = db.query(func.max(System.id)).scalar()
+    if max_id is None:
+        max_id = 0
+    max_id += 1
+    
+    # Create new system
+    new_system = System(
+        id=max_id,
+        system_id=system_id,
+        name=name,
+        description=description,
+        is_custom=is_custom
+    )
+    db.add(new_system)
+    db.commit()
+    logger.debug(f"Created new system {system_id}")
+    return new_system
+
+def get_system_by_id(db, system_id):
+    """get a system by its system_id"""
+    return db.query(System).filter(System.system_id == system_id).first()
+
+def get_all_systems(db):
+    """get all systems"""
+    return db.query(System).all()
+
+def delete_system(db, system_id):
+    """delete a system by its system_id"""
+    system = db.query(System).filter(System.system_id == system_id).first()
+    if not system:
+        logger.warning(f"Attempted to delete non-existent system {system_id}")
+        return False
+    
+    db.delete(system)
+    db.commit()
+    logger.debug(f"Deleted system {system_id}")
+    return True
+
+def add_environment_to_system(db, system_id, env_id):
+    """add an environment to a system"""
+    try:
+        # First, make sure both system and environment exist
+        system = db.query(System).filter(System.system_id == system_id).first()
+        if not system:
+            logger.warning(f"System {system_id} not found")
+            return False
+            
+        # Try to find environment by id 
+        environment = db.query(Environment).filter(Environment.id == env_id).first()
+        if not environment:
+            logger.warning(f"Environment {env_id} not found")
+            return False
+        
+        # Check if environment is already in system
+        if environment not in system.environments:
+            logger.debug(f"Adding environment {env_id} to system {system_id}")
+            system.environments.append(environment)
+            db.commit()
+            logger.debug(f"Added environment {env_id} to system {system_id}")
+        else:
+            logger.debug(f"Environment {env_id} already in system {system_id}")
+            
+        return True
+    except Exception as e:
+        logger.error(f"Error adding environment {env_id} to system {system_id}: {str(e)}")
+        db.rollback()
+        raise
+
+def remove_environment_from_system(db, system_id, env_id):
+    """remove an environment from a system"""
+    try:
+        system = db.query(System).filter(System.system_id == system_id).first()
+        if not system:
+            logger.warning(f"System {system_id} not found")
+            return False
+            
+        environment = db.query(Environment).filter(Environment.id == env_id).first()
+        if not environment:
+            logger.warning(f"Environment {env_id} not found")
+            return False
+        
+        if environment in system.environments:
+            logger.debug(f"Removing environment {env_id} from system {system_id}")
+            system.environments.remove(environment)
+            db.commit()
+            logger.debug(f"Removed environment {env_id} from system {system_id}")
+        else:
+            logger.debug(f"Environment {env_id} not in system {system_id}")
+        
+        return True
+    except Exception as e:
+        logger.error(f"Error removing environment {env_id} from system {system_id}: {str(e)}")
+        db.rollback()
+        raise
+
+def get_system_environments(db, system_id):
+    """get all environments in a system"""
+    system = db.query(System).filter(System.system_id == system_id).first()
+    if not system:
+        return []
+    
+    return system.environments

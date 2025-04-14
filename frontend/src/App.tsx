@@ -15,6 +15,8 @@ const SystemsDisplay = React.lazy(() => import("./pages/display/SystemsDisplay.t
 const SystemDetail = React.lazy(() => import("./pages/display/SystemDetail.tsx"));
 const NodeDetail = React.lazy(() => import("./pages/display/NodeDetail.tsx"));
 const EnvironmentDetail = React.lazy(() => import("./pages/display/EnvironmentDetail.tsx"));
+const NodesOverview = React.lazy(() => import("./pages/display/NodesOverview.tsx"));
+// const WebSocketTest = React.lazy(() => import("./pages/display/WebSocketTest.tsx"));
 
 // config pages
 const SystemsConfig = React.lazy(() => import("./pages/config/SystemsConfig.tsx"));
@@ -45,13 +47,18 @@ const AppRoutes = () => {
 
       {/* Protected routes - now using our RBAC-aware ProtectedRoute component */}
       <Route element={<ProtectedRoute />}>
-        <Route element={<DashboardLayout />}>
+        <Route element={<DashboardLayout hideSidebar={location => location.pathname.startsWith('/nodes')} />}>
           {/* Redirects */}
           <Route path="/system" element={<Navigate to="/display/systems" replace />} />
           <Route path="/display/nodes" element={<Navigate to="/display/systems" replace />} />
           <Route path="/display/environments" element={<Navigate to="/display/systems" replace />} />
           <Route path="/config/nodes" element={<Navigate to="/config/systems" replace />} />
           <Route path="/config/environments" element={<Navigate to="/config/systems" replace />} />
+          
+          {/* Node Overview Routes */}
+          <Route path="/nodes" element={<NodesOverview />} />
+          <Route path="/nodes/:nodeId" element={<NodeDetail />} />
+          {/* <Route path="/test/websocket" element={<WebSocketTest />} /> */}
           
           {/* Display routes */}
           <Route path="/display/systems" element={<SystemsDisplay />} />
@@ -60,7 +67,7 @@ const AppRoutes = () => {
           <Route path="/display/systems/:systemId/nodes/:nodeId/environments/:envId" element={<EnvironmentDetail />} />
           
           {/* Config routes - require config permissions */}
-          <Route element={<ProtectedRoute requiredPermission="config:systems" />}>
+          {/* <Route element={<ProtectedRoute requiredPermission="config:systems" />}>
             <Route path="/config/systems" element={<SystemsConfig />} />
             <Route path="/config/systems/:systemId" element={<SystemConfigDetail />} />
             <Route path="/config/systems/:systemId/nodes/:nodeId" element={<NodeConfigDetail />} />
@@ -73,7 +80,7 @@ const AppRoutes = () => {
           
           <Route element={<ProtectedRoute requiredPermission="config:containers" />}>
             <Route path="/config/containers" element={<ContainerUpload />} />
-          </Route>
+          </Route> */}
 
           {/* Management routes - require admin permissions */}
           <Route element={<ProtectedRoute requiredPermission="admin:users" />}>
