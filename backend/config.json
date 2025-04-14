@@ -12,5 +12,5 @@
     "LDAP_GROUP_DN": "ou=groups,dc=abra,dc=tools",
     "LOCAL_DB": true,
     "NODE_UPDATE_INTERVAL": 5,
-    "ACCESS_TOKEN_EXPIRE_SECONDS": 1800
+    "ACCESS_TOKEN_EXPIRE_SECONDS": 86400
 }

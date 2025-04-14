@@ -79,7 +79,8 @@ app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_
 async def send_data(session):
   try:
     while True:
-      data = db.get_newest_node_info(session)
+      # data = db.get_newest_node_info(session)
+      data = db.return_cluster_info(session)
       if not data:
         await asyncio.sleep(2.5)
         continue

@@ -3,18 +3,16 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useWebSocket } from "@/data/WebSocketContext";
-import { Server, Activity, HardDrive, Box, Container, PlusCircle, Trash } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Server, Activity, HardDrive, Container, Trash } from "lucide-react";
+// import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import AddNewNode from "@/components/AddNewNode";
 
 export default function NodesOverview() {
   const { data, isConnected, error } = useWebSocket();
   const { toast } = useToast();
-  const [addNodeDialogOpen, setAddNodeDialogOpen] = useState(false);
-  const [newNodeName, setNewNodeName] = useState("");
-  const [newNodeIp, setNewNodeIp] = useState("");
   
   // Get all nodes from WebSocketContext
   const nodes = data?.nodes || [];
@@ -42,18 +40,6 @@ export default function NodesOverview() {
       nodes.reduce((sum, node) => sum + node.mem_percent, 0) / nodes.length
     );
   }, [nodes]);
-
-  const handleAddNode = () => {
-    // This would connect to an actual API in the final implementation
-    console.log("Adding node:", { name: newNodeName, ip: newNodeIp });
-    toast({
-      title: "Node addition requested",
-      description: `Adding new node: ${newNodeName}`
-    });
-    setAddNodeDialogOpen(false);
-    setNewNodeName("");
-    setNewNodeIp("");
-  };
 
   const handleRemoveNode = (nodeId) => {
     console.log("Removing node:", nodeId);
@@ -97,40 +83,7 @@ export default function NodesOverview() {
             Monitor and manage your connected nodes
           </p>
         </div>
-        <Dialog open={addNodeDialogOpen} onOpenChange={setAddNodeDialogOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <PlusCircle className="mr-2 h-4 w-4" />
-              Add New Node
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add New Node</DialogTitle>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="nodeName">Node Name</Label>
-                <Input 
-                  id="nodeName" 
-                  value={newNodeName} 
-                  onChange={(e) => setNewNodeName(e.target.value)} 
-                  placeholder="Enter node name"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="nodeIp">IP Address</Label>
-                <Input 
-                  id="nodeIp" 
-                  value={newNodeIp} 
-                  onChange={(e) => setNewNodeIp(e.target.value)} 
-                  placeholder="Enter IP address"
-                />
-              </div>
-            </div>
-            <Button onClick={handleAddNode}>Add Node</Button>
-          </DialogContent>
-        </Dialog>
+        <AddNewNode />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -244,14 +197,6 @@ export default function NodesOverview() {
           {nodes.length === 0 && (
             <div className="col-span-full text-center py-8 text-muted-foreground">
               <p>No nodes connected</p>
-              <Button 
-                variant="outline" 
-                className="mt-4" 
-                onClick={() => setAddNodeDialogOpen(true)}
-              >
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Add First Node
-              </Button>
             </div>
           )}
         </div>
