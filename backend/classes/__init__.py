@@ -89,8 +89,8 @@ class Notification(BaseModel):
 
 class InputConnString(BaseModel):
   name: str
-  source: str
-  ip: Optional[str] = None
+  connection_string: str
+  description: Optional[str] = None
 
 class InputUser(BaseModel):
   username: str

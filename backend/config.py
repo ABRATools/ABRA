@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     DB_CONNECTION_STRING: Optional[SecretStr] = None
     LOCAL_DB: bool = True
     NODE_UPDATE_INTERVAL: int = 5
-    ACCESS_TOKEN_EXPIRE_SECONDS: int = 1800
+    ACCESS_TOKEN_EXPIRE_SECONDS: int = 86400
 
 # the problem with this is that loading the settings once through the main file is not sufficient because every import has its own settings
 # so we need to load the settings in every file that needs them

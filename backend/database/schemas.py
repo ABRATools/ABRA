@@ -3,7 +3,7 @@ sys.path.insert(0, os.path.abspath('..'))
 from logger import logger
 
 from sqlalchemy import and_, func
-from .models import User, Group, Node, Environment, ConnectionStrings, NodeInfo, Permission, System
+from .models import User, Group, Node, Environment, ConnectionStrings, NodeInfo, Permission, System, Cluster
 from typing import List
 import datetime
 import json
@@ -53,33 +53,19 @@ def create_user(db, username, hashed_password, email, groups):
     logger.debug(f"Creating user {username}")
     db.commit()
 
-# def create_user(db, username, password, admin):
-#     if db.query(User).filter(User.username == username).first() is not None:
-#         print(f"User {username} already exists")
-#         return
-#     max_id = db.query(func.max(User.id)).scalar()
-#     if max_id is None:
-#         max_id = 0
-#     max_id += 1
-#     user = User(id=max_id, username=username, email="", password=password, is_active=True)
-#     if admin:
-#         group = db.query(Group).filter(Group.name == 'admin').first()
-#         if group is None:
-#             print("Admin group does not exist... creating")
-#             create_group(db, 'admin')
-#         user.groups.append(group)
-#     db.add(user)
-#     logger.debug(f"Creating user {username}")
-#     db.commit()
-
-def create_connection_string(db, name, connection_string, conn_str_type, ip=None):
-    exists = db.query(ConnectionStrings).filter(ConnectionStrings.name == name).first()
+def create_connection_string(db, name, connection_string, description=None):
+    q_filter = and_(ConnectionStrings.name == name, ConnectionStrings.connection_string == connection_string)
+    exists = db.query(ConnectionStrings).filter(q_filter).first()
     if exists is not None:
-        print(f"Connection string {name} already exists")
+        logger.debug(f"Connection string {name} with connection string {connection_string} already exists... updating")
         exists.connection_string = connection_string
+        exists.description = description
         db.commit()
         return
-    connection_string = ConnectionStrings(name=name, connection_string=connection_string, type=conn_str_type, ip=ip)
+    if description:
+        connection_string = ConnectionStrings(name=name, connection_string=connection_string, description=description)
+    else:
+        connection_string = ConnectionStrings(name=name, connection_string=connection_string)
     db.add(connection_string)
     db.commit()
     logger.debug(f"Adding connection string {name}")
@@ -332,7 +318,7 @@ def get_next_node_id(db):
 # Node Info (JSON)
 #######################
 
-def insert_node_info_json(db, json: str):
+def insert_node_info_json(db, json: str, hostname: str):
     # have max 20 entries in the table
     max_id = db.query(func.max(NodeInfo.id)).scalar()
     if max_id is None:
@@ -343,7 +329,7 @@ def insert_node_info_json(db, json: str):
         db.delete(oldest)
         db.commit()
     # insert new entry
-    new_entry = NodeInfo(id=max_id+1, data=json)
+    new_entry = NodeInfo(id=max_id+1, data=json, hostname=hostname)
     db.add(new_entry)
     db.commit()
 
@@ -357,6 +343,55 @@ def get_all_node_info_newer_than(db, time: datetime.datetime) -> List[str]:
     for entry in data:
         print(entry.data)
         data_list.append(json.dumps(entry.data))
+
+#######################
+# Cluster Info (JSON)
+#######################
+
+def add_node_to_cluster(db, node_name):
+    cluster = db.query(Cluster).first()
+    if cluster is None:
+        # create new cluster
+        max_id = db.query(func.max(Cluster.id)).scalar()
+        if max_id is None:
+            max_id = 0
+        max_id += 1
+        cluster = Cluster(id=max_id, number_of_nodes=1, node_details=f"{node_name}")
+        db.add(cluster)
+    else:
+        # Check if node already exists in cluster
+        for node in cluster.node_details.split(","):
+            if node == node_name:
+                return
+        logger.debug(f"Adding node {node_name} to cluster {cluster.id}")
+        cluster.number_of_nodes += 1
+        cluster.node_details += f",{node_name}"
+
+        db.add(cluster)
+        db.commit()
+        db.refresh(cluster)
+    db.commit()
+
+def return_cluster_info(db):
+    """
+    Uses data stored in Cluster table to create and return a JSON object with the following structure:
+    {
+        "nodes": [
+            # Instances of NodeInfo with matching node_name
+            {"node_name": "node1", "environments": ["env1", "env2"]},
+            {"node_name": "node2", "environments": ["env3"]},
+        ]
+    }
+    """
+    cluster = db.query(Cluster).first()
+    if cluster is None:
+        return None
+    nodes = []
+    for node in cluster.node_details.split(","):
+        node_info = db.query(NodeInfo).filter(NodeInfo.hostname == node).first()
+        if node_info is not None:
+            nodes.append(node_info.data)
+    return json.dumps({"node_data": nodes})
 
 #######################
 # systems

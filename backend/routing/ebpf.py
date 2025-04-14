@@ -20,7 +20,8 @@ async def get_ebpf_module_names(request: Request, token: AuthToken = Depends(aut
         if names is None: # fallback
             names = [
                 'command viewage',
-                'hacker mode'
+                'hacker mode',
+                'asexual mode',
             ]
 
         return JSONResponse(

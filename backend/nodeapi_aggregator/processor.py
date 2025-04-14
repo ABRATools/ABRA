@@ -28,19 +28,22 @@ async def processes_stream_output(output_queue, database_session):
         logger.error(f"No host data for {connection_url}")
         continue
 
+      hostname = host_data.get('node_id', None)
+
       container_data = content.get('containers', None)
       if not container_data:
         logger.warning(f"No container data for {connection_url}")
         continue
-      hosts = []
       host = Node(**host_data, environments=[])
       for container in container_data:
         container = Environment(**container)
         host.environments.append(container)
-      hosts.append(host)
-      hosts_json = [host.model_dump() for host in hosts]
-      
-      db.insert_node_info_json(database_session, hosts_json)
+      host_json = host.model_dump()
+      # print(f"data received for: {hostname}")
+      # add node to cluster
+      db.add_node_to_cluster(database_session, hostname)
+      # add node info to database
+      db.insert_node_info_json(db=database_session, json=host_json, hostname=hostname)
 
 def async_proccess_runner(output_queue, database_session):
   loop = asyncio.new_event_loop()

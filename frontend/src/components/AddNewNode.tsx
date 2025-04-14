@@ -1,14 +1,16 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Box } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea"
+import { PlusCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import React, { useState, useEffect } from "react";
 
 type newNodeState = {
   name: string;
   ip: string;
-  port: string;
+  port: number | '';
+  description?: string;
 };
 interface CreateNodeResponse {
   Id?: string;
@@ -58,27 +60,37 @@ const AddNewNode: React.FC = () => {
 
     try {
       // call api , send json
-      const response = await fetch(`/api/nodes/create`, {
+      const response = await fetch(`/api/add_connection_string`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
+
+        // name: str
+        // connection_string: str
+        // description: Optional[str] = None
+
+        body: JSON.stringify( (newNodeState.description != '') ? {
           name: newNodeState.name,
-          url: 'http://' + newNodeState.ip + ':' + newNodeState.port
-        })
+          connection_string: `http://${newNodeState.ip}:${newNodeState.port}`,
+          description: newNodeState.description,    
+        } : {
+          name: newNodeState.name,
+          connection_string: `http://${newNodeState.ip}:${newNodeState.port}`,
+        }
+      ),
       });
 
       const data: CreateNodeResponse = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to create container.');
+        throw new Error(data.message || 'Failed to add node.');
       }
 
       toast({
         title: "Success",
-        description: `Node "${newNodeState.name}" created successfully${data.Id ? ` with ID: ${data.Id.substring(0, 12)}` : ''}`,
+        description: `Node "${newNodeState.name}" created successfully.`,
         variant: "default",
       });
 
@@ -108,17 +120,25 @@ const AddNewNode: React.FC = () => {
       <Dialog open={openNodeCreationDialog} onOpenChange={setOpenNodeCreationDialog}>
         <DialogTrigger asChild>
           <Button variant="outline" onClick={() => setOpenNodeCreationDialog(true)}>
-            <Box className="mr-2 h-4 w-4" />
-            Add Node
+            <PlusCircle className="mr-2 h-4 w-4" />
+            Add New Node
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add node to system</DialogTitle>
+            <DialogTitle>Add New Node</DialogTitle>
           </DialogHeader>
           
           <div className="space-y-4 py-4">
             <div className="space-y-4">
+              <p className="text-sm">
+                Enter the details of the new node you want to add.
+              </p>
+
+              <p className="text-sm text-muted-foreground">
+                Node Name
+                <span className="text-red-500">*</span>
+              </p>
               <Input
                 placeholder="Node name"
                 value={newNodeState.name || ''}
@@ -128,22 +148,44 @@ const AddNewNode: React.FC = () => {
                   name: e.target.value,
                 })}
               />
+              <p className="text-sm text-muted-foreground">
+                Node IP Address
+                <span className="text-red-500">*</span>
+              </p>
               <div>
                 <Input
-                  placeholder="Node API IP Address"
+                  placeholder="127.0.0.1"
                   value={newNodeState.ip || ''}
                   className="mb-2 border-b border-border focus:border-primary bg-foreground text-black"
                   onChange={(e) => handleIPAddressChange(e)}
                 />
                 <p className="text-sm text-red-500">{ipError}</p>
               </div>
+              <p className="text-sm text-muted-foreground">
+                Node API Port
+                <span className="text-red-500">*</span>
+              </p>
               <Input
-                placeholder="Node API Port"
+                placeholder="8888"
                 value={newNodeState.port || ''}
                 className="mb-2 border-b border-border focus:border-primary bg-foreground text-black"
                 onChange={(e) => setNewNodeState({
                   ...newNodeState,
-                  port: e.target.value,
+                  port: parseInt(e.target.value) || '',
+                })}
+              />
+              <p className="text-sm text-muted-foreground">
+                Node Description
+              </p>
+              <Textarea
+                placeholder="Optionally describe the node"
+                rows={3}
+                maxLength={200}
+                value={newNodeState.description || ''}
+                className="mb-2 border-b border-border focus:border-primary bg-foreground text-black"
+                onChange={(e) => setNewNodeState({
+                  ...newNodeState,
+                  description: e.target.value,
                 })}
               />
             </div>

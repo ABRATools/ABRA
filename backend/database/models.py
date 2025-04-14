@@ -67,8 +67,9 @@ class ConnectionStrings(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(50), nullable=False)
     connection_string = Column(String(255), nullable=False)
-    type = Column(String(50), nullable=False)
-    ip = Column(String(50), nullable=True)
+    description = Column(String(200), nullable=True)
+    # type = Column(String(50), nullable=False)
+    # ip = Column(String(50), nullable=True)
 
 class Node(Base):
     __tablename__ = 'nodes'
@@ -147,7 +148,14 @@ class NodeInfo(Base):
 
     id = Column(Integer, primary_key=True)
     data = Column(JSON, nullable=False)
+    hostname = Column(String(50), nullable=False)
     timestamp = Column(DateTime, default=datetime.datetime.now(tz=datetime.timezone.utc))
+
+class Cluster(Base):
+    __tablename__ = 'clusters'
+    id = Column(Integer, primary_key=True)
+    number_of_nodes = Column(Integer, nullable=False)
+    node_details = Column(String(500), nullable=True) # string which holds list of nodes, becuase sqlite does not support list
 
 class System(Base):
     __tablename__ = 'systems'

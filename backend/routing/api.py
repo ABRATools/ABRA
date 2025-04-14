@@ -162,17 +162,13 @@ async def get_groups(request: Request, session = Depends(get_session), token: Au
 @router.post("/add_connection_string")
 async def post_connection_string(input: InputConnString, session = Depends(get_session), token = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
-    conn_string = None
-    if input.source == 'remote':
-      if input.ip is None:
-        return JSONResponse(content={'message': 'Invalid request'}, status_code=400)
-      conn_string = f"http+ssh://root@{input.ip}/run/podman/podman.sock"
-    elif input.source == 'local':
-      conn_string = "http+unix:///run/podman/podman.sock"
-    else:
-      return JSONResponse(content={'message': 'Invalid request'}, status_code=400)
-    db.create_connection_string(session, input.name, conn_string, input.source, input.ip)
-    return JSONResponse(content={'message': 'Connection string added successfully', 'connection_string': conn_string}, status_code=200)
+    print(input)
+    try:
+      db.create_connection_string(session, input.name, input.connection_string, input.description)
+    except Exception as e:
+      logger.error(f"Error creating connection string: {str(e)}")
+      return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
+    return JSONResponse(content={'message': 'Connection string added successfully', 'connection_string': input.connection_string}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 @router.post("/add_user")
@@ -650,6 +646,9 @@ async def remove_environment(system_id: str, env_id: str, session = Depends(get_
 
 @router.post("/post_node")
 async def post_node(request: Request, session = Depends(get_session)) -> JSONResponse:
+  """
+  To be deleted, this is a test endpoint for adding nodes
+  """
   # if token:
   data = await request.json()
   node = Node.model_validate_json(data)
