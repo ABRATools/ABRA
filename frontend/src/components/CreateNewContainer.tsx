@@ -53,6 +53,7 @@ interface CreateContainerResponse {
 
 const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
   const [open, setOpen] = useState(false);
+  const [isEBPFContainer, setIsEBPFContainer] = useState(false);
   const [useStaticIP, setUseStaticIP] = useState(false);
   const [images, setImages] = useState<Image[]>([]);
   const { toast } = useToast();
@@ -203,19 +204,43 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
 
     try {
       // call api , send json
-      const response = await fetch(`/api/containers/create`, {
+      if (useStaticIP && !validateIPAddress(newContainerState.ip || '')) {
+        toast({
+          title: "Validation Error",
+          description: "Invalid IP address",
+          variant: "destructive",
+        });
+        return;
+      }
+      if (isEBPFContainer && newContainerState.ebpfModules.length === 0) {
+        toast({
+          title: "Validation Error",
+          description: "At least one eBPF module must be selected",
+          variant: "destructive",
+        });
+        return;
+      }
+      const creationEndpoint = isEBPFContainer ? '/api/containers/create-ebpf' : '/api/containers/create';
+      const creationBody = ( isEBPFContainer ? {
+        target_ip: ipAddress,
+        image: newContainerState.image,
+        name: newContainerState.name,
+        ip: newContainerState.ip,
+        ebpfModules: newContainerState.ebpfModules
+        } : {
+        target_ip: ipAddress,
+        image: newContainerState.image,
+        name: newContainerState.name,
+        ip: newContainerState.ip
+        });
+
+      const response = await fetch(creationEndpoint, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          target_ip: ipAddress,
-          image: newContainerState.image,
-          name: newContainerState.name,
-          ip: newContainerState.ip,
-          ebpfModules: newContainerState.ebpfModules
-        })
+        body: JSON.stringify(creationBody)
       });
 
       const data: CreateContainerResponse = await response.json();
@@ -352,6 +377,18 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
             
             {/* eBPF Modules Section */}
             <div className="grid gap-2">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="is_ebpf_container"
+                checked={isEBPFContainer}
+                onCheckedChange={(checked) => setIsEBPFContainer(!!checked)}
+              />
+              <label htmlFor="static_ip" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Is this an eBPF container?
+              </label>
+            </div>
+            {isEBPFContainer && ( 
+              <>
               <label className="text-sm font-medium">eBPF Modules</label>
               <div className="grid gap-2 max-h-32 overflow-y-auto p-2 border rounded-md">
                 {loadingEbpfModules ? (
@@ -374,6 +411,8 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
                   <div className="text-sm text-muted-foreground">No eBPF modules available</div>
                 )}
               </div>
+              </>
+            )}
             </div>
           </div>
         </div>

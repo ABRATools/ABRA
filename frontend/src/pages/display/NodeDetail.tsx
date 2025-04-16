@@ -4,28 +4,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useWebSocket } from "@/data/WebSocketContext";
 import {
-  Settings, 
   Activity, 
   HardDrive, 
-  Clock, 
   Box, 
   RefreshCw, 
-  PlusCircle, 
   Play, 
   StopCircle, 
   Trash,
-  ExternalLink,
   MonitorUp,
   Code
 } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { containersService, ContainerCreateParams, ContainerActionParams } from "@/lib/containers-service";
-import CreateNewContainer from "./CreateNewContainer";
+import CreateNewContainer from "@/components/CreateNewContainer";
 
 const formatMemory = (bytes: number): string => {
   if (bytes < 1024 * 1024 * 1024) {

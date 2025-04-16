@@ -6,6 +6,9 @@ import datetime
 
 Base = declarative_base()
 
+def epoch_now():
+    return int(datetime.datetime.now(tz=datetime.timezone.utc).timestamp())
+
 user_groups = Table(
     'user_groups',
     Base.metadata,
@@ -125,7 +128,7 @@ class Task(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(50), nullable=False)
     description = Column(String(200), nullable=False)
-    start_time = Column(DateTime, default=datetime.datetime.now(tz=datetime.timezone.utc))
+    start_time = Column(Integer, default=epoch_now)
     end_time = Column(DateTime, nullable=True)
     completed = Column(Boolean, default=False)
     status = Column(String(50), default="undefined", nullable=False)
@@ -149,7 +152,7 @@ class NodeInfo(Base):
     id = Column(Integer, primary_key=True)
     data = Column(JSON, nullable=False)
     hostname = Column(String(50), nullable=False)
-    timestamp = Column(DateTime, default=datetime.datetime.now(tz=datetime.timezone.utc))
+    timestamp = Column(Integer, default=epoch_now)
 
 class Cluster(Base):
     __tablename__ = 'clusters'

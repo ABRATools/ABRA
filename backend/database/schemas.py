@@ -324,8 +324,8 @@ def insert_node_info_json(db, json: str, hostname: str):
     if max_id is None:
         max_id = 0
     if max_id >= 20:
-        # delete the oldest entry
-        oldest = db.query(NodeInfo).order_by(NodeInfo.id).first()
+        # delete the oldest entry, smallest timestamp
+        oldest = db.query(NodeInfo).order_by(NodeInfo.timestamp.asc()).first()
         db.delete(oldest)
         db.commit()
     # insert new entry
@@ -333,16 +333,16 @@ def insert_node_info_json(db, json: str, hostname: str):
     db.add(new_entry)
     db.commit()
 
-def get_newest_node_info(db) -> str:
-    newest = db.query(NodeInfo).order_by(NodeInfo.id.desc()).first()
-    return json.dumps(newest.data)
+# def get_newest_node_info(db) -> str:
+#     newest = db.query(NodeInfo).order_by(NodeInfo.id.desc()).first()
+#     return json.dumps(newest.data)
 
-def get_all_node_info_newer_than(db, time: datetime.datetime) -> List[str]:
-    data_list = List[str]
-    data = db.query(NodeInfo).filter(NodeInfo.timestamp > time).all()
-    for entry in data:
-        print(entry.data)
-        data_list.append(json.dumps(entry.data))
+# def get_all_node_info_newer_than(db, time: datetime.datetime) -> List[str]:
+#     data_list = List[str]
+#     data = db.query(NodeInfo).filter(NodeInfo.timestamp > time).all()
+#     for entry in data:
+#         print(entry.data)
+#         data_list.append(json.dumps(entry.data))
 
 #######################
 # Cluster Info (JSON)
@@ -388,7 +388,7 @@ def return_cluster_info(db):
         return None
     nodes = []
     for node in cluster.node_details.split(","):
-        node_info = db.query(NodeInfo).filter(NodeInfo.hostname == node).first()
+        node_info = db.query(NodeInfo).order_by(NodeInfo.timestamp.desc()).filter(NodeInfo.hostname == node).first()
         if node_info is not None:
             nodes.append(node_info.data)
     return json.dumps({"node_data": nodes})

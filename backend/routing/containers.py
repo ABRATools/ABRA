@@ -32,7 +32,7 @@ def start_container(env_id, target_ip):
   except requests.exceptions.RequestException as e:
     logger.error(f"An error occurred: {e}")
     logger.error(f"API response: {response.text}")
-    raise Exception(response.text if response is not None else None)
+    raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
 def stop_container(env_id, target_ip):
   logger.info(f"Stopping container with env_id: {env_id}")
@@ -50,7 +50,7 @@ def stop_container(env_id, target_ip):
   except requests.exceptions.RequestException as e:
     logger.error(f"An error occurred: {e}")
     logger.error(f"API response: {response.text}")
-    raise Exception(response.text if response is not None else None)
+    raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
 def delete_container(env_id, target_ip):
   logger.info(f"Deleting container with env_id: {env_id}")
@@ -68,7 +68,7 @@ def delete_container(env_id, target_ip):
   except requests.exceptions.RequestException as e:
     logger.error(f"An error occurred: {e}")
     logger.error(f"API response: {response.text}")
-    raise Exception(response.text if response is not None else None)
+    raise Exception(response.text if response is not None else {"message": "An error occurred"})
   
 def list_node_images(target_ip):
   try:
@@ -85,7 +85,7 @@ def list_node_images(target_ip):
   except requests.exceptions.RequestException as e:
     logger.error(f"An error occurred: {e}")
     logger.error(f"API response: {response.text}")
-    raise Exception(response.text if response is not None else None)
+    raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
 def create_container(target_ip, image, name, ip):
   try:
@@ -104,7 +104,26 @@ def create_container(target_ip, image, name, ip):
   except requests.exceptions.RequestException as e:
     logger.error(f"An error occurred: {e}")
     logger.error(f"API response: {response.text}")
-    raise Exception(response.text if response is not None else None)
+    raise Exception(response.text if response is not None else {"message": "An error occurred"})
+
+def create_ebpf_container(target_ip, image, name, ip):
+  try:
+    print(target_ip, image, name, ip)
+    response = requests.post(
+      f"http://{target_ip}:8888/containers/create-ebpf",
+      json={"image": image, "name": name, "ip": ip if ip is not None else ""},
+      timeout=10
+    )
+    response.raise_for_status()
+    return response.text
+  except requests.exceptions.Timeout:
+    logger.error("Request timed out after 10 seconds")
+    raise Exception({"message": "Request timed out after 10 seconds"})
+
+  except requests.exceptions.RequestException as e:
+    logger.error(f"An error occurred: {e}")
+    logger.error(f"API response: {response.text}")
+    raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
 @router.post("/start")
 async def start_container_on_node(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
@@ -205,6 +224,45 @@ async def create_environment_on_node(request: Request, session = Depends(get_ses
     output = None
     try:
       output = create_container(target_ip, image, name, ip)
+      if output is None:
+        return JSONResponse(status_code=500, content={"message": "An error occurred"})
+    except Exception as e:
+      logger.error(f"An error occurred: {e}")
+      return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+    return JSONResponse(status_code=200, content={"message": "Container deleted"})
+  logger.warning("Unauthorized request to delete container")
+  return JSONResponse(status_code=401, content={"message": "Unauthorized"})
+
+@router.post("/create-ebpf")
+async def create_ebpf_environment_on_node(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  if token:
+    data = await request.json()
+    target_ip = data.get("target_ip", None)
+    image = data.get("image", None)
+    name = data.get("name", None)
+    ip = data.get("ip", None)
+    ebpf_modules = data.get("ebpfModules", None)
+    if target_ip is None:
+      logger.error("No target_ip provided")
+      return JSONResponse(status_code=400, content={"message": "No target_ip provided"})
+    if image is None:
+      logger.error("No image provided")
+      return JSONResponse(status_code=400, content={"message": "No image provided"})
+    if name is None:
+      logger.error("No name provided")
+      return JSONResponse(status_code=400, content={"message": "No name provided"})
+    # check if ip is valid
+    if ip is not None and ip != "":
+      print("ip: ", ip)
+      try:
+        test_ip = ipaddress.ip_address(ip)
+      except ValueError:
+        logger.error("Invalid ip address")
+        return JSONResponse(status_code=400, content={"message": "Invalid ip address"})
+    logger.info("Creating container: ")
+    output = None
+    try:
+      output = create_ebpf_container(target_ip, image, name, ip)
       if output is None:
         return JSONResponse(status_code=500, content={"message": "An error occurred"})
     except Exception as e:
