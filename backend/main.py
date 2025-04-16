@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--no-aggregator", dest='noagg', action='store_true', help="If set, will not run the aggregator process")
 
 def run_fastapi():
-    uvicorn.run('fastapi_server:app', host="127.0.0.1", port=8989, workers=2)
+    uvicorn.run('fastapi_server:app', host="127.0.0.1", port=7856, workers=2)
 
 def run_aggregator():
     import run_aggregator

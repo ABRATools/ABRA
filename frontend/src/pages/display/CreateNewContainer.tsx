@@ -1,10 +1,17 @@
-import { Checkbox } from "@/components/ui/checkbox"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Box } from "lucide-react";
+import { Box, Code } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter
+} from "@/components/ui/dialog";
 
 type newContainerState = {
   name: string;
@@ -45,9 +52,9 @@ interface CreateContainerResponse {
 }
 
 const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
-  const [openContainerCreationDialog, setOpenContainerCreationDialog] = useState(false);
+  const [open, setOpen] = useState(false);
   const [useStaticIP, setUseStaticIP] = useState(false);
-  const [images, setImages] = useState<Image[]>();
+  const [images, setImages] = useState<Image[]>([]);
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [newContainerState, setNewContainerState] = useState<newContainerState>({
@@ -59,6 +66,7 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
   const [ebpfModuleNames, setEbpfModuleNames] = useState<string[]>([]);
   const [loadingEbpfModules, setLoadingEbpfModules] = useState(false);
   const ipRegex = /^(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}$/;
+  
   function validateIPAddress(ip: string): boolean {
     return ipRegex.test(ip);
   }
@@ -90,68 +98,52 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
     }
   };
 
+  // Load all data on initial render 
   useEffect(() => {
-    const fetchNames = async () => {
-      if (!ipAddress) return; // catch this first!
-
-      setIsLoading(true);
-
-      try {
-        const response = await fetch(`/api/containers/list_images`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ target_ip: ipAddress })
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch images');
-        }
-        const json = await response.json()
-        const images: Image[] = JSON.parse(json.images);
-        setImages(images);
-      } catch (err: any) {
-        console.error('Error fetching images:', err);
-        toast({
-          title: "Error",
-          description: err.message || 'Failed to fetch images',
-          variant: "destructive",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (ipAddress) {
-      fetchNames();
+    if (ipAddress && open) {
+      fetchImages();
+      fetchEbpfModules();
     }
-  }, [ipAddress]); 
+  }, [ipAddress, open]);
 
-  useEffect(() => {
-    const fetchEbpfModules = async () => {
-      if (!openContainerCreationDialog) return;
+  // Separate functions for data loading
+  const fetchImages = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`/api/containers/list_images`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ target_ip: ipAddress })
+        }
+      );
 
-      setLoadingEbpfModules(true);
-      try {
-        const names = await getEBPFModules();
-        setEbpfModuleNames(names);
-      } catch (err: any) {
-        console.error('Error fetching eBPF modules:', err);
-        toast({
-          title: "Error",
-          description: err.message || 'Failed to fetch eBPF modules',
-          variant: "destructive",
-        });
-      } finally {
-        setLoadingEbpfModules(false);
+      if (!response.ok) {
+        throw new Error('Failed to fetch images');
       }
-    };
+      const json = await response.json();
+      const images: Image[] = JSON.parse(json.images);
+      setImages(images);
+    } catch (err: any) {
+      console.error('Error fetching images:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    fetchEbpfModules();
-  }, [openContainerCreationDialog])
+  const fetchEbpfModules = async () => {
+    setLoadingEbpfModules(true);
+    try {
+      const names = await getEBPFModules();
+      setEbpfModuleNames(names);
+    } catch (err: any) {
+      console.error('Error fetching eBPF modules:', err);
+    } finally {
+      setLoadingEbpfModules(false);
+    }
+  };
 
   const getImageNames = (): string[] => {
     if (!images) return [];
@@ -174,8 +166,8 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
     });
   };
 
-  // get the names for the dropdownmenu
-  const dropDownImages = getImageNames();
+  // get the names for the dropdownmenu and ensure they're all strings
+  const dropDownImages = getImageNames().map(name => String(name));
   
   const getEBPFModules = async () => {
     const response = await fetch(
@@ -238,18 +230,18 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
         variant: "default",
       });
 
+      // Reset state
       setNewContainerState({
         name: '',
         image: '',
         ip: '',
         ebpfModules: []
       });
-
       setUseStaticIP(false);
-
-      // close dialog
+      
+      // Close dialog after success
       setTimeout(() => {
-        setOpenContainerCreationDialog(false);
+        setOpen(false);
       }, 2000);
     } catch (err: any) {
       console.error('Error creating container', err);
@@ -263,141 +255,141 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
     }
   };
 
+  const handleCloseDialog = () => {
+    setOpen(false);
+    
+    // Reset state when dialog closes
+    setNewContainerState({
+      name: '',
+      image: '',
+      ip: '',
+      ebpfModules: []
+    });
+    setUseStaticIP(false);
+  };
+
   return (
-    <>
-      <Dialog open={openContainerCreationDialog} onOpenChange={setOpenContainerCreationDialog}>
-        <DialogTrigger asChild>
-          <Button variant="outline" onClick={() => setOpenContainerCreationDialog(true)}>
-            <Box className="mr-2 h-4 w-4" />
-            Create Environment
-          </Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Create a new environment</DialogTitle>
-          </DialogHeader>
-          
-          <div className="space-y-4 py-4">
-            <div className="space-y-4">
-              <Input
-                placeholder="Container name"
-                value={newContainerState.name}
-                className="mb-2 border-b border-border focus:border-primary bg-foreground text-black"
-                onChange={(e) => setNewContainerState({
-                  ...newContainerState,
-                  name: e.target.value,
-                })}
-              />
-              <div>
-                <label htmlFor="image-select" className="block text-sm font-medium">
-                  Container image
-                </label>
-                <select
-                  id="image-select"
-                  value={newContainerState.image}
-                  onChange={(e) =>
-                    setNewContainerState((prevState) => ({
-                      ...prevState,
-                      image: e.target.value,
-                    }))
-                  }
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 bg-foreground text-black"
-                  disabled={isLoading}
-                >
-                  <option value="" disabled>
-                    {isLoading ? "Loading images..." : "Select a container image"}
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline">
+          <Box className="mr-2 h-4 w-4" />
+          Create Environment
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Create a new environment</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4 py-4">
+          <div className="space-y-4">
+            <Input
+              placeholder="Container name"
+              value={newContainerState.name}
+              className="mb-2 border-b border-border focus:border-primary"
+              onChange={(e) => setNewContainerState({
+                ...newContainerState,
+                name: e.target.value,
+              })}
+            />
+            
+            <div>
+              <label htmlFor="image-select" className="block text-sm font-medium mb-1">
+                Container image
+              </label>
+              <select
+                id="image-select"
+                value={newContainerState.image}
+                onChange={(e) => 
+                  setNewContainerState((prev) => ({
+                    ...prev,
+                    image: e.target.value,
+                  }))
+                }
+                className="mt-1 block w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                disabled={isLoading}
+              >
+                <option value="" disabled>
+                  {isLoading ? "Loading images..." : "Select a container image"}
+                </option>
+                {dropDownImages.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
                   </option>
-                  {dropDownImages.map((item) => (
-                    <option key={item} value={item} className="bg-foreground text-black">
-                      {item}
-                    </option>
-                  ))}
-                </select>
+                ))}
+              </select>
 
-                {newContainerState.image && (
-                  <div className="mt-4">
-                    <p>
-                      Selected image: <strong>{newContainerState.image}</strong>
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  eBPF Modules
-                </label>
-                {loadingEbpfModules ? (
-                  <p className="text-sm text-gray-500">Loading eBPF modules...</p>
-                ) : (
-                  <div className="border border-gray-300 rounded-md p-3 max-h-40 overflow-y-auto bg-foreground">
-                    {ebpfModuleNames.length > 0 ? (
-                      ebpfModuleNames.map((moduleName) => (
-                        <div key={moduleName} className="flex items-center space-x-2 mb-2">
-                          <Checkbox
-                            id={`ebpf-${moduleName}`}
-                            checked={newContainerState.ebpfModules.includes(moduleName)}
-                            onCheckedChange={(checked) => 
-                              handleEbpfModuleSelection(moduleName, !!checked)
-                            }
-                          />
-                          <label 
-                            htmlFor={`ebpf-${moduleName}`} 
-                            className="text-sm text-black cursor-pointer"
-                          >
-                            {moduleName}
-                          </label>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="text-sm text-gray-500">No eBPF modules available</p>
-                    )}
-                  </div>
-                )}
-                {newContainerState.ebpfModules.length > 0 && (
-                  <div className="mt-2">
-                    <p className="text-sm">
-                      Selected modules: <strong>{newContainerState.ebpfModules.join(', ')}</strong>
-                    </p>
-                  </div>
-                )}
-              </div>
-              
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="static_ip"
-                  checked={useStaticIP}
-                  onCheckedChange={(checked) => setUseStaticIP(!!checked)}
-                />
-                <label htmlFor="static_ip" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  Use a static IP address (optional)
-                </label>
-              </div>
-              {useStaticIP && (
-                <>
-                  <Input
-                    placeholder="IP Address (default subnet 10.88.0.0/16)"
-                    value={newContainerState.ip || ''}
-                    className="mb-2 border-b border-border focus:border-primary bg-foreground text-black"
-                    onChange={(e) => handleIPAddressChange(e)}
-                  />
-                  <p className="text-sm text-red-500">{ipError}</p>
-                </>
+              {newContainerState.image && (
+                <div className="mt-4">
+                  <p>
+                    Selected image: <strong>{newContainerState.image}</strong>
+                  </p>
+                </div>
               )}
             </div>
-            <Button
-              onClick={handleContainerCreation}
-              variant="default"
-              className="w-full"
-              disabled={isLoading || !newContainerState.name || !newContainerState.image}
-            >
-              {isLoading ? "Creating..." : "Create Environment"}
-            </Button>
+            
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="static_ip"
+                checked={useStaticIP}
+                onCheckedChange={(checked) => setUseStaticIP(!!checked)}
+              />
+              <label htmlFor="static_ip" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Use a static IP address (optional)
+              </label>
+            </div>
+            
+            {useStaticIP && (
+              <>
+                <Input
+                  placeholder="IP Address (default subnet 10.88.0.0/16)"
+                  value={newContainerState.ip || ''}
+                  className="mb-2 border-b border-border focus:border-primary"
+                  onChange={(e) => handleIPAddressChange(e)}
+                />
+                {ipError && <p className="text-sm text-red-500">{ipError}</p>}
+              </>
+            )}
+            
+            {/* eBPF Modules Section */}
+            <div className="grid gap-2">
+              <label className="text-sm font-medium">eBPF Modules</label>
+              <div className="grid gap-2 max-h-32 overflow-y-auto p-2 border rounded-md">
+                {loadingEbpfModules ? (
+                  <div className="text-sm text-muted-foreground">Loading modules...</div>
+                ) : ebpfModuleNames.length > 0 ? (
+                  ebpfModuleNames.map(module => (
+                    <div key={module} className="flex items-center gap-2">
+                      <Checkbox
+                        id={`module-${module}`} 
+                        checked={newContainerState.ebpfModules.includes(module)}
+                        onCheckedChange={(checked) => handleEbpfModuleSelection(module, !!checked)}
+                      />
+                      <label htmlFor={`module-${module}`} className="text-sm cursor-pointer flex items-center">
+                        <Code className="mr-2 h-3.5 w-3.5" />
+                        {module}
+                      </label>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-sm text-muted-foreground">No eBPF modules available</div>
+                )}
+              </div>
+            </div>
           </div>
-        </DialogContent>
-      </Dialog>
-    </>
+        </div>
+        <DialogFooter>
+          <Button
+            onClick={handleContainerCreation}
+            variant="default"
+            className="w-full"
+            disabled={isLoading || !newContainerState.name || !newContainerState.image}
+          >
+            {isLoading ? "Creating..." : "Create Environment"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
-}
+};
 
 export default CreateNewContainer;

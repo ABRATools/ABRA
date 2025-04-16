@@ -635,12 +635,54 @@ export default function SystemDetail() {
   }, [system]);
   
   // Get environments from the system object
+  // In the SystemDetail component, update the useMemo hook for 'environments'
   const environments = useMemo(() => {
     if (!system?.environments) return [];
     
     console.log('Processing final environments:', system.environments.length);
     
-    // For all systems, ensure we have complete environment data
+    // For all-nodes system, collect all environments directly from websocket data
+    if (systemId === 'all-nodes' && data?.nodes) {
+      // For all-nodes, we should directly use the latest data from websocket
+      // rather than using system.environments which might be stale
+      const allNodeEnvironments = [];
+      
+      // Collect all environments from all nodes with sourceNode attached
+      data.nodes.forEach(node => {
+        if (!node.environments) return;
+        
+        node.environments.forEach(env => {
+          allNodeEnvironments.push({
+            ...env,
+            // Add these properties for consistent access
+            env_id: env.env_id,
+            state: env.state || 'unknown',
+            ip: env.ip || 'Not assigned',
+            image: env.image || 'N/A',
+            names: env.names && env.names.length > 0 ? env.names : [`Container-${env.env_id}`],
+            started_at: typeof env.started_at === 'number' ? env.started_at : 0,
+            exited: Boolean(env.exited),
+            exit_code: typeof env.exit_code === 'number' ? env.exit_code : 0,
+            exited_at: typeof env.exited_at === 'number' ? env.exited_at : 0,
+            cpu_percentage: typeof env.cpu_percentage === 'number' ? env.cpu_percentage : 0,
+            memory_percent: typeof env.memory_percent === 'number' ? env.memory_percent : 0,
+            uptime: typeof env.uptime === 'number' ? env.uptime : 0,
+            networks: Array.isArray(env.networks) ? env.networks : [],
+            ports: Array.isArray(env.ports) ? env.ports : [],
+            // Add sourceNode reference
+            sourceNode: {
+              node_id: node.node_id,
+              name: node.node_id
+            }
+          });
+        });
+      });
+      
+      console.log(`All-nodes system: Collected ${allNodeEnvironments.length} environments directly from websocket data`);
+      return allNodeEnvironments;
+    }
+    
+    // For all other systems, use the existing logic
     return system.environments.map(env => {
       // Log a sample of raw data to see the exact structure
       if (Math.random() < 0.2) { // Only log ~20% to avoid console spam
@@ -649,40 +691,6 @@ export default function SystemDetail() {
       
       // Get data from WebSocket if available
       let enhancedEnv = { ...env };
-      
-      // For auto-generated systems like 'all-nodes', check WebSocket data for more details
-      if (systemId === 'all-nodes' && data?.nodes) {
-        // Look for this environment in the WebSocket data
-        for (const node of data.nodes) {
-          if (!node.environments) continue;
-          
-          // First try exact ID match
-          let matchingEnv = node.environments.find(wsEnv => wsEnv.env_id === env.env_id);
-          
-          // If no match, try matching by container name
-          if (!matchingEnv && env.names && env.names.length > 0) {
-            const envName = env.names[0];
-            matchingEnv = node.environments.find(wsEnv => 
-              wsEnv.names && wsEnv.names.length > 0 && wsEnv.names[0] === envName
-            );
-          }
-          
-          if (matchingEnv) {
-            console.log(`Found WebSocket data for env ${env.env_id} on node ${node.node_id}`);
-            enhancedEnv = {
-              ...matchingEnv, // Use WebSocket data as base
-              // Keep original env_id if WebSocket doesn't have one
-              env_id: matchingEnv.env_id || env.env_id,
-              // Preserve the sourceNode reference
-              sourceNode: env.sourceNode || { 
-                node_id: node.node_id, 
-                name: node.node_id 
-              }
-            };
-            break;
-          }
-        }
-      }
       
       return {
         ...enhancedEnv,
@@ -716,16 +724,14 @@ export default function SystemDetail() {
       avgMemoryUsage: 0
     };
     
-    // Try to calculate total containers
+    // Calculate total containers - simply use the environment count
     try {
-      if (systemNodes.length > 0) {
-        metrics.totalContainers = systemNodes.reduce((acc, node) => {
-          return acc + (node.num_containers || 0);
-        }, 0);
-      } else if (environments.length > 0) {
-        // Fallback to environment count if no node data
-        metrics.totalContainers = environments.length;
-      }
+      // For the total container count, ALWAYS use the environment length
+      // as this is the most accurate representation for a system
+      metrics.totalContainers = environments.length;
+      
+      // Debug info
+      console.log(`Setting totalContainers to ${environments.length} (environments.length)`);
     } catch (error) {
       console.error('Error calculating totalContainers:', error);
       metrics.totalContainers = environments.length; // Fallback
@@ -816,10 +822,10 @@ export default function SystemDetail() {
           <h1 className="text-3xl font-bold tracking-tight">{system.name}</h1>
           <p className="text-muted-foreground">
             {system.isCustom 
-              ? `Custom System with ${system.environments.length} environments` 
+              ? `Custom System with ${environments.length} environments` 
               : systemId === 'all-nodes'
-                ? 'All environments in the network'
-                : `System Type: ${systemId.split('-').join(' ')}`
+                ? `All environments in the network (${environments.length})`
+                : `System Type: ${systemId.split('-').join(' ')} with ${environments.length} environments`
             }
           </p>
         </div>
