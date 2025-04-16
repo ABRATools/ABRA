@@ -11,7 +11,7 @@ import {
   PlusCircle
 } from "lucide-react";
 import { useWebSocket } from "@/data/WebSocketContext";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { Node, Environment, System } from "@/types/machine";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -19,7 +19,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
-const groupNodesBySystems = (nodes : Node[], customSystems: System[] = []) => {
+// Update the groupNodesBySystems function to properly match environments by container ID
+
+const groupNodesBySystems = (nodes: Node[], customSystems: System[] = []) => {
   if (!nodes || !Array.isArray(nodes) || nodes.length === 0) {
     // Return just the custom systems if they exist, but with zero nodes
     if (customSystems.length > 0) {
@@ -34,7 +36,7 @@ const groupNodesBySystems = (nodes : Node[], customSystems: System[] = []) => {
   }
   
   // Start with the "all-nodes" system and any custom systems
-  const systemGroups: { [systemId: string] : System; } = {
+  const systemGroups: { [systemId: string]: System; } = {
     'all-nodes': {
       id: 'all-nodes',
       name: 'All Nodes',
@@ -46,19 +48,32 @@ const groupNodesBySystems = (nodes : Node[], customSystems: System[] = []) => {
     }
   };
   
-  // Add custom systems to the map
+  // Add custom systems to the map - PRESERVE THEIR ENVIRONMENTS!
   customSystems.forEach(system => {
+    console.log(`Processing system ${system.id} with ${system.environments?.length || 0} environments`);
+    
+    // Debug environment container IDs
+    if (system.environments && system.environments.length > 0) {
+      system.environments.forEach(env => {
+        if (env.container_id) {
+          console.log(`System ${system.id} has environment with container_id: ${env.container_id}`);
+        }
+      });
+    }
+    
     systemGroups[system.id] = {
       ...system,
       nodeCount: 0,
-      totalContainers: 0,
+      totalContainers: system.environments?.length || 0,
       nodes: [],
-      environments: []
+      // CRITICAL: Keep the original environments array with container_ids
+      environments: system.environments || []
     };
   });
 
-  // First collect all environments from all nodes
+  // First collect all environments from all nodes and map them by container ID
   const allEnvironments: Environment[] = [];
+  const environmentsByContainerId: { [containerId: string]: Environment } = {};
   
   nodes.forEach(node => {
     if (!node || !node.environments) return;
@@ -72,112 +87,81 @@ const groupNodesBySystems = (nodes : Node[], customSystems: System[] = []) => {
     
     // Add environments to the global list
     node.environments.forEach(env => {
+      // Skip if no container ID (env_id)
+      if (!env.env_id) return;
+      
       // Add reference to which node this environment is on
-      const enhancedEnv = { ...env, sourceNode: node };
+      const enhancedEnv = { 
+        ...env, 
+        sourceNode: node,
+        // The env_id is the container ID in the WebSocket data
+        container_id: env.env_id 
+      };
+      
+      // Add to global list and map by container ID
       allEnvironments.push(enhancedEnv);
+      environmentsByContainerId[env.env_id] = enhancedEnv;
       
       // Add to all-nodes system's environments
       systemGroups['all-nodes'].environments.push(enhancedEnv);
     });
   });
   
-  // For custom systems, add matching environments
+  // For custom systems, match environments by container ID
   Object.values(systemGroups).forEach(system => {
     if (system.id === 'all-nodes' || !system.isCustom) return;
     
-    // Custom logic to match environments to this system
+    console.log(`Matching environments for system ${system.id}`);
+    
+    // Create a list for the matched live environments (from WebSocket)
+    const matchedEnvironments: Environment[] = [];
+    
+    // Track which nodes are used by the environments in this system
+    const usedNodeIds = new Set<string>();
+    
+    // Match environments by container ID
     if (system.environments && Array.isArray(system.environments)) {
-      // Get both environment IDs and names for matching
-      const envIds = system.environments.map(e => e.env_id);
-      
-      // Get names from either the name property or the names array
-      const envNames = [];
-      
-      system.environments.forEach(e => {
-        // Get names from the names array if it exists
-        if (e.names && e.names.length > 0) {
-          envNames.push(...e.names);
-        } 
-        // Also use the name property if it exists
-        if (e.name) {
-          envNames.push(e.name);
-        }
-      });
-      
-      // Debug
-      console.log(`Custom system ${system.name} is looking for env IDs:`, envIds);
-      console.log(`Custom system ${system.name} is looking for env names:`, envNames);
-      
-      // Match by either environment ID or container name with more flexible matching
-      system.environments = allEnvironments.filter(env => {
-        // Match by env_id (exact match)
-        if (envIds.includes(env.env_id)) {
-          console.log(`Matched environment ${env.env_id} by ID in system ${system.name}`);
-          return true;
+      system.environments.forEach(dbEnv => {
+        // Skip if no container ID
+        if (!dbEnv.container_id) {
+          console.log(`Environment in system ${system.id} has no container_id`);
+          return;
         }
         
-        // Match by container name (exact match of any name)
-        if (env.names && env.names.length > 0) {
-          const hasMatch = env.names.some(name => envNames.includes(name));
-          if (hasMatch) {
-            console.log(`Matched environment ${env.env_id} by name "${env.names}" in system ${system.name}`);
-            return true;
-          }
-        }
+        // Find matching live environment by container ID
+        const liveEnv = environmentsByContainerId[dbEnv.container_id];
         
-        // For environments without explicit matches, try substring matching
-        // This helps with partial IDs and name fragments
-        if (env.names && env.names.length > 0) {
-          // Check if any environment name contains any name from envNames
-          const substringMatch = env.names.some(envName => 
-            envNames.some(name => 
-              // Case insensitive substring match
-              envName.toLowerCase().includes(name.toLowerCase()) || 
-              name.toLowerCase().includes(envName.toLowerCase())
-            )
-          );
+        if (liveEnv) {
+          console.log(`MATCH! Found live environment with container_id ${dbEnv.container_id}`);
+          matchedEnvironments.push(liveEnv);
           
-          if (substringMatch) {
-            console.log(`Matched environment ${env.env_id} by substring name "${env.names}" in system ${system.name}`);
-            return true;
+          // Track the node this environment is on
+          if (liveEnv.sourceNode) {
+            usedNodeIds.add(liveEnv.sourceNode.node_id);
           }
-        }
-        
-        // If env_id is a string (like a hash), check for substring matches
-        if (typeof env.env_id === 'string' && env.env_id.length > 10) {
-          const idMatch = envIds.some(id => 
-            env.env_id.includes(id) || (typeof id === 'string' && id.includes(env.env_id))
-          );
+        } else {
+          console.log(`No match found for container_id ${dbEnv.container_id}`);
           
-          if (idMatch) {
-            console.log(`Matched environment ${env.env_id} by ID substring in system ${system.name}`);
-            return true;
-          }
-        }
-        
-        return false;
-      });
-      
-      // Debug the matched environments
-      console.log(`Custom system ${system.name} matched environments:`, 
-        system.environments.map(e => ({id: e.env_id, names: e.names}))
-      );
-      
-      // Add the source nodes to this system too
-      system.environments.forEach(env => {
-        // @ts-ignore - sourceNode is added dynamically
-        const sourceNode = env.sourceNode;
-        if (sourceNode && !system.nodes.some(n => n.node_id === sourceNode.node_id)) {
-          system.nodes.push(sourceNode);
-          system.nodeCount++;
+          // Keep the database environment if there's no matching live environment
+          // This preserves environments that might be temporarily down
+          matchedEnvironments.push(dbEnv);
         }
       });
-      
-      system.totalContainers = system.environments.length;
     }
+    
+    // Debug the matched environments
+    console.log(`System ${system.name} matched ${matchedEnvironments.length} environments`);
+    
+    // Replace system's environments with matched live environments
+    system.environments = matchedEnvironments;
+    
+    // Build nodes list from the matched environments
+    system.nodes = nodes.filter(node => usedNodeIds.has(node.node_id));
+    system.nodeCount = system.nodes.length;
+    system.totalContainers = matchedEnvironments.length;
   });
   
-  // Calculate status for each system
+  // Calculate status for each system based on node and environment health
   const processedSystems = Object.values(systemGroups).map(system => {
     // Status based on node health
     let nodeStatus: Status = 'healthy';
@@ -195,7 +179,7 @@ const groupNodesBySystems = (nodes : Node[], customSystems: System[] = []) => {
     
     // Use the more severe status
     system.status = nodeStatus === 'error' || envStatus === 'error' ? 'error' : 
-                    (nodeStatus === 'warning' || envStatus === 'warning' ? 'warning' : 'healthy');
+                   (nodeStatus === 'warning' || envStatus === 'warning' ? 'warning' : 'healthy');
     
     return system;
   });
@@ -211,22 +195,26 @@ export default function SystemsDisplay() {
   const [newSystemDialogOpen, setNewSystemDialogOpen] = useState(false);
   const [newSystem, setNewSystem] = useState<{
     name: string;
-    environmentIds: string[];
+    environmentIds: string[]; // Now contains stringified JSON objects with container and node IDs
   }>({
     name: '',
     environmentIds: []
   });
   
-  // Get all available environments for selection
+  // Get all available environments for selection but with stable references
   const allEnvironments = useMemo(() => {
     if (!data?.nodes) return [];
+    
+    // Use a stable key for environments to prevent unnecessary re-renders
     return data.nodes.flatMap(node => 
       (node.environments || []).map(env => ({
         ...env,
-        nodeId: node.node_id
+        nodeId: node.node_id,
+        // Add these properties for stable rendering 
+        key: `${node.node_id}-${env.env_id}`
       }))
     );
-  }, [data]);
+  }, [data?.nodes?.length, data?.nodes?.map(n => n.node_id).join(',')]);
   
   // Load custom systems on initial render and whenever location changes
   const fetchCustomSystems = async () => {
@@ -242,46 +230,105 @@ export default function SystemsDisplay() {
       
       if (systemsResponse.ok) {
         const data = await systemsResponse.json();
+        console.log('FULL API RESPONSE:', data);
+        
         // Filter out only custom systems from database
         const databaseSystems = data.systems.filter(
           (sys: any) => sys.is_custom && sys.source === 'database'
         );
         console.log('Loaded database systems:', databaseSystems);
         
+        // CRITICAL DEBUG: Analyze each database system in detail
+        databaseSystems.forEach((sys: any) => {
+          console.log(`RAW SYSTEM DATA FOR ${sys.system_id}:`, JSON.stringify(sys, null, 2));
+          console.log(`System ${sys.system_id} has environments array:`, 
+                     sys.environments ? `YES (${sys.environments.length} items)` : 'NO');
+          
+          if (sys.environments && sys.environments.length > 0) {
+            console.log(`First environment in system ${sys.system_id}:`, sys.environments[0]);
+          }
+        });
+        
         // Map API response to our System type
-        const mappedSystems = databaseSystems.map((sys: any) => ({
-          id: sys.system_id,
-          name: sys.name,
-          description: sys.description || '',
-          status: 'healthy',
-          nodeCount: 0, // Will be calculated based on nodes
-          totalContainers: sys.environments.length,
-          environments: sys.environments.map((env: any) => ({
-            env_id: env.env_id,
-            name: env.name,
-            status: env.status,
-            state: env.status || 'unknown',
-            ip: env.ip || '',
-            networks: [],
-            ports: [],
-            image: '',
-            names: [env.name],
-            started_at: 0,
-            exited: false,
-            exit_code: 0,
-            exited_at: 0,
-            cpu_percentage: 0,
-            memory_percent: 0,
-            uptime: 0,
-            sourceNode: {
-              node_id: env.node_id,
-              name: env.node_name
+        console.log("Raw database systems:", databaseSystems);
+        
+        const mappedSystems = databaseSystems.map((sys: any) => {
+          // Special case handling: If no environments, log warning and create empty array
+          if (!sys.environments || !Array.isArray(sys.environments) || sys.environments.length === 0) {
+            console.warn(`System ${sys.system_id} has no environments!`);
+            sys.environments = [];
+          }
+          
+          // Log each raw environment
+          console.log(`System ${sys.system_id} raw environments:`, sys.environments);
+          
+          const mappedEnvironments = sys.environments.map((env: any) => {
+            if (!env) {
+              console.warn("Found null environment in system", sys.system_id);
+              return null;
             }
-          })),
-          nodes: [], // Will be populated later
-          isCustom: true,
-          source: 'database'
-        }));
+            
+            // Store container_id directly from backend - critical for matching
+            const container_id = env.container_id;
+            
+            // Log any container_id we find with clear identification
+            if (container_id) {
+              console.log(`IMPORTANT MATCH DATA - container_id in DB: ${container_id} for env_id ${env.env_id}`);
+            }
+            
+            // Create names array for secondary matching
+            const names = [];
+            // Include actual name
+            if (env.name) names.push(env.name);
+            // Include env_id as a possible name match
+            if (env.env_id) names.push(String(env.env_id));
+            
+            // Return full environment object with all fields preserved
+            return {
+              env_id: env.env_id,
+              name: env.name,
+              status: env.status,
+              state: env.status || 'unknown',
+              ip: env.ip || '',
+              networks: [],
+              ports: [],
+              image: '',
+              names: names,
+              started_at: 0,
+              exited: false,
+              exit_code: 0,
+              exited_at: 0,
+              cpu_percentage: 0,
+              memory_percent: 0,
+              uptime: 0,
+              container_id: container_id, // Directly use container_id from backend
+              sourceNode: {
+                node_id: env.node_id,
+                name: env.node_name
+              }
+            };
+          }).filter(env => env !== null); // Filter out any null environments
+          
+          // Build full system object with careful environment handling
+          const systemObj = {
+            id: sys.system_id,
+            name: sys.name,
+            description: sys.description || '',
+            status: 'healthy',
+            nodeCount: 0, // Will be calculated based on nodes
+            totalContainers: mappedEnvironments.length,
+            environments: mappedEnvironments,
+            nodes: [], // Will be populated later
+            isCustom: true,
+            source: 'database'
+          };
+          
+          console.log(`Created mapped system: ${sys.system_id} with ${mappedEnvironments.length} environments`, 
+                     {envIds: mappedEnvironments.map(e => e.env_id),
+                      containerIds: mappedEnvironments.map(e => e.container_id)});
+                      
+          return systemObj;
+        });
         
         // Update state
         setCustomSystems(mappedSystems);
@@ -361,12 +408,36 @@ export default function SystemsDisplay() {
     }
     
     try {
-      // Call backend API to create the system
-      // Create a stable, predictable ID format based on name and timestamp
+      // Create a stable ID format
       const timestamp = Date.now();
       const systemId = `custom-${newSystem.name.toLowerCase().replace(/\s+/g, '-')}-${timestamp}`;
       
-      // Make API call to create system
+      // Parse the selected environments with all context intact
+      const parsedEnvironments = newSystem.environmentIds.map(item => {
+        const envData = JSON.parse(item);
+        
+        // DEBUG: Log each environment being added
+        console.log('Adding environment to system:', envData);
+        
+        return {
+          // CRITICAL: The container_id must match env_id from WebSocket data
+          container_id: envData.containerId,
+          // Include env_id from WebSocket
+          env_id: envData.containerId,
+          // Include node context
+          node_id: envData.nodeId,
+          // Include a friendly name
+          name: envData.name || `Container-${envData.containerId.substring(0, 8)}`,
+          // Default values for other required fields
+          ip: "",
+          os: "undefined",
+          status: "pending"
+        };
+      });
+      
+      console.log("Full environment data to send to API:", parsedEnvironments);
+      
+      // Make API call with the container ID-based environment data
       const response = await fetch('/api/system', {
         method: 'POST',
         headers: {
@@ -377,58 +448,32 @@ export default function SystemsDisplay() {
           name: newSystem.name,
           description: '',
           is_custom: true,
-          // Send as-is, backend will handle finding correct environments
-          environment_ids: newSystem.environmentIds
+          // Send the complete environment objects
+          environments: parsedEnvironments
         })
       });
       
-      if (!response.ok) {
+      if (response.ok) {
+        toast({
+          title: "Success",
+          description: "System created successfully",
+          variant: "default"
+        });
+        
+        // Clear the form and close dialog
+        setNewSystem({
+          name: '',
+          environmentIds: []
+        });
+        setNewSystemDialogOpen(false);
+        
+        // Refresh systems list
+        refreshSystems();
+      } else {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to create system');
       }
-      
-      // Get the system from API response
-      const responseData = await response.json();
-      
-      // get environments for immediate ui display
-      // Include the complete environment objects for matching later
-      const selectedEnvironments = allEnvironments.filter(env => 
-        newSystem.environmentIds.includes(env.env_id)
-      );
-      
-      // create system object for local state update with proper source
-      const newCustomSystem: System = {
-        id: systemId,
-        name: newSystem.name,
-        description: '',
-        status: 'healthy',
-        nodeCount: 0,
-        totalContainers: selectedEnvironments.length,
-        nodes: [],
-        environments: selectedEnvironments,
-        isCustom: true,
-        source: 'database'
-      };
-      
-      // Get the ID from the response if available, otherwise use our generated one
-      const createdSystemId = responseData?.system_id || systemId;
-      
-      // Use our refreshSystems function to get the latest data
-      refreshSystems();
-      
-      // Add a slight delay to ensure the backend has time to process
-      setTimeout(() => {
-        refreshSystems();
-      }, 500); // 500ms should be enough for most backend operations
-      
-      setNewSystemDialogOpen(false);
-      setNewSystem({ name: '', environmentIds: [] });
-      
-      toast({
-        title: "Success",
-        description: `Created new system "${newSystem.name}" with ${selectedEnvironments.length} environments`,
-      });
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error creating system:', error);
       toast({
         title: "Error",
@@ -437,73 +482,101 @@ export default function SystemsDisplay() {
       });
     }
   };
-
-  // Environment selection component for the dialog
+  
+  // Update the EnvironmentSelector component to make environment selection more robust
   const EnvironmentSelector = () => {
-    // Group environments by their source node for better organization
-    const groupedEnvironments = useMemo(() => {
-      const groups: Record<string, typeof allEnvironments> = {};
-      
-      allEnvironments.forEach(env => {
-        const nodeId = env.nodeId || 'unknown';
-        if (!groups[nodeId]) {
-          groups[nodeId] = [];
-        }
-        groups[nodeId].push(env);
-      });
-      
-      return groups;
-    }, [allEnvironments]);
+    // Organize environments by node for better display
+    const nodeGroups = {};
     
-    const toggleEnvironment = (envId: string) => {
-      if (newSystem.environmentIds.includes(envId)) {
-        setNewSystem(prev => ({
-          ...prev,
-          environmentIds: prev.environmentIds.filter(id => id !== envId)
-        }));
-      } else {
-        setNewSystem(prev => ({
-          ...prev,
-          environmentIds: [...prev.environmentIds, envId]
-        }));
+    allEnvironments.forEach(env => {
+      const nodeId = env.nodeId || 'unknown';
+      if (!nodeGroups[nodeId]) {
+        nodeGroups[nodeId] = [];
       }
-    };
+      nodeGroups[nodeId].push(env);
+    });
     
     return (
-      <div className="max-h-[300px] overflow-y-auto pr-2">
-        {Object.entries(groupedEnvironments).map(([nodeId, environments]) => (
-          <div key={nodeId} className="mb-4">
+      <div 
+        className="overflow-y-auto pr-2 border rounded-md"
+        style={{ height: '300px' }}
+      >
+        {Object.entries(nodeGroups).map(([nodeId, environments]) => (
+          <div key={nodeId} className="mb-4 p-2">
             <h3 className="font-medium mb-2">Node: {nodeId}</h3>
             <div className="space-y-2">
-              {environments.map(env => (
-                <div key={env.env_id} className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id={env.env_id}
-                    checked={newSystem.environmentIds.includes(env.env_id)}
-                    onChange={() => toggleEnvironment(env.env_id)}
-                    className="rounded border-gray-300"
-                  />
-                  <label htmlFor={env.env_id} className="text-sm flex-1">
-                    {env.names[0] || env.env_id} ({env.image})
-                  </label>
-                  <span className={`px-2 py-0.5 text-xs rounded-full ${
-                    env.state === 'running' ? 'bg-green-100 text-green-800' :
-                    'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {env.state}
-                  </span>
-                </div>
-              ))}
+              {environments.map(env => {
+                // IMPORTANT: Use container ID (env_id) as the primary identifier
+                const containerId = env.env_id;
+                // Create a display value that shows the node and environment name
+                const displayName = `${env.names?.[0] || 'unnamed'} (${nodeId})`;
+                
+                // DEBUG: Log environment details
+                console.log(`Environment selection option: ${displayName}, containerId=${containerId}`);
+                
+                return (
+                  <div key={`${nodeId}-${containerId}`} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id={`${nodeId}-${containerId}`}
+                      name="environment"
+                      // Store both container ID and node ID
+                      value={JSON.stringify({
+                        containerId,
+                        nodeId,
+                        name: env.names?.[0] || 'unnamed'
+                      })}
+                      checked={newSystem.environmentIds.some(
+                        item => JSON.parse(item).containerId === containerId && 
+                               JSON.parse(item).nodeId === nodeId
+                      )}
+                      onChange={(e) => {
+                        const valueObj = JSON.parse(e.target.value);
+                        
+                        if (e.target.checked) {
+                          // DEBUG: Log when environment is selected
+                          console.log('Selected environment:', valueObj);
+                          
+                          setNewSystem(prev => ({
+                            ...prev,
+                            environmentIds: [...prev.environmentIds, e.target.value]
+                          }));
+                        } else {
+                          // DEBUG: Log when environment is deselected
+                          console.log('Deselected environment:', valueObj);
+                          
+                          setNewSystem(prev => ({
+                            ...prev,
+                            environmentIds: prev.environmentIds.filter(item => {
+                              const itemObj = JSON.parse(item);
+                              return !(itemObj.containerId === valueObj.containerId && 
+                                      itemObj.nodeId === valueObj.nodeId);
+                            })
+                          }));
+                        }
+                      }}
+                      className="rounded border-gray-300"
+                    />
+                    <label htmlFor={`${nodeId}-${containerId}`} className="text-sm flex-1">
+                      {displayName} ({env.image || 'unknown'})
+                    </label>
+                    <span className={`px-2 py-0.5 text-xs rounded-full ${
+                      env.state === 'running' ? 'bg-green-100 text-green-800' :
+                      'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      {env.state || 'unknown'}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}
-        {Object.keys(groupedEnvironments).length === 0 && (
-          <p className="text-sm text-muted-foreground">No environments available</p>
-        )}
       </div>
     );
   };
+  
+  
 
   if (!isConnected || error) {
     return (
@@ -564,12 +637,13 @@ export default function SystemsDisplay() {
               <div className="grid gap-2">
                 <Label>Select Environments</Label>
                 <EnvironmentSelector />
-                <p className="text-xs text-muted-foreground mt-1">
-                  Selected: {newSystem.environmentIds.length} environments
-                </p>
               </div>
             </div>
-            <div className="flex justify-end">
+            {/* Add the submit buttons here */}
+            <div className="flex justify-end gap-2 mt-4">
+              <Button variant="outline" onClick={() => setNewSystemDialogOpen(false)}>
+                Cancel
+              </Button>
               <Button onClick={handleCreateSystem}>
                 Create System
               </Button>
@@ -634,17 +708,37 @@ export default function SystemsDisplay() {
         {systems.map((system) => {
           // calculate system-specific metrics
           const nodeCount = system.nodes.length;
-          const totalContainers = system.nodes.reduce((acc, node) => acc + node.num_containers, 0);
-          const avgCpuUsage = Math.round(
-            system.nodes.reduce((sum, node) => {
-              const nodeEnvs = node.environments || [];
-              const nodeCpuSum = nodeEnvs.reduce((envSum, env) => envSum + env.cpu_percentage, 0);
-              return sum + (nodeEnvs.length > 0 ? nodeCpuSum / nodeEnvs.length : 0);
-            }, 0) / (system.nodes.length || 1)
-          );
-          const avgMemoryUsage = Math.round(
-            system.nodes.reduce((sum, node) => sum + node.mem_percent, 0) / system.nodes.length
-          );
+          
+          // Calculate total containers from environments if available, otherwise from nodes
+          const totalContainers = system.isCustom && system.environments.length > 0 
+            ? system.environments.length 
+            : system.nodes.reduce((acc, node) => acc + node.num_containers, 0);
+            
+          // For CPU usage, use direct environment data for custom systems
+          let avgCpuUsage = 0;
+          if (system.isCustom && system.environments.length > 0) {
+            // Calculate directly from system environments
+            const totalCpuPercentage = system.environments.reduce((sum, env) => 
+              sum + (env.cpu_percentage || 0), 0);
+            avgCpuUsage = Math.round(totalCpuPercentage / system.environments.length);
+          } else {
+            // Use node-based calculation for auto-generated systems
+            avgCpuUsage = Math.round(
+              system.nodes.reduce((sum, node) => {
+                const nodeEnvs = node.environments || [];
+                const nodeCpuSum = nodeEnvs.reduce((envSum, env) => envSum + (env.cpu_percentage || 0), 0);
+                return sum + (nodeEnvs.length > 0 ? nodeCpuSum / nodeEnvs.length : 0);
+              }, 0) / (system.nodes.length || 1)
+            );
+          }
+          
+          // Calculate memory usage - use average of node memory percents if available
+          const avgMemoryUsage = system.nodes.length > 0
+            ? Math.round(
+                system.nodes.reduce((sum, node) => sum + (node.mem_percent || 0), 0) / 
+                system.nodes.length
+              )
+            : 0;
 
           return (
             <Card key={system.id}>

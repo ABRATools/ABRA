@@ -416,121 +416,107 @@ async def get_systems(request: Request, session = Depends(get_session), token: A
       return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
+# Updated system creation endpoint to handle container IDs
 @router.post('/system')
 async def create_system(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
-  """create a new system"""
-  if token:
-    try:
-      data = await request.json()
-      # Manually extract fields from data
-      system_id = data["system_id"]
-      name = data["name"]
-      description = data.get("description", "")
-      is_custom = data.get("is_custom", True)
-      # Store environment IDs for later use
-      environment_ids = data.get("environment_ids", [])
-      
-      # Create the system
-      system = db.create_system(
-        session, 
-        system_id, 
-        name, 
-        description, 
-        is_custom
-      )
-      
-      # Add environments if provided
-      for env_id in environment_ids:
-        logger.info(f"Looking for environment: {env_id}")
+    """create a new system with proper container ID handling"""
+    if token:
         try:
-          env = None
-          
-          # Try different lookup strategies for finding the environment
-          
-          # 1. Try exact ID match (most reliable)
-          try:
-            if env_id.isdigit():
-              env = session.query(db.models.Environment).filter(db.models.Environment.id == int(env_id)).first()
-          except (ValueError, AttributeError):
-            pass
+            data = await request.json()
+            # Extract basic system fields
+            system_id = data["system_id"]
+            name = data["name"]
+            description = data.get("description", "")
+            is_custom = data.get("is_custom", True)
             
-          # 2. Try by container_id for long IDs (most reliable for WebSocket sources)
-          if not env and isinstance(env_id, str) and len(env_id) > 12:
-            env = session.query(db.models.Environment).filter(db.models.Environment.container_id == env_id).first()
-            
-          # 3. Try by name (frontend often sends names)
-          if not env:
-            env = session.query(db.models.Environment).filter(db.models.Environment.name == env_id).first()
-          
-          # 4. Try by partial ID string in case it's a prefix/suffix
-          if not env:
-            # Convert to string for LIKE comparison
-            env = session.query(db.models.Environment).filter(
-              db.models.Environment.id.cast(db.String).like(f"%{env_id}%")
-            ).first()
-            
-          # 5. Try by env_id if it's a string that looks like "env_123"
-          if not env and isinstance(env_id, str) and env_id.startswith("env_"):
-            try:
-              # Extract numeric part after "env_"
-              numeric_part = env_id.split("_")[1]
-              if numeric_part.isdigit():
-                env = session.query(db.models.Environment).filter(
-                  db.models.Environment.id == int(numeric_part)
-                ).first()
-            except (IndexError, ValueError):
-              pass
-          
-          # If environment wasn't found, create a placeholder environment for the ID
-          # This is needed because the actual environment data comes from websocket
-          if not env:
-            logger.info(f"Creating placeholder environment for {env_id}")
-            # Create a placeholder environment with minimal info
-            max_id = session.query(db.func.max(db.models.Environment.id)).scalar() or 0
-            max_id += 1
-            
-            # For websocket container integration, store the env_id in the name
-            # format: container_name or env_id itself if no name can be extracted
-            container_name = env_id
-            # If the env_id looks like a hash ID (typical of container IDs), use a generic name
-            if len(env_id) > 32 and any(c in env_id for c in "0123456789abcdef"):
-              container_name = f"Container-{max_id}"
-            
-            env = db.models.Environment(
-              id=max_id,
-              name=container_name,
-              ip="",
-              os="undefined",
-              status="pending",
-              uptime="0",
-              cpu_percent=0,
-              memory=0,
-              disk=0,
-              max_cpus=0,
-              max_memory=0,
-              max_disk=0,
-              container_id=env_id  # Store the original container ID
+            # Create the base system first
+            system = db.create_system(
+                session, 
+                system_id, 
+                name, 
+                description, 
+                is_custom
             )
-            session.add(env)
-            session.commit()
-            logger.info(f"Created placeholder environment {env.id} for {env_id}")
             
-          if env:
-            db.add_environment_to_system(session, system_id, env.id)
-            logger.info(f"Added environment {env_id} to system {system_id}")
-          else:
-            logger.warning(f"Environment {env_id} not found when creating system {system_id}")
+            # Handle both new format (environments array) and old format (environment_ids)
+            if "environments" in data and isinstance(data["environments"], list):
+                # New format - contains full environment objects with container_ids
+                environments = data["environments"]
+                logger.info(f"Creating system with {len(environments)} environment objects")
+                
+                for env_data in environments:
+                    # Log the environment we're trying to add
+                    logger.info(f"Processing environment: {env_data}")
+                    
+                    # Try to find the environment by container_id first (most reliable)
+                    if "container_id" in env_data and env_data["container_id"]:
+                        container_id = env_data["container_id"]
+                        logger.info(f"Looking for environment by container_id: {container_id}")
+                        
+                        # Look up existing env by container_id
+                        env = db.find_or_create_environment_by_container_id(
+                            session,
+                            container_id,
+                            name=env_data.get("name", "Unknown"),
+                            node_id=env_data.get("node_id")
+                        )
+                        
+                        if env:
+                            logger.info(f"Adding environment with container_id {container_id} to system")
+                            # Add environment to system
+                            system.environments.append(env)
+                            continue
+                    
+                    # Fallback for environments without container_id
+                    try:
+                        # Create minimal environment record
+                        new_env = db.models.Environment(
+                            name=env_data.get("name", "Unknown"),
+                            ip=env_data.get("ip", ""),
+                            os=env_data.get("os", "undefined"),
+                            status=env_data.get("status", "undefined"),
+                            uptime="0",  # Default values for required fields
+                            cpu_percent=0,
+                            memory=0,
+                            disk=0,
+                            max_cpus=0,
+                            max_memory=0,
+                            max_disk=0,
+                            container_id=env_data.get("container_id", None)
+                        )
+                        
+                        # If we have node info, try to associate with a node
+                        if "node_id" in env_data and env_data["node_id"]:
+                            node = session.query(db.models.Node).filter(
+                                db.models.Node.name == env_data["node_id"]
+                            ).first()
+                            
+                            if node:
+                                new_env.node_id = node.id
+                        
+                        # Add to database and get ID
+                        session.add(new_env)
+                        session.flush()  # Flush to get the ID
+                        
+                        logger.info(f"Created new environment: {new_env.id}")
+                        
+                        # Add to system
+                        system.environments.append(new_env)
+                    except Exception as e:
+                        logger.error(f"Error creating environment: {str(e)}")
+                        # Continue with other environments
+            
+            # Commit all changes
+            session.commit()
+            
+            return JSONResponse(content={
+                'message': 'System created successfully',
+                'system_id': system.system_id
+            }, status_code=200)
         except Exception as e:
-          logger.error(f"Error processing environment {env_id}: {str(e)}")
-      
-      return JSONResponse(content={
-        'message': 'System created successfully',
-        'system_id': system.system_id
-      }, status_code=200)
-    except Exception as e:
-      logger.error(f"Error creating system: {str(e)}")
-      return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
-  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+            logger.error(f"Error creating system: {str(e)}")
+            return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
+    return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 @router.post('/system/{system_id}')
 async def get_system(system_id: str, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:

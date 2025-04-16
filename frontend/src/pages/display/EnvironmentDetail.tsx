@@ -351,6 +351,37 @@ export default function EnvironmentDetail() {
       </Card>
 
       <Card>
+        <CardContent className="pt-6">
+          <div className="grid gap-4 grid-cols-3">
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2">
+                <Activity className="h-4 w-4 text-muted-foreground" />
+                <h4 className="text-sm font-medium">CPU Usage</h4>
+              </div>
+              <div className="text-2xl font-bold">{environment.cpu_percentage.toFixed(2)}%</div>
+            </div>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2">
+                <HardDrive className="h-4 w-4 text-muted-foreground" />
+                <h4 className="text-sm font-medium">Memory Usage</h4>
+              </div>
+              <div className="text-2xl font-bold">{environment.memory_percent.toFixed(2)}%</div>
+            </div>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4 text-muted-foreground" />
+                <h4 className="text-sm font-medium">Uptime</h4>
+              </div>
+              <div className="text-2xl font-bold">{formatUptime(environment.started_at)}</div>
+              <p className="text-xs text-muted-foreground">
+                Started: {formatTimestamp(environment.started_at)}
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <div>
             <CardTitle className="flex items-center gap-2">
@@ -395,106 +426,6 @@ export default function EnvironmentDetail() {
           </div>
         </CardContent>
       </Card>
-
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">CPU Usage</CardTitle>
-            <Activity className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{environment.cpu_percentage.toFixed(2)}%</div>
-            <p className="text-xs text-muted-foreground">
-              Currently used
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Memory Usage</CardTitle>
-            <HardDrive className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{environment.memory_percent.toFixed(2)}%</div>
-            <p className="text-xs text-muted-foreground">
-              Currently used
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Uptime</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{formatUptime(environment.started_at)}</div>
-            <p className="text-xs text-muted-foreground">
-              Started: {formatTimestamp(environment.started_at)}
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle>Network Configuration</CardTitle>
-            <Network className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div>
-                <h4 className="text-sm font-medium mb-2">IP Address</h4>
-                <div className="text-sm text-muted-foreground">{environment.ip || 'Not assigned'}</div>
-              </div>
-              <div>
-                <h4 className="text-sm font-medium mb-2">Networks</h4>
-                {environment.networks.map((network) => (
-                  <div key={network} className="text-sm text-muted-foreground">
-                    {network}
-                  </div>
-                ))}
-                {environment.networks.length === 0 && (
-                  <div className="text-sm text-muted-foreground">No networks connected</div>
-                )}
-              </div>
-              <div>
-                <h4 className="text-sm font-medium mb-2">Port Mappings</h4>
-                {environment.ports.map((port) => (
-                  <div key={port} className="text-sm text-muted-foreground">
-                    {port}
-                  </div>
-                ))}
-                {environment.ports.length === 0 && (
-                  <div className="text-sm text-muted-foreground">No ports mapped</div>
-                )}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle>Environment Variables</CardTitle>
-            <Layers className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {Object.entries(envVariables).map(([key, value]) => (
-                <div key={key} className="text-sm">
-                  <span className="font-medium">{key}:</span>{' '}
-                  <span className="text-muted-foreground">
-                    {key.toLowerCase().includes('password') ? '********' : value}
-                  </span>
-                </div>
-              ))}
-              {Object.keys(envVariables).length === 0 && (
-                <div className="text-sm text-muted-foreground">No environment variables set</div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between pb-2">

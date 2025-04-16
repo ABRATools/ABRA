@@ -25,6 +25,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { containersService, ContainerCreateParams, ContainerActionParams } from "@/lib/containers-service";
+import CreateNewContainer from "./CreateNewContainer";
 
 const formatMemory = (bytes: number): string => {
   if (bytes < 1024 * 1024 * 1024) {
@@ -391,134 +392,149 @@ export default function NodeDetail() {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold tracking-tight">Containers</h2>
-          <Button onClick={() => setNewContainerDialogOpen(true)}>
+          <CreateNewContainer ipAddress={node.ip_address} />
+          {/* <Button onClick={() => setNewContainerDialogOpen(true)}>
             <PlusCircle className="mr-2 h-4 w-4" />
             New Container
-          </Button>
-                      
-          {newContainerDialogOpen && (
-            <Dialog open={newContainerDialogOpen} onOpenChange={setNewContainerDialogOpen}>
-              <DialogContent className="max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Create New Container</DialogTitle>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  {/* Container Name */}
-                  <div className="grid gap-2">
-                    <Label htmlFor="name">Container Name</Label>
-                    <Input 
-                      id="name" 
-                      value={newContainer.name}
-                      onChange={(e) => setNewContainer(prev => ({ ...prev, name: e.target.value }))}
-                      placeholder="Enter container name"
-                    />
-                  </div>
-                  
-                  {/* Container Image */}
-                  <div className="grid gap-2">
-                    <Label htmlFor="image">Container Image</Label>
-                    {isLoading.images ? (
-                      <div className="flex items-center h-10 px-3 border rounded-md text-sm text-muted-foreground">
-                        Loading images...
-                      </div>
-                    ) : (
-                      <Select 
-                        onValueChange={(value) => setNewContainer(prev => ({ ...prev, image: value }))}
-                        value={newContainer.image || ""}
-                      >
-                        <SelectTrigger id="image">
-                          <SelectValue placeholder="Select container image" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {availableImages.length === 0 ? (
-                            <SelectItem value="no-images" disabled>No images available</SelectItem>
-                          ) : (
-                            availableImages.map(image => (
-                              <SelectItem key={image} value={image}>{image}</SelectItem>
-                            ))
-                          )}
-                        </SelectContent>
-                      </Select>
-                    )}
-                  </div>
-                  
-                  {/* Static IP Option */}
-                  <div className="grid gap-2">
-                    <div className="flex items-center gap-2">
-                      <input 
-                        type="checkbox"
-                        id="useStaticIp" 
-                        checked={newContainer.useStaticIp} 
-                        onChange={(e) => setNewContainer(prev => ({ 
-                          ...prev, 
-                          useStaticIp: e.target.checked 
-                        }))}
-                        className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                      />
-                      <Label htmlFor="useStaticIp">Use Static IP</Label>
-                    </div>
-                    {newContainer.useStaticIp && (
-                      <Input 
-                        id="ip" 
-                        value={newContainer.ip}
-                        onChange={(e) => setNewContainer(prev => ({ ...prev, ip: e.target.value }))}
-                        placeholder="Enter IP address (e.g. 192.168.1.100)"
-                      />
-                    )}
-                  </div>
-                  
-                  {/* eBPF Modules */}
-                  <div className="grid gap-2">
-                    <Label>eBPF Modules</Label>
-                    <div className="grid gap-2 max-h-32 overflow-y-auto p-2 border rounded-md">
-                      {isLoading.ebpfModules ? (
-                        <div className="text-sm text-muted-foreground">Loading modules...</div>
-                      ) : ebpfModules.length > 0 ? (
-                        ebpfModules.map(module => (
-                          <div key={module} className="flex items-center gap-2">
-                            <input
-                              type="checkbox"
-                              id={`module-${module}`} 
-                              checked={newContainer.selectedModules.includes(module)}
-                              onChange={(e) => {
-                                if (e.target.checked) {
-                                  setNewContainer(prev => ({
-                                    ...prev,
-                                    selectedModules: [...prev.selectedModules, module]
-                                  }));
-                                } else {
-                                  setNewContainer(prev => ({
-                                    ...prev,
-                                    selectedModules: prev.selectedModules.filter(m => m !== module)
-                                  }));
-                                }
-                              }}
-                              className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                            />
-                            <Label htmlFor={`module-${module}`} className="text-sm cursor-pointer flex items-center">
-                              <Code className="mr-2 h-3.5 w-3.5" />
-                              {module}
-                            </Label>
-                          </div>
-                        ))
-                      ) : (
-                        <div className="text-sm text-muted-foreground">No eBPF modules available</div>
-                      )}
-                    </div>
-                  </div>
+          </Button> */}
+        </div>
+        
+        {newContainerDialogOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            {/* Backdrop */}
+            <div 
+              className="fixed inset-0 bg-black/50"
+              onClick={() => setNewContainerDialogOpen(false)}
+            />
+            
+            {/* Dialog */}
+            <div 
+              className="relative max-w-md w-full max-h-[85vh] overflow-auto bg-white rounded-lg shadow-lg p-4 z-50"
+              onClick={e => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold">Create New Container</h2>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="h-8 w-8 rounded-full"
+                  onClick={() => setNewContainerDialogOpen(false)}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </Button>
+              </div>
+              
+              {/* Content */}
+              <div className="grid gap-4 py-4">
+                {/* Container Name */}
+                <div className="grid gap-2">
+                  <Label htmlFor="name">Container Name</Label>
+                  <Input 
+                    id="name" 
+                    value={newContainer.name}
+                    onChange={(e) => setNewContainer(prev => ({ ...prev, name: e.target.value }))}
+                    placeholder="Enter container name"
+                  />
                 </div>
                 
-                {/* Create Button */}
-                <Button 
-                  onClick={handleCreateContainer} 
-                  disabled={isLoading.containerAction || !newContainer.name || !newContainer.image}
-                >
-                  {isLoading.containerAction ? "Creating..." : "Create Container"}
-                </Button>
-              </DialogContent>
-            </Dialog>
-          )}
-        </div>
+                {/* Container Image */}
+                <div className="grid gap-2">
+                  <Label htmlFor="image">Container Image</Label>
+                  {isLoading.images ? (
+                    <div className="flex items-center h-10 px-3 border rounded-md text-sm text-muted-foreground">
+                      Loading images...
+                    </div>
+                  ) : (
+                    <select
+                      id="image"
+                      value={newContainer.image || ""}
+                      onChange={(e) => setNewContainer(prev => ({ ...prev, image: e.target.value }))}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      <option value="" disabled>Select container image</option>
+                      {availableImages.length === 0 ? (
+                        <option value="no-images" disabled>No images available</option>
+                      ) : (
+                        availableImages.map(image => (
+                          <option key={image} value={image}>{image}</option>
+                        ))
+                      )}
+                    </select>
+                  )}
+                </div>
+                
+                {/* Static IP Option */}
+                <div className="grid gap-2">
+                  <div className="flex items-center gap-2">
+                    <input 
+                      type="checkbox"
+                      id="useStaticIp" 
+                      checked={newContainer.useStaticIp} 
+                      onChange={(e) => setNewContainer(prev => ({ 
+                        ...prev, 
+                        useStaticIp: e.target.checked 
+                      }))}
+                      className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                    />
+                    <Label htmlFor="useStaticIp">Use Static IP</Label>
+                  </div>
+                  {newContainer.useStaticIp && (
+                    <Input 
+                      id="ip" 
+                      value={newContainer.ip}
+                      onChange={(e) => setNewContainer(prev => ({ ...prev, ip: e.target.value }))}
+                      placeholder="Enter IP address (e.g. 192.168.1.100)"
+                    />
+                  )}
+                </div>
+                
+                {/* eBPF Modules */}
+                <div className="grid gap-2">
+                  <Label>eBPF Modules</Label>
+                  <div className="grid gap-2 max-h-32 overflow-y-auto p-2 border rounded-md">
+                    {isLoading.ebpfModules ? (
+                      <div className="text-sm text-muted-foreground">Loading modules...</div>
+                    ) : ebpfModules.length > 0 ? (
+                      ebpfModules.map(module => (
+                        <div key={module} className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            id={`module-${module}`} 
+                            checked={newContainer.selectedModules.includes(module)}
+                            onChange={(e) => toggleEbpfModule(module, e.target.checked)}
+                            className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                          />
+                          <Label htmlFor={`module-${module}`} className="text-sm cursor-pointer flex items-center">
+                            <Code className="mr-2 h-3.5 w-3.5" />
+                            {module}
+                          </Label>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-sm text-muted-foreground">No eBPF modules available</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Create Button */}
+              <Button 
+                onClick={handleCreateContainer} 
+                disabled={isLoading.containerAction || !newContainer.name || !newContainer.image}
+                className="w-full"
+              >
+                {isLoading.containerAction ? "Creating..." : "Create Container"}
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+      
+      <div className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {nodeEnvironments.map((env) => (
             <Card key={env.env_id}>
