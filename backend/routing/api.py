@@ -416,89 +416,107 @@ async def get_systems(request: Request, session = Depends(get_session), token: A
       return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
-@@router.post('/system')
+# Updated system creation endpoint to handle container IDs
+@router.post('/system')
 async def create_system(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
-  """create a new system"""
-  if token:
-    try:
-      data = await request.json()
-      # Manually extract fields from data
-      system_id = data["system_id"]
-      name = data["name"]
-      description = data.get("description", "")
-      is_custom = data.get("is_custom", True)
-      # Store environment IDs for later use
-      environment_ids = data.get("environment_ids", [])
-      
-      logger.info(f"Creating system {name} with environment IDs: {environment_ids}")
-      
-      # Create the system
-      system = db.create_system(
-        session, 
-        system_id, 
-        name, 
-        description, 
-        is_custom
-      )
-      
-      # Process environments
-      success_count = 0
-      for env_id in environment_ids:
-        logger.info(f"Processing environment ID: {env_id}")
+    """create a new system with proper container ID handling"""
+    if token:
         try:
-          env = None
-          
-          # First try parsing as numeric ID
-          if isinstance(env_id, str) and env_id.isdigit():
-            numeric_id = int(env_id)
-            logger.info(f"Looking for environment by numeric ID: {numeric_id}")
-            env = session.query(db.models.Environment).filter(db.models.Environment.id == numeric_id).first()
+            data = await request.json()
+            # Extract basic system fields
+            system_id = data["system_id"]
+            name = data["name"]
+            description = data.get("description", "")
+            is_custom = data.get("is_custom", True)
             
-            if env:
-              logger.info(f"Found environment with ID {numeric_id}")
-              db.add_environment_to_system(session, system_id, env.id)
-              success_count += 1
-              continue
-          
-          # If numeric ID didn't work, try by container_id
-          if not env and isinstance(env_id, str):
-            logger.info(f"Looking for environment by container_id: {env_id}")
-            env = session.query(db.models.Environment).filter(db.models.Environment.container_id == env_id).first()
+            # Create the base system first
+            system = db.create_system(
+                session, 
+                system_id, 
+                name, 
+                description, 
+                is_custom
+            )
             
-            if env:
-              logger.info(f"Found environment with container_id {env_id}")
-              db.add_environment_to_system(session, system_id, env.id)
-              success_count += 1
-              continue
-          
-          # If still not found, try by name
-          if not env and isinstance(env_id, str):
-            logger.info(f"Looking for environment by name: {env_id}")
-            env = session.query(db.models.Environment).filter(db.models.Environment.name == env_id).first()
+            # Handle both new format (environments array) and old format (environment_ids)
+            if "environments" in data and isinstance(data["environments"], list):
+                # New format - contains full environment objects with container_ids
+                environments = data["environments"]
+                logger.info(f"Creating system with {len(environments)} environment objects")
+                
+                for env_data in environments:
+                    # Log the environment we're trying to add
+                    logger.info(f"Processing environment: {env_data}")
+                    
+                    # Try to find the environment by container_id first (most reliable)
+                    if "container_id" in env_data and env_data["container_id"]:
+                        container_id = env_data["container_id"]
+                        logger.info(f"Looking for environment by container_id: {container_id}")
+                        
+                        # Look up existing env by container_id
+                        env = db.find_or_create_environment_by_container_id(
+                            session,
+                            container_id,
+                            name=env_data.get("name", "Unknown"),
+                            node_id=env_data.get("node_id")
+                        )
+                        
+                        if env:
+                            logger.info(f"Adding environment with container_id {container_id} to system")
+                            # Add environment to system
+                            system.environments.append(env)
+                            continue
+                    
+                    # Fallback for environments without container_id
+                    try:
+                        # Create minimal environment record
+                        new_env = db.models.Environment(
+                            name=env_data.get("name", "Unknown"),
+                            ip=env_data.get("ip", ""),
+                            os=env_data.get("os", "undefined"),
+                            status=env_data.get("status", "undefined"),
+                            uptime="0",  # Default values for required fields
+                            cpu_percent=0,
+                            memory=0,
+                            disk=0,
+                            max_cpus=0,
+                            max_memory=0,
+                            max_disk=0,
+                            container_id=env_data.get("container_id", None)
+                        )
+                        
+                        # If we have node info, try to associate with a node
+                        if "node_id" in env_data and env_data["node_id"]:
+                            node = session.query(db.models.Node).filter(
+                                db.models.Node.name == env_data["node_id"]
+                            ).first()
+                            
+                            if node:
+                                new_env.node_id = node.id
+                        
+                        # Add to database and get ID
+                        session.add(new_env)
+                        session.flush()  # Flush to get the ID
+                        
+                        logger.info(f"Created new environment: {new_env.id}")
+                        
+                        # Add to system
+                        system.environments.append(new_env)
+                    except Exception as e:
+                        logger.error(f"Error creating environment: {str(e)}")
+                        # Continue with other environments
             
-            if env:
-              logger.info(f"Found environment with name {env_id}")
-              db.add_environment_to_system(session, system_id, env.id)
-              success_count += 1
-              continue
-          
-          # If environment not found, log a warning
-          if not env:
-            logger.warning(f"Environment {env_id} not found")
+            # Commit all changes
+            session.commit()
             
+            return JSONResponse(content={
+                'message': 'System created successfully',
+                'system_id': system.system_id
+            }, status_code=200)
         except Exception as e:
-          logger.error(f"Error processing environment {env_id}: {str(e)}")
-          # Continue processing other environments even if this one fails
-          continue
-      
-      return JSONResponse(content={
-        'message': f'System created successfully with {success_count}/{len(environment_ids)} environments',
-        'system_id': system.system_id
-      }, status_code=200)
-    except Exception as e:
-      logger.error(f"Error creating system: {str(e)}")
-      return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
-  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
+            logger.error(f"Error creating system: {str(e)}")
+            return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
+    return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
 
 @router.post('/system/{system_id}')
 async def get_system(system_id: str, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:

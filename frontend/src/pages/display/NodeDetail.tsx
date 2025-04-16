@@ -399,7 +399,6 @@ export default function NodeDetail() {
           </Button> */}
         </div>
         
-        Simple Modal for Container Creation - avoids nested dialogs
         {newContainerDialogOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center">
             {/* Backdrop */}

@@ -514,3 +514,128 @@ def get_system_environments(db, system_id):
         return []
     
     return system.environments
+
+def find_or_create_environment_by_container_id(db, container_id, name=None, node_id=None):
+    """
+    Find an environment by its container ID or create a new one if it doesn't exist
+    
+    Args:
+        db: Database session
+        container_id: The container ID from Podman
+        name: Optional name for the environment
+        node_id: Optional node ID to associate with this environment
+        
+    Returns:
+        The found or newly created Environment object
+    """
+    if not container_id:
+        logger.warning("No container_id provided to find_or_create_environment_by_container_id")
+        return None
+        
+    # First try to find by container ID
+    env = db.query(Environment).filter(Environment.container_id == container_id).first()
+    
+    if env:
+        logger.debug(f"Found existing environment with container_id {container_id}")
+        # Update name and node if provided
+        if name:
+            env.name = name
+        if node_id:
+            # Find node by ID or name
+            node = None
+            try:
+                if isinstance(node_id, int):
+                    node = db.query(Node).filter(Node.id == node_id).first()
+                else:
+                    node = db.query(Node).filter(Node.name == node_id).first()
+                    
+                if node:
+                    env.node_id = node.id
+            except Exception as e:
+                logger.error(f"Error finding node {node_id}: {str(e)}")
+                
+        db.commit()
+        return env
+        
+    # If not found, create a new environment
+    try:
+        # Get next ID
+        max_id = db.query(func.max(Environment.id)).scalar()
+        if max_id is None:
+            max_id = 0
+        max_id += 1
+        
+        # Create minimal environment record with required fields
+        new_env = Environment(
+            id=max_id,
+            name=name or "Unknown",
+            ip="",
+            os="undefined",
+            status="undefined",
+            uptime="0",
+            cpu_percent=0,
+            memory=0,
+            disk=0,
+            max_cpus=0,
+            max_memory=0,
+            max_disk=0,
+            container_id=container_id
+        )
+        
+        # Associate with node if provided
+        if node_id:
+            node = None
+            try:
+                if isinstance(node_id, int):
+                    node = db.query(Node).filter(Node.id == node_id).first()
+                else:
+                    node = db.query(Node).filter(Node.name == node_id).first()
+                    
+                if node:
+                    new_env.node_id = node.id
+            except Exception as e:
+                logger.error(f"Error finding node {node_id}: {str(e)}")
+        
+        db.add(new_env)
+        db.commit()
+        
+        logger.debug(f"Created new environment with ID {max_id} for container_id {container_id}")
+        return new_env
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error creating environment for container_id {container_id}: {str(e)}")
+        return None
+
+# Enhanced function to add environment to system with container ID support
+def add_environment_to_system_by_container_id(db, system_id, container_id, env_name=None, node_id=None):
+    """Add an environment to a system by container ID"""
+    try:
+        # First, make sure system exists
+        system = db.query(System).filter(System.system_id == system_id).first()
+        if not system:
+            logger.warning(f"System {system_id} not found")
+            return False
+        
+        # Find or create environment by container ID
+        environment = find_or_create_environment_by_container_id(
+            db, container_id, name=env_name, node_id=node_id
+        )
+        
+        if not environment:
+            logger.warning(f"Could not find or create environment for container_id {container_id}")
+            return False
+        
+        # Check if environment is already in system
+        if environment not in system.environments:
+            logger.debug(f"Adding environment {environment.id} (container_id: {container_id}) to system {system_id}")
+            system.environments.append(environment)
+            db.commit()
+            logger.debug(f"Added environment to system {system_id}")
+        else:
+            logger.debug(f"Environment {environment.id} (container_id: {container_id}) already in system {system_id}")
+            
+        return True
+    except Exception as e:
+        logger.error(f"Error adding environment with container_id {container_id} to system {system_id}: {str(e)}")
+        db.rollback()
+        raise

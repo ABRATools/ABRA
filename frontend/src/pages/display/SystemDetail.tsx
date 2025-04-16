@@ -499,16 +499,34 @@ export default function SystemDetail() {
     if (system.source === 'database' && system.isCustom) {
       console.log('Updating custom system with WebSocket data');
       
-      // Create a lookup for environments by name and ID for faster matching
+      // DEBUG: Log the system environments we need to match
+      console.log('System environments from database:', system.environments.map(e => ({
+        env_id: e.env_id,
+        container_id: e.container_id,
+        name: e.names?.[0] || 'unnamed'
+      })));
+      
+      // Create lookups for environments by various attributes for faster matching
       const envByName = new Map<string, Environment>();
       const envById = new Map<string, Environment>();
+      const envByContainerId = new Map<string, Environment>();
       
       // Process all environments from all nodes and create lookups
       data.nodes.forEach(node => {
         if (!node.environments) return;
         
+        // DEBUG: Log the environments from this node
+        console.log(`Node ${node.node_id} environments:`, node.environments.map(e => ({
+          env_id: e.env_id,
+          names: e.names
+        })));
+        
         node.environments.forEach(env => {
+          // In WebSocket data, env_id IS the container_id!
           envById.set(env.env_id, {...env, sourceNode: node});
+          
+          // IMPORTANT: Also map by env_id as container_id for direct matching
+          envByContainerId.set(env.env_id, {...env, sourceNode: node});
           
           // Add lookup by each name
           if (env.names && env.names.length > 0) {
@@ -519,47 +537,30 @@ export default function SystemDetail() {
         });
       });
       
-      // Now look for matching environments using both ID and name
+      // Now look for matching environments using container_id as the primary key
       const matchedEnvironments: Environment[] = [];
       const nodeIds = new Set<string>();
       
       system.environments.forEach(sysEnv => {
         let matchedEnv: Environment | undefined;
         
-        // Try to match by ID first
-        if (envById.has(sysEnv.env_id)) {
-          matchedEnv = envById.get(sysEnv.env_id);
+        // IMPORTANT: Try to match by container_id first (most reliable)
+        if (sysEnv.container_id && envByContainerId.has(sysEnv.container_id)) {
+          matchedEnv = envByContainerId.get(sysEnv.container_id);
+          console.log(`MATCH FOUND by container_id: ${sysEnv.container_id}`);
         } 
+        // Then try to match by env_id
+        else if (envById.has(sysEnv.env_id)) {
+          matchedEnv = envById.get(sysEnv.env_id);
+          console.log(`MATCH FOUND by env_id: ${sysEnv.env_id}`);
+        }
         // Then try to match by name
         else if (sysEnv.names && sysEnv.names.length > 0) {
           for (const name of sysEnv.names) {
             if (envByName.has(name)) {
               matchedEnv = envByName.get(name);
+              console.log(`MATCH FOUND by name: ${name}`);
               break;
-            }
-          }
-        }
-        
-        // Try to match by substring as a last resort
-        if (!matchedEnv) {
-          // First check if any environment ID contains this environment's ID
-          for (const [id, env] of envById.entries()) {
-            if (id.includes(sysEnv.env_id) || sysEnv.env_id.includes(id)) {
-              matchedEnv = env;
-              console.log(`Found substring match for ID ${sysEnv.env_id} with ${id}`);
-              break;
-            }
-          }
-          
-          // Then check if any environment name contains this environment's name
-          if (!matchedEnv && sysEnv.names && sysEnv.names.length > 0) {
-            const sysEnvName = sysEnv.names[0];
-            for (const [name, env] of envByName.entries()) {
-              if (name.includes(sysEnvName) || sysEnvName.includes(name)) {
-                matchedEnv = env;
-                console.log(`Found substring match for name ${sysEnvName} with ${name}`);
-                break;
-              }
             }
           }
         }
@@ -575,6 +576,9 @@ export default function SystemDetail() {
             nodeIds.add(matchedEnv.sourceNode.node_id);
           }
         } else {
+          // DEBUG: Log when no match is found
+          console.warn(`NO MATCH FOUND for environment: env_id=${sysEnv.env_id}, container_id=${sysEnv.container_id}, names=${sysEnv.names}`);
+          
           // Keep the original environment if no match found
           matchedEnvironments.push(sysEnv);
           
@@ -587,7 +591,7 @@ export default function SystemDetail() {
       
       // Update the system's environments - we do this for custom systems only
       if (system.isCustom && matchedEnvironments.length > 0) {
-        console.log('Updating system environments:', 
+        console.log('Updating system environments:',
           matchedEnvironments.map(e => ({id: e.env_id, names: e.names, state: e.state})));
         system.environments = matchedEnvironments;
         system.totalContainers = matchedEnvironments.length;
@@ -597,6 +601,8 @@ export default function SystemDetail() {
       const matchingNodes = data.nodes.filter(node => 
         nodeIds.has(node.node_id)
       );
+      
+      console.log(`Found ${matchingNodes.length} matching nodes for system ${system.id}`);
       
       // Always return fresh nodes for custom systems to ensure we have current data
       return matchingNodes;
@@ -632,7 +638,7 @@ export default function SystemDetail() {
     
     // Otherwise, use the nodes from system or websocket
     return system.nodes || [];
-  }, [system]);
+  }, [system, data]);
   
   // Get environments from the system object
   // In the SystemDetail component, update the useMemo hook for 'environments'
