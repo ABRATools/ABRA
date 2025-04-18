@@ -33,7 +33,7 @@ def request_ebpf_module_names(target_ip, name):
     except requests.exceptions.RequestException as e:
         logger.error(f"An error occurred: {e}")
         logger.error(f"API response: {response.text}")
-        raise Exception(response.text if response is not None else {})
+        raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
 def start_ebpf_service(target_ip, name, service):
   try:
@@ -52,7 +52,7 @@ def start_ebpf_service(target_ip, name, service):
   except requests.exceptions.RequestException as e:
     logger.error(f"An error occurred: {e}")
     logger.error(f"API response: {response.text}")
-    raise Exception(response.text if response is not None else {})
+    raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
 def stop_ebpf_service(target_ip, name, service):
   try:
@@ -71,7 +71,7 @@ def stop_ebpf_service(target_ip, name, service):
   except requests.exceptions.RequestException as e:
     logger.error(f"An error occurred: {e}")
     logger.error(f"API response: {response.text}")
-    raise Exception(response.text if response is not None else {})
+    raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
 @router.post("/start-ebpf-service")
 async def start_service_on_container(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:

@@ -14,6 +14,8 @@ from web_utils import get_session
 from logger import logger
 from web_auth import authenticate_cookie, AuthToken
 
+MAX_MEM_GIB = 16
+
 router = APIRouter(prefix="/api/containers")
 
 def start_container(env_id, target_ip):
@@ -87,12 +89,14 @@ def list_node_images(target_ip):
     logger.error(f"API response: {response.text}")
     raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
-def create_container(target_ip, image, name, ip):
+def create_container(target_ip, image, name, ip, cpus, mem_limit):
+  logger.info(f"Creating container with env_id: {name}, image: {image}, ip: {ip}, cpus: {cpus}, mem_limit: {mem_limit}")
   try:
     print(target_ip, image, name, ip)
     response = requests.post(
       f"http://{target_ip}:8888/containers/create",
-      json={"image": image, "name": name, "ip": ip if ip is not None else ""},
+      json={"image": image, "name": name, "ip": ip if ip is not None else "", "cpus": cpus, "mem_limit": mem_limit},
+      headers={"Content-Type": "application/json"},
       timeout=10
     )
     response.raise_for_status()
@@ -106,12 +110,14 @@ def create_container(target_ip, image, name, ip):
     logger.error(f"API response: {response.text}")
     raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
-def create_ebpf_container(target_ip, image, name, ip):
+def create_ebpf_container(target_ip, image, name, ip, cpus, mem_limit):
+  logger.info(f"Creating container with env_id: {name}, image: {image}, ip: {ip}, cpus: {cpus}, mem_limit: {mem_limit}")
   try:
     print(target_ip, image, name, ip)
     response = requests.post(
       f"http://{target_ip}:8888/containers/create-ebpf",
-      json={"image": image, "name": name, "ip": ip if ip is not None else ""},
+      json={"image": image, "name": name, "ip": ip if ip is not None else "", "cpus": cpus, "mem_limit": mem_limit},
+      headers={"Content-Type": "application/json"},
       timeout=10
     )
     response.raise_for_status()
@@ -203,6 +209,8 @@ async def create_environment_on_node(request: Request, session = Depends(get_ses
     image = data.get("image", None)
     name = data.get("name", None)
     ip = data.get("ip", None)
+    cpus = data.get("cpus", None)
+    mem_limit = data.get("mem_limit", None)
     if target_ip is None:
       logger.error("No target_ip provided")
       return JSONResponse(status_code=400, content={"message": "No target_ip provided"})
@@ -212,6 +220,18 @@ async def create_environment_on_node(request: Request, session = Depends(get_ses
     if name is None:
       logger.error("No name provided")
       return JSONResponse(status_code=400, content={"message": "No name provided"})
+    if not isinstance(cpus, int):
+      logger.error("Invalid cpus provided")
+      return JSONResponse(status_code=400, content={"message": "Invalid cpus provided"})
+    if not isinstance(mem_limit, int):
+      logger.error("Invalid mem_limit provided")
+      return JSONResponse(status_code=400, content={"message": "Invalid mem_limit provided"})
+    if cpus < 1 or cpus > 16:
+      logger.error("Invalid cpus provided")
+      return JSONResponse(status_code=400, content={"message": "Invalid cpus provided"})
+    if mem_limit < 1 or mem_limit > (1073741824 * MAX_MEM_GIB):
+      logger.error("Invalid mem_limit provided")
+      return JSONResponse(status_code=400, content={"message": "Invalid mem_limit provided"})
     # check if ip is valid
     if ip is not None and ip != "":
       print("ip: ", ip)
@@ -223,7 +243,7 @@ async def create_environment_on_node(request: Request, session = Depends(get_ses
     logger.info("Creating container: ")
     output = None
     try:
-      output = create_container(target_ip, image, name, ip)
+      output = create_container(target_ip, image, name, ip, cpus, mem_limit)
       if output is None:
         return JSONResponse(status_code=500, content={"message": "An error occurred"})
     except Exception as e:
@@ -242,6 +262,8 @@ async def create_ebpf_environment_on_node(request: Request, session = Depends(ge
     name = data.get("name", None)
     ip = data.get("ip", None)
     ebpf_modules = data.get("ebpfModules", None)
+    cpus = data.get("cpus", None)
+    mem_limit = data.get("mem_limit", None)
     if target_ip is None:
       logger.error("No target_ip provided")
       return JSONResponse(status_code=400, content={"message": "No target_ip provided"})
@@ -251,6 +273,18 @@ async def create_ebpf_environment_on_node(request: Request, session = Depends(ge
     if name is None:
       logger.error("No name provided")
       return JSONResponse(status_code=400, content={"message": "No name provided"})
+    if not isinstance(cpus, int):
+      logger.error("Invalid cpus provided")
+      return JSONResponse(status_code=400, content={"message": "Invalid cpus provided"})
+    if not isinstance(mem_limit, int):
+      logger.error("Invalid mem_limit provided")
+      return JSONResponse(status_code=400, content={"message": "Invalid mem_limit provided"})
+    if cpus < 1 or cpus > 16:
+      logger.error("Invalid cpus provided")
+      return JSONResponse(status_code=400, content={"message": "Invalid cpus provided"})
+    if mem_limit < 1 or mem_limit > (1073741824 * MAX_MEM_GIB):
+      logger.error("Invalid mem_limit provided")
+      return JSONResponse(status_code=400, content={"message": "Invalid mem_limit provided"})
     # check if ip is valid
     if ip is not None and ip != "":
       print("ip: ", ip)
@@ -262,7 +296,7 @@ async def create_ebpf_environment_on_node(request: Request, session = Depends(ge
     logger.info("Creating container: ")
     output = None
     try:
-      output = create_ebpf_container(target_ip, image, name, ip)
+      output = create_ebpf_container(target_ip, image, name, ip, cpus, mem_limit)
       if output is None:
         return JSONResponse(status_code=500, content={"message": "An error occurred"})
     except Exception as e:

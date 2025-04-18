@@ -810,6 +810,10 @@ body{
   height: 4rem;
 }
 
+.h-2{
+  height: 0.5rem;
+}
+
 .h-2\.5{
   height: 0.625rem;
 }
@@ -958,6 +962,10 @@ body{
   width: 2rem;
 }
 
+.w-\[70\%\]{
+  width: 70%;
+}
+
 .w-full{
   width: 100%;
 }
@@ -970,12 +978,21 @@ body{
   min-width: var(--radix-select-trigger-width);
 }
 
+.max-w-\[70\%\]{
+  max-width: 70%;
+}
+
 .max-w-lg{
   max-width: 32rem;
 }
 
 .max-w-md{
   max-width: 28rem;
+}
+
+.max-w-min{
+  max-width: -moz-min-content;
+  max-width: min-content;
 }
 
 .max-w-sm{
@@ -991,6 +1008,10 @@ body{
 }
 
 .flex-grow{
+  flex-grow: 1;
+}
+
+.grow{
   flex-grow: 1;
 }
 
@@ -1050,6 +1071,10 @@ body{
 
 .cursor-pointer{
   cursor: pointer;
+}
+
+.touch-none{
+  touch-action: none;
 }
 
 .select-none{
@@ -1136,6 +1161,11 @@ body{
 
 .gap-6{
   gap: 1.5rem;
+}
+
+.gap-x-2{
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]){
@@ -1236,6 +1266,10 @@ body{
 
 .border{
   border-width: 1px;
+}
+
+.border-2{
+  border-width: 2px;
 }
 
 .border-b{

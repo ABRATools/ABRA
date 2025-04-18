@@ -1,6 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
 import { Box, Code } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import React, { useState, useEffect } from "react";
@@ -12,17 +13,22 @@ import {
   DialogTrigger,
   DialogFooter
 } from "@/components/ui/dialog";
+import { cpus } from "os";
 
 type newContainerState = {
   name: string;
   image: string;
   ip?: string;
   ebpfModules: string[];
+  cpus?: number;
+  mem_limit?: number;
 };
 
 type Props = {
   ipAddress: string;
 }
+
+const GIB  = 1073741824;
 
 interface Image {
   Id: string;
@@ -54,6 +60,7 @@ interface CreateContainerResponse {
 const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
   const [open, setOpen] = useState(false);
   const [isEBPFContainer, setIsEBPFContainer] = useState(false);
+  const [useRLimits, setUseRLimits] = useState(false);
   const [useStaticIP, setUseStaticIP] = useState(false);
   const [images, setImages] = useState<Image[]>([]);
   const { toast } = useToast();
@@ -62,6 +69,8 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
     name: '',
     image: '',
     ebpfModules: [],
+    mem_limit: 0,
+    cpus: 0,
   });
   const [ipError, setIpError] = useState('');
   const [ebpfModuleNames, setEbpfModuleNames] = useState<string[]>([]);
@@ -220,18 +229,79 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
         });
         return;
       }
+      if (useRLimits && (!newContainerState.cpus || !newContainerState.mem_limit)) {
+        toast({
+          title: "Validation Error",
+          description: "CPUs and Memory limits are required when setting resource limits",
+          variant: "destructive",
+        });
+        return;
+      }
+      if (useRLimits && newContainerState.cpus && newContainerState.cpus < 1) {
+        toast({
+          title: "Validation Error",
+          description: "CPUs must be at least 1",
+          variant: "destructive",
+        });
+        return;
+      }
+      if (useRLimits && newContainerState.mem_limit && newContainerState.mem_limit < 1) {
+        toast({
+          title: "Validation Error",
+          description: "Memory limit must be at least 1 GiB",
+          variant: "destructive",
+        });
+        return;
+      }
+      if (useRLimits && newContainerState.mem_limit && newContainerState.mem_limit > 16) {
+        toast({
+          title: "Validation Error",
+          description: "Memory limit cannot exceed 16 GiB",
+          variant: "destructive",
+        });
+        return;
+      }
+      if (useRLimits && newContainerState.cpus && newContainerState.cpus > 8) {
+        toast({
+          title: "Validation Error",
+          description: "CPUs cannot exceed 8",
+          variant: "destructive",
+        });
+        return;
+      }
+      if (useRLimits && newContainerState.cpus && newContainerState.cpus < 1) {
+        toast({
+          title: "Validation Error",
+          description: "CPUs must be at least 1",
+          variant: "destructive",
+        });
+        return;
+      }
+      // set cpus and mem_limit to 0 if not using rlimits
+      if ( ! useRLimits ) {
+        setNewContainerState({
+          ...newContainerState,
+          cpus: 0,
+          mem_limit: 0
+        });
+      }
+
       const creationEndpoint = isEBPFContainer ? '/api/containers/create-ebpf' : '/api/containers/create';
       const creationBody = ( isEBPFContainer ? {
-        target_ip: ipAddress,
-        image: newContainerState.image,
-        name: newContainerState.name,
-        ip: newContainerState.ip,
-        ebpfModules: newContainerState.ebpfModules
+          target_ip: ipAddress,
+          image: newContainerState.image,
+          name: newContainerState.name,
+          ip: newContainerState.ip,
+          ebpfModules: newContainerState.ebpfModules,
+          cpus: newContainerState.cpus ? newContainerState.cpus : undefined,
+          mem_limit: newContainerState.mem_limit ? newContainerState.mem_limit * GIB : undefined
         } : {
-        target_ip: ipAddress,
-        image: newContainerState.image,
-        name: newContainerState.name,
-        ip: newContainerState.ip
+          target_ip: ipAddress,
+          image: newContainerState.image,
+          name: newContainerState.name,
+          ip: newContainerState.ip,
+          cpus: newContainerState.cpus ? newContainerState.cpus : undefined,
+          mem_limit: newContainerState.mem_limit ? newContainerState.mem_limit * GIB : undefined
         });
 
       const response = await fetch(creationEndpoint, {
@@ -377,43 +447,107 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
             
             {/* eBPF Modules Section */}
             <div className="grid gap-2">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="is_ebpf_container"
-                checked={isEBPFContainer}
-                onCheckedChange={(checked) => setIsEBPFContainer(!!checked)}
-              />
-              <label htmlFor="static_ip" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                Is this an eBPF container?
-              </label>
-            </div>
-            {isEBPFContainer && ( 
-              <>
-              <label className="text-sm font-medium">eBPF Modules</label>
-              <div className="grid gap-2 max-h-32 overflow-y-auto p-2 border rounded-md">
-                {loadingEbpfModules ? (
-                  <div className="text-sm text-muted-foreground">Loading modules...</div>
-                ) : ebpfModuleNames.length > 0 ? (
-                  ebpfModuleNames.map(module => (
-                    <div key={module} className="flex items-center gap-2">
-                      <Checkbox
-                        id={`module-${module}`} 
-                        checked={newContainerState.ebpfModules.includes(module)}
-                        onCheckedChange={(checked) => handleEbpfModuleSelection(module, !!checked)}
-                      />
-                      <label htmlFor={`module-${module}`} className="text-sm cursor-pointer flex items-center">
-                        <Code className="mr-2 h-3.5 w-3.5" />
-                        {module}
-                      </label>
-                    </div>
-                  ))
-                ) : (
-                  <div className="text-sm text-muted-foreground">No eBPF modules available</div>
-                )}
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="is_ebpf_container"
+                  checked={isEBPFContainer}
+                  onCheckedChange={(checked) => setIsEBPFContainer(!!checked)}
+                />
+                <label htmlFor="static_ip" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  Use eBPF modules (optional)
+                </label>
               </div>
-              </>
-            )}
+              {isEBPFContainer && ( 
+                <>
+                <label className="text-sm font-medium">eBPF Modules</label>
+                <div className="grid gap-2 max-h-32 overflow-y-auto p-2 border rounded-md">
+                  {loadingEbpfModules ? (
+                    <div className="text-sm text-muted-foreground">Loading modules...</div>
+                  ) : ebpfModuleNames.length > 0 ? (
+                    ebpfModuleNames.map(module => (
+                      <div key={module} className="flex items-center gap-2">
+                        <Checkbox
+                          id={`module-${module}`} 
+                          checked={newContainerState.ebpfModules.includes(module)}
+                          onCheckedChange={(checked) => handleEbpfModuleSelection(module, !!checked)}
+                        />
+                        <label htmlFor={`module-${module}`} className="text-sm cursor-pointer flex items-center">
+                          <Code className="mr-2 h-3.5 w-3.5" />
+                          {module}
+                        </label>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-sm text-muted-foreground">No eBPF modules available</div>
+                  )}
+                </div>
+                </>
+              )}
             </div>
+
+            <div className="grid gap-2">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="set_rlimits"
+                  checked={useRLimits}
+                  onCheckedChange={(checked) => setUseRLimits(!!checked)}
+                />
+                <label htmlFor="static_ip" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  Set resource limits (optional)
+                </label>
+              </div>
+              {useRLimits && ( 
+                <>
+                <label className="text-sm font-medium">Resource Limits</label>
+                <div className="grid gap-2 max-h-32 overflow-y-auto p-2 border rounded-md">
+                  <div className="flex items-center w-full flex-row gap-x-2 justify-between">
+                    <label htmlFor="cpus" className="text-sm max-w-min">CPUs</label>
+                    <code className="text-sm text-muted-foreground max-w-min">
+                      {newContainerState.cpus ? newContainerState.cpus : 1}
+                    </code>
+                    <div className="w-[70%] max-w-[70%]">
+                      <Slider
+                        value={[newContainerState.cpus || 1]}
+                        defaultValue={[1]}
+                        onValueChange={(value: number[]) => {
+                          setNewContainerState({
+                            ...newContainerState,
+                            cpus: value[0]
+                          });
+                        }}
+                        min={1}
+                        max={8}
+                        step={1}
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex items-center w-full flex-row gap-x-2 justify-between">
+                    <label htmlFor="memory" className="text-sm max-w-min">Memory (GiB)</label>
+                    <code className="text-sm text-muted-foreground max-w-min">
+                      {newContainerState.mem_limit ? newContainerState.mem_limit : 1}
+                    </code>
+                    <div className="w-[70%] max-w-[70%]">
+                      <Slider
+                        value={[newContainerState.mem_limit || 1]}
+                        onValueChange={(value: number[]) => {
+                          setNewContainerState({
+                            ...newContainerState,
+                            mem_limit: value[0]
+                          });
+                        }}
+                        min={1}
+                        max={16}
+                        step={0.5}
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+                </>
+              )}
+            </div>
+
           </div>
         </div>
         <DialogFooter>
