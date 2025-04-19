@@ -29,6 +29,7 @@ async def serve_frontend_public(
 @router.get("/display/systems/{system_id}")
 @router.get("/display/systems/{system_id}/nodes/{node_id}")
 @router.get("/display/systems/{system_id}/nodes/{node_id}/environments/{env_id}")
+@router.get("/display/systems/{system_id}/nodes/{node_id}/environments/{env_id}/logs")
 @router.get("/config/systems")
 @router.get("/config/systems/{system_id}")
 @router.get("/config/systems/{system_id}/nodes/{node_id}")

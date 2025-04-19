@@ -6,13 +6,11 @@ import {
   Settings,
   Activity,
   HardDrive,
-  Network,
-  Terminal,
+  FolderClock,
   RefreshCw,
   Play,
   Square,
   Trash,
-  Layers,
   Monitor,
   Clock
 } from "lucide-react";
@@ -229,21 +227,6 @@ export default function EnvironmentDetail() {
       </div>
     );
   }
-
-  // simulate environment variables since they aren't directly in the data model
-  const envVariables = environment.names.reduce((vars, name) => {
-    const varMatches = name.match(/(\w+)=(\w+)/);
-    if (varMatches) {
-      vars[varMatches[1]] = varMatches[2];
-    }
-    return vars;
-  }, {} as Record<string, string>);
-
-  // if no environment variables were found, add some defaults
-  if (Object.keys(envVariables).length === 0) {
-    envVariables.PORT = "8080";
-    envVariables.NODE_ENV = "production";
-  }
   
   return (
     <div className="space-y-6">
@@ -284,6 +267,12 @@ export default function EnvironmentDetail() {
               </p>
             </div>
             <div className="flex gap-2">
+            <Button variant="ghost" asChild>
+              <Link to={`/display/systems/${systemId}/nodes/${nodeId}/environments/${envId}/logs`}>
+                <FolderClock className="mr-2 h-4 w-4" />
+                View Logs
+              </Link>
+            </Button>
               <Button 
                 variant="outline" size="sm" disabled={environment.state === 'running'} onClick={() => handleStart(envId)}>
                 <Play className="mr-2 h-4 w-4" />
@@ -423,33 +412,6 @@ export default function EnvironmentDetail() {
             <Button variant="outline" size="sm" disabled={!isConsoleConnected}>
               Full Screen
             </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle>Container Logs</CardTitle>
-          <Terminal className="h-4 w-4 text-muted-foreground" />
-        </CardHeader>
-        <CardContent>
-          <div className="bg-muted p-4 rounded-md font-mono text-sm h-48 overflow-auto">
-            <div className="text-muted-foreground">
-              {formatTimestamp(environment.started_at)} [INFO] Container started successfully
-              <br />
-              {environment.exited && environment.exit_code !== 0 ? (
-                <>
-                  {formatTimestamp(environment.exited_at)} [ERROR] Container exited with code {environment.exit_code}
-                  <br />
-                </>
-              ) : null}
-              {environment.state === 'running' ? (
-                <>
-                  {formatTimestamp(Date.now() / 1000 - 60)} [INFO] Health check passed
-                  <br />
-                </>
-              ) : null}
-            </div>
           </div>
         </CardContent>
       </Card>

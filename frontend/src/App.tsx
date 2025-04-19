@@ -16,6 +16,7 @@ const SystemDetail = React.lazy(() => import("./pages/display/SystemDetail.tsx")
 const NodeDetail = React.lazy(() => import("./pages/display/NodeDetail.tsx"));
 const EnvironmentDetail = React.lazy(() => import("./pages/display/EnvironmentDetail.tsx"));
 const NodesOverview = React.lazy(() => import("./pages/display/NodesOverview.tsx"));
+const EnvironmentLogs = React.lazy(() => import("./pages/display/EnvironmentLogs.tsx"));
 // const WebSocketTest = React.lazy(() => import("./pages/display/WebSocketTest.tsx"));
 
 // config pages
@@ -65,6 +66,7 @@ const AppRoutes = () => {
           <Route path="/display/systems/:systemId" element={<SystemDetail />} />
           <Route path="/display/systems/:systemId/nodes/:nodeId" element={<NodeDetail />} />
           <Route path="/display/systems/:systemId/nodes/:nodeId/environments/:envId" element={<EnvironmentDetail />} />
+          <Route path="/display/systems/:systemId/nodes/:nodeId/environments/:envId/logs" element={<EnvironmentLogs />} />
           
           {/* Config routes - require config permissions */}
           {/* <Route element={<ProtectedRoute requiredPermission="config:systems" />}>

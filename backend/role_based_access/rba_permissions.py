@@ -17,6 +17,7 @@ ROUTE_PERMISSIONS = {
     "/display/systems/:systemId": "view:system_detail",
     "/display/systems/:systemId/nodes/:nodeId": "view:node_detail",
     "/display/systems/:systemId/nodes/:nodeId/environments/:envId": "view:environment_detail",
+    "/display/systems/:systemId/nodes/:nodeId/environments/:envId/logs": "view:environment_detail",
     
     "/config/systems": "config:systems",
     "/config/systems/:systemId": "config:system_detail",

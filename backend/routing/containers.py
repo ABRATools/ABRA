@@ -131,6 +131,48 @@ def create_ebpf_container(target_ip, image, name, ip, cpus, mem_limit):
     logger.error(f"API response: {response.text}")
     raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
+def generate_tree_structure(path):
+  def helper(current_path):
+    items = []
+
+    entries = sorted(os.listdir(current_path))
+    dirs = [e for e in entries if os.path.isdir(os.path.join(current_path, e))]
+    files = [e for e in entries if os.path.isfile(os.path.join(current_path, e))]
+
+    for d in dirs:
+      items.append([d, helper(os.path.join(current_path, d))])
+
+    items.extend(files)
+    return items
+
+  tree = helper(path)
+  return tree
+
+@router.post("/node-log-tree")
+async def generate_log_tree(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
+  if token:
+    data = await request.json()
+    env_id = data.get("env_id", None)
+    node_id = data.get("node_id", None)
+    env_name = data.get("env_name", None)
+    if env_id is None:
+      logger.error("No env_id provided")
+      return JSONResponse(status_code=400, content={"message": "No env_id provided"})
+    if node_id is None:
+      logger.error("No node_id provided")
+      return JSONResponse(status_code=400, content={"message": "No node_id provided"})
+    if env_name is None:
+      logger.error("No env_name provided")
+      return JSONResponse(status_code=400, content={"message": "No env_name provided"})
+    logger.info("Generating log tree: ")
+    try:
+      output = generate_tree_structure(f"/var/log/{node_id}/{env_name}")
+    except Exception as e:
+      return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+    return JSONResponse(status_code=200, content={"message": "Log tree generated", "tree": output})
+  logger.warning("Unauthorized request to generate log tree")
+  return JSONResponse(status_code=401, content={"message": "Unauthorized"})
+
 @router.post("/start")
 async def start_container_on_node(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
   if token:
