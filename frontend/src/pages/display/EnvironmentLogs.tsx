@@ -34,82 +34,69 @@ import {
 import { useWebSocket } from "@/data/WebSocketContext";
 import { useState, useMemo, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-
-// helper to format timestamp
-const formatTimestamp = (timestamp: number): string => {
-  return new Date(timestamp * 1000).toLocaleString();
-};
+import { LogFileView } from "@/components/LogViewer";
 
 type FileTreeItem = string | [string, FileTreeItem[]]
 
-const test_file_data = {
-  tree: [
-    [
-      "app",
-      [
-        "api",
-        ["hello", ["route.ts"]],
-        "page.tsx",
-        "layout.tsx",
-        ["blog", ["page.tsx"]],
-      ],
-    ],
-    [
-      "components",
-      ["ui", "button.tsx", "card.tsx"],
-      "header.tsx",
-      "footer.tsx",
-    ],
-    ["lib", ["util.ts"]],
-    ["public", "favicon.ico", "vercel.svg"],
-    ".eslintrc.json",
-    ".gitignore",
-    "next.config.js",
-    "tailwind.config.js",
-    "package.json",
-    "README.md",
-  ],
-}
-
 function Tree({ item }: { item: string | any[] }) {
-  const [name, ...items] = Array.isArray(item) ? item : [item]
+  if (Array.isArray(item) && item.length === 1 && Array.isArray(item[0])) {
+    return <Tree item={item[0]} />
+  }
 
-  if (!items.length) {
+  if (typeof item === 'string') {
     return (
       <Button
-        variant={"ghost"}
-        // isActive={name === "button.tsx"}
-        className="data-[active=true]:bg-transparent flex items-center gap-2 p-2 text-sm text-muted-foreground hover:bg-muted/10 transition-colors"
+        variant="ghost"
+        className="data-[active=true]:bg-transparent flex items-start gap-2 p-2 text-sm text-muted-foreground hover:bg-muted/10 transition-colors max-w-fit"
       >
         <File />
-        {name}
+        {item}
       </Button>
     )
   }
 
-  return (
-    <div className="flex flex-col">
-      <Collapsible
-        className="group/collapsible [&[data-state=open]>button>svg:first-child]:rotate-90"
-        // defaultOpen={name === "components" || name === "ui"}
-      >
-        <CollapsibleTrigger asChild>
-          <div className="flex items-center gap-2 p-2 text-sm text-muted-foreground hover:bg-muted/10 transition-colors">
-            <ChevronRight className="transition-transform" />
-            <Folder />
-            {name}
-          </div>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className="flex flex-col pl-4">
-            {items.map((subItem, index) => (
-              <Tree key={index} item={subItem} />
-            ))}
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-    </div>
-  )
+  if (
+    Array.isArray(item) &&
+    item.length === 2 &&
+    typeof item[0] === 'string' &&
+    Array.isArray(item[1])
+  ) {
+    const [name, children] = item
+    if (children.length === 0) return null
+
+    return (
+      <div className="flex flex-col">
+        <Collapsible className="group/collapsible [&[data-state=open]>div>svg:first-child]:rotate-90">
+          <CollapsibleTrigger asChild>
+            <div className="flex items-start gap-2 p-2 text-sm text-muted-foreground hover:bg-muted/10 transition-colors max-w-min">
+              <ChevronRight className="transition-transform" />
+              <Folder />
+              {name}
+            </div>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className="flex flex-col pl-4">
+              {children.map((subItem, i) => (
+                <Tree key={i} item={subItem} />
+              ))}
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+    )
+  }
+
+  if (Array.isArray(item)) {
+    return (
+      <>
+        {item.map((subItem, i) => (
+          <Tree key={i} item={subItem} />
+        ))}
+      </>
+    )
+  }
+
+  return null
 }
 
 export default function EnvironmentLogs() {
@@ -120,6 +107,7 @@ export default function EnvironmentLogs() {
   
   // load file tree structure at load
   const [fileTree, setFileTree] = useState<FileTreeItem[]>([]);
+  const logEndpoint = "/api/stream_audit_log";
 
   // find the node
   const node = useMemo(() => {
@@ -210,27 +198,31 @@ export default function EnvironmentLogs() {
   }
   
   return (
-    <div className="grid grid-cols-4 gap-4">
-      <div className="flex items-start justify-start flex-col col-span-1">
+    <div className="grid grid-cols-6 gap-4">
+      <div className="flex items-start justify-start flex-col col-span-1 min-w-[200px]">
         {fileTree.map((item, index) => (
           <Tree key={index} item={item} />
         ))}
       </div>
-      <div className="flex items-center justify-between flex-col col-span-3">
-        <Card>
+      <div className="flex items-center justify-between flex-col col-span-5">
+        <Card className="w-full">
           <CardHeader>
             <CardTitle>Environment Logs</CardTitle>
           </CardHeader>
-          <CardContent className="pt-6">
+          <CardContent className="w-full">
             { loadingTree && (
               <div className="text-center py-8">
                 <h2 className="text-xl mb-2">Loading file tree...</h2>
                 <p>Please wait while we load the file tree structure</p>
               </div>
             )}
-            <div className="text-center py-8">
-              <h2 className="text-xl mb-2">Logs for Environment {envId}</h2>
-              {/* <p>{environment.logs}</p> */}
+
+            <div className="space-y-6">
+              <div className="flex-grow flex gap-4 min-w-md min-h-md">
+                <div className="relative flex-1 min-w-md min-h-md">
+                  <LogFileView endpoint={logEndpoint} streaming={true} scrolling={true}/>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>

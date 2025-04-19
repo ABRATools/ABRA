@@ -758,8 +758,8 @@ body{
   grid-column: span 1 / span 1;
 }
 
-.col-span-3{
-  grid-column: span 3 / span 3;
+.col-span-5{
+  grid-column: span 5 / span 5;
 }
 
 .col-span-full{
@@ -1100,6 +1100,10 @@ body{
   min-width: 1.25rem;
 }
 
+.min-w-\[200px\]{
+  min-width: 200px;
+}
+
 .min-w-\[8rem\]{
   min-width: 8rem;
 }
@@ -1114,6 +1118,11 @@ body{
 
 .max-w-\[70\%\]{
   max-width: 70%;
+}
+
+.max-w-fit{
+  max-width: -moz-fit-content;
+  max-width: fit-content;
 }
 
 .max-w-lg{
@@ -1256,8 +1265,8 @@ body{
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.grid-cols-4{
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+.grid-cols-6{
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .flex-row{
@@ -3136,7 +3145,7 @@ body{
   padding-left: 1.75rem;
 }
 
-.\[\&\[data-state\=open\]\>button\>svg\:first-child\]\:rotate-90[data-state=open]>button>svg:first-child{
+.\[\&\[data-state\=open\]\>div\>svg\:first-child\]\:rotate-90[data-state=open]>div>svg:first-child{
   --tw-rotate: 90deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
