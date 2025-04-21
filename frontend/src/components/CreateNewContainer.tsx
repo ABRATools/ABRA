@@ -20,8 +20,8 @@ type newContainerState = {
   image: string;
   ip?: string;
   ebpfModules: string[];
-  cpus?: number;
-  mem_limit?: number;
+  cpus: number;
+  mem_limit: number;
 };
 
 type Props = {
@@ -330,7 +330,9 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
         name: '',
         image: '',
         ip: '',
-        ebpfModules: []
+        ebpfModules: [],
+        cpus: 0,
+        mem_limit: 0
       });
       setUseStaticIP(false);
       
@@ -358,7 +360,9 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
       name: '',
       image: '',
       ip: '',
-      ebpfModules: []
+      ebpfModules: [],
+      cpus: 0,
+      mem_limit: 0
     });
     setUseStaticIP(false);
   };
@@ -490,7 +494,24 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
                 <Checkbox
                   id="set_rlimits"
                   checked={useRLimits}
-                  onCheckedChange={(checked) => setUseRLimits(!!checked)}
+                  onCheckedChange={(checked) => {
+                    // Reset resource limits if unchecked
+                    if (checked) {
+                      setNewContainerState({
+                        ...newContainerState,
+                        cpus: 1,
+                        mem_limit: 1
+                      });
+                    }
+                    if (!checked) {
+                      setNewContainerState({
+                        ...newContainerState,
+                        cpus: 0,
+                        mem_limit: 0
+                      });
+                    }
+                    setUseRLimits(!!checked)
+                  }}
                 />
                 <label htmlFor="static_ip" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   Set resource limits (optional)
@@ -503,7 +524,7 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
                   <div className="flex items-center w-full flex-row gap-x-2 justify-between">
                     <label htmlFor="cpus" className="text-sm max-w-min">CPUs</label>
                     <code className="text-sm text-muted-foreground max-w-min">
-                      {newContainerState.cpus ? newContainerState.cpus : 1}
+                      {newContainerState.cpus ? newContainerState.cpus : 0}
                     </code>
                     <div className="w-[70%] max-w-[70%]">
                       <Slider
@@ -525,7 +546,7 @@ const CreateNewContainer: React.FC<Props> = ({ ipAddress }) => {
                   <div className="flex items-center w-full flex-row gap-x-2 justify-between">
                     <label htmlFor="memory" className="text-sm max-w-min">Memory (GiB)</label>
                     <code className="text-sm text-muted-foreground max-w-min">
-                      {newContainerState.mem_limit ? newContainerState.mem_limit : 1}
+                      {newContainerState.mem_limit ? newContainerState.mem_limit : 0}
                     </code>
                     <div className="w-[70%] max-w-[70%]">
                       <Slider

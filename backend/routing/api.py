@@ -228,74 +228,6 @@ async def get_node_locations(request: Request, session = Depends(get_session)) -
   node_locations_json = [ConnectionStrings(name=location.name, connection_string=location.connection_string, type=location.type, ip=location.ip).model_dump_json() for location in node_locations]
   return JSONResponse(content={'node_locations': node_locations_json}, status_code=200)
 
-# container file logic
-@router.get('/get_containers')
-async def get_containers_endpoint(token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
-    logger.info("Fetching containers")
-    print("hello")
-    try:
-        if token:
-            containers = fetch_containers()
-            logger.info(f"Successfully retrieved containers: {containers}")
-            return JSONResponse(content={
-                'images': containers,
-                'success': True
-            }, status_code=200)  
-        else:
-            logger.warning("Unauthorized access attempt to get_containers")
-            return JSONResponse(content={
-                'message': 'Unauthorized', 
-                'redirect': '/login'
-            }, status_code=401)
-    except Exception as e:
-        logger.error(f"Error fetching containers: {str(e)}", exc_info=True)
-        return JSONResponse(content={
-            'message': 'Internal server error',
-            'success': False
-        }, status_code=500)
-
-@router.post('/write_containers')
-async def write_container(request: Request, token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
-  try:
-    if token:
-      data = await request.json()
-      filename = data['filename']
-      content = data['content']
-      result = edit_container(filename, content)
-      return {
-        'success': result
-      }
-    else:
-      return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
-  except Exception as e:
-    print(f"Exception occurred: {e}")
-    return {}
-
-@router.post('/delete_container')
-async def delete_container(request: Request, token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
-  try:
-    if token:
-      data = await request.json()
-      filename = data['filename']
-      result = delete_container(filename)
-      return {
-        'success': result 
-      }
-    else:
-      return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
-  except Exception as e:
-    print(f"Exception occurred: {e}")
-    return {}
-
-# test data for now
-@router.post('/node-data')
-async def get_node_data(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
-  if token:
-    nodes = db.get_nodes(session)
-    nodes_json = [Node(node_id=node.id, name=node.name, ip=node.ip, os=node.os, status=node.status, uptime=node.uptime, cpu_percent=node.cpu_percent, memory=node.memory, disk=node.disk, max_cpus=node.max_cpus, max_memory=node.max_memory, max_disk=node.max_disk, environments=[Environment(env_id=env.id, name=env.name, ip=env.ip, os=env.os, status=env.status, uptime=env.uptime, cpu_percent=env.cpu_percent, memory=env.memory, disk=env.disk, max_cpus=env.max_cpus, max_memory=env.max_memory, max_disk=env.max_disk, node_id=env.node_id) for env in node.environments]).model_dump_json() for node in nodes]
-    return JSONResponse(content={'nodes': nodes_json}, status_code=200)
-  return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
-
 # systems endpoints
 @router.post('/systems')
 async def get_systems(request: Request, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)) -> JSONResponse:
@@ -629,17 +561,3 @@ async def remove_environment(system_id: str, env_id: str, session = Depends(get_
       logger.error(f"Error removing environment {env_id} from system {system_id}: {str(e)}")
       return JSONResponse(content={'message': f'Error: {str(e)}'}, status_code=500)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)
-
-@router.post("/post_node")
-async def post_node(request: Request, session = Depends(get_session)) -> JSONResponse:
-  """
-  To be deleted, this is a test endpoint for adding nodes
-  """
-  # if token:
-  data = await request.json()
-  node = Node.model_validate_json(data)
-  if node:
-    db.create_node(session, node)
-    return JSONResponse(content={'message': 'Nodes added successfully'}, status_code=200)
-  return JSONResponse(content={'message': 'Unproccessable Data'}, status_code=422)
-  # return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)

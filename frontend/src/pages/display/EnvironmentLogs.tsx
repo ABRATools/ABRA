@@ -1,16 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
 import { ChevronRight, File, Folder } from "lucide-react"
 import {
   Collapsible,
@@ -18,18 +8,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 import { 
-  Settings,
-  Activity,
-  HardDrive,
-  Network,
-  Terminal,
-  RefreshCw,
-  Play,
-  Square,
   Trash,
-  Layers,
-  Monitor,
-  Clock
 } from "lucide-react";
 import { useWebSocket } from "@/data/WebSocketContext";
 import { useState, useMemo, useEffect } from "react";
@@ -38,76 +17,15 @@ import { LogFileView } from "@/components/LogViewer";
 
 type FileTreeItem = string | [string, FileTreeItem[]]
 
-function Tree({ item }: { item: string | any[] }) {
-  if (Array.isArray(item) && item.length === 1 && Array.isArray(item[0])) {
-    return <Tree item={item[0]} />
-  }
-
-  if (typeof item === 'string') {
-    return (
-      <Button
-        variant="ghost"
-        className="data-[active=true]:bg-transparent flex items-start gap-2 p-2 text-sm text-muted-foreground hover:bg-muted/10 transition-colors max-w-fit"
-      >
-        <File />
-        {item}
-      </Button>
-    )
-  }
-
-  if (
-    Array.isArray(item) &&
-    item.length === 2 &&
-    typeof item[0] === 'string' &&
-    Array.isArray(item[1])
-  ) {
-    const [name, children] = item
-    if (children.length === 0) return null
-
-    return (
-      <div className="flex flex-col">
-        <Collapsible className="group/collapsible [&[data-state=open]>div>svg:first-child]:rotate-90">
-          <CollapsibleTrigger asChild>
-            <div className="flex items-start gap-2 p-2 text-sm text-muted-foreground hover:bg-muted/10 transition-colors max-w-min">
-              <ChevronRight className="transition-transform" />
-              <Folder />
-              {name}
-            </div>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="flex flex-col pl-4">
-              {children.map((subItem, i) => (
-                <Tree key={i} item={subItem} />
-              ))}
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
-    )
-  }
-
-  if (Array.isArray(item)) {
-    return (
-      <>
-        {item.map((subItem, i) => (
-          <Tree key={i} item={subItem} />
-        ))}
-      </>
-    )
-  }
-
-  return null
-}
-
 export default function EnvironmentLogs() {
   const { systemId, nodeId, envId } = useParams();
   const { data, isConnected: wsConnected, error } = useWebSocket();
   const [loadingTree, setLoadingTree] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const { toast } = useToast();
-  
+
   // load file tree structure at load
   const [fileTree, setFileTree] = useState<FileTreeItem[]>([]);
-  const logEndpoint = "/api/stream_audit_log";
 
   // find the node
   const node = useMemo(() => {
@@ -130,6 +48,103 @@ export default function EnvironmentLogs() {
       name: node.node_id
     };
   }, [node, systemId]);
+
+  const LogFetchOptions: RequestInit = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({
+      "node_id": nodeId,
+      "env_name": environment ? environment?.names[0] : "",
+      "log_path": selectedFile,
+    }),
+  };
+
+  const handleFileClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const filePath = e.currentTarget.getAttribute('data-file-path');
+    if (filePath) {
+      setSelectedFile(null);
+      setTimeout(() => {
+        setSelectedFile(filePath);
+      }, 200);
+      // setTimeout is used to allow the button to update before setting the file
+    }
+  };
+
+  const getBaseName = (p: string) => {
+    // works with both / and \ paths
+    const parts = p.split(/[\\/]/);
+    return parts[parts.length - 1];
+  };
+
+  const Tree = ({ item }: { item: string | any[] }) => {
+    if (Array.isArray(item) && item.length === 1 && Array.isArray(item[0])) {
+      return <Tree item={item[0]} />
+    }
+  
+    if (typeof item === 'string') {
+      const name = getBaseName(item);
+      return (
+        <Button
+          variant={selectedFile === item ? "default" : "ghost"}
+          data-file-path={item}
+          className="flex items-start gap-2 p-2 text-sm text-muted-foreground transition-colors max-w-fit"
+          onClick={handleFileClick}
+        >
+          <File />
+          {name}
+        </Button>
+      )
+    }
+  
+    if (
+      Array.isArray(item) &&
+      item.length === 2 &&
+      typeof item[0] === 'string' &&
+      Array.isArray(item[1])
+    ) {
+      const [rawname, children] = item
+      if (children.length === 0) return null
+      const name = getBaseName(rawname);
+  
+      return (
+        <div className="flex flex-col">
+          <Collapsible defaultOpen={true} className="group/collapsible [&[data-state=open]>div>svg:first-child]:rotate-90">
+            <CollapsibleTrigger asChild>
+              <div className="flex items-start gap-2 p-2 text-sm text-muted-foreground transition-colors max-w-min">
+                <ChevronRight className="transition-transform" />
+                <Folder />
+                {name}
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="flex flex-col pl-4">
+                {children.map((subItem, i) => (
+                  <Tree key={i} item={subItem} />
+                ))}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+      )
+    }
+  
+    if (Array.isArray(item)) {
+      return (
+        <>
+          {item.map((subItem, i) => (
+            <Tree key={i} item={subItem} />
+          ))}
+        </>
+      )
+    }
+  
+    return null
+  }
 
   useEffect(() => {
     const loadFileTree = async () => {
@@ -207,7 +222,7 @@ export default function EnvironmentLogs() {
       <div className="flex items-center justify-between flex-col col-span-5">
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Environment Logs</CardTitle>
+            <CardTitle>Environment logs for {environment ? environment?.names[0] : ""} on {nodeId}</CardTitle>
           </CardHeader>
           <CardContent className="w-full">
             { loadingTree && (
@@ -220,7 +235,24 @@ export default function EnvironmentLogs() {
             <div className="space-y-6">
               <div className="flex-grow flex gap-4 min-w-md min-h-md">
                 <div className="relative flex-1 min-w-md min-h-md">
-                  <LogFileView endpoint={logEndpoint} streaming={true} scrolling={true}/>
+                  {selectedFile ? (
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="flex items-center justify-between">
+                      <Button variant="outline" className="absolute top-4 right-4 self-end" onClick={() => setSelectedFile(null)}>
+                        <Trash className="mr-2" />
+                        Close
+                      </Button>
+                      </div>
+                      <h2 className="text-xl mb-2">{getBaseName(selectedFile)}</h2>
+                      { !!selectedFile && (
+                        <LogFileView endpoint={"/api/containers/node-log-file"} streaming={true} scrolling={true} fetchOptions={LogFetchOptions} height={600}/>
+                      )}
+                    </div>
+                  ) : 
+                    <div className="text-center py-8">
+                      <h2 className="text-xl mb-2">Select a file to view logs</h2>
+                    </div>
+                  }
                 </div>
               </div>
             </div>

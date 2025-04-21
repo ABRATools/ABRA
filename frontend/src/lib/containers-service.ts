@@ -8,6 +8,12 @@ export interface ContainerCreateParams {
   ebpf_modules?: string[];
 }
 
+export interface ContainerDeleteParams {
+  env_id: string;
+  env_name: string;
+  target_ip: string;
+}
+
 export interface ContainerActionParams {
   env_id: string;
   target_ip: string;
@@ -83,7 +89,7 @@ export const containersService = {
   },
 
   // Delete a container from a node
-  async deleteContainer(params: ContainerActionParams) {
+  async deleteContainer(params: ContainerDeleteParams) {
     try {
       return await api.post('/api/containers/delete', params);
     } catch (error) {

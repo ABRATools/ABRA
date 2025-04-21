@@ -1396,6 +1396,10 @@ body{
   border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
 }
 
+.self-end{
+  align-self: flex-end;
+}
+
 .overflow-auto{
   overflow: auto;
 }
@@ -2316,10 +2320,6 @@ body{
   background-color: hsl(var(--destructive) / 0.9);
 }
 
-.hover\:bg-muted\/10:hover{
-  background-color: hsl(var(--muted) / 0.1);
-}
-
 .hover\:bg-muted\/50:hover{
   background-color: hsl(var(--muted) / 0.5);
 }
@@ -2588,10 +2588,6 @@ body{
 
 .data-\[active\=true\]\:bg-sidebar-accent[data-active="true"]{
   background-color: hsl(var(--sidebar-accent));
-}
-
-.data-\[active\=true\]\:bg-transparent[data-active="true"]{
-  background-color: transparent;
 }
 
 .data-\[state\=active\]\:bg-background[data-state="active"]{

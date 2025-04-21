@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { containersService, ContainerCreateParams, ContainerActionParams } from "@/lib/containers-service";
+import { containersService, ContainerCreateParams, ContainerActionParams, ContainerDeleteParams } from "@/lib/containers-service";
 import CreateNewContainer from "@/components/CreateNewContainer";
 
 const formatMemory = (bytes: number): string => {
@@ -212,7 +212,46 @@ export default function NodeDetail() {
     }
   };
 
-  const handleContainerAction = async (envId: string, action: 'start' | 'stop' | 'delete') => {
+  const handleDeleteContainer = async (envId: string, envName: string) => {
+    if (!node) return;
+    
+    if (!envId || !envName) {
+      toast({
+        title: "Error",
+        description: "Container name and image are required",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(prev => ({ ...prev, containerAction: true }));
+      
+      const containerParams: ContainerDeleteParams = {
+        env_id: envId,
+        env_name: envName,
+        target_ip: node.ip_address
+      };
+
+      await containersService.deleteContainer(containerParams);
+      
+      toast({
+        title: "Container deleted",
+        description: `Container ${newContainer.name} has been deleted successfully`
+      });
+      
+    } catch (error: any) {
+      toast({
+        title: "Error creating container",
+        description: error.message || "Failed to delete container",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(prev => ({ ...prev, containerAction: false }));
+    }
+  };
+
+  const handleContainerAction = async (envId: string, action: 'start' | 'stop' ) => {
     if (!node) return;
 
     try {
@@ -231,14 +270,11 @@ export default function NodeDetail() {
         case 'stop':
           result = await containersService.stopContainer(params);
           break;
-        case 'delete':
-          result = await containersService.deleteContainer(params);
-          break;
       }
 
       toast({
         title: `Container ${action} successful`,
-        description: `Container has been ${action}${action === 'delete' ? 'd' : 'ed'} successfully`
+        description: `Container has been ${action}ed successfully`
       });
     } catch (error: any) {
       toast({
@@ -603,7 +639,7 @@ export default function NodeDetail() {
                     <Button 
                       variant="destructive" 
                       size="icon"
-                      onClick={() => handleContainerAction(env.env_id, 'delete')}
+                      onClick={() => handleDeleteContainer(env.env_id, env.names[0])}
                       disabled={isLoading.containerAction}
                     >
                       <Trash className="h-4 w-4" />

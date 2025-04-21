@@ -8,7 +8,8 @@ from classes import *
 from containers import *
 import requests
 from fastapi import APIRouter, Request, Depends
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
+import asyncio
 
 from web_utils import get_session
 from logger import logger
@@ -54,12 +55,14 @@ def stop_container(env_id, target_ip):
     logger.error(f"API response: {response.text}")
     raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
-def delete_container(env_id, target_ip):
+def delete_container(env_id, env_name, target_ip):
   logger.info(f"Deleting container with env_id: {env_id}")
   try:
     response = requests.post(
-      f"http://{target_ip}:8888/containers/remove/{env_id}",
-      timeout=10
+      f"http://{target_ip}:8888/containers/remove",
+      timeout=10,
+      json={"env_id": env_id, "env_name": env_name},
+      headers={"Content-Type": "application/json"}
     )
     response.raise_for_status()
     return response.text
@@ -132,6 +135,7 @@ def create_ebpf_container(target_ip, image, name, ip, cpus, mem_limit):
     raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
 def generate_tree_structure(path):
+  path = os.path.abspath(path) 
   def helper(current_path):
     items = []
 
@@ -142,7 +146,9 @@ def generate_tree_structure(path):
     for d in dirs:
       items.append([d, helper(os.path.join(current_path, d))])
 
-    items.extend(files)
+    for f in files:
+      items.append(os.path.join(current_path, f))
+
     return items
 
   tree = helper(path)
@@ -171,6 +177,51 @@ async def generate_log_tree(request: Request, session = Depends(get_session), to
       return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
     return JSONResponse(status_code=200, content={"message": "Log tree generated", "tree": output})
   logger.warning("Unauthorized request to generate log tree")
+  return JSONResponse(status_code=401, content={"message": "Unauthorized"})
+
+@router.post('/node-log-file')
+async def get_container_logs(request: Request, token: AuthToken = Depends(authenticate_cookie)) -> StreamingResponse:
+  """get logs from a container"""
+  if token:
+    data = await request.json()
+    container_name = data.get("env_name", None)
+    node_name = data.get("node_id", None)
+    log_path = data.get("log_path", None) 
+    if not container_name:
+      return JSONResponse(content={'message': 'No container_name provided'}, status_code=400)
+    if not node_name:
+      return JSONResponse(content={'message': 'No node_name provided'}, status_code=400)
+    if not log_path:
+      return JSONResponse(content={'message': 'No log_path provided'}, status_code=400)
+    
+    container_log_dir = os.path.join("/var/log/", node_name, container_name)
+    # check if log_path is a valid path under container_log_dir
+    if not os.path.exists(container_log_dir):
+      return JSONResponse(content={'message': 'Log directory does not exist'}, status_code=400)
+    # check if log_path is within container_log_dir
+    if not os.path.commonpath([container_log_dir, log_path]) == container_log_dir:
+      return JSONResponse(content={'message': 'Invalid log path'}, status_code=400)
+    if not os.path.exists(log_path):
+      return JSONResponse(content={'message': 'Log file does not exist'}, status_code=400)
+    # check if log_path is a file
+    if not os.path.isfile(log_path):
+      return JSONResponse(content={'message': 'Log path is not a file'}, status_code=400)
+    # check if log_path is readable
+    if not os.access(log_path, os.R_OK):
+      return JSONResponse(content={'message': 'Log file is not readable'}, status_code=400)
+    logger.info(f"Getting logs from container {container_name} on node {node_name} at path {log_path}")
+    async def generate_log():
+      with open(log_path, "r") as log_file:
+        lines = log_file.readlines()
+        yield ''.join(lines)
+        while True:
+          line = log_file.readline()
+          if line:
+            yield f"{line}"
+          else: # check for new log every 5s
+            await asyncio.sleep(5)
+    return StreamingResponse(generate_log(), media_type="text/event-stream")
+  logger.warning("Unauthorized request to get container logs")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
 
 @router.post("/start")
@@ -224,6 +275,7 @@ async def delete_container_on_node(request: Request, session = Depends(get_sessi
   if token:
     data = await request.json()
     env_id = data.get("env_id", None)
+    env_name = data.get("env_name", None)
     target_ip = data.get("target_ip", None)
     if env_id is None:
       logger.error("No env_id provided")
@@ -231,10 +283,13 @@ async def delete_container_on_node(request: Request, session = Depends(get_sessi
     if target_ip is None:
       logger.error("No target_ip provided")
       return JSONResponse(status_code=400, content={"message": "No target_ip provided"})
+    if env_name is None:
+      logger.error("No env_name provided")
+      return JSONResponse(status_code=400, content={"message": "No env_name provided"})
     logger.info("Deleting container: ")
     logger.info(f"Deleting container with env_id: {env_id}")
     try:
-      output = delete_container(env_id, target_ip)
+      output = delete_container(env_id, env_name, target_ip)
       if output is None:
         return JSONResponse(status_code=500, content={"message": "An error occurred"})
     except Exception as e:
@@ -262,16 +317,16 @@ async def create_environment_on_node(request: Request, session = Depends(get_ses
     if name is None:
       logger.error("No name provided")
       return JSONResponse(status_code=400, content={"message": "No name provided"})
-    if not isinstance(cpus, int):
+    if not (cpus is None) and isinstance(cpus, int):
       logger.error("Invalid cpus provided")
       return JSONResponse(status_code=400, content={"message": "Invalid cpus provided"})
-    if not isinstance(mem_limit, int):
+    if not (mem_limit is None) and isinstance(mem_limit, int):
       logger.error("Invalid mem_limit provided")
       return JSONResponse(status_code=400, content={"message": "Invalid mem_limit provided"})
-    if cpus < 1 or cpus > 16:
+    if isinstance(cpus, int) and (cpus < 1 or cpus > 16):
       logger.error("Invalid cpus provided")
       return JSONResponse(status_code=400, content={"message": "Invalid cpus provided"})
-    if mem_limit < 1 or mem_limit > (1073741824 * MAX_MEM_GIB):
+    if isinstance(mem_limit, int) and (mem_limit < 1 or mem_limit > (1073741824 * MAX_MEM_GIB)):
       logger.error("Invalid mem_limit provided")
       return JSONResponse(status_code=400, content={"message": "Invalid mem_limit provided"})
     # check if ip is valid
@@ -291,8 +346,8 @@ async def create_environment_on_node(request: Request, session = Depends(get_ses
     except Exception as e:
       logger.error(f"An error occurred: {e}")
       return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
-    return JSONResponse(status_code=200, content={"message": "Container deleted"})
-  logger.warning("Unauthorized request to delete container")
+    return JSONResponse(status_code=200, content={"message": "Container created"})
+  logger.warning("Unauthorized request to create container")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
 
 @router.post("/create-ebpf")
@@ -315,16 +370,16 @@ async def create_ebpf_environment_on_node(request: Request, session = Depends(ge
     if name is None:
       logger.error("No name provided")
       return JSONResponse(status_code=400, content={"message": "No name provided"})
-    if not isinstance(cpus, int):
+    if not (cpus is None) and isinstance(cpus, int):
       logger.error("Invalid cpus provided")
       return JSONResponse(status_code=400, content={"message": "Invalid cpus provided"})
-    if not isinstance(mem_limit, int):
+    if not (mem_limit is None) and isinstance(mem_limit, int):
       logger.error("Invalid mem_limit provided")
       return JSONResponse(status_code=400, content={"message": "Invalid mem_limit provided"})
-    if cpus < 1 or cpus > 16:
+    if isinstance(cpus, int) and (cpus < 1 or cpus > 16):
       logger.error("Invalid cpus provided")
       return JSONResponse(status_code=400, content={"message": "Invalid cpus provided"})
-    if mem_limit < 1 or mem_limit > (1073741824 * MAX_MEM_GIB):
+    if isinstance(mem_limit, int) and (mem_limit < 1 or mem_limit > (1073741824 * MAX_MEM_GIB)):
       logger.error("Invalid mem_limit provided")
       return JSONResponse(status_code=400, content={"message": "Invalid mem_limit provided"})
     # check if ip is valid
@@ -344,8 +399,8 @@ async def create_ebpf_environment_on_node(request: Request, session = Depends(ge
     except Exception as e:
       logger.error(f"An error occurred: {e}")
       return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
-    return JSONResponse(status_code=200, content={"message": "Container deleted"})
-  logger.warning("Unauthorized request to delete container")
+    return JSONResponse(status_code=200, content={"message": "Container created"})
+  logger.warning("Unauthorized request to create container")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
 
 @router.post("/list_images")

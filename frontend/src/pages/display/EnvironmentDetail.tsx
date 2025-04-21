@@ -165,7 +165,11 @@ export default function EnvironmentDetail() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ env_id: envId, target_ip: node?.ip_address || '' })
+        body: JSON.stringify({
+            env_name: environment?.names ? environment.names[0] : '',
+            env_id: envId,
+            target_ip: node?.ip_address || '' 
+          })
       });
       
       if (response.ok) {

@@ -7,13 +7,15 @@ import { LazyLog, ScrollFollow } from "@melloware/react-logviewer";
 
 LazyLog.defaultProps.style = {
     contain: 'none',
-    minHeight: '600px'
+    minHeight: '300px'
 };
 
 interface LogFileViewProps {
     endpoint: string;
     streaming?: boolean;
     scrolling?: boolean;
+    fetchOptions?: RequestInit | undefined;
+    height?: number;
 }
 
 const LazyLogStyle = {
@@ -21,7 +23,7 @@ const LazyLogStyle = {
     maxWidth: '600px'
   };
 
-export const LogFileView: React.FC<LogFileViewProps> = ({ endpoint, streaming = false, scrolling = false }) => {
+export const LogFileView: React.FC<LogFileViewProps> = ({ endpoint, streaming = false, scrolling = false, fetchOptions = undefined, height=1000 }) => {
     return (
         <>
         { scrolling ? (
@@ -32,15 +34,16 @@ export const LogFileView: React.FC<LogFileViewProps> = ({ endpoint, streaming = 
                         enableSearch
                         url={endpoint}
                         stream={!!streaming}
+                        fetchOptions={fetchOptions}
                         follow={true}
                         onScroll={onScroll}
-                        height={1000}
+                        height={height}
                         containerStyle={LazyLogStyle}
                     />
                 )}
             />
         ) : (
-            <LazyLog url={endpoint} stream={!!streaming} />
+            <LazyLog url={endpoint} stream={!!streaming} fetchOptions={fetchOptions} height={height}/>
         )}
         </>
     );
