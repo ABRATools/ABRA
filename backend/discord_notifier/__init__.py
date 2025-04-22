@@ -1,247 +1,237 @@
+
 import sys, os
 sys.path.insert(0, os.path.abspath('..'))
-from logger import logger
 
-import re
-import time
-import asyncio
-import discord
-import requests
-from classes import *
 import database as db
 import multiprocessing
-from typing import List
-from config import settings
-from discord.ext import commands
-from discord import app_commands
+import asyncio
+import os
+import re
+import time
+import json
+import threading
+import requests
+from typing import Optional
+from logger import logger, get_logfile_path
 
-abra_enabled = True
+class existingProcess:
+    def __init__(self, process, webhook_url):
+        self.process = process
+        self.webhook_url = webhook_url
+    # Override __eq__ and __hash__ to allow for comparison of existingProcess objects, so duplicates are not added to the list
+    def __eq__(self, other):
+        return self.webhook_url == other.webhook_url
+    def __hash__(self):
+        return hash(self.webhook_url)
+    # Get the process object
+    def get_process(self):
+        return self.process
 
-class Bot(commands.Bot):
-	async def on_ready(self):
-		print(f'Logged on as {self.user}!')
-		bot.loop.create_task(monitor())
+class LogMonitor:
+    def __init__(self, poll_interval: float = 2.5, db_session=None):
+        self.logfile_path = get_logfile_path()
+        self.poll_interval = poll_interval
+        self.processes = []
+        self.db_session = db_session
+        self.enabled = True
+        # self._stop_event = threading.Event()
 
-		try:
-			guild = discord.Object(id=TEST_GUILD_ID)
-			synced = await self.tree.sync(guild=guild)
-			print(f'Synced {len(synced)} commands to guild {guild.id}')
+    def toggle(self):
+        """Flip enabled on/off."""
+        self.enabled = not self.enabled
+        state = "ENABLED" if self.enabled else "DISABLED"
+        logger.info(f"[LogMonitor] Toggling to {state}")
 
-		except Exception as e:
-			print(f'Error syncing commands: {e}')
+    def _post_embed(self, embed: dict, webhook_url: str = None):
+        payload = {"embeds": [embed]}
+        try:
+            if webhook_url is None:
+                raise ValueError("No webhook URL provided")
+            resp = requests.post(webhook_url, json=payload, timeout=5)
+            resp.raise_for_status()
+        except Exception as e:
+            logger.error(f"[LogMonitor] Failed to send webhook: {e}")
 
-	async def on_message(self, message):
-		if message.author == self.user:
-			return
+    def _parse_line(self, line: str) -> Optional[dict]:
+        # INFO
+        if "| INFO |" in line:
+            # return ( self._system_added(line)
+            #       or self._environment_added(line) )
+            return self._system_stopped(line)
+        # WARNING
+        # if "| WARNING |" in line:
+        #     return self._warning(line)
+        # ERROR
+        # if "| ERROR |" in line:
+        #     return self._error(line)
+        return None
 
-intents = discord.Intents.default()
-intents.message_content = True
-bot = Bot(command_prefix="!", intents=intents)
+    def _system_stopped(self, line: str) -> Optional[dict]:
+        m = re.search(r"Stopping container with env_id: ([\w\-]+)", line)
+        if not m:
+            return None
+        env_id = m.group(1)
+        return {
+            "title": "System Stopped",
+            "description": f"Container with env_id **{env_id}** has been stopped.",
+            "color": 0xFF0000,  # red
+        }
 
-GUILD_ID = discord.Object(id=TEST_GUILD_ID)
+    def _system_added(self, line: str) -> Optional[dict]:
+        m = re.search(r"Adding system to listing: ([\w\-]+) with (\d+) environments", line)
+        if not m:
+            return None
+        name, envs = m.group(1), m.group(2)
+        return {
+            "title": "New System Added",
+            "description": f"System **{name}** has been added.",
+            "color": 0x800080,  # purple
+            "fields": [{"name": "Environments", "value": envs, "inline": False}],
+        }
 
-def parse_line(line):
-	if "| INFO |" in line:
-		
-		# system added
-		result = system_added(line)
-		if result:
-			return result
-		
-		# system removed
-		result = system_removed(line)
-		if result:
-			return result
-			
-		# environment added
-		result = environment_added(line)
-		if result:
-			return result
+    def _environment_added(self, line: str) -> Optional[dict]:
+        m1 = re.search(r"Adding environment to system (\w+)", line)
+        m2 = re.search(r"\{(.*?)\}", line)
+        if not (m1 and m2):
+            return None
+        sys, raw = m1.group(1), m2.group(1)
+        data = dict(item.strip().strip("'").split(":") for item in raw.split(","))
+        return {
+            "title": "New Environment Added",
+            "description": f"A new containerized environment has been added to system **{sys}**.",
+            "color": 0x800080,
+            "fields": [
+                {"name": "Name",         "value": data.get("name", "N/A"),         "inline": True},
+                {"name": "Container ID", "value": data.get("container_id", "N/A"), "inline": True},
+                {"name": "OS",           "value": data.get("os", "N/A"),            "inline": True},
+                {"name": "Status",       "value": data.get("status", "N/A"),        "inline": True},
+            ],
+        }
 
-		# environment removed
-		result = environment_removed(line)
-		if result:
-			return result
+    def _warning(self, line: str) -> Optional[dict]:
+        m = re.match(r".*\| WARNING \| (.*)$", line)
+        if not m:
+            return None
+        return {
+            "title": "Warning",
+            "description": m.group(1).strip(),
+            "color": 0xFFA500,  # orange
+        }
 
-		# user log in
-		result = logged_in(line)
-		if result:
-			return result
+    def _error(self, line: str) -> Optional[dict]:
+        m = re.match(r".*\| ERROR \| (.*)$", line)
+        if not m:
+            return None
+        return {
+            "title": "Error",
+            "description": m.group(1).strip(),
+            "color": 0xFF0000,  # red
+        }
 
-		# user log out
-		result = logged_out(line)
-		if result:
-			return result
+    def _tail_loop(self, webhook_url: str):
+        # Open and seek to end
+        with open(self.logfile_path, "r", encoding="utf-8") as f:
+            f.seek(0, os.SEEK_END)
+            # while not self._stop_event.is_set():
+            while True:
+                line = f.readline()
+                if not line:
+                    time.sleep(self.poll_interval)
+                    continue
 
-		return None
-	
-	if "| WARNING |" in line:
+                if self.enabled:
+                    embed = self._parse_line(line.strip())
+                    if embed:
+                        self._post_embed(embed, webhook_url=webhook_url)
 
-		# auth failure
-		result = auth_failure(line)
-		if result:
-			return result
+    def create_processes(self):
+        """
+        Create a process (with its own command queue) for each connection string in the database.
+        """
+        notifiers = db.get_current_notifiers(self.db_session)
+        if len(notifiers) == 0 and self.enabled:
+            return
+        for noti in notifiers:
+            if noti.webhook_url is None:
+                logger.warning(f"Notifier {noti.webhook_name} has no webhook URL")
+                continue
+            if noti.enabled:
+                # Create a new process if one doesn't already exist for this connection string.
+                p = multiprocessing.Process(target=self._tail_loop, args=(noti.webhook_url, ))
+                existing = existingProcess(p, noti.webhook_url)
+                # Check if the process already exists in the list
+                if existing not in self.processes:
+                    self.processes.append(existing)
+            else:
+                # Check if the process already exists in the list
+                existing = existingProcess(None, noti.webhook_url)
+                if existing in self.processes:
+                    logger.info(f"Stopping notifier {noti.webhook_name} as it is disabled")
+                    # Stop all processes
+                    for existing_process in self.processes:
+                        p = existing_process.get_process()
+                        if (not p is None) and (p.is_alive()):
+                            logger.info(f"Terminating process {p.pid}")
+                            p.kill()
+                            p.join()
+                    self.processes = []
 
-		else:
-			result = warning(line)
-			if result:
-				return result
-			
-	if "| ERROR | " in line:
+    async def run(self):
+        """
+        The main async loop that starts the poller processes
+        """
+        logger.info("Starting main loop")
+        try:
+            while True:
+                self.create_processes()
 
-		result = error(line)
-		if result:
-			return result
-	
-	return None
+                # Start processes that are not already alive
+                for existing_process in self.processes:
+                    p = existing_process.get_process()
+                    if not p.is_alive():
+                        p.start()
 
-def system_added(line):
-	match = re.search(r"Adding system to listing: ([\w\-]+) with (\d+) environments", line)
+                await asyncio.sleep(self.poll_interval)
+        except KeyboardInterrupt:
+            self.shutdown()
+            raise
+        except asyncio.CancelledError:
+            self.shutdown()
+            raise
+        except Exception as e:
+            logger.error(f"[LogMonitor] Exception in main loop: {e}")
+            self.shutdown()
+            raise
+        finally:
+            logger.info("[LogMonitor] Main loop exited")
+            self.shutdown()
 
-	if match:
-		system_name = match.group(1)
-		num_environments = match.group(2)
+    def shutdown(self):
+        """
+        Terminate all processes and clean up.
+        """
+        if self.main_task and not self.main_task.done():
+            self.main_task.cancel()
+        for existing_process in self.processes:
+            p = existing_process.get_process()
+            if (not p is None) and (p.is_alive()):
+                logger.info(f"Terminating process {p.pid}")
+                p.kill()
+                p.join()
+        self.processes = []
+        self.db_session.close()
+        return
 
-		embed = discord.Embed(
-			title = "New System Added",
-			description = f"System **{system_name}** has been added.",
-			color = discord.Color.purple()
-		)
-		
-		embed.add_field(name="Environments", value=num_environments, inline=False)
-		return embed
-	
-def system_removed(line):
-	return None
-
-def logged_in(line):
-	match = re.search(r"User ([\w\-]+) has successfully logged in", line)
-
-	if match:
-		user = match.group(1)
-		embed = discord.Embed(
-			title = "User Logged In",
-			description = f"User **{user}** has successfully logged in.",
-			color = discord.Color.purple()
-		)
-		
-		return embed
-	
-def logged_out(line):
-	return None
-
-def auth_failure(line):
-	return None
-
-def environment_added(line):
-	system_match = re.search(r"Adding environment to system (\w+)", line)
-	env_match = re.search(r"\{(.*?)\}", line)
-
-	if system_match and env_match:
-		system_name = system_match.group(1)
-		env_raw_data = env_match.group(1)
-
-		env_data = {}
-		for item in env_raw_data.split(","):
-			key, value = item.split(":")
-			key = key.strip().strip("'")
-			value = value.strip().strip("'")
-			env_data[key] = value
-
-		embed = discord.Embed(
-			title = "New Environment Added",
-			description = f"A new containerized environment has been added to system **'{system_name}'**.",
-			color = discord.Color.purple()
-		)
-
-		embed.add_field(name="Environment Name", value=env_data.get("name", "unknown"), inline=True)
-		embed.add_field(name="Container ID", value=env_data.get("container_id", "N/A"), inline=True)
-		embed.add_field(name="OS", value=env_data.get("os", "N/A"), inline=True)
-		embed.add_field(name="Status", value=env_data.get("status", "N/A"), inline=True)
-
-		return embed	
-	
-def environment_removed(line):
-	return None
-
-def warning(line):
-	match = re.match(r"^.*\| WARNING \| (.*)$", line)
-	if not match:
-		return None
-		
-	message = match.group(1).strip()
-	embed = discord.Embed(
-		title = "Warning",
-		description = message,
-		color = discord.Color.red()
-	)
-
-	return embed
-
-def error(line):
-	match = re.match(r"^.*\| ERROR \| (.*)$", line)
-	if not match:
-		return None
-		
-	message = match.group(1).strip()
-	embed = discord.Embed(
-		title = "Error",
-		description = message,
-		color = discord.Color.red()
-	)
-
-	return embed	
-
-# repeatedly checking log file
-async def monitor():
-	await bot.wait_until_ready()
-
-	channel = bot.get_channel(CHANNEL_ID)
-	if channel is None:
-		print("Channel not found. CHeck the ID or bot permissions.")
-		return
-	
-	await channel.send("Now actively monitoring!")
-
-	with open(LOGFILE_PATH, "r") as log_file:
-		log_file.seek(0, os.SEEK_END)
-
-		while not bot.is_closed():
-			line = log_file.readline()
-
-			if not line:
-				await asyncio.sleep(1)
-				continue
-
-			line = line.strip()
-			if line and abra_enabled:
-				response = parse_line(line)
-				if response:
-					await channel.send(embed=response)
-
-@bot.tree.command(name="status", description="Report Status", guild=GUILD_ID)
-async def getStatus(interaction: discord.Interaction):
-	if not abra_enabled:
-		return
-
-	embed = discord.Embed(title="Status Report", description="Status description.", color=discord.Color.purple())
-	embed.add_field(name="", value="", inline=False)
-	await interaction.response.send_message(embed=embed)
-
-@bot.tree.command(name="disable", description="Disable ABRA Discord Service", guild=GUILD_ID)
-async def disable(interaction: discord.Interaction):
-	global abra_enabled
-	abra_enabled = False
-
-	await bot.change_presence(status=discord.Status.offline)
-	await interaction.response.send_message("ABRA Discord Service has been **disabled**.")
-
-@bot.tree.command(name="enable", description="Enable ABRA Discord Service", guild=GUILD_ID)
-async def enable(interaction: discord.Interaction):
-	global abra_enabled
-	abra_enabled = True
-
-	await bot.change_presence(status=discord.Status.online, activity=discord.Game("Monitoring!"))
-	await interaction.response.send_message("ABRA Discord Service has been **enabled**.")
-
-bot.run(TOKEN)
+    # def run(self):
+    #     """Start tailing in a background thread and block until stopped."""
+    #     logger.info(f"[LogMonitor] Starting—tailing {self.logfile_path}")
+    #     t = threading.Thread(target=self._tail_loop, daemon=True)
+    #     t.start()
+    #     try:
+    #         while True:
+    #             time.sleep(1)
+    #     except KeyboardInterrupt:
+    #         print("[LogMonitor] Stopping...")
+    #         self._stop_event.set()
+    #         t.join()
+    #         print("[LogMonitor] Stopped")

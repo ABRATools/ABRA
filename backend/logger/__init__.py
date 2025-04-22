@@ -11,3 +11,7 @@ file_handler = logging.FileHandler('abra.log')
 file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)
+
+def get_logfile_path() -> str:
+    """Return the path to the log file."""
+    return file_handler.baseFilename

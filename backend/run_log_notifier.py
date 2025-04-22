@@ -1,7 +1,9 @@
-import sys
-import signal
-import asyncio
 import database as db
+import asyncio
+import signal
+import sys
+from logger import logger
+from discord_notifier import LogMonitor
 
 def obtain_session():
   try:
@@ -11,7 +13,7 @@ def obtain_session():
   return next(session)
 
 async def service_main(session):
-  service = PollerService(db_session=session, update_database=True)
+  service = LogMonitor(db_session=session)
   loop = asyncio.get_running_loop()
 
   service.main_task = asyncio.create_task(service.run())
@@ -22,11 +24,11 @@ async def service_main(session):
   try:
     await service.main_task
   except asyncio.CancelledError:
-    service.logger.info("Main task cancelled gracefully.")
+    logger.info("Log notifier task cancelled gracefully.")
     sys.exit(0)
 
-async def shutdown_handler(service: PollerService):
-  service.logger.info("Shutdown handler triggered by signal.")
+async def shutdown_handler(service: LogMonitor):
+  logger.info("Shutdown handler for log notifier triggered by signal.")
   service.shutdown()
 
 def main():

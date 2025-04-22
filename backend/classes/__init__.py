@@ -104,15 +104,13 @@ class InputUser(BaseModel):
   is_totp_confirmed: bool = False
 
 class Notifier(BaseModel):
-  notifier_id: int
-  webhook_name: str
-  webhook_url: str
-  enabled: bool
-
-class NewNotifierRequest(BaseModel):
   webhook_name: str
   webhook_url: str
   enabled: bool
 
 class DeleteNotifierRequest(BaseModel):
   webhook_name: str
+
+class ToggleNotifierRequest(BaseModel):
+  webhook_name: str
+  enabled: bool

@@ -27,7 +27,6 @@ def is_jsonable(x):
 router = APIRouter(prefix="/api/containers")
 
 def start_container(env_id, target_ip):
-  logger.info(f"Stopping container with env_id: {env_id}")
   try:
     response = requests.post(
       f"http://{target_ip}:8888/containers/start/{env_id}",
@@ -45,7 +44,6 @@ def start_container(env_id, target_ip):
     raise Exception(response.text if response is not None else {"message": "An error occurred"})
 
 def stop_container(env_id, target_ip):
-  logger.info(f"Stopping container with env_id: {env_id}")
   try:
     response = requests.post(
       f"http://{target_ip}:8888/containers/stop/{env_id}",
@@ -247,7 +245,6 @@ async def start_container_on_node(request: Request, session = Depends(get_sessio
     if target_ip is None:
       logger.error("No target_ip provided")
       return JSONResponse(status_code=400, content={"message": "No target_ip provided"})
-    logger.info("Starting container: ")
     logger.info(f"Starting container with env_id: {env_id}")
     try:
       output = start_container(env_id, target_ip)
@@ -273,7 +270,6 @@ async def stop_container_on_node(request: Request, session = Depends(get_session
     if target_ip is None:
       logger.error("No target_ip provided")
       return JSONResponse(status_code=400, content={"message": "No target_ip provided"})
-    logger.info("Stopping container: ")
     logger.info(f"Stopping container with env_id: {env_id}")
     try:
       output = stop_container(env_id, target_ip)

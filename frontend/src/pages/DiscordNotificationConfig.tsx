@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch"
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast";
 
 export type DiscordNotificationConfig = {
-    notifier_id: string;
     webhook_name: string;
     webhook_url: string;
     enabled: boolean;
@@ -17,9 +16,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 export default function DiscordNotificationConfig() {
+    const [open, setOpen] = useState(false);
     const [currentDiscordConfigs, setDiscordConfigs] = useState<DiscordNotificationConfig[]>([]);
     const [newDiscordConfig, setNewDiscordConfig] = useState<DiscordNotificationConfig>({
-        notifier_id: "",
         webhook_name: "",
         webhook_url: "",
         enabled: false
@@ -29,7 +28,7 @@ export default function DiscordNotificationConfig() {
 
     const handleAddConfig = async () => {
         try {
-            const response = await fetch("/api/discord/add-config", {
+            const response = await fetch("/api/discord/new-config", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -38,12 +37,107 @@ export default function DiscordNotificationConfig() {
                 body: JSON.stringify(newDiscordConfig),
             });
             if (!response.ok) {
+                toast({
+                    title: "Error",
+                    description: "Failed to add Discord configuration",
+                    variant: "destructive",
+                });
                 throw new Error("Failed to add Discord configuration");
             }
             await fetchDiscordConfig();
         } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to add Discord configuration",
+                variant: "destructive",
+            });
             console.error(error);
+        } finally {
+            setOpen(false);
+            setNewDiscordConfig({
+                webhook_name: "",
+                webhook_url: "",
+                enabled: false,
+            });
         }
+        toast({
+            title: "Success",
+            description: `Webhook "${newDiscordConfig.webhook_name}" created successfully.`,
+            variant: "default",
+        });
+    }
+
+    const handleToggleConfig = async (webhook_name: string, enabled: boolean) => {
+        try {
+            const response = await fetch("/api/discord/toggle-config", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({ 
+                    "webhook_name": webhook_name,
+                    "enabled": enabled,
+                }),
+            });
+            if (!response.ok) {
+                toast({
+                    title: "Error",
+                    description: "Failed to toggle Discord configuration",
+                    variant: "destructive",
+                });
+                throw new Error("Failed to toggle Discord configuration");
+            }
+            await fetchDiscordConfig();
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to toggle Discord configuration",
+                variant: "destructive",
+            });
+            console.error(error);
+        } finally {
+            setOpen(false);
+            setNewDiscordConfig({
+                webhook_name: "",
+                webhook_url: "",
+                enabled: false,
+            });
+        }
+        toast({
+            title: "Success",
+            description: `Webhook "${webhook_name}" toggled successfully.`,
+            variant: "default",
+        });
+    }
+
+    const handleDeleteConfig = async (webhook_name: string) => {
+        try {
+            const response = await fetch("/api/discord/delete-config", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({ webhook_name }),
+            });
+            if (!response.ok) {
+                throw new Error("Failed to delete Discord configuration");
+            }
+            await fetchDiscordConfig();
+        } catch (error) {
+            console.error(error);
+            toast({
+                title: "Error",
+                description: "Failed to delete Discord configuration",
+                variant: "destructive",
+            });
+        }
+        toast({
+            title: "Success",
+            description: `Webhook "${webhook_name}" deleted successfully.`,
+            variant: "default",
+        });
     }
 
     const fetchDiscordConfig = async () => {
@@ -60,15 +154,30 @@ export default function DiscordNotificationConfig() {
                 }
             );
             if (!response.ok) {
+                toast({
+                    title: "Error",
+                    description: "Failed to fetch Discord configuration",
+                    variant: "destructive",
+                });
                 throw new Error("Failed to fetch Discord configuration");
             }
             const data = await response.json();
             if (!data.notifiers) {
+                toast({
+                    title: "Error",
+                    description: "Invalid response data",
+                    variant: "destructive",
+                });
                 throw new Error("Invalid response data");
             }
             const currentNotifiers: DiscordNotificationConfig[] = data.notifiers;
             setDiscordConfigs(currentNotifiers);
         } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to fetch Discord configuration",
+                variant: "destructive",
+            });
             console.error(error);
             setIsError(true);
         } finally {
@@ -90,7 +199,7 @@ export default function DiscordNotificationConfig() {
             </div>
             <div className="w-full flex flex-row mt-4 items-end">
                 <div className="justify-self-end max-w-fit">
-                    <Dialog>
+                    <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button variant="outline">
                                 <PlusCircle className="mr-2 h-4 w-4" />
@@ -161,7 +270,7 @@ export default function DiscordNotificationConfig() {
                 <CardTitle>Webhook Configuration</CardTitle>
             </CardHeader>
             <CardContent>
-                <h2>Current Webhooks</h2>
+                <h2 className="py-2">Current Webhooks</h2>
                 <div className="grid grid-cols-1 gap-4">
                     { currentDiscordConfigs.length === 0 ? (
                         <p className="text-muted-foreground">
@@ -169,20 +278,41 @@ export default function DiscordNotificationConfig() {
                         </p>
                     ) : (
                         currentDiscordConfigs.map((config, index) => (
-                            <div key={index} className="border p-4 rounded-md">
-                                <h3 className="text-lg font-semibold">{config.notifier_id}</h3>
-                                <p className="text-sm text-muted-foreground">
-                                    Webhook ID: {config.notifier_id}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                    Webhook Name: {config.webhook_name}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                    Webhook URL: {config.webhook_url}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                    Enabled: {config.enabled ? "Yes" : "No"}
-                                </p>
+                            <div key={index} className="flex flex-row items-center gap-x-2 rounded-md p-2">
+                                <div>
+                                    <h3 className="text-lg font-semibold">{config.webhook_name}</h3>
+                                    <p className="text-sm text-muted-foreground">
+                                        Webhook Name: {config.webhook_name}
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">
+                                        Webhook URL: {config.webhook_url}
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">
+                                        Enabled: {config.enabled ? "Yes" : "No"}
+                                    </p>
+                                </div>
+                                <div className="py-4 h-full flex flex-col items-center max-w-fit">
+                                    <div>
+                                        <Button variant="outline" className="w-full" onClick={() => handleDeleteConfig(config.webhook_name)}>
+                                            <Trash2 className="mr-2" />
+                                            Delete
+                                        </Button>
+                                    </div>
+                                    <div className="flex flex-row items-center mt-2 max-w-min justify-between w-full">
+                                        <Label htmlFor="enable-webhook" className="text-sm text-muted-foreground max-w-min">
+                                            Enable Webhook
+                                        </Label>
+                                        <Switch
+                                            id="enable-webhook"
+                                            className="border-foreground focus:border-primary ml-2"
+                                            checked={config.enabled}
+                                            onCheckedChange={(checked) => handleToggleConfig(
+                                                config.webhook_name,
+                                                checked
+                                            )}
+                                        />
+                                    </div>
+                                </div>
                             </div>
                         ))
                     )}
