@@ -6,15 +6,11 @@ import { useWebSocket } from "@/data/WebSocketContext";
 import {
   Users,
   Server,
-  Settings,
-  Container,
-  Database,
+  Bell,
   Lock,
   Network,
-  FileText,
   ChevronLeft,
   ChevronRight,
-  LockIcon,
   ScrollText,
   AlertTriangle,
   PlusCircle,
@@ -90,6 +86,12 @@ const allMenuItems = [
         href: "/audit",
         permission: "admin:audit"
       },
+      {
+        title: "Notification Config",
+        icon: Bell,
+        href: "/discord-config",
+        permission: "admin:audit"
+      }
     ],
   },
   {

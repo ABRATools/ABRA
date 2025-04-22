@@ -19,6 +19,10 @@ def run_aggregator():
     import run_aggregator
     run_aggregator.main()
 
+def run_log_notifier():
+    import run_log_notifier
+    run_log_notifier.main()
+
 if __name__ == "__main__":
     args = parser.parse_args()
     logger.info("Starting central process...")
@@ -36,6 +40,12 @@ if __name__ == "__main__":
     else:
         logger.info("Not starting aggregator process.")
 
+    if config.settings.DISCORD_ENABLED:
+        logger.info("Starting log notifier process...")
+        log_notifier_process = multiprocessing.Process(target=run_log_notifier)
+        log_notifier_process.start()
+    else:
+        logger.info("Log notifier process not started. DISCORD_ENABLED is set to False.")
     try:
         while True:
             time.sleep(1)

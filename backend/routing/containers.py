@@ -17,6 +17,13 @@ from web_auth import authenticate_cookie, AuthToken
 
 MAX_MEM_GIB = 16
 
+def is_jsonable(x):
+  try:
+    out = json.dumps(x)
+    return out
+  except:
+    return False
+
 router = APIRouter(prefix="/api/containers")
 
 def start_container(env_id, target_ip):
@@ -174,7 +181,11 @@ async def generate_log_tree(request: Request, session = Depends(get_session), to
     try:
       output = generate_tree_structure(f"/var/log/{node_id}/{env_name}")
     except Exception as e:
-      return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+      if is_jsonable(e):
+        logger.error(f"An error occurred: {e}")
+        return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+      logger.error(f"An error occurred: {e}")
+      return JSONResponse(status_code=500, content={"message": "An error occurred"})
     return JSONResponse(status_code=200, content={"message": "Log tree generated", "tree": output})
   logger.warning("Unauthorized request to generate log tree")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
@@ -241,7 +252,11 @@ async def start_container_on_node(request: Request, session = Depends(get_sessio
     try:
       output = start_container(env_id, target_ip)
     except Exception as e:
-      return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+      if is_jsonable(e):
+        logger.error(f"An error occurred: {e}")
+        return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+      logger.error(f"An error occurred: {e}")
+      return JSONResponse(status_code=500, content={"message": "An error occurred"})
     return JSONResponse(status_code=200, content={"message": "Container started"})
   logger.warning("Unauthorized request to start container")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
@@ -265,7 +280,11 @@ async def stop_container_on_node(request: Request, session = Depends(get_session
       if output is None:
         return JSONResponse(status_code=500, content={"message": "An error occurred"})
     except Exception as e:
-      return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+      if is_jsonable(e):
+        logger.error(f"An error occurred: {e}")
+        return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+      logger.error(f"An error occurred: {e}")
+      return JSONResponse(status_code=500, content={"message": "An error occurred"})
     return JSONResponse(status_code=200, content={"message": "Container stopped"})
   logger.warning("Unauthorized request to stop container")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})  
@@ -293,7 +312,11 @@ async def delete_container_on_node(request: Request, session = Depends(get_sessi
       if output is None:
         return JSONResponse(status_code=500, content={"message": "An error occurred"})
     except Exception as e:
-      return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+      if is_jsonable(e):
+        logger.error(f"An error occurred: {e}")
+        return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+      logger.error(f"An error occurred: {e}")
+      return JSONResponse(status_code=500, content={"message": "An error occurred"})
     return JSONResponse(status_code=200, content={"message": "Container deleted"})
   logger.warning("Unauthorized request to delete container")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
@@ -344,8 +367,11 @@ async def create_environment_on_node(request: Request, session = Depends(get_ses
       if output is None:
         return JSONResponse(status_code=500, content={"message": "An error occurred"})
     except Exception as e:
+      if is_jsonable(e):
+        logger.error(f"An error occurred: {e}")
+        return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
       logger.error(f"An error occurred: {e}")
-      return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+      return JSONResponse(status_code=500, content={"message": "An error occurred"})
     return JSONResponse(status_code=200, content={"message": "Container created"})
   logger.warning("Unauthorized request to create container")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
@@ -397,8 +423,11 @@ async def create_ebpf_environment_on_node(request: Request, session = Depends(ge
       if output is None:
         return JSONResponse(status_code=500, content={"message": "An error occurred"})
     except Exception as e:
+      if is_jsonable(e):
+        logger.error(f"An error occurred: {e}")
+        return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
       logger.error(f"An error occurred: {e}")
-      return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+      return JSONResponse(status_code=500, content={"message": "An error occurred"})
     return JSONResponse(status_code=200, content={"message": "Container created"})
   logger.warning("Unauthorized request to create container")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
@@ -417,7 +446,11 @@ async def get_node_images(request: Request, session = Depends(get_session), toke
       if output is None:
         return JSONResponse(status_code=500, content={"message": "An error occurred"})
     except Exception as e:
-      return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+      if is_jsonable(e):
+        logger.error(f"An error occurred: {e}")
+        return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
+      logger.error(f"An error occurred: {e}")
+      return JSONResponse(status_code=500, content={"message": "An error occurred"})
     return JSONResponse(status_code=200, content={"message": "Container images listed", "images": output})
   logger.warning("Unauthorized request to list node images")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})

@@ -924,6 +924,10 @@ body{
   height: 1.25rem;
 }
 
+.h-6{
+  height: 1.5rem;
+}
+
 .h-7{
   height: 1.75rem;
 }
@@ -1020,6 +1024,10 @@ body{
   width: 2.5rem;
 }
 
+.w-11{
+  width: 2.75rem;
+}
+
 .w-14{
   width: 3.5rem;
 }
@@ -1076,6 +1084,10 @@ body{
   width: var(--sidebar-width);
 }
 
+.w-\[150px\]{
+  width: 150px;
+}
+
 .w-\[1px\]{
   width: 1px;
 }
@@ -1102,6 +1114,10 @@ body{
 
 .min-w-\[200px\]{
   min-width: 200px;
+}
+
+.min-w-\[50px\]{
+  min-width: 50px;
 }
 
 .min-w-\[8rem\]{
@@ -1400,6 +1416,10 @@ body{
   align-self: flex-end;
 }
 
+.justify-self-end{
+  justify-self: end;
+}
+
 .overflow-auto{
   overflow: auto;
 }
@@ -1491,6 +1511,10 @@ body{
   border-color: hsl(var(--destructive) / 0.5);
 }
 
+.border-foreground{
+  border-color: hsl(var(--foreground));
+}
+
 .border-gray-300{
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
@@ -1511,6 +1535,10 @@ body{
 
 .border-sidebar-border{
   border-color: hsl(var(--sidebar-border));
+}
+
+.border-transparent{
+  border-color: transparent;
 }
 
 .border-yellow-200{
@@ -2065,6 +2093,12 @@ body{
   outline-style: solid;
 }
 
+.ring-0{
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
 .ring-sidebar-ring{
   --tw-ring-color: hsl(var(--sidebar-ring));
 }
@@ -2448,6 +2482,10 @@ body{
   --tw-ring-offset-width: 2px;
 }
 
+.focus-visible\:ring-offset-background:focus-visible{
+  --tw-ring-offset-color: hsl(var(--background));
+}
+
 .active\:bg-sidebar-accent:active{
   background-color: hsl(var(--sidebar-accent));
 }
@@ -2571,6 +2609,16 @@ body{
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.data-\[state\=checked\]\:translate-x-5[data-state="checked"]{
+  --tw-translate-x: 1.25rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.data-\[state\=unchecked\]\:translate-x-0[data-state="unchecked"]{
+  --tw-translate-x: 0px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .data-\[swipe\=cancel\]\:translate-x-0[data-swipe="cancel"]{
   --tw-translate-x: 0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -2608,6 +2656,10 @@ body{
 
 .data-\[state\=selected\]\:bg-muted[data-state="selected"]{
   background-color: hsl(var(--muted));
+}
+
+.data-\[state\=unchecked\]\:bg-input[data-state="unchecked"]{
+  background-color: hsl(var(--input));
 }
 
 .data-\[active\=true\]\:font-medium[data-active="true"]{

@@ -23,13 +23,6 @@ group_permissions = Table(
     Column('permission_id', Integer, ForeignKey('permissions.id'), primary_key=True)
 )
 
-user_notifications = Table(
-    'user_notifications',
-    Base.metadata,
-    Column('user_id', Integer, ForeignKey('users.id'), primary_key=True),
-    Column('notification_id', Integer, ForeignKey('notifications.id'), primary_key=True)
-)
-
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, index=True)
@@ -43,8 +36,6 @@ class User(Base):
     totp_secret = Column(String(50), nullable=True)
     is_totp_enabled = Column(Boolean, default=True)
     is_totp_confirmed = Column(Boolean, default=False)
-    # user can have multiple notifications
-    notifications = relationship("Notification", secondary=user_notifications, back_populates="users")
     # user can have multiple groups
     groups = relationship("Group", secondary=user_groups, back_populates="users")
 
@@ -134,17 +125,13 @@ class Task(Base):
     status = Column(String(50), default="undefined", nullable=False)
     output = Column(String(200), nullable=True)
 
-class Notification(Base):
-    __tablename__ = 'notifications'
+class Notifier(Base):
+    __tablename__ = 'notifiers'
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(50), nullable=False)
-    description = Column(String(200), nullable=False)
-    date_created = Column(DateTime, default=datetime.datetime.now(tz=datetime.timezone.utc))
-    is_read = Column(Boolean, default=False)
-    is_active = Column(Boolean, default=True)
-    # can have multiple users
-    users = relationship("User", secondary=user_notifications, back_populates="notifications")
+    webhook_name = Column(String(200), nullable=False)
+    webhook_url = Column(String(200), nullable=False)
+    enabled = Column(Boolean, default=True)
 
 class NodeInfo(Base):
     __tablename__ = 'node_info'

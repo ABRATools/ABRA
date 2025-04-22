@@ -10,7 +10,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from fastapi import FastAPI, Request, Depends, APIRouter, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from routing import frontend, api, containers, ebpf
+from routing import frontend, api, containers, ebpf, discord
 import role_based_access
 from starlette.responses import HTMLResponse, JSONResponse
 import asyncio
@@ -73,6 +73,8 @@ app.include_router(role_based_access.rba_endpoints.router)
 app.include_router(role_based_access.rbap_endpoints.router)
 # ebpf related
 app.include_router(ebpf.router)
+# discord notifier related
+app.include_router(discord.router)
 
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY.get_secret_value())
 

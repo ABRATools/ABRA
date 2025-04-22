@@ -3,7 +3,7 @@ sys.path.insert(0, os.path.abspath('..'))
 from logger import logger
 
 from sqlalchemy import and_, func
-from .models import User, Group, Node, Environment, ConnectionStrings, NodeInfo, Permission, System, Cluster
+from .models import User, Group, Node, Environment, ConnectionStrings, NodeInfo, Permission, System, Cluster, Notifier
 from typing import List
 import datetime
 import json
@@ -333,17 +333,6 @@ def insert_node_info_json(db, json: str, hostname: str):
     db.add(new_entry)
     db.commit()
 
-# def get_newest_node_info(db) -> str:
-#     newest = db.query(NodeInfo).order_by(NodeInfo.id.desc()).first()
-#     return json.dumps(newest.data)
-
-# def get_all_node_info_newer_than(db, time: datetime.datetime) -> List[str]:
-#     data_list = List[str]
-#     data = db.query(NodeInfo).filter(NodeInfo.timestamp > time).all()
-#     for entry in data:
-#         print(entry.data)
-#         data_list.append(json.dumps(entry.data))
-
 #######################
 # Cluster Info (JSON)
 #######################
@@ -373,16 +362,6 @@ def add_node_to_cluster(db, node_name):
     db.commit()
 
 def return_cluster_info(db):
-    """
-    Uses data stored in Cluster table to create and return a JSON object with the following structure:
-    {
-        "nodes": [
-            # Instances of NodeInfo with matching node_name
-            {"node_name": "node1", "environments": ["env1", "env2"]},
-            {"node_name": "node2", "environments": ["env3"]},
-        ]
-    }
-    """
     cluster = db.query(Cluster).first()
     if cluster is None:
         return None
@@ -639,3 +618,49 @@ def add_environment_to_system_by_container_id(db, system_id, container_id, env_n
         logger.error(f"Error adding environment with container_id {container_id} to system {system_id}: {str(e)}")
         db.rollback()
         raise
+
+#######################
+# notifiers
+#######################
+
+def get_current_notifiers(db):
+    notifiers = db.query(Notifier).all()
+    return notifiers
+
+def set_notifier_enabled(db, webhook_name, enabled):
+    notifier = db.query(Notifier).filter(Notifier.webhook_name == webhook_name).first()
+    if notifier is None:
+        return False
+    notifier.enabled = enabled
+    db.commit()
+    logger.debug(f"Setting notifier {webhook_name} to {enabled}")
+    return True
+
+def create_notifier(db, webhook_name, webhook_url, enabled=True):
+    # Check if notifier already exists
+    exists = db.query(Notifier).filter(Notifier.webhook_name == webhook_name).first()
+    if exists is not None:
+        logger.debug(f"Notifier {webhook_name} already exists")
+        return
+    
+    # Get max ID
+    max_id = db.query(func.max(Notifier.id)).scalar()
+    if max_id is None:
+        max_id = 0
+    max_id += 1
+    
+    # Create new notifier
+    new_notifier = Notifier(id=max_id, webhook_name=webhook_name, webhook_url=webhook_url, enabled=enabled)
+    db.add(new_notifier)
+    db.commit()
+    logger.debug(f"Creating notifier {webhook_name}")
+    return new_notifier
+
+def delete_notifier(db, webhook_name):
+    notifier = db.query(Notifier).filter(Notifier.webhook_name == webhook_name).first()
+    if notifier is None:
+        return False
+    db.delete(notifier)
+    db.commit()
+    logger.debug(f"Deleting notifier {webhook_name}")
+    return True
