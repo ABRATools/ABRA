@@ -31,13 +31,14 @@ async def processes_stream_output(output_queue, database_session):
       hostname = host_data.get('node_id', None)
 
       container_data = content.get('containers', None)
-      if not container_data:
-        logger.warning(f"No container data for {connection_url}")
-        continue
+      # if not container_data:
+      #   logger.warning(f"No container data for {connection_url}")
+      #   continue
       host = Node(**host_data, environments=[])
-      for container in container_data:
-        container = Environment(**container)
-        host.environments.append(container)
+      if container_data:
+        for container in container_data:
+          container = Environment(**container)
+          host.environments.append(container)
       host_json = host.model_dump()
       # print(f"data received for: {hostname}")
       # add node to cluster

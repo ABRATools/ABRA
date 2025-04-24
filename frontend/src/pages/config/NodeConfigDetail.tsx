@@ -27,7 +27,7 @@ export default function NodeConfigDetail() {
   const [nodeDescription, setNodeDescription] = useState("");
   const [cpuCores, setCpuCores] = useState(4);
   const [memoryGB, setMemoryGB] = useState(16);
-  const [storageGB, setStorageGB] = useState(100);
+  const [storageGB, setStorageGB] = useState(32);
   const [networkMode, setNetworkMode] = useState("bridge");
   const [subnet, setSubnet] = useState("172.17.0.0/16");
   

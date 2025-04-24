@@ -301,8 +301,6 @@ async def delete_container_on_node(request: Request, session = Depends(get_sessi
     if env_name is None:
       logger.error("No env_name provided")
       return JSONResponse(status_code=400, content={"message": "No env_name provided"})
-    logger.info("Deleting container: ")
-    logger.info(f"Deleting container with env_id: {env_id}")
     try:
       output = delete_container(env_id, env_name, target_ip)
       if output is None:

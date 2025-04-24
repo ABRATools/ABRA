@@ -278,7 +278,7 @@ export default function DiscordNotificationConfig() {
                         </p>
                     ) : (
                         currentDiscordConfigs.map((config, index) => (
-                            <div key={index} className="flex flex-row items-center gap-x-2 rounded-md p-2">
+                            <div key={index} className="flex flex-row items-center gap-x-2 rounded-md p-2 justify-between">
                                 <div>
                                     <h3 className="text-lg font-semibold">{config.webhook_name}</h3>
                                     <p className="text-sm text-muted-foreground">

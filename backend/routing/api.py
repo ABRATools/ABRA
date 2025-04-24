@@ -2,11 +2,14 @@
 import sys, os
 sys.path.insert(0, os.path.abspath('..'))
 
+import pathlib
 import database as db
 from database.models import System
 from classes import *
 from containers import *
 from pydantic import BaseModel
+
+import subprocess
 
 import bcrypt
 from fastapi import APIRouter, Request, Depends
@@ -164,6 +167,14 @@ async def post_connection_string(input: InputConnString, session = Depends(get_s
   if token:
     print(input)
     try:
+      # parsed_ip = input.connection_string.split('//')[1].split(':')[0]
+      # base_path = "/var/log"
+      # new_node_path = pathlib.Path(base_path, input.name)
+      # logger.info(f"Creating new connection string for {input.name} at {new_node_path}")
+      # os.makedirs(new_node_path, exist_ok=True, mode=0o644)
+      # with open('/etc/exports', 'a') as f:
+      #   f.write(f"{new_node_path} {parsed_ip}/32(rw,async,no_root_squash,crossmnt,no_subtree_check)\n")
+      # subprocess.run(['exportfs', '-a'], check=True)
       db.create_connection_string(session, input.name, input.connection_string, input.description)
     except Exception as e:
       logger.error(f"Error creating connection string: {str(e)}")

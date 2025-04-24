@@ -340,9 +340,9 @@ export default function NodeDetail() {
   const usedMemory = node.total_memory * (node.mem_percent / 100);
   
   // This is a placeholder, real implementation would depend on actual data available
-  const storageUsed = 100; // GB
-  const storageTotal = 500; // GB
-  const storagePercent = Math.round((storageUsed / storageTotal) * 100);
+  // const storageUsed = 33.3; // GB
+  // const storageTotal = 70; // GB
+  // const storagePercent = Math.round((storageUsed / storageTotal) * 100);
 
   return (
     <div className="space-y-6">
@@ -361,7 +361,7 @@ export default function NodeDetail() {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">CPU Usage</CardTitle>
@@ -390,7 +390,7 @@ export default function NodeDetail() {
             </p>
           </CardContent>
         </Card>
-        <Card>
+        {/* <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Storage Usage</CardTitle>
             <HardDrive className="h-4 w-4 text-muted-foreground" />
@@ -403,7 +403,7 @@ export default function NodeDetail() {
               {storageUsed}/{storageTotal} GB
             </p>
           </CardContent>
-        </Card>
+        </Card> */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Containers</CardTitle>

@@ -57,7 +57,7 @@ class LogMonitor:
         if "| INFO |" in line:
             # return ( self._system_added(line)
             #       or self._environment_added(line) )
-            return self._system_stopped(line)
+            return ( self._system_stopped(line) or self._system_deleted(line) )
         # WARNING
         # if "| WARNING |" in line:
         #     return self._warning(line)
@@ -76,7 +76,16 @@ class LogMonitor:
             "description": f"Container with env_id **{env_id}** has been stopped.",
             "color": 0xFF0000,  # red
         }
-
+    def _system_deleted(self, line: str) -> Optional[dict]:
+        m = re.search(r"Deleted container with env_id: ([\w\-]+)", line)
+        if not m:
+            return None
+        env_id = m.group(1)
+        return {
+            "title": "System Deleted",
+            "description": f"Container with env_id **{env_id}** has been deleted.",
+            "color": 0xFF0000,  # red
+        }
     def _system_added(self, line: str) -> Optional[dict]:
         m = re.search(r"Adding system to listing: ([\w\-]+) with (\d+) environments", line)
         if not m:
@@ -161,6 +170,7 @@ class LogMonitor:
                 existing = existingProcess(p, noti.webhook_url)
                 # Check if the process already exists in the list
                 if existing not in self.processes:
+                    logger.info(f"Starting notifier {noti.webhook_name} as it is enabled")
                     self.processes.append(existing)
             else:
                 # Check if the process already exists in the list
@@ -221,17 +231,3 @@ class LogMonitor:
         self.processes = []
         self.db_session.close()
         return
-
-    # def run(self):
-    #     """Start tailing in a background thread and block until stopped."""
-    #     logger.info(f"[LogMonitor] Starting—tailing {self.logfile_path}")
-    #     t = threading.Thread(target=self._tail_loop, daemon=True)
-    #     t.start()
-    #     try:
-    #         while True:
-    #             time.sleep(1)
-    #     except KeyboardInterrupt:
-    #         print("[LogMonitor] Stopping...")
-    #         self._stop_event.set()
-    #         t.join()
-    #         print("[LogMonitor] Stopped")
