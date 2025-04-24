@@ -10,11 +10,15 @@ export interface System {
   totalContainers: number,
   createdAt?: Date,
   updatedAt?: Date,
-  nodes: Node[]
+  nodes: Node[],
+  environments: Environment[],
+  isCustom?: boolean,
+  source?: 'database' | 'auto-generated' | 'local'
 }
 
 export interface Node {
   node_id: string;
+  ip_address: string;
   os_name: string;
   os_version: string;
   cpu_count: number;

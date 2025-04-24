@@ -55,7 +55,7 @@ def init_pollers(connection_string:str, command_queue:Queue):
         method = command.get('method', 'GET')
         data = command.get('data', None)
         poller.exec_request(endpoint, method, data)
-      time.sleep(5)
+      time.sleep(2)
   except KeyboardInterrupt:
     logger.info(f"Poller {poller_id} shutting down")
     return
@@ -93,7 +93,7 @@ class PollerService:
   A service that spawns a process per connection string from the database
   and manages polling via asynchronous looping.
   """
-  def __init__(self, db_session, update_database=False, shared_queue=None):
+  def __init__(self, db_session, update_database=False):
     """
     Initialize the service with a database session.
     """
@@ -101,7 +101,7 @@ class PollerService:
     self.poll_interval = settings.NODE_UPDATE_INTERVAL
 
     if update_database:
-      init_processor(output_queue, db_session, shared_queue)
+      init_processor(output_queue, db_session)
 
     self.logger = logger
     self.processes: List[existingProcess] = [] 

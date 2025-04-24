@@ -25,8 +25,8 @@ class FilteredUser(BaseModel):
 
 class Group(BaseModel):
   name: str
-  # permissions: Optional[List[str]]
-  permissions: Optional[str]
+  permissions: Optional[List[str]] = []
+  # permissions: Optional[str]
   users: List[str]
 
 class ConnectionStrings(BaseModel):
@@ -54,6 +54,7 @@ class Environment(BaseModel):
 
 class Node(BaseModel):
   node_id: str
+  ip_address: str
   os_name: str
   os_version: str
   cpu_count: int
@@ -88,5 +89,28 @@ class Notification(BaseModel):
 
 class InputConnString(BaseModel):
   name: str
-  source: str
-  ip: Optional[str] = None
+  connection_string: str
+  description: Optional[str] = None
+
+class InputUser(BaseModel):
+  username: str
+  email: Optional[str] = None
+  password: str
+  confirm_password: str
+  groups: Optional[List[str]] = None
+  is_active: bool = True
+  totp_secret: Optional[str] = None
+  is_totp_enabled: bool = False
+  is_totp_confirmed: bool = False
+
+class Notifier(BaseModel):
+  webhook_name: str
+  webhook_url: str
+  enabled: bool
+
+class DeleteNotifierRequest(BaseModel):
+  webhook_name: str
+
+class ToggleNotifierRequest(BaseModel):
+  webhook_name: str
+  enabled: bool

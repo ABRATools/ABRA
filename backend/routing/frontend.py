@@ -29,6 +29,7 @@ async def serve_frontend_public(
 @router.get("/display/systems/{system_id}")
 @router.get("/display/systems/{system_id}/nodes/{node_id}")
 @router.get("/display/systems/{system_id}/nodes/{node_id}/environments/{env_id}")
+@router.get("/display/systems/{system_id}/nodes/{node_id}/environments/{env_id}/logs")
 @router.get("/config/systems")
 @router.get("/config/systems/{system_id}")
 @router.get("/config/systems/{system_id}/nodes/{node_id}")
@@ -39,6 +40,9 @@ async def serve_frontend_public(
 @router.get("/debug/websocket")
 @router.get("/users")
 @router.get("/audit")
+@router.get("/discord-config")
+@router.get("/nodes")
+@router.get("/nodes/{node_id}")
 async def serve_frontend_protected(
     request: Request,
     templates: Annotated[Jinja2Templates, Depends(get_templates)],

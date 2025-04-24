@@ -1,0 +1,16 @@
+{
+    "SECRET_KEY": "supersecretkey",
+    "REDIS_HOST": null,
+    "REDIS_PORT": 6379,
+    "LDAP_ENABLED": true,
+    "LDAP_SERVER": "172.19.0.2",
+    "LDAP_PORT": 3890,
+    "LDAP_BIND_DN": "uid=bind_user,ou=people,dc=abra,dc=tools",
+    "LDAP_BIND_PASSWORD": "graphicalacceleration29",
+    "LDAP_USER_DN": "ou=people,dc=abra,dc=tools",
+    "LDAP_USER_ATTRIBUTE": "uid",
+    "LDAP_GROUP_DN": "ou=groups,dc=abra,dc=tools",
+    "LOCAL_DB": true,
+    "NODE_UPDATE_INTERVAL": 5,
+    "ACCESS_TOKEN_EXPIRE_SECONDS": 86400
+}

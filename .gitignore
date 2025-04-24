@@ -9,3 +9,7 @@ backend/winvenv
 backend/static/
 
 backend/abra.log
+backend/abra.db
+
+backend/config.json
+__pycache__

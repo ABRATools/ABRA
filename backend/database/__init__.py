@@ -4,8 +4,10 @@ import sys, os
 sys.path.insert(0, os.path.abspath('..'))
 from logger import logger
 
+import time
 from sqlalchemy import *
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import event, func
+from sqlalchemy.orm import sessionmaker, Session
 from .models import Base
 from .schemas import *
 
@@ -21,10 +23,13 @@ if not settings.LOCAL_DB:
     )
 else:
     logger.info("Using local sqlite database")
-    engine = create_engine("sqlite:///./test.db")
+    # test if abra.db exists
+    if os.path.exists("abra.db"):
+        logger.info("abra.db exists")
+    else:
+        logger.info("abra.db does not exist, creating new database")
 
-#reset the database
-# Base.metadata.drop_all(engine)
+    engine = create_engine("sqlite:///./abra.db")
 
 # Create the tables
 Base.metadata.create_all(engine)
