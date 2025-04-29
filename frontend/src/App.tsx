@@ -31,7 +31,8 @@ const ContainerUpload = React.lazy(() => import("./pages/config/ContainerUpload.
 const UserManagement = React.lazy(() => import("./pages/UserManagement.tsx"));
 const GroupManagement = React.lazy(() => import("./pages/GroupManagement.tsx"));
 const AuditAbra = React.lazy(() => import("./pages/AuditAbra.tsx"));
-const DiscordNotificationConfig = React.lazy(() => import("./pages/DiscordNotificationConfig.tsx"));
+const Alerts = React.lazy(() => import("./pages/Alerts.tsx"));
+const ConnectionStrings = React.lazy(() => import("./pages/ConnectionStrings.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -99,7 +100,11 @@ const AppRoutes = () => {
           </Route>
 
           <Route element={<ProtectedRoute requiredPermission="admin:audit" />}>
-            <Route path="/discord-config" element={<DiscordNotificationConfig />} />
+            <Route path="/alerts" element={<Alerts />} />
+          </Route>
+
+          <Route element={<ProtectedRoute requiredPermission="admin:audit" />}>
+            <Route path="/conn-strs" element={<ConnectionStrings />} />
           </Route>
           
           {/* Debug routes - require admin permissions */}

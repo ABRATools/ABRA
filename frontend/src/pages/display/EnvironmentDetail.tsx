@@ -12,11 +12,19 @@ import {
   Square,
   Trash,
   Monitor,
-  Clock
+  Terminal,
+  Clock,
+  TerminalSquare
 } from "lucide-react";
 import { useWebSocket } from "@/data/WebSocketContext";
 import { useState, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
 
 // helper to format timestamp
 const formatTimestamp = (timestamp: number): string => {
@@ -50,6 +58,7 @@ export default function EnvironmentDetail() {
   const { systemId, nodeId, envId } = useParams();
   const { data, isConnected: wsConnected, error } = useWebSocket();
   const [isConsoleConnected, setIsConsoleConnected] = useState(false);
+  const [isTerminalConnected, setIsTerminalConnected] = useState(false);
   const [openStopContainerDialog, setOpenStopContainerDialog] = useState(false);
   const [openDeleteContainerDialog, setOpenDeleteContainerDialog] = useState(false);
   const [createContainerData, setCreateContainerData] = useState<createContainerData>({
@@ -374,51 +383,94 @@ export default function EnvironmentDetail() {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <div>
-            <CardTitle className="flex items-center gap-2">
-              <Monitor className="h-5 w-5" />
-              Console Access
-            </CardTitle>
-            <p className="text-sm text-muted-foreground mt-1">
-              Direct console access to the environment
-            </p>
-          </div>
-          <Button 
-            variant={isConsoleConnected ? "destructive" : "default"}
-            onClick={() => setIsConsoleConnected(!isConsoleConnected)}
-          >
-            {isConsoleConnected ? "Disconnect" : "Connect"}
-          </Button>
-        </CardHeader>
-        <CardContent>
-          <div className="relative aspect-video w-full bg-muted rounded-lg overflow-hidden">
-            {isConsoleConnected ? (
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src={`http://${node.ip_address}:9000/${environment.names[0]}/novnc/vnc.html?path=/${environment.names[0]}/novnc/websockify&autoconnect=true&resize=remote&quality=1&compression=10`}
-                title="VNC Console"
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-muted-foreground">
-                  Click Connect to start console session
-                </p>
-              </div>
-            )}
-          </div>
-          <div className="mt-2 flex gap-2">
+      <Tabs defaultValue="ttyd">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger className="padding-2 text-md " value="ttyd">Terminal</TabsTrigger>
+          <TabsTrigger value="novnc">Console</TabsTrigger>
+        </TabsList>
+        <TabsContent value="ttyd">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Terminal className="h-5 w-5" />
+                Terminal Access
+              </CardTitle>
+            </div>
+            <div className="flex gap-2">
+            <Button variant="outline" size="sm" disabled={!isTerminalConnected}>
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Refresh
+              </Button>
+              <Button variant="outline" size="sm" disabled={!isTerminalConnected}>
+                Full Screen
+              </Button>
+              <Button variant={isTerminalConnected ? "destructive" : "default"} onClick={() => setIsTerminalConnected(!isTerminalConnected)}>
+                {isTerminalConnected ? "Disconnect" : "Connect"}
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="relative aspect-video w-full bg-muted rounded-lg overflow-hidden">
+              {isTerminalConnected ? (
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src={`http://${node.ip_address}:9000/${environment.names[0]}/ttyd/`}
+                  title="TTYD Terminal"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <p className="text-muted-foreground">
+                    Click Connect to start terminal session
+                  </p>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+        </TabsContent>
+        <TabsContent value="novnc">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Monitor className="h-5 w-5" />
+                Console Access
+              </CardTitle>
+            </div>
+            <div className="flex gap-2">
             <Button variant="outline" size="sm" disabled={!isConsoleConnected}>
-              <RefreshCw className="mr-2 h-4 w-4" />
-              Refresh
-            </Button>
-            <Button variant="outline" size="sm" disabled={!isConsoleConnected}>
-              Full Screen
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Refresh
+              </Button>
+              <Button variant="outline" size="sm" disabled={!isConsoleConnected}>
+                Full Screen
+              </Button>
+              <Button variant={isConsoleConnected ? "destructive" : "default"} onClick={() => setIsConsoleConnected(!isConsoleConnected)}>
+                {isConsoleConnected ? "Disconnect" : "Connect"}
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="relative aspect-video w-full bg-muted rounded-lg overflow-hidden">
+              {isConsoleConnected ? (
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src={`http://${node.ip_address}:9000/${environment.names[0]}/novnc/vnc.html?path=/${environment.names[0]}/novnc/websockify&autoconnect=true&resize=remote&quality=1&compression=10`}
+                  title="VNC Console"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <p className="text-muted-foreground">
+                    Click Connect to start console session
+                  </p>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

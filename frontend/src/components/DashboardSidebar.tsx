@@ -16,7 +16,8 @@ import {
   PlusCircle,
   HardDrive,
   Trash2,
-  Activity
+  Activity,
+  Link as LinkIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -87,9 +88,15 @@ const allMenuItems = [
         permission: "admin:audit"
       },
       {
-        title: "Notification Config",
+        title: "Alert Configuration",
         icon: Bell,
-        href: "/discord-config",
+        href: "/alerts",
+        permission: "admin:audit"
+      },
+      {
+        title: "Connection Strings",
+        icon: LinkIcon,
+        href: "/conn-strs",
         permission: "admin:audit"
       }
     ],

@@ -40,7 +40,8 @@ async def serve_frontend_public(
 @router.get("/debug/websocket")
 @router.get("/users")
 @router.get("/audit")
-@router.get("/discord-config")
+@router.get("/alerts")
+@router.get("/conn-strs")
 @router.get("/nodes")
 @router.get("/nodes/{node_id}")
 async def serve_frontend_protected(

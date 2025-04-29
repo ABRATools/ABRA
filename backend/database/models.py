@@ -62,8 +62,6 @@ class ConnectionStrings(Base):
     name = Column(String(50), nullable=False)
     connection_string = Column(String(255), nullable=False)
     description = Column(String(200), nullable=True)
-    # type = Column(String(50), nullable=False)
-    # ip = Column(String(50), nullable=True)
 
 class Node(Base):
     __tablename__ = 'nodes'
