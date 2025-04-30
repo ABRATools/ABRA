@@ -67,10 +67,6 @@ const AddNewNode: React.FC = () => {
           'Content-Type': 'application/json'
         },
 
-        // name: str
-        // connection_string: str
-        // description: Optional[str] = None
-
         body: JSON.stringify( (newNodeState.description != '') ? {
           name: newNodeState.name,
           connection_string: `http://${newNodeState.ip}:${newNodeState.port}`,
@@ -121,18 +117,18 @@ const AddNewNode: React.FC = () => {
         <DialogTrigger asChild>
           <Button variant="outline" onClick={() => setOpenNodeCreationDialog(true)}>
             <PlusCircle className="mr-2 h-4 w-4" />
-            Add New Node
+            Add Node Connection String
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add New Node</DialogTitle>
+            <DialogTitle>Add Node Connection String</DialogTitle>
           </DialogHeader>
           
           <div className="space-y-4 py-4">
             <div className="space-y-4">
               <p className="text-sm">
-                Enter the details of the new node you want to add.
+                Enter the details of the new node connection string you want to add.
               </p>
 
               <p className="text-sm text-muted-foreground">

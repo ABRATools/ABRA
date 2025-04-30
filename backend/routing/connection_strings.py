@@ -2,7 +2,7 @@ import sys, os
 sys.path.insert(0, os.path.abspath('..'))
 
 import database as db
-from classes import ConnectionStrings
+from classes import DeleteConnectionString, ConnectionStrings
 from containers import *
 from fastapi import APIRouter, Request, Depends
 from fastapi.responses import JSONResponse
@@ -29,17 +29,17 @@ async def return_all_connection_strings(request: Request, session = Depends(get_
   logger.warning("Unauthorized request to fetch connection strings")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
 
-@router.get("/get_ebpf_module_names")
-async def get_ebpf_module_names(request: Request, token: AuthToken = Depends(authenticate_cookie)):
+@router.delete("/delete-connstr")
+async def delete_connection_string(deleteConnStrReq: DeleteConnectionString, session = Depends(get_session), token: AuthToken = Depends(authenticate_cookie)):
   if token:
-    names = [
-      "ebpf_usercommands"
-      "ebpf_ipgeolocation"
-    ]
-    return JSONResponse(
-      content={
-        "module_names": names
-      },
-      status_code=200
-    )
+    try:
+      # delete the connection string
+      db.delete_connection_string(
+        session,
+        deleteConnStrReq.connstr_name
+      )
+    except Exception as e:
+      logger.error(f"Error deleting connection string: {e}")
+      return JSONResponse(content={'message': 'Error deleting connection string'}, status_code=500)
+    return JSONResponse(content={'message': 'Connection string deleted successfully'}, status_code=200)
   return JSONResponse(content={'message': 'Unauthorized', 'redirect': '/login'}, status_code=401)

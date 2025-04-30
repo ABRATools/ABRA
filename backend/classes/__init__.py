@@ -113,3 +113,6 @@ class DeleteNotifierRequest(BaseModel):
 class ToggleNotifierRequest(BaseModel):
   webhook_name: str
   enabled: bool
+
+class DeleteConnectionString(BaseModel):
+  connstr_name: str

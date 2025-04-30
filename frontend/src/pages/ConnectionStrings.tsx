@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { PlusCircle, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
+import AddNewNode from "@/components/AddNewNode";
 
 export type ConnectionString = {
     name: string;
@@ -12,7 +11,6 @@ export type ConnectionString = {
 };
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 export default function ConnectionStrings() {
     const [open, setOpen] = useState(false);
@@ -24,6 +22,35 @@ export default function ConnectionStrings() {
     });
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
+
+    const handleDeleteConnStr = async (connstr_name: string) => {
+        try {
+            const response = await fetch("/connection-strings/delete-connstr", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({ connstr_name }),
+            });
+            if (!response.ok) {
+                throw new Error("Failed to delete Discord configuration");
+            }
+            await fetchConnectionStrings();
+        } catch (error) {
+            console.error(error);
+            toast({
+                title: "Error",
+                description: "Failed to delete connection string",
+                variant: "destructive",
+            });
+        }
+        toast({
+            title: "Success",
+            description: `Connection string "${connstr_name}" deleted successfully.`,
+            variant: "default",
+        });
+    }
 
     const fetchConnectionStrings = async () => {
         setIsLoading(true);
@@ -79,7 +106,7 @@ export default function ConnectionStrings() {
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold tracking-tight">Manage Connection Strings</h1>
             </div>
-
+            <AddNewNode/>
             {isLoading && <p>Loading...</p>}
             {isError && <p className="text-red-500">Error loading node connection strings</p>}
             {!isLoading && !isError && (
@@ -111,26 +138,11 @@ export default function ConnectionStrings() {
                                 </div>
                                 <div className="py-4 h-full flex flex-col items-center max-w-fit">
                                     <div>
-                                        {/* <Button variant="outline" className="w-full" onClick={() => handleDeleteConfig(config.webhook_name)}> */}
-                                        <Button variant="outline" className="w-full">
+                                        <Button variant="outline" className="w-full" onClick={() => handleDeleteConnStr(config.name)}>
                                             <Trash2 className="mr-2" />
                                             Delete
                                         </Button>
                                     </div>
-                                    {/* <div className="flex flex-row items-center mt-2 max-w-min justify-between w-full">
-                                        <Label htmlFor="enable-webhook" className="text-sm text-muted-foreground max-w-min">
-                                            Enable Webhook
-                                        </Label>
-                                        <Switch
-                                            id="enable-webhook"
-                                            className="border-foreground focus:border-primary ml-2"
-                                            checked={config.enabled}
-                                            onCheckedChange={(checked) => handleToggleConfig(
-                                                config.webhook_name,
-                                                checked
-                                            )}
-                                        />
-                                    </div> */}
                                 </div>
                             </div>
                         ))
