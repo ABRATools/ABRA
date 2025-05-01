@@ -107,6 +107,15 @@ class Notifier(BaseModel):
   webhook_url: str
   enabled: bool
 
+class Notification(BaseModel):
+  notification_id: int
+  name: str
+  description: Optional[str] = None
+  date_created: int
+  severity: str
+  is_read: bool
+  notification_type: str
+
 class DeleteNotifierRequest(BaseModel):
   webhook_name: str
 

@@ -673,16 +673,22 @@ def get_current_notifications(db):
     notifications = db.query(Notification).all()
     return notifications
 
-def set_notification_read(db, notification_id):
+def get_unread_notifications(db):
+    notifications = db.query(Notification).filter(Notification.is_read == False).all()
+    if notifications is None:
+        return []
+    return notifications
+
+def mark_notification_read(db, notification_id, is_read=True):
     notifier = db.query(Notification).filter(Notification.id == notification_id).first()
     if notifier is None:
         return False
-    notifier.is_read = True
+    notifier.is_read = is_read
     db.commit()
-    logger.debug(f"Setting notification with id {notification_id} to read")
+    logger.debug(f"Setting read status of notification with id {notification_id} to {is_read}")
     return True
 
-def create_notification(db, notification_name, notifiction_type, description, severity):
+def create_notification(db, notification_name, notification_type, description, severity):
     # Get max ID
     max_id = db.query(func.max(Notification.id)).scalar()
     if max_id is None:
@@ -690,7 +696,7 @@ def create_notification(db, notification_name, notifiction_type, description, se
     max_id += 1
     
     # Create new notification
-    new_notif = Notification(id=max_id, name=notification_name, description=description, notifiction_type=notifiction_type, severity=severity)
+    new_notif = Notification(id=max_id, name=notification_name, description=description, notification_type=notification_type, severity=severity)
     db.add(new_notif)
     db.commit()
     logger.debug("Creating notification")

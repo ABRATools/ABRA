@@ -10,7 +10,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from fastapi import FastAPI, Request, Depends, APIRouter, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from routing import frontend, api, containers, ebpf, alerts, connection_strings
+from routing import frontend, api, containers, ebpf, connection_strings, discord
 import role_based_access
 from starlette.responses import HTMLResponse, JSONResponse
 import asyncio
@@ -74,7 +74,7 @@ app.include_router(role_based_access.rbap_endpoints.router)
 # ebpf related
 app.include_router(ebpf.router)
 # alerts related
-app.include_router(alerts.router)
+app.include_router(discord.router)
 # connection strings related
 app.include_router(connection_strings.router)
 
