@@ -131,6 +131,20 @@ class Notifier(Base):
     webhook_url = Column(String(200), nullable=False)
     enabled = Column(Boolean, default=True)
 
+class Notification(Base):
+    # global
+    __tablename__ = 'notifications'
+
+    # severity and type should really be enums, if only sqlite supported them
+    
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(50), nullable=False)
+    description = Column(String(200), nullable=False)
+    date_created = Column(Integer, default=epoch_now)
+    severity = Column(String(50), nullable=False)
+    is_read = Column(Boolean, default=False)
+    notification_type = Column(String(50), nullable=False)
+
 class NodeInfo(Base):
     __tablename__ = 'node_info'
 
