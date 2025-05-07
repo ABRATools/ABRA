@@ -3,7 +3,7 @@ sys.path.insert(0, os.path.abspath('..'))
 from logger import logger
 
 from sqlalchemy import and_, func
-from .models import User, Group, Node, Environment, ConnectionStrings, NodeInfo, Permission, System, Cluster, Notifier
+from .models import User, Group, Node, Environment, ConnectionStrings, NodeInfo, Permission, System, Cluster, Notifier, Notification
 from typing import List
 import datetime
 import json
@@ -663,4 +663,50 @@ def delete_notifier(db, webhook_name):
     db.delete(notifier)
     db.commit()
     logger.debug(f"Deleting notifier {webhook_name}")
+    return True
+
+#######################
+# notifications
+#######################
+
+def get_current_notifications(db):
+    notifications = db.query(Notification).all()
+    return notifications
+
+def get_unread_notifications(db):
+    notifications = db.query(Notification).filter(Notification.is_read == False).all()
+    if notifications is None:
+        return []
+    return notifications
+
+def mark_notification_read(db, notification_id, is_read=True):
+    notifier = db.query(Notification).filter(Notification.id == notification_id).first()
+    if notifier is None:
+        return False
+    notifier.is_read = is_read
+    db.commit()
+    logger.debug(f"Setting read status of notification with id {notification_id} to {is_read}")
+    return True
+
+def create_notification(db, notification_name, notification_type, description, severity):
+    # Get max ID
+    max_id = db.query(func.max(Notification.id)).scalar()
+    if max_id is None:
+        max_id = 0
+    max_id += 1
+    
+    # Create new notification
+    new_notif = Notification(id=max_id, name=notification_name, description=description, notification_type=notification_type, severity=severity)
+    db.add(new_notif)
+    db.commit()
+    logger.debug("Creating notification")
+    return new_notif
+
+def delete_notification(db, notification_id):
+    noti = db.query(Notification).filter(Notification.id == notification_id).first()
+    if noti is None:
+        return False
+    db.delete(noti)
+    db.commit()
+    logger.debug(f"Deleting notification {Notification.name}: {Notification.notification_type}")
     return True

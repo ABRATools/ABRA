@@ -32,8 +32,7 @@ class Group(BaseModel):
 class ConnectionStrings(BaseModel):
   name: str
   connection_string: str
-  type: str
-  ip: Optional[str]
+  description: Optional[str] = None
 
 class Environment(BaseModel):
   env_id: str
@@ -108,9 +107,21 @@ class Notifier(BaseModel):
   webhook_url: str
   enabled: bool
 
+class Notification(BaseModel):
+  notification_id: int
+  name: str
+  description: Optional[str] = None
+  date_created: int
+  severity: str
+  is_read: bool
+  notification_type: str
+
 class DeleteNotifierRequest(BaseModel):
   webhook_name: str
 
 class ToggleNotifierRequest(BaseModel):
   webhook_name: str
   enabled: bool
+
+class DeleteConnectionString(BaseModel):
+  connstr_name: str

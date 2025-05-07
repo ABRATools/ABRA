@@ -14,8 +14,7 @@ parser.add_argument("--no-aggregator", dest='noagg', action='store_true', help="
 parser.add_argument("--no-notifier", dest='nonoti', action='store_true', help="If set, will not run the notifier process")
 
 def run_fastapi():
-    # uvicorn.run('fastapi_server:app', host="127.0.0.1", port=8989, workers=2)
-    uvicorn.run('fastapi_server:app', host="127.0.0.1", port=8989)
+    uvicorn.run('fastapi_server:app', host="127.0.0.1", port=8000)
 
 def run_aggregator():
     import run_aggregator

@@ -15,7 +15,7 @@ export type DiscordNotificationConfig = {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
-export default function DiscordNotificationConfig() {
+export default function Alerts() {
     const [open, setOpen] = useState(false);
     const [currentDiscordConfigs, setDiscordConfigs] = useState<DiscordNotificationConfig[]>([]);
     const [newDiscordConfig, setNewDiscordConfig] = useState<DiscordNotificationConfig>({
@@ -192,7 +192,7 @@ export default function DiscordNotificationConfig() {
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-bold tracking-tight">Discord Notification Configuration</h1>
+                <h1 className="text-3xl font-bold tracking-tight">Alert Configuration</h1>
                 <p className="text-muted-foreground">
                     Configure the Discord webhook for notifications.
                 </p>

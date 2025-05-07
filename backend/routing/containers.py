@@ -251,9 +251,23 @@ async def start_container_on_node(request: Request, session = Depends(get_sessio
     except Exception as e:
       if is_jsonable(e):
         logger.error(f"An error occurred: {e}")
+        db.create_notification(
+          session,
+          "Container start error",
+          "Container error",
+          str(e) if e is not None else "Undefined error"
+          "error",
+        )
         return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
       logger.error(f"An error occurred: {e}")
       return JSONResponse(status_code=500, content={"message": "An error occurred"})
+    db.create_notification(
+      session,
+      "Container start info",
+      "Container info",
+      f"Container with env_id: {env_id} started by user {token.username}",
+      "info",
+    )
     return JSONResponse(status_code=200, content={"message": "Container started"})
   logger.warning("Unauthorized request to start container")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
@@ -278,9 +292,23 @@ async def stop_container_on_node(request: Request, session = Depends(get_session
     except Exception as e:
       if is_jsonable(e):
         logger.error(f"An error occurred: {e}")
+        db.create_notification(
+          session,
+          "Container stop error",
+          "Container error",
+          str(e) if e is not None else "Undefined error"
+          "error",
+        )
         return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
       logger.error(f"An error occurred: {e}")
       return JSONResponse(status_code=500, content={"message": "An error occurred"})
+    db.create_notification(
+      session,
+      "Container stopped warning",
+      "Container warning",
+      f"Container with env_id: {env_id} stopped by user {token.username}",
+      "warning",
+    )
     return JSONResponse(status_code=200, content={"message": "Container stopped"})
   logger.warning("Unauthorized request to stop container")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})  
@@ -308,9 +336,23 @@ async def delete_container_on_node(request: Request, session = Depends(get_sessi
     except Exception as e:
       if is_jsonable(e):
         logger.error(f"An error occurred: {e}")
+        db.create_notification(
+          session,
+          "Container delete error",
+          "Container error",
+          str(e) if e is not None else "Undefined error"
+          "error",
+        )
         return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
       logger.error(f"An error occurred: {e}")
       return JSONResponse(status_code=500, content={"message": "An error occurred"})
+    db.create_notification(
+      session,
+      "Container deleted warning",
+      "Container warning",
+      f"Container with env_id: {env_id} deleted by user {token.username}",
+      "warning",
+    )
     return JSONResponse(status_code=200, content={"message": "Container deleted"})
   logger.warning("Unauthorized request to delete container")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
@@ -334,10 +376,10 @@ async def create_environment_on_node(request: Request, session = Depends(get_ses
     if name is None:
       logger.error("No name provided")
       return JSONResponse(status_code=400, content={"message": "No name provided"})
-    if not (cpus is None) and isinstance(cpus, int):
+    if not (cpus is None) and (not isinstance(cpus, int)):
       logger.error("Invalid cpus provided")
       return JSONResponse(status_code=400, content={"message": "Invalid cpus provided"})
-    if not (mem_limit is None) and isinstance(mem_limit, int):
+    if not (mem_limit is None) and (not isinstance(mem_limit, int)):
       logger.error("Invalid mem_limit provided")
       return JSONResponse(status_code=400, content={"message": "Invalid mem_limit provided"})
     if isinstance(cpus, int) and (cpus < 1 or cpus > 16):
@@ -363,9 +405,23 @@ async def create_environment_on_node(request: Request, session = Depends(get_ses
     except Exception as e:
       if is_jsonable(e):
         logger.error(f"An error occurred: {e}")
+        db.create_notification(
+          session,
+          "Container create error",
+          "Container error",
+          str(e) if e is not None else "Undefined error"
+          "error",
+        )
         return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
       logger.error(f"An error occurred: {e}")
       return JSONResponse(status_code=500, content={"message": "An error occurred"})
+    db.create_notification(
+      session,
+      "Container creation info",
+      "Container info",
+      f"Container with name: {name} created by user {token.username}",
+      "info",
+    )
     return JSONResponse(status_code=200, content={"message": "Container created"})
   logger.warning("Unauthorized request to create container")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
@@ -390,10 +446,10 @@ async def create_ebpf_environment_on_node(request: Request, session = Depends(ge
     if name is None:
       logger.error("No name provided")
       return JSONResponse(status_code=400, content={"message": "No name provided"})
-    if not (cpus is None) and isinstance(cpus, int):
+    if not (cpus is None) and (not isinstance(cpus, int)):
       logger.error("Invalid cpus provided")
       return JSONResponse(status_code=400, content={"message": "Invalid cpus provided"})
-    if not (mem_limit is None) and isinstance(mem_limit, int):
+    if not (mem_limit is None) and (not isinstance(mem_limit, int)):
       logger.error("Invalid mem_limit provided")
       return JSONResponse(status_code=400, content={"message": "Invalid mem_limit provided"})
     if isinstance(cpus, int) and (cpus < 1 or cpus > 16):
@@ -418,10 +474,24 @@ async def create_ebpf_environment_on_node(request: Request, session = Depends(ge
         return JSONResponse(status_code=500, content={"message": "An error occurred"})
     except Exception as e:
       if is_jsonable(e):
+        db.create_notification(
+          session,
+          "Container create error",
+          "Container error",
+          str(e) if e is not None else "Undefined error"
+          "error",
+        )
         logger.error(f"An error occurred: {e}")
         return JSONResponse(status_code=500, content=json.loads(str(e)) if e is not None else {"message": "An error occurred"})
       logger.error(f"An error occurred: {e}")
       return JSONResponse(status_code=500, content={"message": "An error occurred"})
+    db.create_notification(
+      session,
+      "Container creation info",
+      "Container info",
+      f"Container with name: {name} created by user {token.username}",
+      "info",
+    )
     return JSONResponse(status_code=200, content={"message": "Container created"})
   logger.warning("Unauthorized request to create container")
   return JSONResponse(status_code=401, content={"message": "Unauthorized"})
